@@ -53,3 +53,6 @@ dkms.conf
 
 # Editor config
 *.vscode
+
+#platform IO
+*.pio
