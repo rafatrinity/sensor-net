@@ -1,8 +1,4 @@
 {
-    "name": "smart-garden-server",
-    "description": “The goal of this project is to manage a garden, capture sensor data, generate metrics, plot graphs, and automate tasks by remotely activating actuators.”,
-    "version": "0.0.1",
-    "dependencies": {},
     "node-red": {
         "settings": {
             "flowFile": "flows.json",
