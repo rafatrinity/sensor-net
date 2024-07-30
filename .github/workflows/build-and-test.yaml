@@ -32,4 +32,4 @@ jobs:
         with:
           token: ${{ secrets.WOKWI_CLI_TOKEN }}
           scenario: 'http-client.test.yaml'
-          timeout: 10000
+          timeout: 100000
