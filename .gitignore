@@ -56,3 +56,6 @@ dkms.conf
 
 #platform IO
 *.pio
+
+#env
+*.env
