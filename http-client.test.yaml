@@ -5,4 +5,3 @@ author: Rafael Trindade
 steps:
   - wait-serial: 'Connecting to WiFi'
   - wait-serial: 'Reconnecting to MQTT...'
-  - exit: 0
