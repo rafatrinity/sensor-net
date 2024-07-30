@@ -3,11 +3,19 @@
 #include <PubSubClient.h>
 #include <DHT.h>
 
-// Pin definitions
-#define ECHO_PIN 25
-#define TRIG_PIN 26
+#pragma region Pin_definitions
+#define ECHO_PIN 18
+#define TRIG_PIN 19
 #define DHTPIN 4
 #define DHTTYPE DHT22
+#pragma region multiplexer
+#define S0 13
+#define S1 12
+#define S2 14
+#define S3 27
+#define SIG_pin 36 // VP
+#pragma endregion multiplexer
+#pragma endregion Pin_definitions
 
 // WiFi credentials
 const char *ssid = "Wokwi-GUEST";
@@ -22,6 +30,7 @@ WiFiClient espClient;
 PubSubClient mqttClient(espClient);
 DHT dht(DHTPIN, DHTTYPE);
 
+#pragma region main
 void setup() {
     Serial.begin(115200);
     connectToWiFi();
@@ -35,6 +44,7 @@ void loop() {
     publishSensorData();
     delay(3000);
 }
+#pragma endregion main
 
 void connectToWiFi() {
     Serial.print("Connecting to WiFi");
@@ -50,6 +60,11 @@ void connectToWiFi() {
 void initializePins() {
     pinMode(TRIG_PIN, OUTPUT);
     pinMode(ECHO_PIN, INPUT);
+    pinMode(S0, OUTPUT);
+    pinMode(S1, OUTPUT);
+    pinMode(S2, OUTPUT);
+    pinMode(S3, OUTPUT);
+    pinMode(SIG_pin, INPUT);
 }
 
 void ensureMQTTConnection() {
@@ -90,12 +105,12 @@ void publishHumidityData() {
 }
 
 void publishPhData() {
-    float ph = analogRead(35) * 0.003418803;
+    float ph = readAnalogMultiplexer(0) * 0.003418803;
     publishMQTTMessage("01/ph", ph);
 }
 
 void publishSoilHumidityData() {
-    float soilHumidity = analogRead(34) * 0.024420024;
+    float soilHumidity = readAnalogMultiplexer(1) * 0.024420024;
     publishMQTTMessage("01/soil_humidity", soilHumidity);
 }
 
@@ -131,4 +146,13 @@ float readHumidity() {
         return -999.0;
     }
     return humidity;
+}
+
+float readAnalogMultiplexer(int pin) {
+    digitalWrite(S0, bitRead(pin, 0));
+    digitalWrite(S1, bitRead(pin, 1));
+    digitalWrite(S2, bitRead(pin, 2));
+    digitalWrite(S3, bitRead(pin, 3));
+    float value = analogRead(SIG_pin);
+    return value;
 }
