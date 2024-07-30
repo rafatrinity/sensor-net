@@ -1,8 +1,8 @@
 name: HTTP Client Test
 version: 1
-author: Uri Shaked
+author: Rafael Trindade
 
 steps:
   - wait-serial: 'Connecting to WiFi'
-  - wait-serial: 'Fetching http://example.org... HTTP 200'
-  - wait-serial: '<title>Example Domain</title>'
+  - wait-serial: 'Reconnecting to MQTT...'
+  - wait-serial: 'MQTT connected...'
