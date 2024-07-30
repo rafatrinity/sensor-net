@@ -78,6 +78,7 @@ void ensureMQTTConnection() {
             delay(2000);
         }
     }
+    Serial.println("MQTT connected...");
 }
 
 void publishSensorData() {
