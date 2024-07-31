@@ -13,7 +13,7 @@
 #define S1 12
 #define S2 14
 #define S3 27
-#define SIG_pin 36 // VP
+#define SIG_pin 34
 #pragma endregion multiplexer
 #pragma endregion Pin_definitions
 
@@ -78,7 +78,6 @@ void ensureMQTTConnection() {
             delay(2000);
         }
     }
-    Serial.println("MQTT connected...");
 }
 
 void publishSensorData() {
@@ -154,6 +153,7 @@ float readAnalogMultiplexer(int pin) {
     digitalWrite(S1, bitRead(pin, 1));
     digitalWrite(S2, bitRead(pin, 2));
     digitalWrite(S3, bitRead(pin, 3));
+    delay(10);
     float value = analogRead(SIG_pin);
     return value;
 }
