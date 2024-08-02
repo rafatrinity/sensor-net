@@ -2,6 +2,8 @@
 #include <HTTPClient.h>
 #include <PubSubClient.h>
 #include <DHT.h>
+#include <HX711.h>
+#include <vector>
 
 #pragma region Pin_definitions
 #define ECHO_PIN 18
@@ -13,7 +15,7 @@
 #define S1 12
 #define S2 14
 #define S3 27
-#define SIG_pin 34
+#define SIG_pin 33
 #pragma endregion multiplexer
 #pragma endregion Pin_definitions
 
@@ -29,6 +31,7 @@ const int mqtt_port = 1883;
 WiFiClient espClient;
 PubSubClient mqttClient(espClient);
 DHT dht(DHTPIN, DHTTYPE);
+std::vector<HX711> scales(2);
 
 #pragma region main
 void setup() {
@@ -65,6 +68,8 @@ void initializePins() {
     pinMode(S2, OUTPUT);
     pinMode(S3, OUTPUT);
     pinMode(SIG_pin, INPUT);
+    scales[0].begin(SIG_pin, SIG_pin);
+    scales[1].begin(SIG_pin, SIG_pin);
 }
 
 void ensureMQTTConnection() {
@@ -86,6 +91,7 @@ void publishSensorData() {
     publishHumidityData();
     publishPhData();
     publishSoilHumidityData();
+    publishScaleData();
 }
 
 void publishDistanceData() {
@@ -120,6 +126,14 @@ void publishMQTTMessage(const char* topic, float value) {
     mqttClient.publish(topic, message, true);
 }
 
+void publishScaleData() {
+    float scale1Data = readHX711Data(0);
+    publishMQTTMessage("01/scale1", scale1Data);
+
+    float scale2Data = readHX711Data(1);
+    publishMQTTMessage("01/scale2", scale2Data);
+}
+
 float readDistanceCM() {
     digitalWrite(TRIG_PIN, LOW);
     delayMicroseconds(2);
@@ -148,6 +162,23 @@ float readHumidity() {
     return humidity;
 }
 
+float readHX711Data(int scaleIndex) {
+    if (scaleIndex < 0 || scaleIndex >= scales.size()) {
+        Serial.println("Invalid scale index!");
+        return -1;
+    }
+
+    selectMultiplexerChannel(2); // Seleciona o pino C2 (DT)
+    delay(10); // Delay para estabilizar o multiplexador
+    float dtValue = scales[scaleIndex].read();
+
+    selectMultiplexerChannel(3); // Seleciona o pino C3 (SCK)
+    delay(10); // Delay para estabilizar o multiplexador
+    float sckValue = scales[scaleIndex].read();
+
+    return dtValue;  // Retorna o valor do DT (pode ajustar conforme a lógica do seu projeto)
+}
+
 float readAnalogMultiplexer(int pin) {
     digitalWrite(S0, bitRead(pin, 0));
     digitalWrite(S1, bitRead(pin, 1));
@@ -156,4 +187,11 @@ float readAnalogMultiplexer(int pin) {
     delay(10);
     float value = analogRead(SIG_pin);
     return value;
+}
+
+void selectMultiplexerChannel(int pin) {
+    digitalWrite(S0, bitRead(pin, 0));
+    digitalWrite(S1, bitRead(pin, 1));
+    digitalWrite(S2, bitRead(pin, 2));
+    digitalWrite(S3, bitRead(pin, 3));
 }
