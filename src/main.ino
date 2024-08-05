@@ -2,38 +2,26 @@
 #include <HTTPClient.h>
 #include <PubSubClient.h>
 #include <DHT.h>
-#include <HX711.h>
-#include <vector>
 
-#pragma region Pin_definitions
-#define ECHO_PIN 18
-#define TRIG_PIN 19
+// Pin definitions
+#define ECHO_PIN 25
+#define TRIG_PIN 26
 #define DHTPIN 4
 #define DHTTYPE DHT22
-#pragma region multiplexer
-#define S0 13
-#define S1 12
-#define S2 14
-#define S3 27
-#define SIG_pin 33
-#pragma endregion multiplexer
-#pragma endregion Pin_definitions
 
 // WiFi credentials
 const char *ssid = "Wokwi-GUEST";
 const char *password = "";
 
 // MQTT server details
-const char *mqtt_server = "172.17.0.4";
+const char *mqtt_server = "172.17.0.6";
 const int mqtt_port = 1883;
 
 // Global objects
 WiFiClient espClient;
 PubSubClient mqttClient(espClient);
 DHT dht(DHTPIN, DHTTYPE);
-std::vector<HX711> scales(2);
 
-#pragma region main
 void setup() {
     Serial.begin(115200);
     connectToWiFi();
@@ -47,7 +35,6 @@ void loop() {
     publishSensorData();
     delay(3000);
 }
-#pragma endregion main
 
 void connectToWiFi() {
     Serial.print("Connecting to WiFi");
@@ -63,13 +50,6 @@ void connectToWiFi() {
 void initializePins() {
     pinMode(TRIG_PIN, OUTPUT);
     pinMode(ECHO_PIN, INPUT);
-    pinMode(S0, OUTPUT);
-    pinMode(S1, OUTPUT);
-    pinMode(S2, OUTPUT);
-    pinMode(S3, OUTPUT);
-    pinMode(SIG_pin, INPUT);
-    scales[0].begin(SIG_pin, SIG_pin);
-    scales[1].begin(SIG_pin, SIG_pin);
 }
 
 void ensureMQTTConnection() {
@@ -91,7 +71,6 @@ void publishSensorData() {
     publishHumidityData();
     publishPhData();
     publishSoilHumidityData();
-    publishScaleData();
 }
 
 void publishDistanceData() {
@@ -111,12 +90,12 @@ void publishHumidityData() {
 }
 
 void publishPhData() {
-    float ph = readAnalogMultiplexer(0) * 0.003418803;
+    float ph = analogRead(35) * 0.003418803;
     publishMQTTMessage("01/ph", ph);
 }
 
 void publishSoilHumidityData() {
-    float soilHumidity = readAnalogMultiplexer(1) * 0.024420024;
+    float soilHumidity = analogRead(34) * 0.024420024;
     publishMQTTMessage("01/soil_humidity", soilHumidity);
 }
 
@@ -124,14 +103,6 @@ void publishMQTTMessage(const char* topic, float value) {
     char message[50];
     snprintf(message, sizeof(message), "%.2f", value);
     mqttClient.publish(topic, message, true);
-}
-
-void publishScaleData() {
-    float scale1Data = readHX711Data(0);
-    publishMQTTMessage("01/scale1", scale1Data);
-
-    float scale2Data = readHX711Data(1);
-    publishMQTTMessage("01/scale2", scale2Data);
 }
 
 float readDistanceCM() {
@@ -160,38 +131,4 @@ float readHumidity() {
         return -999.0;
     }
     return humidity;
-}
-
-float readHX711Data(int scaleIndex) {
-    if (scaleIndex < 0 || scaleIndex >= scales.size()) {
-        Serial.println("Invalid scale index!");
-        return -1;
-    }
-
-    selectMultiplexerChannel(2); // Seleciona o pino C2 (DT)
-    delay(10); // Delay para estabilizar o multiplexador
-    float dtValue = scales[scaleIndex].read();
-
-    selectMultiplexerChannel(3); // Seleciona o pino C3 (SCK)
-    delay(10); // Delay para estabilizar o multiplexador
-    float sckValue = scales[scaleIndex].read();
-
-    return dtValue;  // Retorna o valor do DT (pode ajustar conforme a lógica do seu projeto)
-}
-
-float readAnalogMultiplexer(int pin) {
-    digitalWrite(S0, bitRead(pin, 0));
-    digitalWrite(S1, bitRead(pin, 1));
-    digitalWrite(S2, bitRead(pin, 2));
-    digitalWrite(S3, bitRead(pin, 3));
-    delay(10);
-    float value = analogRead(SIG_pin);
-    return value;
-}
-
-void selectMultiplexerChannel(int pin) {
-    digitalWrite(S0, bitRead(pin, 0));
-    digitalWrite(S1, bitRead(pin, 1));
-    digitalWrite(S2, bitRead(pin, 2));
-    digitalWrite(S3, bitRead(pin, 3));
 }
