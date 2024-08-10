@@ -2,17 +2,8 @@
 #include <HTTPClient.h>
 #include <PubSubClient.h>
 #include <DHT.h>
+#include "config.hpp"
 
-#define ECHO_PIN 25
-#define TRIG_PIN 26
-#define DHTPIN 4
-#define DHTTYPE DHT22
-
-const char *ssid = "Wokwi-GUEST";
-const char *password = "";
-
-const char *mqtt_server = "172.17.0.2";
-const int mqtt_port = 1883;
 
 WiFiClient espClient;
 PubSubClient mqttClient(espClient);
@@ -23,7 +14,7 @@ void manageMQTT(void * parameter);
 void readSensors(void * parameter);
 
 void setup() {
-    Serial.begin(115200);
+    Serial.begin(BAUD);
     initializePins();
     dht.begin();
 
