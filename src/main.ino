@@ -3,40 +3,65 @@
 #include <PubSubClient.h>
 #include <DHT.h>
 
-// Pin definitions
 #define ECHO_PIN 25
 #define TRIG_PIN 26
 #define DHTPIN 4
 #define DHTTYPE DHT22
 
-// WiFi credentials
 const char *ssid = "Wokwi-GUEST";
 const char *password = "";
 
-// MQTT server details
 const char *mqtt_server = "172.17.0.2";
 const int mqtt_port = 1883;
 
-// Global objects
 WiFiClient espClient;
 PubSubClient mqttClient(espClient);
 DHT dht(DHTPIN, DHTTYPE);
 
+void connectToWiFi(void * parameter);
+void manageMQTT(void * parameter);
+void readSensors(void * parameter);
+
 void setup() {
     Serial.begin(115200);
-    connectToWiFi();
     initializePins();
     dht.begin();
-    mqttClient.setServer(mqtt_server, mqtt_port);
+
+    xTaskCreatePinnedToCore(
+        connectToWiFi, /* função da tarefa */
+        "WiFiTask", /* nome da tarefa */
+        4096, /* tamanho da pilha */
+        NULL, /* parâmetros da tarefa */
+        1, /* prioridade da tarefa */
+        NULL, /* handle da tarefa */
+        0 /* núcleo em que a tarefa será executada (0 ou 1) */
+    );
+
+    xTaskCreatePinnedToCore(
+        manageMQTT, /* função da tarefa */
+        "MQTTTask", /* nome da tarefa */
+        4096, /* tamanho da pilha */
+        NULL, /* parâmetros da tarefa */
+        1, /* prioridade da tarefa */
+        NULL, /* handle da tarefa */
+        0 /* núcleo em que a tarefa será executada (0 ou 1) */
+    );
+
+    xTaskCreatePinnedToCore(
+        readSensors, /* função da tarefa */
+        "SensorTask", /* nome da tarefa */
+        4096, /* tamanho da pilha */
+        NULL, /* parâmetros da tarefa */
+        1, /* prioridade da tarefa */
+        NULL, /* handle da tarefa */
+        1 /* núcleo em que a tarefa será executada (0 ou 1) */
+    );
 }
 
 void loop() {
-    ensureMQTTConnection();
-    publishSensorData();
-    delay(3000);
 }
 
-void connectToWiFi() {
+void connectToWiFi(void * parameter) {
     Serial.print("Connecting to WiFi");
     WiFi.begin(ssid, password);
     while (WiFi.status() != WL_CONNECTED) {
@@ -45,11 +70,26 @@ void connectToWiFi() {
     }
     Serial.print("OK! IP=");
     Serial.println(WiFi.localIP());
+
+    vTaskDelete(NULL);
 }
 
-void initializePins() {
-    pinMode(TRIG_PIN, OUTPUT);
-    pinMode(ECHO_PIN, INPUT);
+void manageMQTT(void * parameter) {
+    mqttClient.setServer(mqtt_server, mqtt_port);
+    mqttClient.setCallback([](char* topic, byte* payload, unsigned int length) {
+        Serial.print("Message arrived [");
+        Serial.print(topic);
+        Serial.print("] ");
+        for (int i = 0; i < length; i++) {
+            Serial.print((char)payload[i]);
+        }
+        Serial.println();
+    });
+
+    while(true) {
+        ensureMQTTConnection();
+        mqttClient.loop();
+    }
 }
 
 void ensureMQTTConnection() {
@@ -57,6 +97,7 @@ void ensureMQTTConnection() {
         Serial.println("Reconnecting to MQTT...");
         if (mqttClient.connect("ESP32Client")) {
             Serial.println("Reconnected");
+            mqttClient.subscribe("your/topic");
         } else {
             Serial.print("Failed with state ");
             Serial.println(mqttClient.state());
@@ -65,12 +106,25 @@ void ensureMQTTConnection() {
     }
 }
 
-void publishSensorData() {
-    publishDistanceData();
-    publishTemperatureData();
-    publishHumidityData();
-    publishPhData();
-    publishSoilHumidityData();
+void initializePins() {
+    pinMode(TRIG_PIN, OUTPUT);
+    pinMode(ECHO_PIN, INPUT);
+}
+
+void publishMQTTMessage(const char* topic, float value) {
+    char message[50];
+    snprintf(message, sizeof(message), "%.2f", value);
+    mqttClient.publish(topic, message, true);
+}
+
+void readSensors(void * parameter) {
+    while(true) {
+        publishDistanceData();
+        publishTemperatureData();
+        publishHumidityData();
+        publishPhData();
+        publishSoilHumidityData();
+    }
 }
 
 void publishDistanceData() {
@@ -97,12 +151,6 @@ void publishPhData() {
 void publishSoilHumidityData() {
     float soilHumidity = analogRead(34) * 0.024420024;
     publishMQTTMessage("01/soil_humidity", soilHumidity);
-}
-
-void publishMQTTMessage(const char* topic, float value) {
-    char message[50];
-    snprintf(message, sizeof(message), "%.2f", value);
-    mqttClient.publish(topic, message, true);
 }
 
 float readDistanceCM() {
