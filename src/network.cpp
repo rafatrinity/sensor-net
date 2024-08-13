@@ -36,34 +36,26 @@ void connectToWiFi(void * parameter) {
 }
 
 void ensureMQTTConnection() {
+    const int loopDelay = 500;
     while (!mqttClient.connected()) {
         Serial.println("Reconnecting to MQTT...");
         if (mqttClient.connect("ESP32Client")) {
             Serial.println("Reconnected");
-            mqttClient.subscribe("your/topic");
         } else {
             Serial.print("Failed with state ");
             Serial.println(mqttClient.state());
-            delay(2000);
+            vTaskDelay(loopDelay / portTICK_PERIOD_MS);
         }
     }
 }
 
 void manageMQTT(void * parameter) {
+    const int loopDelay = 100;
     mqttClient.setServer(mqtt_server, mqtt_port);
-    mqttClient.setCallback([](char* topic, byte* payload, unsigned int length) {
-        Serial.print("Message arrived [");
-        Serial.print(topic);
-        Serial.print("] ");
-        for (int i = 0; i < length; i++) {
-            Serial.print((char)payload[i]);
-        }
-        Serial.println();
-    });
-
     while(true) {
         ensureMQTTConnection();
         mqttClient.loop();
+        vTaskDelay(loopDelay / portTICK_PERIOD_MS);
     }
 }
 
@@ -75,4 +67,3 @@ void publishMQTTMessage(const char* topic, float value) {
         Serial.println("Failed to publish message.");
     }
 }
-
