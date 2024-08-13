@@ -6,19 +6,32 @@ PubSubClient mqttClient(espClient);
 const char *ssid = "Wokwi-GUEST";
 const char *password = "";
 
-const char *mqtt_server = "172.17.0.2";
+const char *mqtt_server = "172.17.0.3";
 const int mqtt_port = 1883;
 
 void connectToWiFi(void * parameter) {
-    Serial.print("Connecting to WiFi");
-    WiFi.begin(ssid, password);
-    while (WiFi.status() != WL_CONNECTED) {
-        delay(500);
-        Serial.print(".");
-    }
-    Serial.print("OK! IP=");
-    Serial.println(WiFi.localIP());
+    const uint32_t maxRetries = 20;
+    const uint32_t retryDelay = 100;
 
+    Serial.println("Connecting to WiFi...");
+    WiFi.begin(ssid, password);
+
+    uint32_t attempt = 0;
+
+    while (WiFi.status() != WL_CONNECTED && attempt < maxRetries) {
+        vTaskDelay(retryDelay / portTICK_PERIOD_MS);
+        Serial.print(".");
+        attempt++;
+    }
+
+    if (WiFi.status() == WL_CONNECTED) {
+        Serial.println("\nConnected to WiFi");
+        Serial.print("IP Address: ");
+        Serial.println(WiFi.localIP());
+    } else {
+        Serial.println("\nFailed to connect to WiFi");
+        ESP.restart();
+    }
     vTaskDelete(NULL);
 }
 

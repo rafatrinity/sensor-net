@@ -12,7 +12,7 @@ void setup() {
     xTaskCreatePinnedToCore(
         connectToWiFi, 
         "WiFiTask", 
-        4096, 
+        8192, 
         NULL, 
         1, 
         NULL, 
@@ -22,7 +22,7 @@ void setup() {
     xTaskCreatePinnedToCore(
         manageMQTT, 
         "MQTTTask", 
-        4096, 
+        8192, 
         NULL, 
         1, 
         NULL, 
@@ -32,7 +32,7 @@ void setup() {
     xTaskCreatePinnedToCore(
         readSensors, 
         "SensorTask", 
-        4096, 
+        8192, 
         NULL, 
         1, 
         NULL, 
@@ -40,8 +40,7 @@ void setup() {
     );
 }
 
-void loop() {
-}
+void loop() {}
 
 void initializePins() {
     pinMode(TRIG_PIN, OUTPUT);
