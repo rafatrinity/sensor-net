@@ -68,7 +68,11 @@ void manageMQTT(void * parameter) {
 }
 
 void publishMQTTMessage(const char* topic, float value) {
-    char message[50];
-    snprintf(message, sizeof(message), "%.2f", value);
-    mqttClient.publish(topic, message, true);
+    String message = String(value, 2);
+    if (mqttClient.publish(topic, message.c_str(), true)) {
+        Serial.println("Message published successfully.");
+    } else {
+        Serial.println("Failed to publish message.");
+    }
 }
+
