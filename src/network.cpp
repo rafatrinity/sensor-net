@@ -6,7 +6,7 @@ PubSubClient mqttClient(espClient);
 const char *ssid = "Wokwi-GUEST";
 const char *password = "";
 
-const char *mqtt_server = "172.17.0.3";
+const char *mqtt_server = "172.17.0.4";
 const int mqtt_port = 1883;
 
 void connectToWiFi(void * parameter) {
