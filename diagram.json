@@ -31,7 +31,16 @@
       "attrs": { "travelLength": "30" }
     },
     { "type": "wokwi-vcc", "id": "vcc1", "top": -114.44, "left": -38.4, "attrs": {} },
-    { "type": "wokwi-gnd", "id": "gnd1", "top": 182.4, "left": 201, "attrs": {} }
+    { "type": "wokwi-gnd", "id": "gnd1", "top": 182.4, "left": 201, "attrs": {} },
+    {
+      "type": "wokwi-lcd1602",
+      "id": "lcd1",
+      "top": -108.8,
+      "left": 245.6,
+      "attrs": { "pins": "i2c" }
+    },
+    { "type": "wokwi-gnd", "id": "gnd2", "top": -134.4, "left": 220.2, "attrs": {} },
+    { "type": "wokwi-vcc", "id": "vcc2", "top": -133.64, "left": 201.6, "attrs": {} }
   ],
   "connections": [
     [ "esp:TX0", "$serialMonitor:RX", "", [] ],
@@ -50,6 +59,9 @@
     [ "dht1:VCC", "bb1:bp.11", "red", [ "v0" ] ],
     [ "dht1:SDA", "esp:D4", "green", [ "v0" ] ],
     [ "dht1:GND", "bb1:bn.9", "black", [ "h0" ] ],
+    [ "pot1:SIG", "bb1:19t.a", "green", [ "v0" ] ],
+    [ "pot1:VCC", "bb1:tp.15", "red", [ "v0" ] ],
+    [ "pot1:GND", "bb1:bn.25", "black", [ "v-34", "h172.8" ] ],
     [ "esp:VIN", "bb1:9t.b", "", [ "$bb" ] ],
     [ "esp:GND.2", "bb1:10t.b", "", [ "$bb" ] ],
     [ "esp:D13", "bb1:11t.b", "", [ "$bb" ] ],
@@ -80,9 +92,10 @@
     [ "esp:TX0", "bb1:21b.j", "", [ "$bb" ] ],
     [ "esp:D22", "bb1:22b.j", "", [ "$bb" ] ],
     [ "esp:D23", "bb1:23b.j", "", [ "$bb" ] ],
-    [ "pot1:SIG", "bb1:19t.a", "green", [ "v0" ] ],
-    [ "pot1:VCC", "bb1:tp.15", "red", [ "v0" ] ],
-    [ "pot1:GND", "bb1:bn.25", "black", [ "v-34", "h172.8" ] ]
+    [ "gnd2:GND", "lcd1:GND", "black", [ "h19.2", "v57.6" ] ],
+    [ "vcc2:VCC", "lcd1:VCC", "red", [ "v0" ] ],
+    [ "lcd1:SDA", "esp:D21", "purple", [ "h-28.8", "v77.9" ] ],
+    [ "lcd1:SCL", "esp:D22", "white", [ "h-38.4", "v38.7", "h-66" ] ]
   ],
   "dependencies": {}
 }

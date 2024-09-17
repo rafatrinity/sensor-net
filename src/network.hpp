@@ -11,6 +11,7 @@ void connectToWiFi(void*);
 void ensureMQTTConnection();
 void manageMQTT(void*);
 void publishMQTTMessage(const char* topic, float value);
+void spinner();
 
 extern const char *ssid;
 extern const char *password;
