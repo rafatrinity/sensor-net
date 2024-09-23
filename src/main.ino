@@ -25,15 +25,15 @@ void setup() {
         0 
     );
 
-    // xTaskCreatePinnedToCore(
-    //     manageMQTT, 
-    //     "MQTTTask", 
-    //     2048, 
-    //     NULL, 
-    //     1, 
-    //     NULL, 
-    //     0 
-    // );
+    xTaskCreatePinnedToCore(
+        manageMQTT, 
+        "MQTTTask", 
+        2048, 
+        NULL, 
+        1, 
+        NULL, 
+        0 
+    );
 
     xTaskCreatePinnedToCore(
         readSensors, 

@@ -41,8 +41,7 @@ float readPh() {
 }
 
 float readSoilHumidity() {
-    // return analogRead(34) * 0.024420024;
-    return analogRead(34);
+    return analogReadMilliVolts(34) / 33.3;
 }
 
 void publishDistanceData() {

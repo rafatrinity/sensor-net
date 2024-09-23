@@ -70,7 +70,7 @@ void ensureMQTTConnection() {
         Serial.println("Reconnecting to MQTT...");
         LCD.setCursor(0, 0);
         LCD.print("Reconnecting to MQTT...");
-        if (mqttClient.connect("ESP32Client")) {
+        if (mqttClient.connect("ESP32Client1")) {
             Serial.println("Reconnected");
         } else {
             Serial.print("Failed with state ");
@@ -98,9 +98,10 @@ void publishMQTTMessage(const char* topic, float value) {
     LCD.print(message);
     vTaskDelay(2000 / portTICK_PERIOD_MS);
     LCD.clear();
-    // if (mqttClient.publish(topic, message.c_str(), true)) {
-    //     Serial.println("Message published successfully.");
-    // } else {
-    //     Serial.println("Failed to publish message.");
-    // }
+    if (mqttClient.publish(topic, message.c_str(), true)) {
+        Serial.println("Message published successfully.");
+    } else {
+        Serial.println(mqttClient.state());
+        Serial.println("Failed to publish message.");
+    }
 }

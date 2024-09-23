@@ -40,7 +40,11 @@
       "attrs": { "pins": "i2c" }
     },
     { "type": "wokwi-gnd", "id": "gnd2", "top": -134.4, "left": 220.2, "attrs": {} },
-    { "type": "wokwi-vcc", "id": "vcc2", "top": -133.64, "left": 201.6, "attrs": {} }
+    { "type": "wokwi-vcc", "id": "vcc2", "top": -133.64, "left": 201.6, "attrs": {} },
+    { "type": "wokwi-relay-module", "id": "relay1", "top": 125, "left": 259.2, "attrs": {} },
+    { "type": "wokwi-led", "id": "led1", "top": 82.8, "left": 397.4, "attrs": { "color": "red" } },
+    { "type": "wokwi-gnd", "id": "gnd3", "top": 124.8, "left": 412.2, "attrs": {} },
+    { "type": "wokwi-vcc", "id": "vcc3", "top": 154.36, "left": 432, "attrs": {} }
   ],
   "connections": [
     [ "esp:TX0", "$serialMonitor:RX", "", [] ],
@@ -62,6 +66,10 @@
     [ "pot1:SIG", "bb1:19t.a", "green", [ "v0" ] ],
     [ "pot1:VCC", "bb1:tp.15", "red", [ "v0" ] ],
     [ "pot1:GND", "bb1:bn.25", "black", [ "v-34", "h172.8" ] ],
+    [ "gnd2:GND", "lcd1:GND", "black", [ "h19.2", "v57.6" ] ],
+    [ "vcc2:VCC", "lcd1:VCC", "red", [ "v0" ] ],
+    [ "lcd1:SDA", "esp:D21", "purple", [ "h-28.8", "v77.9" ] ],
+    [ "lcd1:SCL", "esp:D22", "white", [ "h-38.4", "v38.7", "h-66" ] ],
     [ "esp:VIN", "bb1:9t.b", "", [ "$bb" ] ],
     [ "esp:GND.2", "bb1:10t.b", "", [ "$bb" ] ],
     [ "esp:D13", "bb1:11t.b", "", [ "$bb" ] ],
@@ -92,10 +100,12 @@
     [ "esp:TX0", "bb1:21b.j", "", [ "$bb" ] ],
     [ "esp:D22", "bb1:22b.j", "", [ "$bb" ] ],
     [ "esp:D23", "bb1:23b.j", "", [ "$bb" ] ],
-    [ "gnd2:GND", "lcd1:GND", "black", [ "h19.2", "v57.6" ] ],
-    [ "vcc2:VCC", "lcd1:VCC", "red", [ "v0" ] ],
-    [ "lcd1:SDA", "esp:D21", "purple", [ "h-28.8", "v77.9" ] ],
-    [ "lcd1:SCL", "esp:D22", "white", [ "h-38.4", "v38.7", "h-66" ] ]
+    [ "relay1:IN", "esp:D2", "green", [ "h-86.4", "v-75.8" ] ],
+    [ "relay1:VCC", "bb1:bp.5", "red", [ "h0" ] ],
+    [ "relay1:GND", "bb1:bn.4", "black", [ "h0" ] ],
+    [ "led1:C", "relay1:NC", "green", [ "v0" ] ],
+    [ "gnd3:GND", "led1:A", "black", [ "v0" ] ],
+    [ "vcc3:VCC", "relay1:COM", "red", [ "h-38.4", "v-27.4" ] ]
   ],
   "dependencies": {}
 }
