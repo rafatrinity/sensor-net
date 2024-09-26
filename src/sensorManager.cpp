@@ -1,6 +1,8 @@
 #include "sensorManager.hpp"
 #include "network.hpp"
 #include "config.hpp"
+#include <vector> 
+#include <numeric>
 
 DHT dht(DHTPIN, DHTTYPE);
 
@@ -41,7 +43,22 @@ float readPh() {
 }
 
 float readSoilHumidity() {
-    return analogReadMilliVolts(34) / 33.3;
+    std::vector<int> arr;  
+    
+    for(int i = 0; i < 100; i++) {
+        int analogValue = 4095 - analogRead(34);  
+        if (analogValue > 0) {
+            arr.push_back(analogValue);  
+        }
+    }
+    
+    if (!arr.empty()) {
+        float sum = std::accumulate(arr.begin(), arr.end(), 0);
+        float average = sum / arr.size();
+        return average / 32.0;  
+    } else {
+        return 0.0;  
+    }
 }
 
 void publishDistanceData() {
@@ -67,5 +84,6 @@ void publishPhData() {
 
 void publishSoilHumidityData() {
     float soilHumidity = readSoilHumidity();
-    publishMQTTMessage("01/soil_humidity", soilHumidity);
+    if(soilHumidity > 0)
+        publishMQTTMessage("01/soil_humidity", soilHumidity);
 }

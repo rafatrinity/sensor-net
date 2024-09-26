@@ -56,10 +56,10 @@ void initializePins() {
 void readSensors(void * parameter) {
     const int loopDelay = 500;
     while(true) {
-        publishDistanceData();
+        // publishDistanceData();
         publishTemperatureData();
         publishHumidityData();
-        publishPhData();
+        // publishPhData();
         publishSoilHumidityData();
         vTaskDelay(loopDelay / portTICK_PERIOD_MS);
     }
