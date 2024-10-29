@@ -1,8 +1,11 @@
+#include <algorithm>
+#include <numeric>
+#include <numeric>
+#include <vector>
+
 #include "sensorManager.hpp"
 #include "network.hpp"
 #include "config.hpp"
-#include <vector> 
-#include <numeric>
 
 DHT dht(DHTPIN, DHTTYPE);
 
@@ -45,6 +48,7 @@ float readPh() {
 float readSoilHumidity() {
     std::vector<int> arr;  
     
+    // Leitura de 100 valores analógicos
     for(int i = 0; i < 100; i++) {
         int analogValue = 4095 - analogRead(34);  
         if (analogValue > 0) {
@@ -52,12 +56,21 @@ float readSoilHumidity() {
         }
     }
     
-    if (!arr.empty()) {
+    // Garante que temos ao menos 7 valores para aplicar o filtro
+    if (arr.size() > 6) {
+        // Ordena o vetor
+        std::sort(arr.begin(), arr.end());
+
+        // Remove os 3 maiores e os 3 menores valores
+        arr.erase(arr.begin(), arr.begin() + 3);              // Remove os 3 menores
+        arr.erase(arr.end() - 3, arr.end());                  // Remove os 3 maiores
+
+        // Calcula a média dos valores restantes
         float sum = std::accumulate(arr.begin(), arr.end(), 0);
         float average = sum / arr.size();
-        return average/40.95;  
+        return average / 40.95;  // Ajuste para escala de umidade
     } else {
-        return 0.0;  
+        return 0.0;  // Retorna 0 se o vetor tiver poucos elementos para uma média precisa
     }
 }
 
