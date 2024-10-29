@@ -9,9 +9,9 @@ void readSensors(void * parameter);
 
 void setup() {
     Serial.begin(BAUD);
-    initializePins();
+    // initializePins();
     initializeSensors();
-    
+    pinMode(2, OUTPUT);
     LCD.init();
     LCD.backlight();
     Serial.println(esp_get_free_heap_size());
