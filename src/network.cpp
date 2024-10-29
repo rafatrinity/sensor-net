@@ -14,6 +14,8 @@ const char *mqtt_server = "192.168.1.11";
 // const char *mqtt_server = "172.18.0.15";
 const int mqtt_port = 1883;
 
+float target;
+
 void spinner() {
   static int8_t counter = 0;
   const char* glyphs = "\xa1\xa5\xdb";
@@ -70,8 +72,6 @@ void ensureMQTTConnection() {
     const int loopDelay = 500;
     while (!mqttClient.connected()) {
         Serial.println("Reconnecting to MQTT...");
-        LCD.setCursor(0, 0);
-        LCD.print("Reconnecting to MQTT...");
         if (mqttClient.connect("ESP32Client1")) {
             Serial.println("Reconnected");
         } else {
@@ -96,15 +96,8 @@ void mqttCallback(char* topic, byte* payload, unsigned int length) {
 
     if (String(topic) == "01/air_humidity_control") {
         Serial.println("Processing air humidity control message...");
-        float target = message.toFloat();
+        target = message.toFloat();
         float value = readHumidity();
-        if (value < target) {
-            digitalWrite(2, LOW);
-            Serial.println("Relay activated: Humidity is below target.");
-        } else if (value > target) {
-            digitalWrite(2, HIGH);
-            Serial.println("Relay deactivated: Humidity is above target.");
-        }
     }
 }
 
@@ -125,15 +118,14 @@ void manageMQTT(void * parameter) {
     }
 }
 
-
 void publishMQTTMessage(const char* topic, float value) {
     String message = String(value, 2);
+
     LCD.setCursor(0, 0);
     LCD.print(topic);
     LCD.setCursor(0, 1);
     LCD.print(message);
-    vTaskDelay(2000 / portTICK_PERIOD_MS);
-    LCD.clear();
+
     if (mqttClient.publish(topic, message.c_str(), true)) {
         Serial.print(topic);
         Serial.print(": ");
@@ -142,4 +134,7 @@ void publishMQTTMessage(const char* topic, float value) {
         Serial.println(mqttClient.state());
         Serial.println("Failed to publish message.");
     }
+
+    vTaskDelay(2000 / portTICK_PERIOD_MS);
+    LCD.clear();
 }
