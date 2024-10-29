@@ -96,8 +96,15 @@ void mqttCallback(char* topic, byte* payload, unsigned int length) {
 
     if (String(topic) == "01/air_humidity_control") {
         Serial.println("Processing air humidity control message...");
-        target = message.toFloat();
+        float target = message.toFloat();
         float value = readHumidity();
+        if (value < target) {
+            digitalWrite(2, LOW);
+            Serial.println("Relay activated: Humidity is below target.");
+        } else if (value > target) {
+            digitalWrite(2, HIGH);
+            Serial.println("Relay deactivated: Humidity is above target.");
+        }
     }
 }
 
@@ -117,6 +124,7 @@ void manageMQTT(void * parameter) {
         vTaskDelay(loopDelay / portTICK_PERIOD_MS);
     }
 }
+
 
 void publishMQTTMessage(const char* topic, float value) {
     String message = String(value, 2);
