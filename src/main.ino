@@ -14,11 +14,10 @@ void setup() {
     pinMode(2, OUTPUT);
     LCD.init();
     LCD.backlight();
-    Serial.println(esp_get_free_heap_size());
     xTaskCreatePinnedToCore(
         connectToWiFi, 
         "WiFiTask", 
-        4096, 
+        8192, 
         NULL, 
         1, 
         NULL, 
@@ -28,7 +27,7 @@ void setup() {
     xTaskCreatePinnedToCore(
         manageMQTT, 
         "MQTTTask", 
-        2048, 
+        8192, 
         NULL, 
         1, 
         NULL, 
@@ -38,12 +37,14 @@ void setup() {
     xTaskCreatePinnedToCore(
         readSensors, 
         "SensorTask", 
-        2048, 
+        8192, 
         NULL, 
         1, 
         NULL, 
         1 
     );
+    Serial.println(ESP.getFreeHeap());
+    Serial.println(esp_get_free_heap_size());
 }
 
 void loop() {}

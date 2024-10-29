@@ -14,7 +14,7 @@ const char *mqtt_server = "192.168.1.11";
 // const char *mqtt_server = "172.18.0.15";
 const int mqtt_port = 1883;
 
-float target;
+float target = 70;
 
 void spinner() {
   static int8_t counter = 0;
@@ -28,7 +28,7 @@ void spinner() {
 
 void connectToWiFi(void * parameter) {
     const uint32_t maxRetries = 20;
-    const uint32_t retryDelay = 100;
+    const uint32_t retryDelay = 500;
 
     LCD.setCursor(0, 0);
     LCD.print("Connecting to ");
@@ -110,7 +110,7 @@ void setupMQTT() {
 
 void manageMQTT(void * parameter) {
     setupMQTT();
-    const int loopDelay = 100;
+    const int loopDelay = 500;
     while (true) {
         ensureMQTTConnection();
         mqttClient.loop();
@@ -126,6 +126,9 @@ void publishMQTTMessage(const char* topic, float value) {
     LCD.setCursor(0, 1);
     LCD.print(message);
 
+    vTaskDelay(2000 / portTICK_PERIOD_MS);
+    LCD.clear();
+
     if (mqttClient.publish(topic, message.c_str(), true)) {
         Serial.print(topic);
         Serial.print(": ");
@@ -134,7 +137,4 @@ void publishMQTTMessage(const char* topic, float value) {
         Serial.println(mqttClient.state());
         Serial.println("Failed to publish message.");
     }
-
-    vTaskDelay(2000 / portTICK_PERIOD_MS);
-    LCD.clear();
 }

@@ -1,6 +1,5 @@
 #include <algorithm>
 #include <numeric>
-#include <numeric>
 #include <vector>
 
 #include "sensorManager.hpp"
@@ -8,8 +7,6 @@
 #include "config.hpp"
 
 DHT dht(DHTPIN, DHTTYPE);
-
-extern float target;
 
 void initializeSensors() {
     dht.begin();
@@ -37,11 +34,10 @@ float readTemperature() {
 float readHumidity() {
     float humidity = dht.readHumidity();
     if (isnan(humidity)) {
+        digitalWrite(2, LOW);
         Serial.println(F("Failed to read from DHT sensor!"));
         return -999.0;
     }
-    
-    if(!target) digitalWrite(2, LOW);
 
     if (humidity < target) {
         digitalWrite(2, LOW);
