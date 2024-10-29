@@ -77,7 +77,7 @@ float readSoilHumidity() {
         // Calcula a média dos valores restantes
         float sum = std::accumulate(arr.begin(), arr.end(), 0);
         float average = sum / arr.size();
-        return average / 40.95;  // Ajuste para escala de umidade
+        return average/40.95;  
     } else {
         return 0.0;  // Retorna 0 se o vetor tiver poucos elementos para uma média precisa
     }
