@@ -13,6 +13,7 @@ const char *password = "12345678";
 const char *mqtt_server = "192.168.1.11";
 // const char *mqtt_server = "172.18.0.15";
 const int mqtt_port = 1883;
+float target = 70;
 
 void spinner() {
   static int8_t counter = 0;
@@ -28,10 +29,6 @@ void connectToWiFi(void * parameter) {
     const uint32_t maxRetries = 20;
     const uint32_t retryDelay = 100;
 
-    LCD.setCursor(0, 0);
-    LCD.print("Connecting to ");
-    LCD.setCursor(0, 1);
-    LCD.print("WiFi ");
     Serial.println("Connecting to WiFi...");
     WiFi.begin(ssid, password);
 
@@ -45,12 +42,7 @@ void connectToWiFi(void * parameter) {
     }
 
     if (WiFi.status() == WL_CONNECTED) {
-        Serial.println("\nConnected to WiFi");
-        Serial.print("IP Address: ");
         Serial.println(WiFi.localIP());
-
-        LCD.setCursor(0, 0);
-        LCD.print("Connected");
         LCD.setCursor(0, 1);
         LCD.print("IP: ");
         LCD.print(WiFi.localIP().toString().c_str());
@@ -70,8 +62,6 @@ void ensureMQTTConnection() {
     const int loopDelay = 500;
     while (!mqttClient.connected()) {
         Serial.println("Reconnecting to MQTT...");
-        LCD.setCursor(0, 0);
-        LCD.print("Reconnecting to MQTT...");
         if (mqttClient.connect("ESP32Client1")) {
             Serial.println("Reconnected");
         } else {
@@ -96,15 +86,8 @@ void mqttCallback(char* topic, byte* payload, unsigned int length) {
 
     if (String(topic) == "01/air_humidity_control") {
         Serial.println("Processing air humidity control message...");
-        float target = message.toFloat();
+        target = message.toFloat();
         float value = readHumidity();
-        if (value < target) {
-            digitalWrite(2, LOW);
-            Serial.println("Relay activated: Humidity is below target.");
-        } else if (value > target) {
-            digitalWrite(2, HIGH);
-            Serial.println("Relay deactivated: Humidity is above target.");
-        }
     }
 }
 
@@ -125,14 +108,12 @@ void manageMQTT(void * parameter) {
     }
 }
 
-
 void publishMQTTMessage(const char* topic, float value) {
     String message = String(value, 2);
     LCD.setCursor(0, 0);
     LCD.print(topic);
     LCD.setCursor(0, 1);
     LCD.print(message);
-    vTaskDelay(2000 / portTICK_PERIOD_MS);
     LCD.clear();
     if (mqttClient.publish(topic, message.c_str(), true)) {
         Serial.print(topic);
@@ -142,4 +123,5 @@ void publishMQTTMessage(const char* topic, float value) {
         Serial.println(mqttClient.state());
         Serial.println("Failed to publish message.");
     }
+    vTaskDelay(2000 / portTICK_PERIOD_MS);
 }

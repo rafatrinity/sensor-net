@@ -6,6 +6,7 @@
 
 extern WiFiClient espClient;
 extern PubSubClient mqttClient;
+extern float target;
 
 void connectToWiFi(void*);
 void ensureMQTTConnection();
