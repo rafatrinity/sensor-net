@@ -11,17 +11,6 @@ void initializeSensors()
     dht.begin();
 }
 
-float readDistanceCM()
-{
-    digitalWrite(TRIG_PIN, LOW);
-    delayMicroseconds(2);
-    digitalWrite(TRIG_PIN, HIGH);
-    delayMicroseconds(10);
-    digitalWrite(TRIG_PIN, LOW);
-    int duration = pulseIn(ECHO_PIN, HIGH);
-    return duration * 0.0342 / 2;
-}
-
 float readTemperature()
 {
     float temperature = dht.readTemperature();
@@ -44,13 +33,13 @@ float readHumidity()
     if(!target) return humidity;
     if (humidity < target)
     {
-        digitalWrite(2, LOW);
-        Serial.println("Relay activated: Humidity is below target.");
+        digitalWrite(2, HIGH);
+        Serial.println("SSR activated: Humidity is below target.");
     }
     else if (humidity > target)
     {
-        digitalWrite(2, HIGH);
-        Serial.println("Relay deactivated: Humidity is above target.");
+        digitalWrite(2, LOW);
+        Serial.println("SSR deactivated: Humidity is above target.");
     }
     return humidity;
 }
@@ -83,13 +72,6 @@ float readSoilHumidity()
     {
         return 0.0;
     }
-}
-
-void publishDistanceData()
-{
-    float distance = readDistanceCM();
-    float percentage = (402 - distance) * 0.25;
-    publishMQTTMessage("01/water_level", percentage);
 }
 
 void publishTemperatureData()
