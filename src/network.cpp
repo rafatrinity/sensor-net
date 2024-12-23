@@ -13,17 +13,21 @@ const char *password = "12345678";
 const char *mqtt_server = "192.168.1.11";
 // const char *mqtt_server = "172.18.0.15";
 const int mqtt_port = 1883;
-float target = 70;
+float target = 62;
 
 void spinner() {
-  static int8_t counter = 0;
-  const char* glyphs = "\xa1\xa5\xdb";
-  LCD.setCursor(15, 1);
-  LCD.print(glyphs[counter++]);
-  if (counter == strlen(glyphs)) {
-    counter = 0;
-  }
+    static int8_t counter = 0;
+    static int8_t lastCounter = -1;
+    const char* glyphs = "\xa1\xa5\xdb";
+
+    if (counter != lastCounter) {
+        LCD.setCursor(15, 1);
+        LCD.print(glyphs[counter]);
+        lastCounter = counter;
+    }
+    counter = (counter + 1) % strlen(glyphs);
 }
+
 
 void connectToWiFi(void * parameter) {
     const uint32_t maxRetries = 20;
@@ -43,17 +47,21 @@ void connectToWiFi(void * parameter) {
 
     if (WiFi.status() == WL_CONNECTED) {
         Serial.println(WiFi.localIP());
-        LCD.setCursor(0, 1);
-        LCD.print("IP: ");
+        LCD.setCursor(0, 0);
+        LCD.print("IP:");
         LCD.print(WiFi.localIP().toString().c_str());
-        delay(2000);
+        vTaskDelay(2000 / portTICK_PERIOD_MS);
         LCD.clear();
 
     } else {
         Serial.println("\nFailed to connect to WiFi");
         LCD.setCursor(0, 0);
         LCD.print("Failed to connect");
-        ESP.restart();
+        if (WiFi.status() != WL_CONNECTED) {
+        Serial.println("\nFailed to connect to WiFi, retrying...");
+        vTaskDelay(5000 / portTICK_PERIOD_MS); // Aguarde antes de tentar novamente
+}
+
     }
     vTaskDelete(NULL);
 }
@@ -76,7 +84,6 @@ void mqttCallback(char* topic, byte* payload, unsigned int length) {
     Serial.print("Message arrived on topic: ");
     Serial.println(topic);
 
-    // Converte o payload para string
     String message;
     for (unsigned int i = 0; i < length; i++) {
         message += (char)payload[i];
@@ -102,19 +109,29 @@ void manageMQTT(void * parameter) {
     setupMQTT();
     const int loopDelay = 100;
     while (true) {
-        ensureMQTTConnection();
-        mqttClient.loop();
+        if (WiFi.status() == WL_CONNECTED) {
+            ensureMQTTConnection();
+            mqttClient.loop();
+        } else {
+            Serial.println("WiFi disconnected, waiting to reconnect...");
+        }
         vTaskDelay(loopDelay / portTICK_PERIOD_MS);
     }
 }
 
 void publishMQTTMessage(const char* topic, float value) {
+    static String lastMessage = "";
     String message = String(value, 2);
-    LCD.setCursor(0, 0);
-    LCD.print(topic);
-    LCD.setCursor(0, 1);
-    LCD.print(message);
-    LCD.clear();
+
+    if (lastMessage != message) {
+        LCD.clear();
+        LCD.setCursor(0, 0);
+        LCD.print(topic);
+        LCD.setCursor(0, 1);
+        LCD.print(message);
+        lastMessage = message;
+    }
+
     if (mqttClient.publish(topic, message.c_str(), true)) {
         Serial.print(topic);
         Serial.print(": ");

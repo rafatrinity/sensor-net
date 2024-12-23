@@ -44,11 +44,6 @@ float readHumidity()
     return humidity;
 }
 
-float readPh()
-{
-    return analogRead(35) * 0.003418803;
-}
-
 float readSoilHumidity()
 {
     std::vector<int> arr;
@@ -72,30 +67,4 @@ float readSoilHumidity()
     {
         return 0.0;
     }
-}
-
-void publishTemperatureData()
-{
-    float temperature = readTemperature();
-    publishMQTTMessage("01/temperature", temperature);
-}
-
-void publishHumidityData()
-{
-    float humidity = readHumidity();
-    if (humidity != -999)
-        publishMQTTMessage("01/air_humidity", humidity);
-}
-
-void publishPhData()
-{
-    float ph = readPh();
-    publishMQTTMessage("01/ph", ph);
-}
-
-void publishSoilHumidityData()
-{
-    float soilHumidity = readSoilHumidity();
-    if (soilHumidity > 0)
-        publishMQTTMessage("01/soil_humidity", soilHumidity);
 }
