@@ -78,7 +78,7 @@ void readSensors(void * parameter) {
         LCD.setCursor(0, 1);
         LCD.print("A:");
         LCD.print(airHumidity, 1);
-        LCD.print("S:");
+        LCD.print(" S:");
         LCD.print(soilHumidity, 1);
 
         vTaskDelay(loopDelay / portTICK_PERIOD_MS);
