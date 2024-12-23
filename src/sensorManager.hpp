@@ -11,6 +11,8 @@ float readTemperature();
 float readHumidity();
 float readSoilHumidity();
 
+float calculateVpd(float tem, float hum);
+
 void initializeSensors();
 
 #endif

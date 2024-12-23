@@ -54,11 +54,13 @@ void readSensors(void * parameter) {
         float temperature = readTemperature();
         float airHumidity = readHumidity();
         float soilHumidity = readSoilHumidity();
+        float vpd = calculateVpd(temperature, airHumidity);
 
         String payload = "{";
         payload += "\"temperature\":" + String(temperature, 2) + ",";
         payload += "\"humidity\":" + String(airHumidity, 2) + ",";
-        payload += "\"soil_humidity\":" + String(soilHumidity, 2);
+        payload += "\"soil_humidity\":" + String(soilHumidity, 2) + ",";
+        payload += "\"vpd\":" + String(vpd, 3);
         payload += "}";
 
         if (mqttClient.publish("01/sensors", payload.c_str(), true)) {
