@@ -77,5 +77,5 @@ float calculateVpd(float tem, float hum)
     float es = 6.112 * exp((17.67 * tem) / (tem + 243.5));
     float ea = (hum / 100) * es;
     float vpd = es - ea;
-    return vpd;
+    return vpd/10;
 }
