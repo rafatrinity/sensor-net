@@ -1,7 +1,7 @@
 #include "config.hpp"
 #include "network.hpp"
 #include "sensorManager.hpp"
-#include <Wire.h> // Biblioteca para comunicação I2C
+#include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 
 LiquidCrystal_I2C LCD(0x27, 16, 2);
@@ -13,14 +13,9 @@ void setup() {
     initializeSensors();
     pinMode(2, OUTPUT);
 
-    // Configurar SDA e SCL
-    Wire.begin(21, 22); // Define SDA = GPIO 21 e SCL = GPIO 22
-
-    // Inicializar o display LCD
+    Wire.begin(21, 22);
     LCD.init();
     LCD.backlight();
-
-    Serial.println(esp_get_free_heap_size());
 
     xTaskCreatePinnedToCore(
         connectToWiFi, 
@@ -54,13 +49,12 @@ void setup() {
 }
 
 void readSensors(void * parameter) {
-    const int loopDelay = 2000; // Atualizar a cada 2 segundos
+    const int loopDelay = 2000;
     while (true) {
         float temperature = readTemperature();
         float airHumidity = readHumidity();
         float soilHumidity = readSoilHumidity();
 
-        // Montar payload para MQTT
         String payload = "{";
         payload += "\"temperature\":" + String(temperature, 2) + ",";
         payload += "\"humidity\":" + String(airHumidity, 2) + ",";
@@ -73,17 +67,16 @@ void readSensors(void * parameter) {
             Serial.println("Failed to publish sensor data.");
         }
 
-        // Atualizar display LCD
         LCD.clear();
-        LCD.setCursor(0, 0); // Primeira linha
+        LCD.setCursor(0, 0);
         LCD.print("Temp:");
         LCD.print(temperature, 1);
         LCD.print("C");
 
-        LCD.setCursor(0, 1); // Segunda linha
-        LCD.print("Air:");
+        LCD.setCursor(0, 1);
+        LCD.print("A:");
         LCD.print(airHumidity, 1);
-        LCD.print("Soil:");
+        LCD.print("S:");
         LCD.print(soilHumidity, 1);
 
         vTaskDelay(loopDelay / portTICK_PERIOD_MS);
