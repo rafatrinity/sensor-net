@@ -58,8 +58,8 @@ void readSensors(void * parameter) {
 
         String payload = "{";
         payload += "\"temperature\":" + String(temperature, 2) + ",";
-        payload += "\"humidity\":" + String(airHumidity, 2) + ",";
-        payload += "\"soil_humidity\":" + String(soilHumidity, 2) + ",";
+        payload += "\"airHumidity\":" + String(airHumidity, 2) + ",";
+        payload += "\"soilHumidity\":" + String(soilHumidity, 2) + ",";
         payload += "\"vpd\":" + String(vpd, 3);
         payload += "}";
 

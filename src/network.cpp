@@ -14,7 +14,12 @@ const char *password = "12345678";
 const char *mqtt_server = "192.168.1.11";
 // const char *mqtt_server = "172.18.0.15";
 const int mqtt_port = 1883;
-TargetValues target;
+TargetValues target = {
+    .airHumidity = 64.0f, 
+    .vpd = 1.0f,          
+    .soilHumidity = 66.0f,
+    .temperature = 23.0f  
+};
 
 void spinner() {
     static int8_t counter = 0;
@@ -93,12 +98,10 @@ void mqttCallback(char* topic, byte* payload, unsigned int length) {
     Serial.print("Message: ");
     Serial.println(message);
 
-    // Verifique se a mensagem chegou no tópico esperado
     if (String(topic) == ROOM "/control") {
         Serial.println("Processing control message...");
 
-        // Crie um buffer estático para evitar realocações dinâmicas
-        StaticJsonDocument<256> doc;
+        JsonDocument doc;
         DeserializationError error = deserializeJson(doc, message);
 
         if (error) {
@@ -107,11 +110,18 @@ void mqttCallback(char* topic, byte* payload, unsigned int length) {
             return;
         }
 
-        // Atualize os valores do alvo (target)
-        target.airHumidity = doc["airHumidity"] | 0.0f;
-        target.vpd = doc["vpd"] | 0.0f;
-        target.soilHumidity = doc["soilHumidity"] | 0.0f;
-        target.temperature = doc["temperature"] | 0.0f;
+        if (!doc["airHumidity"].isNull() && doc["airHumidity"].is<float>()) {
+            target.airHumidity = doc["airHumidity"].as<float>();
+        }
+        if (!doc["vpd"].isNull() && doc["vpd"].is<float>()) {
+            target.vpd = doc["vpd"].as<float>();
+        }
+        if (!doc["soilHumidity"].isNull() && doc["soilHumidity"].is<float>()) {
+            target.soilHumidity = doc["soilHumidity"].as<float>();
+        }
+        if (!doc["temperature"].isNull() && doc["temperature"].is<float>()) {
+            target.temperature = doc["temperature"].as<float>();
+        }
 
         Serial.println("Updated target values:");
         Serial.print("Air Humidity: ");
