@@ -1,6 +1,7 @@
 #include "network.hpp"
 #include "config.hpp"
 #include "sensorManager.hpp"
+#include <ArduinoJson.h>
 
 WiFiClient espClient;
 PubSubClient mqttClient(espClient);
@@ -13,7 +14,7 @@ const char *password = "12345678";
 const char *mqtt_server = "192.168.1.11";
 // const char *mqtt_server = "172.18.0.15";
 const int mqtt_port = 1883;
-float target = 62;
+TargetValues target;
 
 void spinner() {
     static int8_t counter = 0;
@@ -84,6 +85,7 @@ void mqttCallback(char* topic, byte* payload, unsigned int length) {
     Serial.print("Message arrived on topic: ");
     Serial.println(topic);
 
+    // Converta o payload em uma string
     String message;
     for (unsigned int i = 0; i < length; i++) {
         message += (char)payload[i];
@@ -91,10 +93,35 @@ void mqttCallback(char* topic, byte* payload, unsigned int length) {
     Serial.print("Message: ");
     Serial.println(message);
 
-    if (String(topic) == "01/air_humidity_control") {
-        Serial.println("Processing air humidity control message...");
-        target = message.toFloat();
-        float value = readHumidity();
+    // Verifique se a mensagem chegou no tópico esperado
+    if (String(topic) == ROOM "/control") {
+        Serial.println("Processing control message...");
+
+        // Crie um buffer estático para evitar realocações dinâmicas
+        StaticJsonDocument<256> doc;
+        DeserializationError error = deserializeJson(doc, message);
+
+        if (error) {
+            Serial.print("JSON deserialization failed: ");
+            Serial.println(error.c_str());
+            return;
+        }
+
+        // Atualize os valores do alvo (target)
+        target.airHumidity = doc["airHumidity"] | 0.0f;
+        target.vpd = doc["vpd"] | 0.0f;
+        target.soilHumidity = doc["soilHumidity"] | 0.0f;
+        target.temperature = doc["temperature"] | 0.0f;
+
+        Serial.println("Updated target values:");
+        Serial.print("Air Humidity: ");
+        Serial.println(target.airHumidity);
+        Serial.print("VPD: ");
+        Serial.println(target.vpd);
+        Serial.print("Soil Humidity: ");
+        Serial.println(target.soilHumidity);
+        Serial.print("Temperature: ");
+        Serial.println(target.temperature);
     }
 }
 
@@ -102,7 +129,7 @@ void setupMQTT() {
     mqttClient.setServer(mqtt_server, mqtt_port);
     mqttClient.setCallback(mqttCallback);
     ensureMQTTConnection();
-    mqttClient.subscribe("01/air_humidity_control");  // Inscreve-se no tópico
+    mqttClient.subscribe(ROOM "/control");
 }
 
 void manageMQTT(void * parameter) {

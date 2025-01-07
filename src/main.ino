@@ -63,7 +63,7 @@ void readSensors(void * parameter) {
         payload += "\"vpd\":" + String(vpd, 3);
         payload += "}";
 
-        if (mqttClient.publish("01/sensors", payload.c_str(), true)) {
+        if (mqttClient.publish(ROOM "/sensors", payload.c_str(), true)) {
             Serial.println("Sensor data published: " + payload);
         } else {
             Serial.println("Failed to publish sensor data.");
