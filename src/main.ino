@@ -55,7 +55,10 @@ void readSensors(void * parameter) {
         float airHumidity = readHumidity();
         float soilHumidity = readSoilHumidity();
         float vpd = calculateVpd(temperature, airHumidity);
+        vTaskDelay(loopDelay / portTICK_PERIOD_MS);
 
+        if(isnan(vpd)) continue;
+        
         String payload = "{";
         payload += "\"temperature\":" + String(temperature, 2) + ",";
         payload += "\"airHumidity\":" + String(airHumidity, 2) + ",";
@@ -80,8 +83,6 @@ void readSensors(void * parameter) {
         LCD.print(airHumidity, 1);
         LCD.print(" S:");
         LCD.print(soilHumidity, 1);
-
-        vTaskDelay(loopDelay / portTICK_PERIOD_MS);
     }
 }
 

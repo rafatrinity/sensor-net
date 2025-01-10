@@ -34,7 +34,6 @@ void spinner() {
     counter = (counter + 1) % strlen(glyphs);
 }
 
-
 void connectToWiFi(void * parameter) {
     const uint32_t maxRetries = 20;
     const uint32_t retryDelay = 100;
@@ -90,7 +89,6 @@ void mqttCallback(char* topic, byte* payload, unsigned int length) {
     Serial.print("Message arrived on topic: ");
     Serial.println(topic);
 
-    // Converta o payload em uma string
     String message;
     for (unsigned int i = 0; i < length; i++) {
         message += (char)payload[i];

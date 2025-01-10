@@ -11,7 +11,6 @@ void initializeSensors()
     dht.begin();
 }
 
-
 float readTemperature()
 {
     float temperature = dht.readTemperature();
@@ -31,8 +30,10 @@ float readHumidity()
         Serial.println(F("Failed to read from DHT sensor!"));
         return -999.0;
     }
-    if (!target.airHumidity)
+    if (!target.airHumidity){
+        Serial.println("air humidity target not found");
         return humidity;
+    }
     if (humidity < target.airHumidity)
     {
         digitalWrite(2, HIGH);
@@ -71,9 +72,9 @@ float readSoilHumidity()
     }
 }
 
-
 float calculateVpd(float tem, float hum)
 {
+    if(tem == -999 || hum == -999) return NAN;
     float es = 6.112 * exp((17.67 * tem) / (tem + 243.5));
     float ea = (hum / 100) * es;
     float vpd = es - ea;
