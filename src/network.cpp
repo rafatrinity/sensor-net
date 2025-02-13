@@ -18,7 +18,7 @@ TargetValues target = {
     .airHumidity = 64.0f, 
     .vpd = 1.0f,          
     .soilHumidity = 66.0f,
-    .temperature = 23.0f  
+    .temperature = 25.0f  
 };
 
 void spinner() {
@@ -86,6 +86,7 @@ void ensureMQTTConnection() {
 }
 
 void mqttCallback(char* topic, byte* payload, unsigned int length) {
+    Serial.println("===================================");
     Serial.print("Message arrived on topic: ");
     Serial.println(topic);
 
@@ -93,13 +94,13 @@ void mqttCallback(char* topic, byte* payload, unsigned int length) {
     for (unsigned int i = 0; i < length; i++) {
         message += (char)payload[i];
     }
-    Serial.print("Message: ");
+    Serial.print("Raw Message: ");
     Serial.println(message);
 
     if (String(topic) == ROOM "/control") {
         Serial.println("Processing control message...");
 
-        JsonDocument doc;
+        StaticJsonDocument<256> doc;  // ajuste o tamanho conforme necessário
         DeserializationError error = deserializeJson(doc, message);
 
         if (error) {
@@ -108,30 +109,46 @@ void mqttCallback(char* topic, byte* payload, unsigned int length) {
             return;
         }
 
-        if (!doc["airHumidity"].isNull() && doc["airHumidity"].is<float>()) {
-            target.airHumidity = doc["airHumidity"].as<float>();
-        }
-        if (!doc["vpd"].isNull() && doc["vpd"].is<float>()) {
-            target.vpd = doc["vpd"].as<float>();
-        }
-        if (!doc["soilHumidity"].isNull() && doc["soilHumidity"].is<float>()) {
-            target.soilHumidity = doc["soilHumidity"].as<float>();
-        }
-        if (!doc["temperature"].isNull() && doc["temperature"].is<float>()) {
-            target.temperature = doc["temperature"].as<float>();
+        // Atualizando e mostrando cada valor recebido
+        if (!doc["airHumidity"].isNull() && doc["airHumidity"].is<double>()) {
+            float newAirHumidity = doc["airHumidity"].as<float>();
+            target.airHumidity = newAirHumidity;
+            Serial.print("Updated airHumidity to: ");
+            Serial.println(target.airHumidity);
+        } else {
+            Serial.println("airHumidity not found or not a number");
         }
 
-        Serial.println("Updated target values:");
-        Serial.print("Air Humidity: ");
-        Serial.println(target.airHumidity);
-        Serial.print("VPD: ");
-        Serial.println(target.vpd);
-        Serial.print("Soil Humidity: ");
-        Serial.println(target.soilHumidity);
-        Serial.print("Temperature: ");
-        Serial.println(target.temperature);
+        if (!doc["vpd"].isNull() && doc["vpd"].is<double>()) {
+            float newVpd = doc["vpd"].as<float>();
+            target.vpd = newVpd;
+            Serial.print("Updated vpd to: ");
+            Serial.println(target.vpd);
+        } else {
+            Serial.println("vpd not found or not a number");
+        }
+
+        if (!doc["soilHumidity"].isNull() && doc["soilHumidity"].is<double>()) {
+            float newSoilHumidity = doc["soilHumidity"].as<float>();
+            target.soilHumidity = newSoilHumidity;
+            Serial.print("Updated soilHumidity to: ");
+            Serial.println(target.soilHumidity);
+        } else {
+            Serial.println("soilHumidity not found or not a number");
+        }
+
+        if (!doc["temperature"].isNull() && doc["temperature"].is<double>()) {
+            float newTemperature = doc["temperature"].as<float>();
+            target.temperature = newTemperature;
+            Serial.print("Updated temperature to: ");
+            Serial.println(target.temperature);
+        } else {
+            Serial.println("temperature not found or not a number");
+        }
+        Serial.println("===================================");
     }
 }
+
 
 void setupMQTT() {
     mqttClient.setServer(mqtt_server, mqtt_port);
@@ -167,7 +184,7 @@ void publishMQTTMessage(const char* topic, float value) {
         lastMessage = message;
     }
 
-    if (mqttClient.publish(topic, message.c_str(), true)) {
+    if (mqttClient.publish(topic, message.c_str(), false)) {
         Serial.print(topic);
         Serial.print(": ");
         Serial.println(value);

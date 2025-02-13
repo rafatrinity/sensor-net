@@ -30,10 +30,19 @@ float readHumidity()
         Serial.println(F("Failed to read from DHT sensor!"));
         return -999.0;
     }
-    if (!target.airHumidity){
+
+    // Debug: exibe os valores medidos e o target atual
+    Serial.println("----- readHumidity() -----");
+    Serial.print("Measured humidity: ");
+    Serial.println(humidity);
+    Serial.print("Current target.airHumidity: ");
+    Serial.println(target.airHumidity);
+
+    if (target.airHumidity == 0.0) {
         Serial.println("air humidity target not found");
         return humidity;
     }
+
     if (humidity < target.airHumidity)
     {
         digitalWrite(2, HIGH);
@@ -44,6 +53,7 @@ float readHumidity()
         digitalWrite(2, LOW);
         Serial.println("SSR deactivated: Humidity is above target.");
     }
+    Serial.println("--------------------------");
     return humidity;
 }
 
