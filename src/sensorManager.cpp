@@ -1,7 +1,3 @@
-#include <algorithm>
-#include <numeric>
-#include <vector>
-
 #include "sensorManager.hpp"
 #include "network.hpp"
 #include "config.hpp"
