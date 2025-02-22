@@ -5,14 +5,8 @@
 
 WiFiClient espClient;
 PubSubClient mqttClient(espClient);
+AppConfig appConfig;
 
-const char *ssid = "Casa";
-const char *password = "12345678";
-// const char *ssid = "Wokwi-GUEST";
-// const char *password = "";
-
-const char *mqtt_server = "192.168.1.11";
-// const char *mqtt_server = "172.18.0.15";
 const int mqtt_port = 1883;
 TargetValues target = {
     .airHumidity = 64.0f, 
@@ -39,7 +33,7 @@ void connectToWiFi(void * parameter) {
     const uint32_t retryDelay = 100;
 
     Serial.println("Connecting to WiFi...");
-    WiFi.begin(ssid, password);
+    WiFi.begin(appConfig.wifi.ssid, appConfig.wifi.password);
 
     uint32_t attempt = 0;
 
@@ -97,10 +91,10 @@ void mqttCallback(char* topic, byte* payload, unsigned int length) {
     Serial.print("Raw Message: ");
     Serial.println(message);
 
-    if (String(topic) == ROOM "/control") {
+    if (String(topic) == String(appConfig.mqtt.roomTopic) + "/control") {
         Serial.println("Processing control message...");
 
-        StaticJsonDocument<256> doc;  // ajuste o tamanho conforme necessário
+        JsonDocument doc;
         DeserializationError error = deserializeJson(doc, message);
 
         if (error) {
@@ -151,10 +145,10 @@ void mqttCallback(char* topic, byte* payload, unsigned int length) {
 
 
 void setupMQTT() {
-    mqttClient.setServer(mqtt_server, mqtt_port);
+    mqttClient.setServer(appConfig.mqtt.server, appConfig.mqtt.port);
     mqttClient.setCallback(mqttCallback);
     ensureMQTTConnection();
-    mqttClient.subscribe(ROOM "/control");
+    mqttClient.subscribe((String(appConfig.mqtt.roomTopic) + "/control").c_str());
 }
 
 void manageMQTT(void * parameter) {

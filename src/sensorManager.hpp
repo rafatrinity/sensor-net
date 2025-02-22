@@ -15,4 +15,8 @@ float calculateVpd(float tem, float hum);
 
 void initializeSensors();
 
+void controlGpioByTime(int horaIni, int horaFim, int gpioPin);
+int getCurrentHour();
+void initializeNTP();
+
 #endif

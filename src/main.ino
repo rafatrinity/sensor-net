@@ -4,6 +4,7 @@
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 #include <ArduinoJson.h>
+#include <NTPClient.h>
 
 LiquidCrystal_I2C LCD(0x27, 16, 2);
 JsonDocument doc;
@@ -13,7 +14,9 @@ void readSensors(void * parameter);
 void setup() {
     Serial.begin(BAUD);
     initializeSensors();
-    pinMode(2, OUTPUT);
+    pinMode(appConfig.gpioControl.humidityControlPin, OUTPUT);
+    pinMode(appConfig.gpioControl.timeControlTestPin, OUTPUT);
+
 
     Wire.begin(21, 22);
     LCD.init();
@@ -29,6 +32,7 @@ void setup() {
         0
     );
 
+    initializeNTP();
     xTaskCreatePinnedToCore(
         manageMQTT, 
         "MQTTTask", 
@@ -69,7 +73,7 @@ void readSensors(void * parameter) {
         String payload;
         serializeJson(doc, payload);
 
-        if (mqttClient.publish(ROOM "/sensors", payload.c_str(), true)) {
+        if (mqttClient.publish((String(appConfig.mqtt.roomTopic) + "/sensors").c_str(), payload.c_str(), true)) {
             Serial.println("Sensor data published: " + payload);
         } else {
             Serial.println("Failed to publish sensor data.");

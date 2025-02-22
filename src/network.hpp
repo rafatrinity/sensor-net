@@ -1,6 +1,5 @@
 #ifndef NETWORK_H
 #define NETWORK_H
-#define ROOM "01"
 
 #include <WiFi.h>
 #include <PubSubClient.h>
@@ -15,11 +14,6 @@ struct TargetValues {
 extern WiFiClient espClient;
 extern PubSubClient mqttClient;
 extern TargetValues target;
-
-extern const char *ssid;
-extern const char *password;
-extern const char *mqtt_server;
-extern const int mqtt_port;
 
 void connectToWiFi(void*);
 void ensureMQTTConnection();
