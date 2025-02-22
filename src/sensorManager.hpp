@@ -7,19 +7,16 @@
 extern DHT dht;
 
 // Funções de leitura dos sensores
-float readDistanceCM();
 float readTemperature();
 float readHumidity();
-float readPh();
 float readSoilHumidity();
 
-// Funções de publicação de dados dos sensores
-void publishDistanceData();
-void publishTemperatureData();
-void publishHumidityData();
-void publishPhData();
-void publishSoilHumidityData();
+float calculateVpd(float tem, float hum);
 
 void initializeSensors();
+
+void controlGpioByTime(int horaIni, int horaFim, int gpioPin);
+int getCurrentHour();
+void initializeNTP();
 
 #endif

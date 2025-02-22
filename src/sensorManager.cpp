@@ -5,108 +5,156 @@
 #include "sensorManager.hpp"
 #include "network.hpp"
 #include "config.hpp"
+#include <vector>
+#include <numeric>
+#include <Arduino.h>
+#include <WiFi.h>          
+#include <WiFiUdp.h>       
+#include <NTPClient.h>     
 
-DHT dht(DHTPIN, DHTTYPE);
+DHT dht(appConfig.sensor.dhtPin, appConfig.sensor.dhtType);
 
-void initializeSensors() {
+
+WiFiUDP ntpUDP;
+NTPClient timeClient(ntpUDP);
+
+
+
+void initializeNTP() {
+    timeClient.begin();
+    timeClient.setTimeOffset(appConfig.time.utcOffsetInSeconds);
+    Serial.println("NTP Client initialized.");
+}
+
+
+int getCurrentHour() {
+    if (!timeClient.update()) {
+        Serial.println("Failed to get NTP time!");
+        return -1; 
+    }
+    return timeClient.getHours();
+}
+
+void initializeSensors()
+{
     dht.begin();
 }
 
-float readDistanceCM() {
-    digitalWrite(TRIG_PIN, LOW);
-    delayMicroseconds(2);
-    digitalWrite(TRIG_PIN, HIGH);
-    delayMicroseconds(10);
-    digitalWrite(TRIG_PIN, LOW);
-    int duration = pulseIn(ECHO_PIN, HIGH);
-    return duration * 0.0342 / 2;
+void controlGpioByTime(int horaIni, int horaFim, int gpioPin) {
+    int currentHour = getCurrentHour(); 
+
+    
+    if (horaIni < 0 || horaIni > 23 || horaFim < 0 || horaFim > 23) {
+        Serial.println("Horas inválidas! Use horas entre 0 e 23.");
+        return; 
+    }
+
+    Serial.print("Hora atual: ");
+    Serial.print(currentHour);
+    Serial.print(" - Intervalo: ");
+    Serial.print(horaIni);
+    Serial.print("h - ");
+    Serial.print(horaFim);
+    Serial.print("h.  Pino GPIO: ");
+    Serial.print(gpioPin);
+
+
+    if (horaIni < horaFim) { 
+        if (currentHour >= horaIni && currentHour < horaFim) {
+            digitalWrite(gpioPin, HIGH); 
+            Serial.println(" - ATIVADO");
+        } else {
+            digitalWrite(gpioPin, LOW);  
+            Serial.println(" - DESATIVADO");
+        }
+    } else { 
+        if (currentHour >= horaIni || currentHour < horaFim) {
+            digitalWrite(gpioPin, HIGH); 
+            Serial.println(" - ATIVADO");
+        } else {
+            digitalWrite(gpioPin, LOW);  
+            Serial.println(" - DESATIVADO");
+        }
+    }
+    delay(1000); 
 }
 
-float readTemperature() {
+float readTemperature()
+{
     float temperature = dht.readTemperature();
-    if (isnan(temperature)) {
+    if (isnan(temperature))
+    {
         Serial.println(F("Failed to read from DHT sensor!"));
         return -999.0;
     }
     return temperature;
 }
 
-float readHumidity() {
+float readHumidity()
+{
     float humidity = dht.readHumidity();
-    if (isnan(humidity)) {
-        digitalWrite(2, LOW);
+    if (isnan(humidity))
+    {
         Serial.println(F("Failed to read from DHT sensor!"));
         return -999.0;
     }
 
-    if (humidity < target) {
-        digitalWrite(2, LOW);
-        Serial.println("Relay activated: Humidity is below target.");
-    } 
-    else if (humidity > target) {
-        digitalWrite(2, HIGH);
-        Serial.println("Relay deactivated: Humidity is above target.");
+    
+    Serial.println("----- readHumidity() -----");
+    Serial.print("Measured humidity: ");
+    Serial.println(humidity);
+    Serial.print("Current target.airHumidity: ");
+    Serial.println(target.airHumidity);
+
+    if (target.airHumidity == 0.0) {
+        Serial.println("air humidity target not found");
+        return humidity;
     }
+
+    if (humidity < target.airHumidity)
+    {
+        digitalWrite(appConfig.gpioControl.humidityControlPin, HIGH);
+        Serial.println("SSR activated: Humidity is below target.");
+    }
+    else if (humidity > target.airHumidity)
+    {
+        digitalWrite(appConfig.gpioControl.humidityControlPin, LOW);
+        Serial.println("SSR deactivated: Humidity is above target.");
+    }
+    Serial.println("--------------------------");
     return humidity;
 }
 
-float readPh() {
-    return analogRead(35) * 0.003418803;
-}
+float readSoilHumidity()
+{
+    std::vector<int> arr;
 
-float readSoilHumidity() {
-    std::vector<int> arr;  
-    
-    // Leitura de 100 valores analógicos
-    for(int i = 0; i < 100; i++) {
-        int analogValue = 4095 - analogRead(34);  
-        if (analogValue > 0) {
-            arr.push_back(analogValue);  
+    for (int i = 0; i < 100; i++)
+    {
+        int analogValue = 4095 - analogRead(appConfig.sensor.soilHumiditySensorPin);
+        if (analogValue > 0)
+        {
+            arr.push_back(analogValue);
         }
     }
-    
-    // Garante que temos ao menos 7 valores para aplicar o filtro
-    if (arr.size() > 6) {
-        // Ordena o vetor
-        std::sort(arr.begin(), arr.end());
 
-        // Remove os 3 maiores e os 3 menores valores
-        arr.erase(arr.begin(), arr.begin() + 3);              // Remove os 3 menores
-        arr.erase(arr.end() - 3, arr.end());                  // Remove os 3 maiores
-
-        // Calcula a média dos valores restantes
+    if (!arr.empty())
+    {
         float sum = std::accumulate(arr.begin(), arr.end(), 0);
         float average = sum / arr.size();
-        return average/40.95;  
-    } else {
-        return 0.0;  // Retorna 0 se o vetor tiver poucos elementos para uma média precisa
+        return average / 40.95;
+    }
+    else
+    {
+        return 0.0;
     }
 }
 
-void publishDistanceData() {
-    float distance = readDistanceCM();
-    float percentage = (402 - distance) * 0.25;
-    publishMQTTMessage("01/water_level", percentage);
-}
-
-void publishTemperatureData() {
-    float temperature = readTemperature();
-    publishMQTTMessage("01/temperature", temperature);
-}
-
-void publishHumidityData() {
-    float humidity = readHumidity();
-    if(humidity != -999)
-        publishMQTTMessage("01/air_humidity", humidity);
-}
-
-void publishPhData() {
-    float ph = readPh();
-    publishMQTTMessage("01/ph", ph);
-}
-
-void publishSoilHumidityData() {
-    float soilHumidity = readSoilHumidity();
-    if(soilHumidity > 0)
-        publishMQTTMessage("01/soil_humidity", soilHumidity);
+float calculateVpd(float tem, float hum)
+{
+    if(tem == -999 || hum == -999) return NAN;
+    float es = 6.112 * exp((17.67 * tem) / (tem + 243.5));
+    float ea = (hum / 100) * es;
+    float vpd = es - ea;
+    return vpd/10;
 }

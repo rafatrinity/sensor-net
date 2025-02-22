@@ -1,41 +1,39 @@
 #include "network.hpp"
 #include "config.hpp"
 #include "sensorManager.hpp"
+#include <ArduinoJson.h>
 
 WiFiClient espClient;
 PubSubClient mqttClient(espClient);
+AppConfig appConfig;
 
-const char *ssid = "Casa";
-const char *password = "12345678";
-// const char *ssid = "Wokwi-GUEST";
-// const char *password = "";
-
-const char *mqtt_server = "192.168.1.11";
-// const char *mqtt_server = "172.18.0.15";
 const int mqtt_port = 1883;
-
-float target = 70;
+TargetValues target = {
+    .airHumidity = 64.0f, 
+    .vpd = 1.0f,          
+    .soilHumidity = 66.0f,
+    .temperature = 25.0f  
+};
 
 void spinner() {
-  static int8_t counter = 0;
-  const char* glyphs = "\xa1\xa5\xdb";
-  LCD.setCursor(15, 1);
-  LCD.print(glyphs[counter++]);
-  if (counter == strlen(glyphs)) {
-    counter = 0;
-  }
+    static int8_t counter = 0;
+    static int8_t lastCounter = -1;
+    const char* glyphs = "\xa1\xa5\xdb";
+
+    if (counter != lastCounter) {
+        LCD.setCursor(15, 1);
+        LCD.print(glyphs[counter]);
+        lastCounter = counter;
+    }
+    counter = (counter + 1) % strlen(glyphs);
 }
 
 void connectToWiFi(void * parameter) {
     const uint32_t maxRetries = 20;
     const uint32_t retryDelay = 500;
 
-    LCD.setCursor(0, 0);
-    LCD.print("Connecting to ");
-    LCD.setCursor(0, 1);
-    LCD.print("WiFi ");
     Serial.println("Connecting to WiFi...");
-    WiFi.begin(ssid, password);
+    WiFi.begin(appConfig.wifi.ssid, appConfig.wifi.password);
 
     uint32_t attempt = 0;
 
@@ -47,23 +45,22 @@ void connectToWiFi(void * parameter) {
     }
 
     if (WiFi.status() == WL_CONNECTED) {
-        Serial.println("\nConnected to WiFi");
-        Serial.print("IP Address: ");
         Serial.println(WiFi.localIP());
-
         LCD.setCursor(0, 0);
-        LCD.print("Connected");
-        LCD.setCursor(0, 1);
-        LCD.print("IP: ");
+        LCD.print("IP:");
         LCD.print(WiFi.localIP().toString().c_str());
-        delay(2000);
+        vTaskDelay(2000 / portTICK_PERIOD_MS);
         LCD.clear();
 
     } else {
         Serial.println("\nFailed to connect to WiFi");
         LCD.setCursor(0, 0);
         LCD.print("Failed to connect");
-        ESP.restart();
+        if (WiFi.status() != WL_CONNECTED) {
+        Serial.println("\nFailed to connect to WiFi, retrying...");
+        vTaskDelay(5000 / portTICK_PERIOD_MS); // Aguarde antes de tentar novamente
+}
+
     }
     vTaskDelete(NULL);
 }
@@ -83,61 +80,105 @@ void ensureMQTTConnection() {
 }
 
 void mqttCallback(char* topic, byte* payload, unsigned int length) {
+    Serial.println("===================================");
     Serial.print("Message arrived on topic: ");
     Serial.println(topic);
 
-    // Converte o payload para string
     String message;
     for (unsigned int i = 0; i < length; i++) {
         message += (char)payload[i];
     }
-    Serial.print("Message: ");
+    Serial.print("Raw Message: ");
     Serial.println(message);
 
-    if (String(topic) == "01/air_humidity_control") {
-        Serial.println("Processing air humidity control message...");
-        float target = message.toFloat();
-        float value = readHumidity();
-        if (value < target) {
-            digitalWrite(2, LOW);
-            Serial.println("Relay activated: Humidity is below target.");
-        } else if (value > target) {
-            digitalWrite(2, HIGH);
-            Serial.println("Relay deactivated: Humidity is above target.");
+    if (String(topic) == String(appConfig.mqtt.roomTopic) + "/control") {
+        Serial.println("Processing control message...");
+
+        JsonDocument doc;
+        DeserializationError error = deserializeJson(doc, message);
+
+        if (error) {
+            Serial.print("JSON deserialization failed: ");
+            Serial.println(error.c_str());
+            return;
         }
+
+        // Atualizando e mostrando cada valor recebido
+        if (!doc["airHumidity"].isNull() && doc["airHumidity"].is<double>()) {
+            float newAirHumidity = doc["airHumidity"].as<float>();
+            target.airHumidity = newAirHumidity;
+            Serial.print("Updated airHumidity to: ");
+            Serial.println(target.airHumidity);
+        } else {
+            Serial.println("airHumidity not found or not a number");
+        }
+
+        if (!doc["vpd"].isNull() && doc["vpd"].is<double>()) {
+            float newVpd = doc["vpd"].as<float>();
+            target.vpd = newVpd;
+            Serial.print("Updated vpd to: ");
+            Serial.println(target.vpd);
+        } else {
+            Serial.println("vpd not found or not a number");
+        }
+
+        if (!doc["soilHumidity"].isNull() && doc["soilHumidity"].is<double>()) {
+            float newSoilHumidity = doc["soilHumidity"].as<float>();
+            target.soilHumidity = newSoilHumidity;
+            Serial.print("Updated soilHumidity to: ");
+            Serial.println(target.soilHumidity);
+        } else {
+            Serial.println("soilHumidity not found or not a number");
+        }
+
+        if (!doc["temperature"].isNull() && doc["temperature"].is<double>()) {
+            float newTemperature = doc["temperature"].as<float>();
+            target.temperature = newTemperature;
+            Serial.print("Updated temperature to: ");
+            Serial.println(target.temperature);
+        } else {
+            Serial.println("temperature not found or not a number");
+        }
+        Serial.println("===================================");
     }
 }
 
+
 void setupMQTT() {
-    mqttClient.setServer(mqtt_server, mqtt_port);
+    mqttClient.setServer(appConfig.mqtt.server, appConfig.mqtt.port);
     mqttClient.setCallback(mqttCallback);
     ensureMQTTConnection();
-    mqttClient.subscribe("01/air_humidity_control");  // Inscreve-se no tópico
+    mqttClient.subscribe((String(appConfig.mqtt.roomTopic) + "/control").c_str());
 }
 
 void manageMQTT(void * parameter) {
     setupMQTT();
     const int loopDelay = 500;
     while (true) {
-        ensureMQTTConnection();
-        mqttClient.loop();
+        if (WiFi.status() == WL_CONNECTED) {
+            ensureMQTTConnection();
+            mqttClient.loop();
+        } else {
+            Serial.println("WiFi disconnected, waiting to reconnect...");
+        }
         vTaskDelay(loopDelay / portTICK_PERIOD_MS);
     }
 }
 
-
 void publishMQTTMessage(const char* topic, float value) {
+    static String lastMessage = "";
     String message = String(value, 2);
 
-    LCD.setCursor(0, 0);
-    LCD.print(topic);
-    LCD.setCursor(0, 1);
-    LCD.print(message);
+    if (lastMessage != message) {
+        LCD.clear();
+        LCD.setCursor(0, 0);
+        LCD.print(topic);
+        LCD.setCursor(0, 1);
+        LCD.print(message);
+        lastMessage = message;
+    }
 
-    vTaskDelay(2000 / portTICK_PERIOD_MS);
-    LCD.clear();
-
-    if (mqttClient.publish(topic, message.c_str(), true)) {
+    if (mqttClient.publish(topic, message.c_str(), false)) {
         Serial.print(topic);
         Serial.print(": ");
         Serial.println(value);
@@ -145,4 +186,5 @@ void publishMQTTMessage(const char* topic, float value) {
         Serial.println(mqttClient.state());
         Serial.println("Failed to publish message.");
     }
+    vTaskDelay(2000 / portTICK_PERIOD_MS);
 }

@@ -4,19 +4,20 @@
 #include <WiFi.h>
 #include <PubSubClient.h>
 
+struct TargetValues {
+    float airHumidity;
+    float vpd;
+    float soilHumidity;
+    float temperature;
+};
+
 extern WiFiClient espClient;
 extern PubSubClient mqttClient;
-extern float target;
+extern TargetValues target;
 
 void connectToWiFi(void*);
 void ensureMQTTConnection();
 void manageMQTT(void*);
 void publishMQTTMessage(const char* topic, float value);
 void spinner();
-
-extern const char *ssid;
-extern const char *password;
-extern const char *mqtt_server;
-extern const int mqtt_port;
-
 #endif
