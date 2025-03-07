@@ -71,6 +71,10 @@ void ensureMQTTConnection() {
         Serial.println("Reconnecting to MQTT...");
         if (mqttClient.connect("ESP32Client1")) {
             Serial.println("Reconnected");
+            if (mqttClient.publish("devices", appConfig.mqtt.roomTopic)) {
+                Serial.print("Sent devices message: ");
+                Serial.println(appConfig.mqtt.roomTopic);
+            } else { Serial.println("Failed to send devices message");}
         } else {
             Serial.print("Failed with state ");
             Serial.println(mqttClient.state());
