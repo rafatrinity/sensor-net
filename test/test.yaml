@@ -1,7 +1,0 @@
-name: HTTP Client Test
-version: 1
-author: Rafael Trindade
-
-steps:
-  - wait-serial: 'Connecting to WiFi'
-  - wait-serial: 'Reconnecting to MQTT...'

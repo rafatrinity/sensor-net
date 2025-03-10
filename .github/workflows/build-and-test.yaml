@@ -24,12 +24,31 @@ jobs:
       - name: Install PlatformIO Core
         run: pip install --upgrade platformio
 
-      - name: Build PlatformIO Project
-        run: pio run
+      - name: Build for ESP32
+        run: pio run -e esp32
 
-      - name: Test with Wokwi
+      - name: Build for ESP32-C3
+        run: pio run -e c3
+
+      - name: Run Unit Tests for ESP32
+        run: pio test -e esp32
+
+      - name: Run Unit Tests for ESP32-C3
+        run: pio test -e c3
+
+      - name: Test HTTP Client Scenario on Wokwi
         uses: wokwi/wokwi-ci-action@v1
         with:
           token: ${{ secrets.WOKWI_CLI_TOKEN }}
           scenario: 'http-client.test.yaml'
           timeout: 100000
+
+      - name: Test MQTT Scenario on Wokwi
+        uses: wokwi/wokwi-ci-action@v1
+        with:
+          token: ${{ secrets.WOKWI_CLI_TOKEN }}
+          scenario: 'mqtt.test.yaml'
+          timeout: 100000
+
+      - name: Check PlatformIO Dependencies
+        run: pio lib list

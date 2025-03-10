@@ -32,35 +32,30 @@ void connectToWiFi(void * parameter) {
     const uint32_t maxRetries = 20;
     const uint32_t retryDelay = 500;
 
-    Serial.println("Connecting to WiFi...");
-    WiFi.begin(appConfig.wifi.ssid, appConfig.wifi.password);
+    while (true) {
+        Serial.println("Connecting to WiFi...");
+        WiFi.begin(appConfig.wifi.ssid, appConfig.wifi.password);
 
-    uint32_t attempt = 0;
+        uint32_t attempt = 0;
+        while (WiFi.status() != WL_CONNECTED && attempt < maxRetries) {
+            vTaskDelay(retryDelay / portTICK_PERIOD_MS);
+            Serial.print(".");
+            spinner();
+            attempt++;
+        }
 
-    while (WiFi.status() != WL_CONNECTED && attempt < maxRetries) {
-        vTaskDelay(retryDelay / portTICK_PERIOD_MS);
-        Serial.print(".");
-        spinner();
-        attempt++;
-    }
-
-    if (WiFi.status() == WL_CONNECTED) {
-        Serial.println(WiFi.localIP());
-        LCD.setCursor(0, 0);
-        LCD.print("IP:");
-        LCD.print(WiFi.localIP().toString().c_str());
-        vTaskDelay(2000 / portTICK_PERIOD_MS);
-        LCD.clear();
-
-    } else {
-        Serial.println("\nFailed to connect to WiFi");
-        LCD.setCursor(0, 0);
-        LCD.print("Failed to connect");
-        if (WiFi.status() != WL_CONNECTED) {
-        Serial.println("\nFailed to connect to WiFi, retrying...");
-        vTaskDelay(5000 / portTICK_PERIOD_MS); // Aguarde antes de tentar novamente
-}
-
+        if (WiFi.status() == WL_CONNECTED) {
+            Serial.println(WiFi.localIP());
+            LCD.setCursor(0, 0);
+            LCD.print("IP:");
+            LCD.print(WiFi.localIP().toString().c_str());
+            vTaskDelay(2000 / portTICK_PERIOD_MS);
+            LCD.clear();
+            break;
+        } else {
+            Serial.println("\nFailed to connect to WiFi, retrying in 5 seconds...");
+            vTaskDelay(5000 / portTICK_PERIOD_MS);
+        }
     }
     vTaskDelete(NULL);
 }

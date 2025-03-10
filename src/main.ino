@@ -31,7 +31,9 @@ void setup() {
         NULL,
         0
     );
-
+    while (WiFi.status() != WL_CONNECTED) {
+        vTaskDelay(500 / portTICK_PERIOD_MS);
+    }
     initializeNTP();
     xTaskCreatePinnedToCore(
         manageMQTT, 
@@ -66,6 +68,8 @@ void readSensors(void * parameter) {
         vTaskDelay(loopDelay / portTICK_PERIOD_MS);
 
         if(isnan(vpd)) continue;
+        
+        ensureMQTTConnection();
         
         doc["temperature"] = temperature;
         doc["airHumidity"] = airHumidity;
