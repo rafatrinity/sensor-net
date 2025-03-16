@@ -9,8 +9,8 @@ struct TargetValues {
     float vpd;
     float soilHumidity;
     float temperature;
-    int lightOnHour;
-    int lightOffHour;
+    struct tm lightOnTime;
+    struct tm lightOffTime;
 };
 
 extern WiFiClient espClient;

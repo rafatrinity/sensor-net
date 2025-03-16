@@ -15,7 +15,7 @@ float calculateVpd(float tem, float hum);
 
 void initializeSensors();
 
-void lightControl(int horaIni, int horaFim, int gpioPin);
+void lightControl(struct tm lightOn, struct tm lightOff, int gpioPin);
 int getCurrentHour();
 void initializeNTP();
 

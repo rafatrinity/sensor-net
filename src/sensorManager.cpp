@@ -17,11 +17,14 @@ NTPClient timeClient(ntpUDP);
 
 
 void initializeNTP() {
-    timeClient.begin();
-    timeClient.setTimeOffset(appConfig.time.utcOffsetInSeconds);
-    Serial.println("NTP Client initialized.");
+    configTime(appConfig.time.utcOffsetInSeconds, 0, "pool.ntp.org", "time.nist.gov");
+    struct tm timeinfo;
+    if (!getLocalTime(&timeinfo)) {
+        Serial.println("Falha ao obter tempo NTP");
+        return;
+    }
+    Serial.println("Tempo NTP sincronizado com sucesso!");
 }
-
 
 int getCurrentHour() {
     if (!timeClient.update()) {
@@ -36,43 +39,30 @@ void initializeSensors()
     dht.begin();
 }
 
-void lightControl(int horaIni, int horaFim, int gpioPin) {
-    int currentHour = getCurrentHour(); 
-
-    
-    if (horaIni < 0 || horaIni > 23 || horaFim < 0 || horaFim > 23) {
-        Serial.println("Horas inválidas! Use horas entre 0 e 23.");
-        return; 
+void lightControl(struct tm lightOn, struct tm lightOff, int gpioPin) {
+    struct tm timeinfo;
+    if (!getLocalTime(&timeinfo)) {
+        Serial.println("Erro ao obter horário atual!");
+        return;
     }
 
-    Serial.print("Hora atual: ");
-    Serial.print(currentHour);
-    Serial.print(" - Intervalo: ");
-    Serial.print(horaIni);
-    Serial.print("h - ");
-    Serial.print(horaFim);
-    Serial.print("h.  Pino GPIO: ");
-    Serial.print(gpioPin);
+    int now = timeinfo.tm_hour * 60 + timeinfo.tm_min;
+    int start = lightOn.tm_hour * 60 + lightOn.tm_min;
+    int end = lightOff.tm_hour * 60 + lightOff.tm_min;
 
+    Serial.printf("Hora atual: %02d:%02d - Intervalo: %02d:%02d → %02d:%02d\n",
+                  timeinfo.tm_hour, timeinfo.tm_min,
+                  lightOn.tm_hour, lightOn.tm_min,
+                  lightOff.tm_hour, lightOff.tm_min);
 
-    if (horaIni < horaFim) { 
-        if (currentHour >= horaIni && currentHour < horaFim) {
-            digitalWrite(gpioPin, HIGH); 
-            Serial.println(" - ATIVADO");
-        } else {
-            digitalWrite(gpioPin, LOW);  
-            Serial.println(" - DESATIVADO");
-        }
-    } else { 
-        if (currentHour >= horaIni || currentHour < horaFim) {
-            digitalWrite(gpioPin, HIGH); 
-            Serial.println(" - ATIVADO");
-        } else {
-            digitalWrite(gpioPin, LOW);  
-            Serial.println(" - DESATIVADO");
-        }
+    if ((start < end && now >= start && now < end) ||
+        (start > end && (now >= start || now < end))) {
+        digitalWrite(gpioPin, HIGH);
+        Serial.println("Luz ATIVADA");
+    } else {
+        digitalWrite(gpioPin, LOW);
+        Serial.println("Luz DESATIVADA");
     }
-    delay(1000); 
 }
 
 float readTemperature()
@@ -95,13 +85,6 @@ float readHumidity()
         return -999.0;
     }
 
-    
-    Serial.println("----- readHumidity() -----");
-    Serial.print("Measured humidity: ");
-    Serial.println(humidity);
-    Serial.print("Current target.airHumidity: ");
-    Serial.println(target.airHumidity);
-
     if (target.airHumidity == 0.0) {
         Serial.println("air humidity target not found");
         return humidity;
@@ -110,14 +93,11 @@ float readHumidity()
     if (humidity < target.airHumidity)
     {
         digitalWrite(appConfig.gpioControl.humidityControlPin, HIGH);
-        Serial.println("SSR activated: Humidity is below target.");
     }
     else if (humidity > target.airHumidity)
     {
         digitalWrite(appConfig.gpioControl.humidityControlPin, LOW);
-        Serial.println("SSR deactivated: Humidity is above target.");
     }
-    Serial.println("--------------------------");
     return humidity;
 }
 

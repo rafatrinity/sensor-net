@@ -12,9 +12,7 @@ TargetValues target = {
     .airHumidity = 64.0f,
     .vpd = 1.0f,
     .soilHumidity = 66.0f,
-    .temperature = 25.0f,
-    .lightOnHour = 0,
-    .lightOffHour = 0
+    .temperature = 25.0f
 };
 
 void spinner() {
@@ -107,16 +105,19 @@ void mqttCallback(char* topic, byte* payload, unsigned int length) {
             Serial.print("Updated airHumidity to: ");
             Serial.println(target.airHumidity);
         }
+        
         if (!doc["vpd"].isNull() && doc["vpd"].is<double>()) {
             target.vpd = doc["vpd"].as<float>();
             Serial.print("Updated vpd to: ");
             Serial.println(target.vpd);
         }
+
         if (!doc["soilHumidity"].isNull() && doc["soilHumidity"].is<double>()) {
             target.soilHumidity = doc["soilHumidity"].as<float>();
             Serial.print("Updated soilHumidity to: ");
             Serial.println(target.soilHumidity);
         }
+
         if (!doc["temperature"].isNull() && doc["temperature"].is<double>()) {
             target.temperature = doc["temperature"].as<float>();
             Serial.print("Updated temperature to: ");
@@ -124,21 +125,14 @@ void mqttCallback(char* topic, byte* payload, unsigned int length) {
         }
 
         if (doc["lightOnTime"].is<String>()) {
-            String lightOnTimeStr = doc["lightOnTime"].as<String>();
-            int lightOnHour = lightOnTimeStr.substring(0, 2).toInt();
-            target.lightOnHour = lightOnHour;
-            Serial.print("Updated lightOnHour to: ");
-            Serial.println(target.lightOnHour);
+            sscanf(doc["lightOnTime"], "%d:%d", &target.lightOnTime.tm_hour, &target.lightOnTime.tm_min);
+            Serial.printf("Horário de ligar atualizado para %02d:%02d\n", target.lightOnTime.tm_hour, target.lightOnTime.tm_min);
         }
+    
         if (doc["lightOffTime"].is<String>()) {
-            String lightOffTimeStr = doc["lightOffTime"].as<String>();
-            int lightOffHour = lightOffTimeStr.substring(0, 2).toInt();
-            target.lightOffHour = lightOffHour;
-            Serial.print("Updated lightOffHour to: ");
-            Serial.println(target.lightOffHour);
+            sscanf(doc["lightOffTime"], "%d:%d", &target.lightOffTime.tm_hour, &target.lightOffTime.tm_min);
+            Serial.printf("Horário de desligar atualizado para %02d:%02d\n", target.lightOffTime.tm_hour, target.lightOffTime.tm_min);
         }
-
-        Serial.println("===================================");
     }
 }
 

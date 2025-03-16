@@ -36,7 +36,7 @@ struct MQTTConfig {
 // ===============================================================
 struct GPIOControlConfig {
     int humidityControlPin = 2;    // Pin for humidity control (SSR) - default pin 2
-    int timeControlTestPin = 4;     // Example pin for time-based control testing - default pin 4
+    int timeControlTestPin = 5;     // Example pin for time-based control testing - default pin 5
     // Add more GPIO pin configurations here as needed for different functionalities.
 };
 

@@ -10,10 +10,11 @@ LiquidCrystal_I2C LCD(0x27, 16, 2);
 JsonDocument doc;
 
 void readSensors(void * parameter);
+
 void lightControlTask(void *parameter) {
     while (true) {
-        lightControl(target.lightOnHour, target.lightOffHour, appConfig.gpioControl.timeControlTestPin);
-        vTaskDelay(60000 / portTICK_PERIOD_MS);
+        lightControl(target.lightOnTime, target.lightOffTime, appConfig.gpioControl.timeControlTestPin);
+        vTaskDelay(10000 / portTICK_PERIOD_MS);
     }
 }
 
@@ -94,9 +95,7 @@ void readSensors(void * parameter) {
         String payload;
         serializeJson(doc, payload);
 
-        if (mqttClient.publish((String(appConfig.mqtt.roomTopic) + "/sensors").c_str(), payload.c_str(), true)) {
-            Serial.println("Sensor data published: " + payload);
-        } else {
+        if (!mqttClient.publish((String(appConfig.mqtt.roomTopic) + "/sensors").c_str(), payload.c_str(), true)) {
             Serial.println("Failed to publish sensor data.");
         }
 
