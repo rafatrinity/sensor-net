@@ -9,10 +9,12 @@ AppConfig appConfig;
 
 const int mqtt_port = 1883;
 TargetValues target = {
-    .airHumidity = 64.0f, 
-    .vpd = 1.0f,          
+    .airHumidity = 64.0f,
+    .vpd = 1.0f,
     .soilHumidity = 66.0f,
-    .temperature = 25.0f  
+    .temperature = 25.0f,
+    .lightOnHour = 0,
+    .lightOffHour = 0
 };
 
 void spinner() {
@@ -82,7 +84,6 @@ void mqttCallback(char* topic, byte* payload, unsigned int length) {
     Serial.println("===================================");
     Serial.print("Message arrived on topic: ");
     Serial.println(topic);
-
     String message;
     for (unsigned int i = 0; i < length; i++) {
         message += (char)payload[i];
@@ -92,56 +93,55 @@ void mqttCallback(char* topic, byte* payload, unsigned int length) {
 
     if (String(topic) == String(appConfig.mqtt.roomTopic) + "/control") {
         Serial.println("Processing control message...");
-
         JsonDocument doc;
         DeserializationError error = deserializeJson(doc, message);
-
         if (error) {
             Serial.print("JSON deserialization failed: ");
             Serial.println(error.c_str());
             return;
         }
 
-        // Atualizando e mostrando cada valor recebido
+        // Atualizando valores existentes
         if (!doc["airHumidity"].isNull() && doc["airHumidity"].is<double>()) {
-            float newAirHumidity = doc["airHumidity"].as<float>();
-            target.airHumidity = newAirHumidity;
+            target.airHumidity = doc["airHumidity"].as<float>();
             Serial.print("Updated airHumidity to: ");
             Serial.println(target.airHumidity);
-        } else {
-            Serial.println("airHumidity not found or not a number");
         }
-
         if (!doc["vpd"].isNull() && doc["vpd"].is<double>()) {
-            float newVpd = doc["vpd"].as<float>();
-            target.vpd = newVpd;
+            target.vpd = doc["vpd"].as<float>();
             Serial.print("Updated vpd to: ");
             Serial.println(target.vpd);
-        } else {
-            Serial.println("vpd not found or not a number");
         }
-
         if (!doc["soilHumidity"].isNull() && doc["soilHumidity"].is<double>()) {
-            float newSoilHumidity = doc["soilHumidity"].as<float>();
-            target.soilHumidity = newSoilHumidity;
+            target.soilHumidity = doc["soilHumidity"].as<float>();
             Serial.print("Updated soilHumidity to: ");
             Serial.println(target.soilHumidity);
-        } else {
-            Serial.println("soilHumidity not found or not a number");
         }
-
         if (!doc["temperature"].isNull() && doc["temperature"].is<double>()) {
-            float newTemperature = doc["temperature"].as<float>();
-            target.temperature = newTemperature;
+            target.temperature = doc["temperature"].as<float>();
             Serial.print("Updated temperature to: ");
             Serial.println(target.temperature);
-        } else {
-            Serial.println("temperature not found or not a number");
         }
+
+        // Adicionando lógica para lightOnTime e lightOffTime
+        if (doc.containsKey("lightOnTime")) {
+            String lightOnTimeStr = doc["lightOnTime"].as<String>();
+            int lightOnHour = lightOnTimeStr.substring(0, 2).toInt(); // Pega "HH" de "HH:MM"
+            target.lightOnHour = lightOnHour;
+            Serial.print("Updated lightOnHour to: ");
+            Serial.println(target.lightOnHour);
+        }
+        if (doc.containsKey("lightOffTime")) {
+            String lightOffTimeStr = doc["lightOffTime"].as<String>();
+            int lightOffHour = lightOffTimeStr.substring(0, 2).toInt(); // Pega "HH" de "HH:MM"
+            target.lightOffHour = lightOffHour;
+            Serial.print("Updated lightOffHour to: ");
+            Serial.println(target.lightOffHour);
+        }
+
         Serial.println("===================================");
     }
 }
-
 
 void setupMQTT() {
     mqttClient.setServer(appConfig.mqtt.server, appConfig.mqtt.port);

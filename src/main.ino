@@ -10,24 +10,28 @@ LiquidCrystal_I2C LCD(0x27, 16, 2);
 JsonDocument doc;
 
 void readSensors(void * parameter);
+void lightControlTask(void *parameter) {
+    while (true) {
+        lightControl(target.lightOnHour, target.lightOffHour, appConfig.gpioControl.timeControlTestPin);
+        vTaskDelay(60000 / portTICK_PERIOD_MS);
+    }
+}
 
 void setup() {
     Serial.begin(BAUD);
     initializeSensors();
     pinMode(appConfig.gpioControl.humidityControlPin, OUTPUT);
     pinMode(appConfig.gpioControl.timeControlTestPin, OUTPUT);
-
-
     Wire.begin(21, 22);
     LCD.init();
     LCD.backlight();
 
     xTaskCreatePinnedToCore(
-        connectToWiFi, 
-        "WiFiTask", 
-        8192, 
-        NULL, 
-        1, 
+        connectToWiFi,
+        "WiFiTask",
+        8192,
+        NULL,
+        1,
         NULL,
         0
     );
@@ -35,25 +39,36 @@ void setup() {
         vTaskDelay(500 / portTICK_PERIOD_MS);
     }
     initializeNTP();
+
     xTaskCreatePinnedToCore(
-        manageMQTT, 
-        "MQTTTask", 
-        4096, 
-        NULL, 
-        1, 
+        manageMQTT,
+        "MQTTTask",
+        4096,
+        NULL,
+        1,
         NULL,
         0
     );
-
     xTaskCreatePinnedToCore(
-        readSensors, 
-        "SensorTask", 
-        4096, 
-        NULL, 
-        1, 
+        readSensors,
+        "SensorTask",
+        4096,
+        NULL,
+        1,
         NULL,
         1
     );
+
+    xTaskCreatePinnedToCore(
+        lightControlTask,
+        "LightControlTask",
+        4096,
+        NULL,
+        1,
+        NULL,
+        1
+    );
+
     Serial.println(ESP.getFreeHeap());
     Serial.println(esp_get_free_heap_size());
 }

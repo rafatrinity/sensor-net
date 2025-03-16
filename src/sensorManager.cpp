@@ -36,7 +36,7 @@ void initializeSensors()
     dht.begin();
 }
 
-void controlGpioByTime(int horaIni, int horaFim, int gpioPin) {
+void lightControl(int horaIni, int horaFim, int gpioPin) {
     int currentHour = getCurrentHour(); 
 
     
