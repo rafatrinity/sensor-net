@@ -123,17 +123,16 @@ void mqttCallback(char* topic, byte* payload, unsigned int length) {
             Serial.println(target.temperature);
         }
 
-        // Adicionando lógica para lightOnTime e lightOffTime
-        if (doc.containsKey("lightOnTime")) {
+        if (doc["lightOnTime"].is<String>()) {
             String lightOnTimeStr = doc["lightOnTime"].as<String>();
-            int lightOnHour = lightOnTimeStr.substring(0, 2).toInt(); // Pega "HH" de "HH:MM"
+            int lightOnHour = lightOnTimeStr.substring(0, 2).toInt();
             target.lightOnHour = lightOnHour;
             Serial.print("Updated lightOnHour to: ");
             Serial.println(target.lightOnHour);
         }
-        if (doc.containsKey("lightOffTime")) {
+        if (doc["lightOffTime"].is<String>()) {
             String lightOffTimeStr = doc["lightOffTime"].as<String>();
-            int lightOffHour = lightOffTimeStr.substring(0, 2).toInt(); // Pega "HH" de "HH:MM"
+            int lightOffHour = lightOffTimeStr.substring(0, 2).toInt();
             target.lightOffHour = lightOffHour;
             Serial.print("Updated lightOffHour to: ");
             Serial.println(target.lightOffHour);
