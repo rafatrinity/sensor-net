@@ -9,7 +9,8 @@
 LiquidCrystal_I2C LCD(0x27, 16, 2);
 JsonDocument doc;
 
-void readSensors(void * parameter);
+void readSensors(void *parameter);
+void lightControlTask(void *parameter);
 
 void lightControlTask(void *parameter) {
     while (true) {
@@ -27,54 +28,50 @@ void setup() {
     LCD.init();
     LCD.backlight();
 
-    xTaskCreatePinnedToCore(
-        connectToWiFi,
-        "WiFiTask",
-        8192,
-        NULL,
-        1,
-        NULL,
-        0
+    // Criar tasks sem fixar núcleos
+    xTaskCreate(
+        connectToWiFi,       // Função da task
+        "WiFiTask",          // Nome da task
+        8192,                // Tamanho da stack
+        NULL,                // Parâmetro da task
+        1,                   // Prioridade
+        NULL                 // Handle da task (não usado)
     );
     while (WiFi.status() != WL_CONNECTED) {
         vTaskDelay(500 / portTICK_PERIOD_MS);
     }
     initializeNTP();
 
-    xTaskCreatePinnedToCore(
+    xTaskCreate(
         manageMQTT,
         "MQTTTask",
         4096,
         NULL,
         1,
-        NULL,
-        0
+        NULL
     );
-    xTaskCreatePinnedToCore(
+    xTaskCreate(
         readSensors,
         "SensorTask",
         4096,
         NULL,
         1,
-        NULL,
-        1
+        NULL
     );
-
-    xTaskCreatePinnedToCore(
+    xTaskCreate(
         lightControlTask,
         "LightControlTask",
         4096,
         NULL,
         1,
-        NULL,
-        1
+        NULL
     );
 
     Serial.println(ESP.getFreeHeap());
     Serial.println(esp_get_free_heap_size());
 }
 
-void readSensors(void * parameter) {
+void readSensors(void *parameter) {
     const int loopDelay = 2000;
     while (true) {
         float temperature = readTemperature();
@@ -83,10 +80,10 @@ void readSensors(void * parameter) {
         float vpd = calculateVpd(temperature, airHumidity);
         vTaskDelay(loopDelay / portTICK_PERIOD_MS);
 
-        if(isnan(vpd)) continue;
-        
+        if (isnan(vpd)) continue;
+
         ensureMQTTConnection();
-        
+
         doc["temperature"] = temperature;
         doc["airHumidity"] = airHumidity;
         doc["soilHumidity"] = soilHumidity;
