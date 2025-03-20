@@ -12,34 +12,28 @@ JsonDocument doc;
 void readSensors(void *parameter);
 void lightControlTask(void *parameter);
 
-void lightControlTask(void *parameter) {
-    while (true) {
-        lightControl(target.lightOnTime, target.lightOffTime, appConfig.gpioControl.timeControlTestPin);
-        vTaskDelay(10000 / portTICK_PERIOD_MS);
-    }
-}
-
 void setup() {
     Serial.begin(BAUD);
     initializeSensors();
     pinMode(appConfig.gpioControl.humidityControlPin, OUTPUT);
-    pinMode(appConfig.gpioControl.timeControlTestPin, OUTPUT);
-    Wire.begin(21, 22);
+    pinMode(appConfig.gpioControl.lightControlPin, OUTPUT);
+    Wire.begin(W01, W02);
     LCD.init();
     LCD.backlight();
 
-    // Criar tasks sem fixar núcleos
     xTaskCreate(
-        connectToWiFi,       // Função da task
-        "WiFiTask",          // Nome da task
-        8192,                // Tamanho da stack
-        NULL,                // Parâmetro da task
-        1,                   // Prioridade
-        NULL                 // Handle da task (não usado)
+        connectToWiFi,       
+        "WiFiTask",          
+        8192,                
+        NULL,                
+        1,                   
+        NULL                 
     );
+    
     while (WiFi.status() != WL_CONNECTED) {
         vTaskDelay(500 / portTICK_PERIOD_MS);
     }
+
     initializeNTP();
 
     xTaskCreate(
@@ -50,6 +44,7 @@ void setup() {
         1,
         NULL
     );
+
     xTaskCreate(
         readSensors,
         "SensorTask",
@@ -58,6 +53,7 @@ void setup() {
         1,
         NULL
     );
+
     xTaskCreate(
         lightControlTask,
         "LightControlTask",
@@ -117,6 +113,13 @@ void readSensors(void *parameter) {
             lastAirHumidity = airHumidity;
             lastSoilHumidity = soilHumidity;
         }
+    }
+}
+
+void lightControlTask(void *parameter) {
+    while (true) {
+        lightControl(target.lightOnTime, target.lightOffTime, appConfig.gpioControl.lightControlPin);
+        vTaskDelay(2000 / portTICK_PERIOD_MS);
     }
 }
 

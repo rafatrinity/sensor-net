@@ -1,6 +1,5 @@
 #ifndef CONFIG_HPP
 #define CONFIG_HPP
-#define BAUD 115200
 
 #include <LiquidCrystal_I2C.h>
 #include <DHT.h>
@@ -9,72 +8,66 @@
 extern LiquidCrystal_I2C LCD;
 
 
-// ===============================================================
-// WiFi Configuration
-// ===============================================================
+#if defined(ARDUINO_ESP32_DEV)  
+    #define GPIO_HUMIDITY_PIN 2
+    #define GPIO_LIGHT_PIN 5
+    #define DHT_PIN 4
+    #define SOIL_HUMIDITY_PIN 34
+    #define W01 21
+    #define W02 22
+    #define MQTT_ROOM_TOPIC "01"
+    #define MQTT_CLIENT_ID "ESP32Client1"
+#elif defined(ARDUINO_ESP32C3_DEV)  
+    #define GPIO_HUMIDITY_PIN 0   
+    #define GPIO_LIGHT_PIN 4 
+    #define DHT_PIN 10            
+    #define SOIL_HUMIDITY_PIN 2   
+    #define W01 8
+    #define W02 9
+    #define MQTT_ROOM_TOPIC "02"  
+    #define MQTT_CLIENT_ID "ESP32Client2"
+#else
+    #error "Placa não suportada. Defina as configurações para sua placa."
+#endif
+
+
+#define BAUD 115200
+
 struct WiFiConfig {
-    const char* ssid = "Casa";         // Default SSID
-    const char* password = "12345678"; // Default Password
-    // You can add more WiFi related settings here if needed,
-    // like hostname, static IP configuration, etc.
+    const char* ssid = "Casa";
+    const char* password = "12345678";
 };
 
-// ===============================================================
-// MQTT Configuration
-// ===============================================================
 struct MQTTConfig {
-    const char* server = "192.168.1.11"; // Default MQTT Broker IP
-    int port = 1883;                     // Default MQTT Broker Port
-    const char* clientId = "ESP32Client1"; // Default MQTT Client ID
-    const char* roomTopic = "01";         // Default Room Topic (e.g., for base topic "01/sensors")
-
-    // You can add MQTT username/password, keep-alive settings, etc., if needed.
+    const char* server = "192.168.1.11";
+    int port = 1883;
+    const char* clientId = MQTT_CLIENT_ID;
+    const char* roomTopic = MQTT_ROOM_TOPIC;  
 };
 
-// ===============================================================
-// GPIO Control Configuration
-// ===============================================================
 struct GPIOControlConfig {
-    int humidityControlPin = 2;    // Pin for humidity control (SSR) - default pin 2
-    int timeControlTestPin = 5;     // Example pin for time-based control testing - default pin 5
-    // Add more GPIO pin configurations here as needed for different functionalities.
+    int humidityControlPin = GPIO_HUMIDITY_PIN;
+    int lightControlPin = GPIO_LIGHT_PIN;
 };
 
-// ===============================================================
-// Time Configuration (NTP)
-// ===============================================================
 struct TimeConfig {
-    long utcOffsetInSeconds = -10800; // Default UTC Offset for Brasília (GMT-3)
-    // You might add NTP server address configuration here if needed.
+    long utcOffsetInSeconds = -10800;
 };
 
-// ===============================================================
-// Sensor Configuration (If you want to centralize sensor related settings)
-// ===============================================================
 struct SensorConfig {
-    int dhtPin = 4;     // DHT sensor data pin - default pin 4 (might conflict with timeControlTestPin, adjust as needed!)
-    int dhtType = DHT22; // DHT sensor type (DHT22, DHT11, DHT21)
-    int soilHumiditySensorPin = 34; // Analog pin for soil humidity sensor - default pin 34
-
-    // You can add configurations for other sensors here, like I2C addresses, etc.
+    int dhtPin = DHT_PIN;
+    int dhtType = DHT22;
+    int soilHumiditySensorPin = SOIL_HUMIDITY_PIN;
 };
 
-
-// ===============================================================
-// Application Configuration - Master struct to hold all configurations
-// ===============================================================
 struct AppConfig {
-    WiFiConfig wifi;           // WiFi settings
-    MQTTConfig mqtt;           // MQTT settings
-    GPIOControlConfig gpioControl; // GPIO control settings
-    TimeConfig time;           // Time (NTP) settings
-    SensorConfig sensor;         // Sensor settings
+    WiFiConfig wifi;
+    MQTTConfig mqtt;
+    GPIOControlConfig gpioControl;
+    TimeConfig time;
+    SensorConfig sensor;
 };
 
-// ===============================================================
-// Global Configuration Instance (You can choose to use a global,
-// or pass the config object around as needed)
-// ===============================================================
-extern AppConfig appConfig; // Declare the global instance
+extern AppConfig appConfig;
 
 #endif
