@@ -1,0 +1,8 @@
+name: Connection Test
+version: 1
+author: Rafael Trindade
+
+steps:
+  - wait-serial: 'Connecting to WiFi...'
+  - wait-serial: 'Tempo NTP sincronizado com sucesso!'
+  - wait-serial: 'Reconnecting to MQTT...'

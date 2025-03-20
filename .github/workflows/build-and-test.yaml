@@ -32,15 +32,9 @@ jobs:
         uses: wokwi/wokwi-ci-action@v1
         with:
           token: ${{ secrets.WOKWI_CLI_TOKEN }}
-          scenario: 'test/integration/http-client.test.yaml'
+          scenario: 'test/integration/connection.test.yaml'
           timeout: 100000
 
-      - name: Test MQTT Scenario on Wokwi
-        uses: wokwi/wokwi-ci-action@v1
-        with:
-          token: ${{ secrets.WOKWI_CLI_TOKEN }}
-          scenario: 'test/integration/mqtt.test.yaml'
-          timeout: 100000
 
       - name: Check PlatformIO Dependencies
         run: pio lib list
