@@ -1,3 +1,4 @@
+name: MQTT Scenario
 tests:
   - name: Teste de Reconexão MQTT
     steps:

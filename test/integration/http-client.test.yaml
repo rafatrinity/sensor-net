@@ -1,3 +1,5 @@
+version: 1
+name: HTTP Client Scenario
 tests:
   - name: Teste de Conexão WiFi
     steps:
@@ -8,9 +10,8 @@ tests:
       - type: log
         message: "IP:"
       - type: log
-        message: "<Endereço IP esperado>" # Substitua pelo IP simulado esperado
-
-  - name: Teste de Requisição HTTP (se houver implementado no futuro)
+        message: "<Endereço IP esperado>"
+  - name: Teste de Requisição HTTP
     steps:
       - type: log
-        message: "HTTP request successful" # Apenas um exemplo de mensagem
+        message: "HTTP request successful"
