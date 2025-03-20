@@ -1,0 +1,16 @@
+tests:
+  - name: Teste de Conexão WiFi
+    steps:
+      - type: log
+        message: "Connecting to WiFi..."
+      - type: log
+        message: "Failed to connect to WiFi, retrying in 5 seconds..."
+      - type: log
+        message: "IP:"
+      - type: log
+        message: "<Endereço IP esperado>" # Substitua pelo IP simulado esperado
+
+  - name: Teste de Requisição HTTP (se houver implementado no futuro)
+    steps:
+      - type: log
+        message: "HTTP request successful" # Apenas um exemplo de mensagem

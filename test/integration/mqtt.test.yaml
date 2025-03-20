@@ -1,0 +1,34 @@
+tests:
+  - name: Teste de Reconexão MQTT
+    steps:
+      - type: log
+        message: "Reconnecting to MQTT..."
+      - type: log
+        message: "Reconnected"
+      - type: log
+        message: "Sent devices message:"
+      - type: log
+        message: "Failed to send devices message"
+
+  - name: Teste de Callback MQTT
+    steps:
+      - type: log
+        message: "==================================="
+      - type: log
+        message: "Message arrived on topic:"
+      - type: log
+        message: "Raw Message:"
+      - type: log
+        message: "Processing control message..."
+      - type: log
+        message: "Updated airHumidity to:"
+      - type: log
+        message: "Updated vpd to:"
+      - type: log
+        message: "Updated soilHumidity to:"
+      - type: log
+        message: "Updated temperature to:"
+      - type: log
+        message: "Horário de ligar atualizado para"
+      - type: log
+        message: "Horário de desligar atualizado para"
