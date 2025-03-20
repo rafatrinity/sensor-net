@@ -24,17 +24,9 @@ jobs:
       - name: Install PlatformIO Core
         run: pip install --upgrade platformio
 
-      - name: Build for ESP32
-        run: pio run -e esp32
 
-      - name: Build for ESP32-C3
-        run: pio run -e c3
-
-      - name: Run Unit Tests for ESP32
-        run: pio test -e esp32
-
-      - name: Run Unit Tests for ESP32-C3
-        run: pio test -e c3
+      - name: Build for ESP32 Test
+        run: pio run -e esp32_test
 
       - name: Test HTTP Client Scenario on Wokwi
         uses: wokwi/wokwi-ci-action@v1

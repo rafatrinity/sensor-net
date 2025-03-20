@@ -4,11 +4,18 @@
 #include <LiquidCrystal_I2C.h>
 #include <DHT.h>
 
-
 extern LiquidCrystal_I2C LCD;
 
+// Credenciais do WiFi
+#ifdef UNIT_TEST
+    #define WIFI_SSID "Wokwi-GUEST"
+    #define WIFI_PASSWORD ""
+#else
+    #define WIFI_SSID "Casa"
+    #define WIFI_PASSWORD "12345678"
+#endif
 
-#if defined(ARDUINO_ESP32_DEV)  
+#if defined(ARDUINO_ESP32_DEV)
     #define GPIO_HUMIDITY_PIN 2
     #define GPIO_LIGHT_PIN 5
     #define DHT_PIN 4
@@ -17,32 +24,32 @@ extern LiquidCrystal_I2C LCD;
     #define W02 22
     #define MQTT_ROOM_TOPIC "01"
     #define MQTT_CLIENT_ID "ESP32Client1"
-#elif defined(ARDUINO_ESP32C3_DEV)  
-    #define GPIO_HUMIDITY_PIN 0   
-    #define GPIO_LIGHT_PIN 4 
-    #define DHT_PIN 10            
-    #define SOIL_HUMIDITY_PIN 2   
+#elif defined(ARDUINO_ESP32C3_DEV)
+    #define GPIO_HUMIDITY_PIN 0
+    #define GPIO_LIGHT_PIN 4
+    #define DHT_PIN 10
+    #define SOIL_HUMIDITY_PIN 2
     #define W01 8
     #define W02 9
-    #define MQTT_ROOM_TOPIC "02"  
+    #define MQTT_ROOM_TOPIC "02"
     #define MQTT_CLIENT_ID "ESP32Client2"
 #else
     #error "Placa não suportada. Defina as configurações para sua placa."
 #endif
 
-
 #define BAUD 115200
 
 struct WiFiConfig {
-    const char* ssid = "Casa";
-    const char* password = "12345678";
+    // Usa os macros definidos para credenciais
+    const char* ssid = WIFI_SSID;
+    const char* password = WIFI_PASSWORD;
 };
 
 struct MQTTConfig {
     const char* server = "192.168.1.11";
     int port = 1883;
     const char* clientId = MQTT_CLIENT_ID;
-    const char* roomTopic = MQTT_ROOM_TOPIC;  
+    const char* roomTopic = MQTT_ROOM_TOPIC;
 };
 
 struct GPIOControlConfig {
