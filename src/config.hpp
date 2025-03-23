@@ -39,6 +39,8 @@ extern LiquidCrystal_I2C LCD;
 
 #define BAUD 115200
 
+extern SemaphoreHandle_t mqttMutex;
+extern SemaphoreHandle_t lcdMutex;
 struct WiFiConfig {
     // Usa os macros definidos para credenciais
     const char* ssid = WIFI_SSID;

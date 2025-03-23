@@ -8,6 +8,9 @@
 
 LiquidCrystal_I2C LCD(0x27, 16, 2);
 JsonDocument doc;
+SemaphoreHandle_t mqttMutex = xSemaphoreCreateMutex();
+SemaphoreHandle_t lcdMutex = xSemaphoreCreateMutex();
+//TODO SemaphoreHandle_t ntpMutex = xSemaphoreCreateMutex();
 
 void readSensors(void *parameter);
 void lightControlTask(void *parameter);
@@ -24,7 +27,7 @@ void setup() {
     xTaskCreate(
         connectToWiFi,       
         "WiFiTask",          
-        8192,                
+        4096,                
         NULL,                
         1,                   
         NULL                 
@@ -69,6 +72,7 @@ void setup() {
 
 void readSensors(void *parameter) {
     const int loopDelay = 2000;
+    Serial.println("readSensors: Lendo sensores...");
     while (true) {
         float temperature = readTemperature();
         float airHumidity = readHumidity();
@@ -88,19 +92,22 @@ void readSensors(void *parameter) {
         String payload;
         serializeJson(doc, payload);
 
+        xSemaphoreTake(mqttMutex, portMAX_DELAY);
         if (!mqttClient.publish((String(appConfig.mqtt.roomTopic) + "/sensors").c_str(), payload.c_str(), true)) {
             Serial.println("Failed to publish sensor data.");
         }
+        xSemaphoreGive(mqttMutex);
 
         static float lastTemperature = -1;
         static float lastAirHumidity = -1;
         static float lastSoilHumidity = -1;
 
+        xSemaphoreTake(lcdMutex, portMAX_DELAY);
         if (temperature != lastTemperature) {
             LCD.setCursor(0, 0);
             LCD.print("Temp:");
             LCD.print(temperature, 1);
-            LCD.print("C");
+            LCD.print("C    ");
             lastTemperature = temperature;
         }
 
@@ -110,9 +117,11 @@ void readSensors(void *parameter) {
             LCD.print(airHumidity, 1);
             LCD.print(" S:");
             LCD.print(soilHumidity, 1);
+            LCD.print("   ");
             lastAirHumidity = airHumidity;
             lastSoilHumidity = soilHumidity;
         }
+        xSemaphoreGive(lcdMutex);
     }
 }
 

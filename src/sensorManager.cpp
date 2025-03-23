@@ -50,18 +50,11 @@ void lightControl(struct tm lightOn, struct tm lightOff, int gpioPin) {
     int start = lightOn.tm_hour * 60 + lightOn.tm_min;
     int end = lightOff.tm_hour * 60 + lightOff.tm_min;
 
-    Serial.printf("Hora atual: %02d:%02d - Intervalo: %02d:%02d → %02d:%02d\n",
-                  timeinfo.tm_hour, timeinfo.tm_min,
-                  lightOn.tm_hour, lightOn.tm_min,
-                  lightOff.tm_hour, lightOff.tm_min);
-
     if ((start < end && now >= start && now < end) ||
         (start > end && (now >= start || now < end))) {
         digitalWrite(gpioPin, HIGH);
-        Serial.println("Luz ATIVADA");
     } else {
         digitalWrite(gpioPin, LOW);
-        Serial.println("Luz DESATIVADA");
     }
 }
 
