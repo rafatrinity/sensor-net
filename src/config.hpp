@@ -24,7 +24,7 @@ extern LiquidCrystal_I2C LCD;
     #define W02 22
     #define MQTT_ROOM_TOPIC "01"
     #define MQTT_CLIENT_ID "ESP32Client1"
-#elif defined(ARDUINO_ESP32C3_DEV)
+#else
     #define GPIO_HUMIDITY_PIN 0
     #define GPIO_LIGHT_PIN 4
     #define DHT_PIN 10
@@ -33,8 +33,8 @@ extern LiquidCrystal_I2C LCD;
     #define W02 9
     #define MQTT_ROOM_TOPIC "02"
     #define MQTT_CLIENT_ID "ESP32Client2"
-#else
-    #error "Placa não suportada. Defina as configurações para sua placa."
+// #else
+//     #error "Placa não suportada. Defina as configurações para sua placa."
 #endif
 
 #define BAUD 115200

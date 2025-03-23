@@ -7,9 +7,12 @@ WiFiClient espClient;
 PubSubClient mqttClient(espClient);
 AppConfig appConfig;
 
+// Criar o mutex para proteger o acesso ao mqttClient
+SemaphoreHandle_t mqttMutex = xSemaphoreCreateMutex();
+
 const int mqtt_port = 1883;
 TargetValues target = {
-    .airHumidity = 64.0f,
+    .airHumidity = 70.0f,
     .vpd = 1.0f,
     .soilHumidity = 66.0f,
     .temperature = 25.0f
@@ -62,6 +65,7 @@ void connectToWiFi(void * parameter) {
 
 void ensureMQTTConnection() {
     const int loopDelay = 500;
+    xSemaphoreTake(mqttMutex, portMAX_DELAY);  // Tomar o mutex
     while (!mqttClient.connected()) {
         Serial.println("Reconnecting to MQTT...");
         if (mqttClient.connect("ESP32Client1")) {
@@ -69,13 +73,16 @@ void ensureMQTTConnection() {
             if (mqttClient.publish("devices", appConfig.mqtt.roomTopic)) {
                 Serial.print("Sent devices message: ");
                 Serial.println(appConfig.mqtt.roomTopic);
-            } else { Serial.println("Failed to send devices message");}
+            } else {
+                Serial.println("Failed to send devices message");
+            }
         } else {
             Serial.print("Failed with state ");
             Serial.println(mqttClient.state());
             vTaskDelay(loopDelay / portTICK_PERIOD_MS);
         }
     }
+    xSemaphoreGive(mqttMutex);  // Liberar o mutex
 }
 
 void mqttCallback(char* topic, byte* payload, unsigned int length) {
@@ -140,7 +147,9 @@ void setupMQTT() {
     mqttClient.setServer(appConfig.mqtt.server, appConfig.mqtt.port);
     mqttClient.setCallback(mqttCallback);
     ensureMQTTConnection();
+    xSemaphoreTake(mqttMutex, portMAX_DELAY);  // Tomar o mutex
     mqttClient.subscribe((String(appConfig.mqtt.roomTopic) + "/control").c_str());
+    xSemaphoreGive(mqttMutex);  // Liberar o mutex
 }
 
 void manageMQTT(void * parameter) {
@@ -148,8 +157,10 @@ void manageMQTT(void * parameter) {
     const int loopDelay = 500;
     while (true) {
         if (WiFi.status() == WL_CONNECTED) {
+            xSemaphoreTake(mqttMutex, portMAX_DELAY);  // Tomar o mutex
             ensureMQTTConnection();
             mqttClient.loop();
+            xSemaphoreGive(mqttMutex);  // Liberar o mutex
         } else {
             Serial.println("WiFi disconnected, waiting to reconnect...");
         }
@@ -170,6 +181,7 @@ void publishMQTTMessage(const char* topic, float value) {
         lastMessage = message;
     }
 
+    xSemaphoreTake(mqttMutex, portMAX_DELAY);  // Tomar o mutex
     if (mqttClient.publish(topic, message.c_str(), false)) {
         Serial.print(topic);
         Serial.print(": ");
@@ -178,5 +190,6 @@ void publishMQTTMessage(const char* topic, float value) {
         Serial.println(mqttClient.state());
         Serial.println("Failed to publish message.");
     }
+    xSemaphoreGive(mqttMutex);  // Liberar o mutex
     vTaskDelay(2000 / portTICK_PERIOD_MS);
 }
