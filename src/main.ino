@@ -1,6 +1,9 @@
 #include "config.hpp"
-#include "network.hpp"
-#include "sensorManager.hpp"
+#include "network/wifi.hpp"
+#include "network/mqtt.hpp"
+#include "sensors/sensorManager.hpp"
+#include "sensors/targets.hpp"
+
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 #include <ArduinoJson.h>
@@ -14,13 +17,14 @@ SemaphoreHandle_t lcdMutex = xSemaphoreCreateMutex();
 
 void readSensors(void *parameter);
 void lightControlTask(void *parameter);
+AppConfig appConfig;
 
 void setup() {
     Serial.begin(BAUD);
     initializeSensors();
     pinMode(appConfig.gpioControl.humidityControlPin, OUTPUT);
     pinMode(appConfig.gpioControl.lightControlPin, OUTPUT);
-    Wire.begin(W01, W02);
+    Wire.begin(SDA, SCL);
     LCD.init();
     LCD.backlight();
 

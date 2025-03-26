@@ -20,8 +20,8 @@ extern LiquidCrystal_I2C LCD;
     #define GPIO_LIGHT_PIN 5
     #define DHT_PIN 4
     #define SOIL_HUMIDITY_PIN 34
-    #define W01 21
-    #define W02 22
+    #define SDA 33
+    #define SCL 32
     #define MQTT_ROOM_TOPIC "01"
     #define MQTT_CLIENT_ID "ESP32Client1"
 #else
@@ -29,8 +29,8 @@ extern LiquidCrystal_I2C LCD;
     #define GPIO_LIGHT_PIN 4
     #define DHT_PIN 10
     #define SOIL_HUMIDITY_PIN 2
-    #define W01 8
-    #define W02 9
+    #define SDA 8
+    #define SCL 9
     #define MQTT_ROOM_TOPIC "02"
     #define MQTT_CLIENT_ID "ESP32Client2"
 // #else
