@@ -38,5 +38,6 @@ void connectToWiFi(void * parameter) {
           vTaskDelay(5000 / portTICK_PERIOD_MS);
       }
   }
+  
   vTaskDelete(NULL);
 }
