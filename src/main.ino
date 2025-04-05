@@ -2,138 +2,118 @@
 #include "network/wifi.hpp"
 #include "network/mqtt.hpp"
 #include "sensors/sensorManager.hpp"
+#include "actuatorManager.hpp"
 #include "sensors/targets.hpp"
+#include "utils/timeService.hpp"
 
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 #include <ArduinoJson.h>
-#include <NTPClient.h>
 
-LiquidCrystal_I2C LCD(0x27, 16, 2);
-JsonDocument doc;
+// --- Variáveis Globais (Candidatas à Refatoração/Injeção) ---
+LiquidCrystal_I2C LCD(0x27, 16, 2); // Endereço I2C pode variar, verificar com I2C Scanner
+JsonDocument doc;                   // Usado na tarefa readSensors (globalmente)
 SemaphoreHandle_t mqttMutex = xSemaphoreCreateMutex();
 SemaphoreHandle_t lcdMutex = xSemaphoreCreateMutex();
-//TODO SemaphoreHandle_t ntpMutex = xSemaphoreCreateMutex();
+//TODO: SemaphoreHandle_t targetMutex = xSemaphoreCreateMutex(); // Para proteger acesso à struct target
+//TODO: SemaphoreHandle_t ntpMutex = xSemaphoreCreateMutex(); // Se TimeService precisar de proteção
 
-void readSensors(void *parameter);
-void lightControlTask(void *parameter);
-AppConfig appConfig;
+AppConfig appConfig; // Configuração global
+// TargetValues target; // A instância 'target' é definida em mqttHandler.cpp (global)
+// -----------------------------------------------------------
 
 void setup() {
     Serial.begin(BAUD);
+    Serial.println("\n--- Booting Application ---");
+
     initializeSensors();
-    pinMode(appConfig.gpioControl.humidityControlPin, OUTPUT);
-    pinMode(appConfig.gpioControl.lightControlPin, OUTPUT);
+
+    initializeActuators(appConfig.gpioControl);
+
     Wire.begin(SDA, SCL);
     LCD.init();
     LCD.backlight();
+    LCD.clear();
+    LCD.print("Booting...");
 
+    Serial.println("Starting WiFi Task...");
+    // Cria Tarefa para Conexão WiFi
     xTaskCreate(
-        connectToWiFi,       
-        "WiFiTask",          
-        4096,                
-        NULL,                
-        1,                   
-        NULL                 
+        connectToWiFi,       // Função da tarefa (definida em wifi.cpp)
+        "WiFiTask",          // Nome da tarefa
+        4096,                // Tamanho da pilha
+        NULL,                // Parâmetros da tarefa
+        1,                   // Prioridade da tarefa
+        NULL                 // Handle da tarefa (opcional)
     );
-    
+
+    // Aguarda Conexão WiFi (Bloqueante - não ideal para inicializações paralelas)
+    Serial.print("Waiting for WiFi connection...");
     while (WiFi.status() != WL_CONNECTED) {
-        vTaskDelay(500 / portTICK_PERIOD_MS);
+        Serial.print(".");
+        vTaskDelay(pdMS_TO_TICKS(500)); // Pausa não bloqueante (permite outras tarefas rodarem se já existissem)
     }
+    Serial.println("\nWiFi Connected!");
+    LCD.setCursor(0,1);
+    LCD.print("WiFi OK");
+    delay(500); // Pequena pausa para ver a mensagem
 
-    initializeNTP();
+    Serial.println("Initializing NTP...");
+    LCD.setCursor(0,0);
+    LCD.print("Syncing Time...");
+    initializeTimeService(appConfig.time);
+    LCD.setCursor(0,1);
+    LCD.print("NTP OK    ");
+    delay(500);
 
+
+    Serial.println("Starting MQTT Task...");
+    LCD.clear();
+    LCD.print("Starting MQTT...");
+    // Cria Tarefa para Gerenciamento MQTT (depende de WiFi)
     xTaskCreate(
-        manageMQTT,
+        manageMQTT,         // Função da tarefa (definida em mqtt.cpp)
         "MQTTTask",
         4096,
         NULL,
-        1,
+        2,                  // Prioridade ligeiramente maior pode ser útil para manter conexão
         NULL
     );
 
+    Serial.println("Starting Sensor Reading Task...");
+    LCD.setCursor(0,1);
+    LCD.print("Sensors Task...");
+    // Cria Tarefa para Leitura de Sensores
     xTaskCreate(
-        readSensors,
+        readSensors,        // Função da tarefa (definida em sensorManager.cpp)
         "SensorTask",
-        4096,
+        4096,               // Pode precisar de mais pilha se fizer muita coisa com JSON/String
         NULL,
-        1,
+        1,                  // Prioridade normal
         NULL
     );
 
+    Serial.println("Starting Light Control Task...");
+    LCD.setCursor(0,0);
+    LCD.print("Control Task...");
+     // Cria Tarefa para Controle de Luz (depende de NTP)
     xTaskCreate(
-        lightControlTask,
+        lightControlTask,   // Função da tarefa (definida em actuatorManager.cpp)
         "LightControlTask",
-        4096,
+        2048,               // Pilha menor pode ser suficiente para esta tarefa simples
         NULL,
-        1,
+        1,                  // Prioridade normal
         NULL
     );
+    delay(500);
+    LCD.clear();
 
-    Serial.println(ESP.getFreeHeap());
-    Serial.println(esp_get_free_heap_size());
+    Serial.println("--- Setup Complete ---");
+    Serial.print("Free Heap: "); Serial.println(ESP.getFreeHeap());
 }
 
-void readSensors(void *parameter) {
-    const int loopDelay = 2000;
-    Serial.println("readSensors: Lendo sensores...");
-    while (true) {
-        float temperature = readTemperature();
-        float airHumidity = readHumidity();
-        float soilHumidity = readSoilHumidity();
-        float vpd = calculateVpd(temperature, airHumidity);
-        vTaskDelay(loopDelay / portTICK_PERIOD_MS);
-
-        if (isnan(vpd)) continue;
-
-        ensureMQTTConnection();
-
-        doc["temperature"] = temperature;
-        doc["airHumidity"] = airHumidity;
-        doc["soilHumidity"] = soilHumidity;
-        doc["vpd"] = vpd;
-
-        String payload;
-        serializeJson(doc, payload);
-
-        xSemaphoreTake(mqttMutex, portMAX_DELAY);
-        if (!mqttClient.publish((String(appConfig.mqtt.roomTopic) + "/sensors").c_str(), payload.c_str(), true)) {
-            Serial.println("Failed to publish sensor data.");
-        }
-        xSemaphoreGive(mqttMutex);
-
-        static float lastTemperature = -1;
-        static float lastAirHumidity = -1;
-        static float lastSoilHumidity = -1;
-
-        xSemaphoreTake(lcdMutex, portMAX_DELAY);
-        if (temperature != lastTemperature) {
-            LCD.setCursor(0, 0);
-            LCD.print("Temp:");
-            LCD.print(temperature, 1);
-            LCD.print("C    ");
-            lastTemperature = temperature;
-        }
-
-        if (airHumidity != lastAirHumidity || soilHumidity != lastSoilHumidity) {
-            LCD.setCursor(0, 1);
-            LCD.print("A:");
-            LCD.print(airHumidity, 1);
-            LCD.print(" S:");
-            LCD.print(soilHumidity, 1);
-            LCD.print("   ");
-            lastAirHumidity = airHumidity;
-            lastSoilHumidity = soilHumidity;
-        }
-        xSemaphoreGive(lcdMutex);
-    }
+void loop() {
+    // O loop principal fica vazio, pois tudo é tratado pelas tarefas FreeRTOS.
+    vTaskDelay(pdMS_TO_TICKS(1000)); // Pequeno delay para evitar que o loop rode muito rápido (embora não faça nada)
+                                     // E permite que a tarefa IDLE (prioridade 0) rode para limpar recursos.
 }
-
-void lightControlTask(void *parameter) {
-    while (true) {
-        lightControl(target.lightOnTime, target.lightOffTime, appConfig.gpioControl.lightControlPin);
-        vTaskDelay(2000 / portTICK_PERIOD_MS);
-    }
-}
-
-void loop() {}
