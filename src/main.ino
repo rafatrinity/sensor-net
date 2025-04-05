@@ -1,112 +1,115 @@
-#include "config.hpp"
-#include "network/wifi.hpp"
-#include "network/mqtt.hpp"
-#include "sensors/sensorManager.hpp"
-#include "actuatorManager.hpp"
-#include "sensors/targets.hpp"
-#include "utils/timeService.hpp"
+#include "config.hpp"          // Configurações gerais e de placa
+#include "network/wifi.hpp"    // Para connectToWiFi task
+#include "network/mqtt.hpp"    // Para manageMQTT task
+#include "sensors/sensorManager.hpp" // Para initializeSensors e readSensors task
+#include "actuatorManager.hpp" // Para initializeActuators e lightControlTask task
+#include "sensors/targets.hpp" // Para a struct TargetValues (ainda global)
+#include "utils/timeService.hpp"   // Para initializeTimeService
+#include "ui/displayManager.hpp" // Para todas as interações com o display
 
-#include <Wire.h>
-#include <LiquidCrystal_I2C.h>
-#include <ArduinoJson.h>
+#include <Wire.h>          // Necessário para I2C
+#include <ArduinoJson.h>   // Para o JsonDocument global 'doc'
 
-// --- Variáveis Globais (Candidatas à Refatoração/Injeção) ---
-LiquidCrystal_I2C LCD(0x27, 16, 2); // Endereço I2C pode variar, verificar com I2C Scanner
-JsonDocument doc;                   // Usado na tarefa readSensors (globalmente)
-SemaphoreHandle_t mqttMutex = xSemaphoreCreateMutex();
-SemaphoreHandle_t lcdMutex = xSemaphoreCreateMutex();
-//TODO: SemaphoreHandle_t targetMutex = xSemaphoreCreateMutex(); // Para proteger acesso à struct target
-//TODO: SemaphoreHandle_t ntpMutex = xSemaphoreCreateMutex(); // Se TimeService precisar de proteção
+// --- Variáveis Globais Remanescentes ---
+JsonDocument doc; // Usado na tarefa readSensors (ainda global)
+SemaphoreHandle_t mqttMutex = xSemaphoreCreateMutex(); // OK, será gerenciado pelo MqttManager no futuro
+// LiquidCrystal_I2C LCD(0x27, 16, 2); // REMOVIDO - Agora dentro do DisplayManager
+// SemaphoreHandle_t lcdMutex = xSemaphoreCreateMutex(); // REMOVIDO - Agora dentro do DisplayManager
 
-AppConfig appConfig; // Configuração global
-// TargetValues target; // A instância 'target' é definida em mqttHandler.cpp (global)
+AppConfig appConfig; // Configuração global (ainda precisa ser injetada)
+// TargetValues target; // Definido em mqttHandler.cpp (ainda global)
 // -----------------------------------------------------------
 
 void setup() {
     Serial.begin(BAUD);
     Serial.println("\n--- Booting Application ---");
 
+    // 1. Inicializa módulos independentes
     initializeSensors();
+    initializeActuators(appConfig.gpioControl); // Passa a parte relevante da config
 
-    initializeActuators(appConfig.gpioControl);
+    // 2. Inicializa comunicação I2C e o Display Manager
+    Wire.begin(SDA, SCL); // Usa pinos definidos em config.hpp -> board_xxx.hpp
+    if (!displayManagerInit(0x27, 16, 2)) { // <--- Inicializa Display Manager
+        Serial.println("FATAL ERROR: Display Manager Initialization Failed!");
+        // O que fazer aqui? Parar? Reiniciar? Por enquanto, continua.
+        // Pode ser útil ter um LED de erro piscando.
+    }
+    displayManagerShowBooting(); // <--- Usa Display Manager
 
-    Wire.begin(SDA, SCL);
-    LCD.init();
-    LCD.backlight();
-    LCD.clear();
-    LCD.print("Booting...");
-
+    // 3. Inicia a Tarefa de Conexão WiFi
     Serial.println("Starting WiFi Task...");
-    // Cria Tarefa para Conexão WiFi
+    // Mensagem no display será mostrada pela própria tarefa WiFi agora
     xTaskCreate(
-        connectToWiFi,       // Função da tarefa (definida em wifi.cpp)
-        "WiFiTask",          // Nome da tarefa
-        4096,                // Tamanho da pilha
-        NULL,                // Parâmetros da tarefa
-        1,                   // Prioridade da tarefa
-        NULL                 // Handle da tarefa (opcional)
+        connectToWiFi,      // Função da tarefa (definida em wifi.cpp)
+        "WiFiTask",         // Nome da tarefa
+        4096,               // Tamanho da pilha
+        NULL,               // Parâmetros da tarefa
+        1,                  // Prioridade da tarefa
+        NULL                // Handle da tarefa (opcional)
     );
 
-    // Aguarda Conexão WiFi (Bloqueante - não ideal para inicializações paralelas)
+    // 4. Aguarda Conexão WiFi (Ainda bloqueante, mas necessário para NTP/MQTT)
     Serial.print("Waiting for WiFi connection...");
+    // A tarefa WiFi deve atualizar o display com o status/spinner
     while (WiFi.status() != WL_CONNECTED) {
-        Serial.print(".");
-        vTaskDelay(pdMS_TO_TICKS(500)); // Pausa não bloqueante (permite outras tarefas rodarem se já existissem)
+        // O spinner é atualizado dentro da tarefa connectToWiFi via displayManagerUpdateSpinner()
+        vTaskDelay(pdMS_TO_TICKS(500)); // Pausa não bloqueante
     }
     Serial.println("\nWiFi Connected!");
-    LCD.setCursor(0,1);
-    LCD.print("WiFi OK");
-    delay(500); // Pequena pausa para ver a mensagem
+    // A tarefa connectToWiFi já deve ter mostrado o IP no display
 
-    Serial.println("Initializing NTP...");
-    LCD.setCursor(0,0);
-    LCD.print("Syncing Time...");
-    initializeTimeService(appConfig.time);
-    LCD.setCursor(0,1);
-    LCD.print("NTP OK    ");
-    delay(500);
+    // 5. Inicializa o Serviço de Tempo (depende de WiFi)
+    Serial.println("Initializing Time Service...");
+    displayManagerShowNtpSyncing(); // <--- Usa Display Manager
+    if (!initializeTimeService(appConfig.time)) {
+        Serial.println("ERROR: Failed to initialize Time Service!");
+        displayManagerShowError("NTP Fail"); // <--- Usa Display Manager
+    } else {
+        displayManagerShowNtpSynced(); // <--- Usa Display Manager
+        // Pequena pausa opcional para ver a mensagem NTP OK
+        // vTaskDelay(pdMS_TO_TICKS(1000));
+    }
 
-
+    // 6. Inicia Tarefa MQTT (depende de WiFi)
     Serial.println("Starting MQTT Task...");
-    LCD.clear();
-    LCD.print("Starting MQTT...");
-    // Cria Tarefa para Gerenciamento MQTT (depende de WiFi)
+    displayManagerShowMqttConnecting(); // <--- Usa Display Manager (a tarefa pode atualizar para conectado)
     xTaskCreate(
         manageMQTT,         // Função da tarefa (definida em mqtt.cpp)
         "MQTTTask",
         4096,
         NULL,
-        2,                  // Prioridade ligeiramente maior pode ser útil para manter conexão
+        2,                  // Prioridade
         NULL
     );
 
+    // 7. Inicia Tarefa de Leitura de Sensores
     Serial.println("Starting Sensor Reading Task...");
-    LCD.setCursor(0,1);
-    LCD.print("Sensors Task...");
-    // Cria Tarefa para Leitura de Sensores
+    // A tarefa readSensors agora atualiza o display com os dados
     xTaskCreate(
         readSensors,        // Função da tarefa (definida em sensorManager.cpp)
         "SensorTask",
-        4096,               // Pode precisar de mais pilha se fizer muita coisa com JSON/String
+        4096,
         NULL,
-        1,                  // Prioridade normal
+        1,                  // Prioridade
         NULL
     );
 
+    // 8. Inicia Tarefa de Controle de Atuadores (Luz)
     Serial.println("Starting Light Control Task...");
-    LCD.setCursor(0,0);
-    LCD.print("Control Task...");
-     // Cria Tarefa para Controle de Luz (depende de NTP)
+    // Nenhuma mensagem específica no display para esta tarefa por enquanto
     xTaskCreate(
         lightControlTask,   // Função da tarefa (definida em actuatorManager.cpp)
         "LightControlTask",
-        2048,               // Pilha menor pode ser suficiente para esta tarefa simples
+        2048,
         NULL,
-        1,                  // Prioridade normal
+        1,                  // Prioridade
         NULL
     );
-    delay(500);
-    LCD.clear();
+
+    // Pequena pausa antes de limpar a tela e deixar as tarefas rodarem
+    vTaskDelay(pdMS_TO_TICKS(500));
+    // displayManagerClear(); // Opcional: Limpar a tela após o setup ou deixar a SensorTask assumir
 
     Serial.println("--- Setup Complete ---");
     Serial.print("Free Heap: "); Serial.println(ESP.getFreeHeap());
@@ -114,6 +117,5 @@ void setup() {
 
 void loop() {
     // O loop principal fica vazio, pois tudo é tratado pelas tarefas FreeRTOS.
-    vTaskDelay(pdMS_TO_TICKS(1000)); // Pequeno delay para evitar que o loop rode muito rápido (embora não faça nada)
-                                     // E permite que a tarefa IDLE (prioridade 0) rode para limpar recursos.
+    vTaskDelay(pdMS_TO_TICKS(1000));
 }
