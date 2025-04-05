@@ -49,30 +49,24 @@ void ensureMQTTConnection() {
 }
 
 void publishMQTTMessage(const char* topic, float value) {
-  static String lastMessage = "";
-  String message = String(value, 2);
+    static String lastMessage = "";
+    String message = String(value, 2); // Mantém a lógica de converter float para string
 
-  if (lastMessage != message) {
-      xSemaphoreTake(lcdMutex, portMAX_DELAY);
-      LCD.setCursor(0, 0);
-      LCD.print(topic);
-      LCD.setCursor(0, 1);
-      LCD.print(message);
-      xSemaphoreGive(lcdMutex);
-      lastMessage = message;
-  }
+    // --- INÍCIO DO BLOCO REMOVIDO ---
+    // A lógica de evitar mensagens repetidas no display foi removida daqui
+    // pois esta função NÃO deve mais interagir com o display.
 
-  xSemaphoreTake(mqttMutex, portMAX_DELAY);
-  if (mqttClient.publish(topic, message.c_str(), false)) {
-      Serial.print(topic);
-      Serial.print(": ");
-      Serial.println(value);
-  } else {
-      Serial.println(mqttClient.state());
-      Serial.println("Failed to publish message.");
-  }
-  xSemaphoreGive(mqttMutex);
-  vTaskDelay(2000 / portTICK_PERIOD_MS);
+    // Apenas publica a mensagem MQTT
+    xSemaphoreTake(mqttMutex, portMAX_DELAY); // Usa o mutex CORRETO (mqttMutex)
+    if (mqttClient.publish(topic, message.c_str(), false)) { // Publica a string 'message'
+        Serial.print("Published MQTT ["); Serial.print(topic); Serial.print("]: ");
+        Serial.println(message); // Log da mensagem publicada
+    } else {
+        Serial.print("MQTT Publish Failed! State: "); Serial.println(mqttClient.state());
+        Serial.print("  Topic: "); Serial.println(topic);
+        Serial.print("  Message: "); Serial.println(message);
+    }
+    xSemaphoreGive(mqttMutex); // Libera o mutex CORRETO
 }
 
 void manageMQTT(void *parameter){
