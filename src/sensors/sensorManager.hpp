@@ -1,23 +1,17 @@
 #ifndef SENSOR_MANAGER_HPP
 #define SENSOR_MANAGER_HPP
 
-#include <DHT.h> // Necessário para o tipo DHT
+#include "config.hpp"
 
-// --- Dependência Global (Idealmente injetada no futuro) ---
-/**
- * @brief Instância global externa do objeto sensor DHT.
- * @warning Esta é uma dependência global, considere usar injeção de dependência.
- */
-extern DHT dht;
 // ---------------------------------------------------------
 
 // --- Funções do Módulo SensorManager ---
 
 /**
  * @brief Inicializa os sensores gerenciados por este módulo.
- * Atualmente, inicializa apenas o sensor DHT.
+ * @param config Referência constante à configuração dos sensores.
  */
-void initializeSensors();
+void initializeSensors(const SensorConfig& config);
 
 /**
  * @brief Lê a temperatura do sensor DHT.
@@ -41,7 +35,7 @@ float readHumidity();
  *
  * @return float A umidade do solo calculada em porcentagem (%), ou 0.0 se nenhuma leitura válida for obtida.
  */
-float readSoilHumidity();
+float readSoilHumidity(int soilPin);
 
 /**
  * @brief Calcula o Déficit de Pressão de Vapor (VPD) com base na temperatura e umidade.
