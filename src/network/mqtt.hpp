@@ -1,14 +1,16 @@
+// network/mqtt.hpp
 #ifndef MQTT_HPP
 #define MQTT_HPP
 
 #include <PubSubClient.h>
 #include <WiFi.h>
+#include "config.hpp"
 
-extern PubSubClient mqttClient;
+extern PubSubClient mqttClient; // Ainda global por enquanto
 
-void setupMQTT();
-void ensureMQTTConnection();
-void manageMQTT(void *parameter); 
+void setupMQTT(const MQTTConfig& config);
+void ensureMQTTConnection(const MQTTConfig& config);
+void manageMQTT(void *parameter);
 void publishMQTTMessage(const char* topic, float value);
 
 #endif
