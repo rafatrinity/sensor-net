@@ -10,12 +10,10 @@
 
 // ==========================================================================
 // !!! ATENÇÃO: Dependência de Globais !!!
-// As funções abaixo ainda dependem das variáveis globais 'appConfig' e 'target'.
-// O ideal é refatorar para usar Injeção de Dependência, passando essas
-// informações para as funções ou para uma classe ActuatorManager.
+// A tarefa ainda depende da global 'target'. Isso precisa ser refatorado.
+// A dependência de 'appConfig' foi removida da tarefa.
 // ==========================================================================
-extern AppConfig appConfig;
-extern TargetValues target;
+extern TargetValues target; // TODO <<< AINDA GLOBAL - Refatorar!
 
 // Implementação da inicialização
 void initializeActuators(const GPIOControlConfig& config) {
@@ -51,11 +49,9 @@ void checkAndControlLight(const struct tm& lightOn, const struct tm& lightOff, i
         shouldBeOn = false;
     } else if (startMinutes < endMinutes) {
         // Caso normal (ex: ligar 08:00, desligar 18:00)
-        // Está ligado se a hora atual está entre o início e o fim (exclusive o fim)
         shouldBeOn = (nowMinutes >= startMinutes && nowMinutes < endMinutes);
     } else { // startMinutes > endMinutes
         // Caso noturno (ex: ligar 20:00, desligar 06:00)
-        // Está ligado se a hora atual é maior/igual ao início OU menor que o fim
         shouldBeOn = (nowMinutes >= startMinutes || nowMinutes < endMinutes);
     }
 
@@ -73,15 +69,17 @@ void checkAndControlLight(const struct tm& lightOn, const struct tm& lightOff, i
 
 // Implementação da tarefa FreeRTOS
 void lightControlTask(void *parameter) {
-    // Define a frequência de verificação (ex: a cada 5 segundos)
-    const TickType_t checkInterval = pdMS_TO_TICKS(5000);
-    Serial.println("Light Control Task started.");
+  const GPIOControlConfig* gpioConfig = static_cast<const GPIOControlConfig*>(parameter); // Obtém config do parâmetro
+  if (gpioConfig == nullptr) { 
+      Serial.println("ActuatorManager: Configuração de GPIO inválida!");
+      vTaskDelete(NULL);
+   }
 
-    while (true) {
-        // Chama a função de lógica de controle, buscando os dados das globais (temporário)
-        checkAndControlLight(target.lightOnTime, target.lightOffTime, appConfig.gpioControl.lightControlPin);
-
-        // Aguarda o próximo ciclo de verificação
-        vTaskDelay(checkInterval);
-    }
+  const TickType_t checkInterval = pdMS_TO_TICKS(5000);
+  Serial.println("Light Control Task started.");
+  
+  while (true) {
+      checkAndControlLight(target.lightOnTime, target.lightOffTime, gpioConfig->lightControlPin);
+      vTaskDelay(checkInterval);
+  }
 }
