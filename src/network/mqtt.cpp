@@ -1,84 +1,131 @@
-//mqtt.cpp
+// network/mqtt.cpp
 #include "mqtt.hpp"
-#include "config.hpp"        
-#include "mqttHandler.hpp"  
-#include "wifi.hpp"         
+#include "config.hpp"
+#include "mqttHandler.hpp"
+#include "wifi.hpp" // Desnecessário aqui?
 
 #include <Arduino.h>
-#include <LiquidCrystal_I2C.h>
 #include <WiFi.h>
 #include <PubSubClient.h>
 
 WiFiClient espClient;
-extern LiquidCrystal_I2C LCD;
-PubSubClient mqttClient(espClient);
+PubSubClient mqttClient(espClient); // Ainda global
 
-void setupMQTT() {
-  mqttClient.setServer(appConfig.mqtt.server, appConfig.mqtt.port);
+// Variável estática para guardar o roomTopic para o callback
+String staticRoomTopic = "";
+
+void setupMQTT(const MQTTConfig& config) { // <<< RECEBE CONFIG
+  mqttClient.setServer(config.server, config.port); // <<< USA CONFIG
   mqttClient.setCallback(mqttCallback);
-  ensureMQTTConnection();
+
+  // Guarda o room topic para o callback poder usá-lo (workaround)
+  staticRoomTopic = String(config.roomTopic); // <<< GUARDA TOPIC
+
+  // Garante a conexão inicial (pode ser feito dentro da tarefa também)
+  ensureMQTTConnection(config);
+
+  // Inscreve no tópico de controle
   xSemaphoreTake(mqttMutex, portMAX_DELAY);
-  if(mqttClient.subscribe((String(appConfig.mqtt.roomTopic) + "/control").c_str())){
-      Serial.println("Subscribed to control topic");
+  String controlTopic = staticRoomTopic + "/control"; // Usa a variável estática
+  if(mqttClient.subscribe(controlTopic.c_str())){
+      Serial.print("Subscribed to control topic: ");
+      Serial.println(controlTopic);
   } else {
-      Serial.println("Failed to subscribe to control topic");
+      Serial.print("Failed to subscribe to control topic: ");
+      Serial.println(controlTopic);
   }
   xSemaphoreGive(mqttMutex);
 }
 
-void ensureMQTTConnection() {
+void ensureMQTTConnection(const MQTTConfig& config) { // <<< RECEBE CONFIG
   const int loopDelay = 500;
   while (!mqttClient.connected()) {
+      // Idealmente, esta função não deveria ser chamada por readSensors.
+      // A tarefa manageMQTT deve ser a única responsável por manter a conexão.
+      // Vamos assumir que manageMQTT chama isso.
       xSemaphoreTake(mqttMutex, portMAX_DELAY);
       Serial.println("Reconnecting to MQTT...");
-      if (mqttClient.connect("ESP32Client1")) {
+      // Usa o clientId da configuração
+      if (mqttClient.connect(config.clientId)) { // <<< USA CONFIG
           Serial.println("Reconnected");
-          if (mqttClient.publish("devices", appConfig.mqtt.roomTopic)) {
+          // Publica a mensagem 'devices' usando o roomTopic da configuração
+          if (mqttClient.publish("devices", config.roomTopic)) { // <<< USA CONFIG
               Serial.print("Sent devices message: ");
-              Serial.println(appConfig.mqtt.roomTopic);
+              Serial.println(config.roomTopic);
           } else {
               Serial.println("Failed to send devices message");
           }
+          // Reinscreve no tópico de controle após reconectar
+          String controlTopic = String(config.roomTopic) + "/control";
+          if(mqttClient.subscribe(controlTopic.c_str())){
+             Serial.print("Re-subscribed to: "); Serial.println(controlTopic);
+          } else {
+             Serial.print("Failed re-subscribe to: "); Serial.println(controlTopic);
+          }
+
       } else {
           Serial.print("Failed with state ");
           Serial.println(mqttClient.state());
+          // Libera o mutex antes de esperar para evitar deadlock se outra tarefa precisar dele
+          xSemaphoreGive(mqttMutex);
           vTaskDelay(loopDelay / portTICK_PERIOD_MS);
+          // Retoma o mutex na próxima iteração do while
+          continue; // Pula o xSemaphoreGive no final do loop normal
       }
       xSemaphoreGive(mqttMutex);
   }
 }
 
+// A função publishMQTTMessage foi corrigida anteriormente para remover acesso ao LCD.
+// Não precisa da config diretamente, mas seu propósito geral deve ser revisado.
 void publishMQTTMessage(const char* topic, float value) {
     static String lastMessage = "";
-    String message = String(value, 2); // Mantém a lógica de converter float para string
+    String message = String(value, 2);
 
-    // --- INÍCIO DO BLOCO REMOVIDO ---
-    // A lógica de evitar mensagens repetidas no display foi removida daqui
-    // pois esta função NÃO deve mais interagir com o display.
-
-    // Apenas publica a mensagem MQTT
-    xSemaphoreTake(mqttMutex, portMAX_DELAY); // Usa o mutex CORRETO (mqttMutex)
-    if (mqttClient.publish(topic, message.c_str(), false)) { // Publica a string 'message'
+    xSemaphoreTake(mqttMutex, portMAX_DELAY);
+    if (mqttClient.publish(topic, message.c_str(), false)) {
         Serial.print("Published MQTT ["); Serial.print(topic); Serial.print("]: ");
-        Serial.println(message); // Log da mensagem publicada
+        Serial.println(message);
     } else {
         Serial.print("MQTT Publish Failed! State: "); Serial.println(mqttClient.state());
         Serial.print("  Topic: "); Serial.println(topic);
         Serial.print("  Message: "); Serial.println(message);
     }
-    xSemaphoreGive(mqttMutex); // Libera o mutex CORRETO
+    xSemaphoreGive(mqttMutex);
+    vTaskDelay(2000 / portTICK_PERIOD_MS); // Considere remover/ajustar
 }
 
+
 void manageMQTT(void *parameter){
-  setupMQTT();
-    const int loopDelay = 500;
-    while (true) {
-        if (WiFi.status() == WL_CONNECTED) {
-            ensureMQTTConnection();
-            mqttClient.loop();
-        } else {
-            Serial.println("WiFi disconnected, waiting to reconnect...");
-        }
-        vTaskDelay(loopDelay / portTICK_PERIOD_MS);
+  // Faz o cast do parâmetro para o tipo esperado
+  const MQTTConfig* mqttConfig = static_cast<const MQTTConfig*>(parameter);
+   if (mqttConfig == nullptr) {
+        Serial.println("FATAL ERROR: MQTTTask received NULL config!");
+        vTaskDelete(NULL); // Aborta a tarefa
+        return;
     }
+
+  // Chama setupMQTT passando a configuração
+  setupMQTT(*mqttConfig); // <<< PASSA CONFIG
+
+  const int loopDelay = 500;
+  while (true) {
+      if (WiFi.status() == WL_CONNECTED) {
+          // Garante a conexão e processa mensagens MQTT
+          ensureMQTTConnection(*mqttConfig); // <<< PASSA CONFIG
+          // O loop precisa do mutex para ser seguro contra publicações simultâneas
+          if (xSemaphoreTake(mqttMutex, pdMS_TO_TICKS(50)) == pdTRUE) {
+             if(mqttClient.connected()) { // Verifica de novo após pegar o mutex
+                 mqttClient.loop();
+             }
+             xSemaphoreGive(mqttMutex);
+          } else {
+              Serial.println("MQTTTask: Failed acquire mutex for loop.");
+          }
+      } else {
+          Serial.println("WiFi disconnected, MQTT waiting...");
+          // Não tenta reconectar MQTT se WiFi estiver caído
+      }
+      vTaskDelay(loopDelay / portTICK_PERIOD_MS);
+  }
 }
