@@ -75,8 +75,4 @@ struct AppConfig {
     SensorConfig sensor;
     // const char* board = BOARD_NAME; // Pode adicionar se precisar
 };
-
-// Instância global da configuração (Ainda como extern - alvo de refatoração)
-extern AppConfig appConfig; // OK por enquanto, será instanciada em main e injetada
-
 #endif // CONFIG_HPP
