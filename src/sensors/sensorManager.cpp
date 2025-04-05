@@ -1,3 +1,4 @@
+// sensorManager.cpp
 #include "sensorManager.hpp"
 #include "targets.hpp" // Usado em readHumidity (temporariamente) e na tarefa readSensors (global)
 #include "config.hpp"  // Usado para obter pinos e configurações (global)
@@ -13,19 +14,15 @@
 // Estes deveriam ser movidos quando a tarefa for refatorada
 #include <ArduinoJson.h>       // Para construir o payload na tarefa readSensors
 #include "network/mqtt.hpp"    // Para ensureMQTTConnection e mqttClient na tarefa readSensors
-#include <LiquidCrystal_I2C.h> // Para LCD na tarefa readSensors
-// ---------------------------------------------------------------
+#include "ui/displayManager.hpp"
 
 // --- Variáveis Globais Externas (Dependências) ---
 // Idealmente, estas seriam injetadas ou acessadas via interfaces/filas
 extern AppConfig appConfig;
 extern TargetValues target;
-extern JsonDocument doc;            
-extern PubSubClient mqttClient;     
-extern SemaphoreHandle_t mqttMutex; 
-extern LiquidCrystal_I2C LCD;       
-extern SemaphoreHandle_t lcdMutex;  
-// --------------------------------------------------
+extern JsonDocument doc;
+extern PubSubClient mqttClient;
+extern SemaphoreHandle_t mqttMutex;
 
 // --- Instância do Sensor ---
 // Ainda global, dependendo de appConfig global. Idealmente, injetado.
@@ -35,7 +32,6 @@ DHT dht(appConfig.sensor.dhtPin, appConfig.sensor.dhtType);
 /**
  * @brief Inicializa os sensores gerenciados por este módulo.
  * Atualmente, inicializa apenas o sensor DHT.
-
  */
 void initializeSensors()
 {
@@ -78,16 +74,6 @@ float readHumidity()
         Serial.println(F("SensorManager: Failed to read humidity from DHT sensor!"));
         return -999.0; // Retorna valor de erro
     }
-
-    // ------------------------------------------------------------------
-    // LÓGICA DE CONTROLE REMOVIDA DAQUI!
-    // O controle do pino de umidade deve ser feito por um módulo
-    // dedicado (ActuatorManager) que recebe este valor de umidade lido.
-    // ------------------------------------------------------------------
-    // if (target.airHumidity == 0.0) { ... } // REMOVIDO
-    // if (humidity < target.airHumidity) { ... } // REMOVIDO
-    // else if (humidity > target.airHumidity) { ... } // REMOVIDO
-    // ------------------------------------------------------------------
 
     // Serial.print(F("SensorManager: Humidity Read: ")); Serial.println(humidity); // Log opcional
     return humidity; // Retorna o valor lido
@@ -192,7 +178,7 @@ float calculateVpd(float tem, float hum)
 /**
  * @brief Função da tarefa FreeRTOS para leitura periódica dos sensores e ações relacionadas.
  *
- * @warning Esta tarefa atualmente acumula múltiplas responsabilidades: ... (veja .hpp)
+ * @warning Esta tarefa atualmente acumula múltiplas responsabilidades: Leitura, Publicação MQTT e (anteriormente) Atualização de Display.
  *          Considere refatorar usando filas para comunicação inter-tarefas e separando responsabilidades.
  *
  * @param parameter Ponteiro genérico para parâmetros da tarefa (não utilizado aqui).
@@ -202,11 +188,6 @@ void readSensors(void *parameter)
     // Intervalo entre leituras e publicações
     const TickType_t loopDelay = pdMS_TO_TICKS(3000);
 
-    // Variáveis para armazenar os últimos valores enviados/exibidos no LCD
-    // Usadas para evitar atualizações desnecessárias do LCD
-    static float lastTemperatureLCD = -1000.0; // Inicializa com valor improvável
-    static float lastAirHumidityLCD = -1000.0;
-    static float lastSoilHumidityLCD = -1000.0;
 
     Serial.println("Sensor Reading Task started.");
 
@@ -231,7 +212,7 @@ void readSensors(void *parameter)
             doc["temperature"] = temperature;
             doc["airHumidity"] = airHumidity;
             doc["soilHumidity"] = soilHumidity;
-            doc["vpd"] = vpd;                 
+            doc["vpd"] = vpd;
 
             String payload;
             serializeJson(doc, payload); // Cria a string JSON
@@ -263,69 +244,11 @@ void readSensors(void *parameter)
             Serial.println("SensorTask: Invalid sensor readings, skipping MQTT publish.");
         }
 
-        // --- 3. Atualização do LCD (Responsabilidade Mal Localizada) ---
-        // Atualiza o LCD apenas se os valores mudaram significativamente (evita flickering)
-        if (xSemaphoreTake(lcdMutex, pdMS_TO_TICKS(50)) == pdTRUE)
-        { // Espera até 50ms pelo mutex do LCD
-            // Atualiza Temperatura na Linha 0
-            // Compara com o último valor *exibido*
-            if (abs(temperature - lastTemperatureLCD) > 0.05 || isnan(temperature) != isnan(lastTemperatureLCD))
-            {                        // Atualiza se mudar > 0.05 ou se validade mudar
-                LCD.setCursor(0, 0); // Coluna 0, Linha 0
-                if (!isnan(temperature))
-                {
-                    char tempStr[10];
-                    snprintf(tempStr, sizeof(tempStr), "Tmp:%.1fC", temperature); // Formata "Tmp:XX.XC"
-                    LCD.print(tempStr);
-                }
-                else
-                {
-                    LCD.print("Tmp: ERR"); // Mensagem de erro
-                }
-                LCD.print("        ");            // Limpa o resto da linha (8 espaços)
-                lastTemperatureLCD = temperature; // Atualiza o último valor exibido
-            }
+        // --- 3. Atualização do Display via DisplayManager --- <<< MODIFICADO
+        // Chama a função do DisplayManager para mostrar os dados dos sensores.
+        // A lógica de formatação e otimização (se necessária) fica dentro do displayManager.
+        displayManagerShowSensorData(temperature, airHumidity, soilHumidity);
 
-            // Atualiza Umidades (Ar e Solo) na Linha 1
-            if (abs(airHumidity - lastAirHumidityLCD) > 0.1 || abs(soilHumidity - lastSoilHumidityLCD) > 0.1 || isnan(airHumidity) != isnan(lastAirHumidityLCD) || isnan(soilHumidity) != isnan(lastSoilHumidityLCD))
-            {
-                LCD.setCursor(0, 1); // Coluna 0, Linha 1
-                char humStr[17];     // Buffer para a linha inteira (16 chars + null)
-                int written = 0;
-                if (!isnan(airHumidity))
-                {
-                    written += snprintf(humStr + written, sizeof(humStr) - written, "Air:%.0f%% ", airHumidity); // Formata "Air:XX% "
-                }
-                else
-                {
-                    written += snprintf(humStr + written, sizeof(humStr) - written, "Air:ERR ");
-                }
-                if (!isnan(soilHumidity))
-                {
-                    written += snprintf(humStr + written, sizeof(humStr) - written, "Sol:%.0f%%", soilHumidity); // Formata " Sol:XX%"
-                }
-                else
-                {
-                    written += snprintf(humStr + written, sizeof(humStr) - written, "Sol:ERR");
-                }
-                LCD.print(humStr);
-                // Preenche o restante da linha com espaços
-                for (int i = written; i < 16; ++i)
-                {
-                    LCD.print(" ");
-                }
-
-                lastAirHumidityLCD = airHumidity; // Atualiza últimos valores exibidos
-                lastSoilHumidityLCD = soilHumidity;
-            }
-            xSemaphoreGive(lcdMutex); // Libera o mutex do LCD
-        }
-        else
-        {
-            Serial.println("SensorTask: Failed to acquire LCD mutex.");
-        }
-
-        // --- 4. Aguarda antes do próximo ciclo ---
         vTaskDelay(loopDelay); // Pausa a tarefa pelo tempo definido
     }
 }
