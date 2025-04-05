@@ -1,8 +1,15 @@
-name: Connection Test
+# test/integration/connection.test.yml
+name: Core System Startup Sequence Test
 version: 1
 author: Rafael Trindade
 
+# Este teste verifica se as principais mensagens de log
+# aparecem na ordem esperada durante a inicialização.
+
 steps:
   - wait-serial: 'Connecting to WiFi...'
-  - wait-serial: 'Tempo NTP sincronizado com sucesso!'
+  - wait-serial: 'TimeService: Initial NTP time synchronized successfully!'
   - wait-serial: 'Reconnecting to MQTT...'
+  - wait-serial: 'Sensor Reading Task started.'
+  - wait-serial: 'Light Control Task started.'
+  - wait-serial: '--- Setup Complete ---'
