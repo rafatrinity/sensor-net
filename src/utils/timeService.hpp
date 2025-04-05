@@ -23,7 +23,7 @@ bool initializeTimeService(const TimeConfig& config);
  * @return true Se a hora local foi obtida com sucesso (implica que o NTP está sincronizado).
  * @return false Se não foi possível obter a hora local (NTP pode não estar sincronizado ainda).
  */
-bool getCurrentTime(struct tm timeinfo);
+bool getCurrentTime(struct tm& timeinfo);
 
 /**
  * @brief Verifica se o serviço de tempo foi inicializado com sucesso.

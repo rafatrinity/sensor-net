@@ -65,7 +65,7 @@ bool initializeTimeService(const TimeConfig& config) {
  * @return true Se a hora local foi obtida com sucesso.
  * @return false Se não foi possível obter a hora local.
  */
-bool getCurrentTime(struct tm timeinfo) {
+bool getCurrentTime(struct tm& timeinfo) {
     if (!serviceInitialized) {
         Serial.println("TimeService WARN: Attempted to get time before initialization.");
         return false; // Não tenta obter a hora se o serviço nem foi configurado
@@ -74,7 +74,7 @@ bool getCurrentTime(struct tm timeinfo) {
     // Tenta obter a hora local. O timeout é opcional (0 = não espera).
     // Usar 0 é mais rápido se você só quer checar se já sincronizou.
     // Usar um valor pequeno (ex: 10) pode ajudar se a sincronia estiver marginal.
-    if (!getLocalTime(&timeinfo, 10)) { // Espera no máximo 10ms
+    if (!getLocalTime(timeinfo, 10)) { // Espera no máximo 10ms
         // Serial.println("TimeService: Failed to get current time (NTP potentially out of sync).");
         return false; // Falha ao obter a hora (provavelmente não sincronizado)
     }
