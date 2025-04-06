@@ -1,105 +1,131 @@
+// src/sensors/sensorManager.cpp
 #include "sensorManager.hpp"
-#include "targets.hpp" // Usado em readHumidity (temporariamente) e na tarefa readSensors (global)
-#include "config.hpp"  // Usado para obter pinos e configurações (global)
+#include "targets.hpp"
+#include "config.hpp"
 
 #include <vector>
 #include <numeric>
 #include <Arduino.h>
-#include <math.h>              // Para exp() em calculateVpd
-#include "freertos/FreeRTOS.h" // Para vTaskDelay na tarefa
+#include <math.h>
+#include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
+#include "freertos/semphr.h" // <<< ADICIONADO para Mutex
 
-// --- Includes que AINDA são necessários pela tarefa readSensors ---
-// Estes deveriam ser movidos quando a tarefa for refatorada
-#include <ArduinoJson.h>       // Para construir o payload na tarefa readSensors
-#include "network/mqtt.hpp"    // Para ensureMQTTConnection e mqttClient na tarefa readSensors
+// Includes para a tarefa readSensors (mantidos por enquanto)
+#include <ArduinoJson.h>
+#include "network/mqtt.hpp"
 #include "ui/displayManager.hpp"
 
-// --- Variáveis Globais Externas (Dependências) ---
-// Idealmente, estas seriam injetadas ou acessadas via interfaces/filas
+// Variáveis Globais Externas (Dependências da tarefa readSensors)
 extern TargetValues target;
 extern JsonDocument doc;
 extern PubSubClient mqttClient;
-extern SemaphoreHandle_t mqttMutex;
+extern SemaphoreHandle_t mqttMutex; // Mutex do MQTT, não o nosso novo
 
-// --- Variáveis Estáticas do Módulo --- 
+// --- Variáveis Estáticas do Módulo ---
 static DHT* dht_sensor = nullptr;
-static SensorConfig sensor_config;
-// ---------------------------
+static SensorConfig sensor_config; // Configuração dos sensores
+static float cached_temperature = NAN; // <<< ADICIONADO: Cache para temperatura
+static float cached_humidity = NAN;    // <<< ADICIONADO: Cache para umidade
+static SemaphoreHandle_t sensorDataMutex = nullptr; // <<< ADICIONADO: Mutex para proteger o cache
+
+// --- Funções Auxiliares Internas (Opcional, ou lógica dentro da tarefa) ---
+/**
+ * @brief Realiza a leitura direta do sensor de temperatura DHT.
+ * @warning NÃO É THREAD-SAFE. Deve ser chamada apenas pela tarefa readSensors.
+ * @return float Temperatura em Celsius ou NAN em caso de falha.
+ */
+static float _readTemperatureFromSensor() {
+    if (dht_sensor == nullptr) return NAN;
+    float t = dht_sensor->readTemperature();
+    // A biblioteca DHT já retorna NAN em caso de falha na leitura
+    // Não precisamos checar isnan aqui e retornar -999 como antes.
+    return t;
+}
 
 /**
- * @brief Inicializa os sensores gerenciados por este módulo.
- * Atualmente, inicializa apenas o sensor DHT.
+ * @brief Realiza a leitura direta do sensor de umidade DHT.
+ * @warning NÃO É THREAD-SAFE. Deve ser chamada apenas pela tarefa readSensors.
+ * @return float Umidade em % ou NAN em caso de falha.
+ */
+static float _readHumidityFromSensor() {
+    if (dht_sensor == nullptr) return NAN;
+    float h = dht_sensor->readHumidity();
+    return h;
+}
+
+
+/**
+ * @brief Inicializa os sensores e o mutex de cache.
  */
 void initializeSensors(const SensorConfig& config) {
-    Serial.println("Initializing DHT Sensor...");
-    sensor_config = config;
+    Serial.println("Initializing Sensors and Cache...");
+    sensor_config = config; // Guarda a configuração
+
+    // Inicializa o Mutex para os dados cacheados
+    if (sensorDataMutex == nullptr) { // Evita recriar se chamado múltiplas vezes
+       sensorDataMutex = xSemaphoreCreateMutex();
+       if (sensorDataMutex == nullptr) {
+           Serial.println("SensorManager FATAL ERROR: Failed to create sensorDataMutex!");
+           // Lidar com o erro - talvez parar a inicialização?
+           return; // Ou abort() ?
+       }
+    }
+
+    // Inicializa o sensor DHT
     if (dht_sensor != nullptr) {
         delete dht_sensor;
-        dht_sensor = nullptr;
     }
     dht_sensor = new DHT(config.dhtPin, config.dhtType);
     if (dht_sensor != nullptr) {
-        dht_sensor->begin(); // Chama begin na nova instância
+        dht_sensor->begin();
         Serial.println("DHT Sensor Initialized.");
     } else {
         Serial.println("ERROR: Failed to allocate DHT sensor!");
     }
+     Serial.println("Sensors Initialized.");
 }
 
+// <<< FUNÇÕES readTemperature() e readHumidity() PÚBLICAS REMOVIDAS >>>
+
 /**
- * @brief Lê a temperatura do sensor DHT.
- *
- * @return float A temperatura lida em graus Celsius, ou -999.0 em caso de falha na leitura.
+ * @brief Obtém a última leitura de temperatura válida armazenada em cache.
  */
-float readTemperature()
-{
-    if (dht_sensor == nullptr) {
-        Serial.println(F("SensorManager ERROR: DHT sensor not initialized!"));
-        return -999.0;
+float getCurrentTemperature() {
+    float temp = NAN;
+    if (sensorDataMutex != nullptr && xSemaphoreTake(sensorDataMutex, pdMS_TO_TICKS(10)) == pdTRUE) {
+        temp = cached_temperature;
+        xSemaphoreGive(sensorDataMutex);
+    } else {
+        // Log opcional se falhar em obter o mutex rapidamente
+        // Serial.println("WARN: Failed to get sensorDataMutex for getCurrentTemperature");
     }
-
-    float temperature = dht_sensor->readTemperature();
-    
-    if (isnan(temperature))
-    {
-        Serial.println(F("SensorManager: Failed to read temperature from DHT sensor!"));
-        return -999.0;
-    }
-    return temperature;
+    return temp;
 }
 
 /**
- * @brief Lê a umidade relativa do ar do sensor DHT.
- *
- * @return float A umidade relativa lida em porcentagem (%), ou -999.0 em caso de falha na leitura.
+ * @brief Obtém a última leitura de umidade do ar válida armazenada em cache.
  */
-float readHumidity()
-{
-    if (dht_sensor == nullptr) {
-        Serial.println(F("SensorManager ERROR: DHT sensor not initialized!"));
-        return -999.0;
+float getCurrentHumidity() {
+    float hum = NAN;
+     if (sensorDataMutex != nullptr && xSemaphoreTake(sensorDataMutex, pdMS_TO_TICKS(10)) == pdTRUE) {
+        hum = cached_humidity;
+        xSemaphoreGive(sensorDataMutex);
+    } else {
+         // Log opcional
+        // Serial.println("WARN: Failed to get sensorDataMutex for getCurrentHumidity");
     }
-
-    float humidity = dht_sensor->readHumidity();
-    if (isnan(humidity))
-    {
-        Serial.println(F("SensorManager: Failed to read humidity from DHT sensor!"));
-        return -999.0;
-    }
-    return humidity;
+    return hum;
 }
 
+
 /**
- * @brief Lê a umidade do solo do sensor analógico.
- * Realiza múltiplas leituras, calcula a média e converte para uma escala percentual (0-100).
- *
- * @return float A umidade do solo calculada em porcentagem (%), ou 0.0 se nenhuma leitura válida for obtida.
+ * @brief Lê a umidade do solo do sensor analógico. (Função inalterada)
  */
 float readSoilHumidity(int soilPin)
 {
-    const int numReadings = 10; // Número de amostras para a média
-    const float adcMax = 4095.0; // Valor máximo do ADC (12 bits no ESP32)
+    const int numReadings = 10;
+    const float adcMax = 4095.0;
     std::vector<int> validReadings;
     validReadings.reserve(numReadings);
 
@@ -123,20 +149,16 @@ float readSoilHumidity(int soilPin)
     else
     {
         Serial.println(F("SensorManager: Failed to get valid readings from Soil Humidity sensor!"));
-        return 0.0;
+        return NAN; // Retornar NAN para consistência com outras leituras
     }
 }
 
 /**
- * @brief Calcula o Déficit de Pressão de Vapor (VPD) com base na temperatura e umidade.
- *
- * @param tem A temperatura em graus Celsius.
- * @param hum A umidade relativa em porcentagem (%).
- * @return float O valor do VPD calculado em kiloPascals (kPa), ou NAN se as entradas forem inválidas.
+ * @brief Calcula o Déficit de Pressão de Vapor (VPD). (Função inalterada)
  */
 float calculateVpd(float tem, float hum)
 {
-    if (tem <= -999.0 || hum <= -999.0 || isnan(tem) || isnan(hum))
+    if (isnan(tem) || isnan(hum)) // Checa por NAN
     {
         return NAN;
     }
@@ -148,33 +170,60 @@ float calculateVpd(float tem, float hum)
     return vpd_kpa;
 }
 
+
 /**
- * @brief Tarefa FreeRTOS para leitura periódica dos sensores e ações relacionadas.
- *
- * @param parameter Ponteiro genérico para parâmetros da tarefa (não utilizado aqui).
+ * @brief Tarefa FreeRTOS para leitura periódica dos sensores e atualização do cache.
  */
 void readSensors(void *parameter)
 {
     const AppConfig* config = static_cast<const AppConfig*>(parameter);
+    // Ajustar delay se necessário, 3s é geralmente ok para DHT22 se for a única tarefa lendo
     const TickType_t loopDelay = pdMS_TO_TICKS(3000);
-    Serial.println("Sensor Reading Task started.");
+    Serial.println("Sensor Reading Task started (Centralized DHT Read).");
 
     while (true)
     {
-        float temperature = readTemperature();
-        float airHumidity = readHumidity();
-        float soilHumidity = readSoilHumidity(sensor_config.soilHumiditySensorPin);
-        float vpd = calculateVpd(temperature, airHumidity);
+        // --- 1. Ler Sensores (DHT e Solo) ---
+        // Somente esta tarefa lê o DHT agora
+        float currentTemperature = _readTemperatureFromSensor(); // Leitura direta
+        float currentAirHumidity = _readHumidityFromSensor();    // Leitura direta
+        float currentSoilHumidity = readSoilHumidity(sensor_config.soilHumiditySensorPin); // Leitura do solo
 
-        if (!isnan(temperature) && !isnan(airHumidity) && !isnan(soilHumidity) && !isnan(vpd))
+        // --- 2. Atualizar Cache (Thread-Safe) ---
+        if (sensorDataMutex != nullptr && xSemaphoreTake(sensorDataMutex, pdMS_TO_TICKS(50)) == pdTRUE)
         {
+            // Atualiza o cache APENAS se a leitura do DHT foi válida (não NAN)
+            if (!isnan(currentTemperature)) {
+                cached_temperature = currentTemperature;
+            }
+            if (!isnan(currentAirHumidity)) {
+                 cached_humidity = currentAirHumidity;
+            }
+            // Se a leitura falhou (NAN), o cache mantém o último valor válido.
+            // Você pode optar por atualizar para NAN aqui se preferir que getCurrent* retorne NAN após uma falha.
+            // else { cached_temperature = NAN; cached_humidity = NAN; } // Opção: invalidar cache na falha
+
+            xSemaphoreGive(sensorDataMutex);
+        } else {
+             Serial.println("SensorTask WARN: Failed acquire sensorDataMutex to update cache.");
+        }
+
+        // --- 3. Calcular VPD (usando os valores lidos *nesta* iteração) ---
+        float currentVpd = calculateVpd(currentTemperature, currentAirHumidity);
+
+        // --- 4. Processar e Enviar Dados (MQTT) ---
+        // Usar os valores lidos nesta iteração (current*) para consistência
+        if (!isnan(currentTemperature) && !isnan(currentAirHumidity) && !isnan(currentSoilHumidity) && !isnan(currentVpd))
+        {
+            // A lógica de garantir conexão MQTT pode permanecer aqui por enquanto,
+            // mas idealmente seria abstraída.
             ensureMQTTConnection(config->mqtt);
 
             doc.clear();
-            doc["temperature"] = temperature;
-            doc["airHumidity"] = airHumidity;
-            doc["soilHumidity"] = soilHumidity;
-            doc["vpd"] = vpd;
+            doc["temperature"] = currentTemperature; // Usar valor lido nesta iteração
+            doc["airHumidity"] = currentAirHumidity; // Usar valor lido nesta iteração
+            doc["soilHumidity"] = currentSoilHumidity;
+            doc["vpd"] = currentVpd;
 
             String payload;
             serializeJson(doc, payload);
@@ -195,10 +244,17 @@ void readSensors(void *parameter)
         }
         else
         {
-            Serial.println("SensorTask: Invalid sensor readings, skipping MQTT publish.");
+            Serial.println("SensorTask: Invalid sensor readings obtained, skipping MQTT publish for this cycle.");
+            // Logar quais leituras falharam pode ser útil
+             Serial.printf(" Readings: T=%.1f, AH=%.1f, SH=%.1f, VPD=%.2f\n",
+                           currentTemperature, currentAirHumidity, currentSoilHumidity, currentVpd);
         }
 
-        displayManagerShowSensorData(temperature, airHumidity, soilHumidity);
+        // --- 5. Atualizar Display ---
+        // Passar os valores lidos nesta iteração para o display
+        displayManagerShowSensorData(currentTemperature, currentAirHumidity, currentSoilHumidity);
+
+        // --- 6. Aguardar próximo ciclo ---
         vTaskDelay(loopDelay);
     }
 }
