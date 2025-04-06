@@ -7,37 +7,42 @@
 
 /**
  * @brief Inicializa os pinos GPIO definidos na configuração como OUTPUT.
- *
+ * Configura os pinos de controle de luz e umidade.
  * @param config Referência para a estrutura de configuração dos pinos de controle.
  */
 void initializeActuators(const GPIOControlConfig& config);
 
 /**
  * @brief Verifica a hora atual contra os horários alvo e controla o pino da luz.
- *
- * Obtém a hora atual (usando getLocalTime internamente por enquanto) e compara
- * com os horários lightOn e lightOff para determinar se a luz deve estar acesa
- * ou apagada, atualizando o estado do pino GPIO correspondente.
- *
- * @param lightOn Estrutura tm representando o horário para ligar a luz.
- * @param lightOff Estrutura tm representando o horário para desligar a luz.
- * @param lightPin O número do pino GPIO que controla a luz.
+ * // ... (comentário existente) ...
  */
 void checkAndControlLight(const struct tm& lightOn, const struct tm& lightOff, int lightPin);
 
+
+/**
+ * @brief Verifica a umidade atual contra o alvo e controla o pino do umidificador.
+ * Liga o pino se a umidade atual for menor que o alvo, desliga caso contrário.
+ * Assume que o pino controla um UMIDIFICADOR.
+ *
+ * @param currentHumidity A umidade relativa do ar atual (em %).
+ * @param targetHumidity A umidade relativa do ar desejada (em %).
+ * @param humidityPin O número do pino GPIO que controla o dispositivo de umidade.
+ */
+void checkAndControlHumidity(float currentHumidity, float targetHumidity, int humidityPin);
+
 /**
  * @brief Função da tarefa FreeRTOS para controle periódico da iluminação.
- *
- * Esta tarefa chama checkAndControlLight() em intervalos regulares para garantir
- * que o estado da luz seja atualizado conforme a hora do dia e as configurações alvo.
- *
- * @param parameter Ponteiro para parâmetros (não utilizado atualmente).
+ * // ... (comentário existente) ...
  */
 void lightControlTask(void *parameter);
 
-// --- Funções futuras ---
-// void checkAndControlHumidity(float currentHumidity, float targetHumidity, int humidityPin);
-// void humidityControlTask(void* parameter);
-// -----------------------
+/**
+ * @brief Função da tarefa FreeRTOS para controle periódico da umidade.
+ * Esta tarefa lê periodicamente a umidade do ar (através do sensorManager)
+ * e chama checkAndControlHumidity() para atualizar o estado do atuador.
+ *
+ * @param parameter Ponteiro para a estrutura GPIOControlConfig.
+ */
+void humidityControlTask(void *parameter); // <<< ADICIONADO
 
 #endif // ACTUATOR_MANAGER_HPP
