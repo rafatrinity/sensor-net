@@ -1,32 +1,32 @@
-/**
- * @file actuatorManager.cpp
- * @brief Manages the control of actuators like lights and humidity controllers.
- * 
- * Implements tasks and functions to control actuators based on target values
- * and sensor readings (obtained via sensorManager).
- */
+// src/actuators/actuatorManager.cpp (Modificado)
 
- #include "actuatorManager.hpp"
- #include "config.hpp"           // For GPIOControlConfig
- #include "sensors/targets.hpp"  // For TargetValues (external global, TODO: Refactor)
- #include "utils/timeService.hpp"// For getCurrentTime
- #include "sensors/sensorManager.hpp" // For getCurrentHumidity
- 
- #include <Arduino.h>
- #include <time.h>               // For struct tm
- #include <math.h>               // For isnan
- #include "freertos/FreeRTOS.h"
- #include "freertos/task.h"
- 
- // ==========================================================================
- // !!! WARNING: Global Dependency !!!
- // This module still relies on the global 'target' variable. This needs refactoring.
- // ==========================================================================
- extern TargetValues target; // TODO: Refactor away from global dependency.
- 
- // --- Static Variables ---
- static int lastLightState = -1; // Internal state for light change logging
- 
+#include "actuatorManager.hpp"
+#include "config.hpp"
+// #include "sensors/targets.hpp" // <<< REMOVER ESTE INCLUDE
+#include "data/targetDataManager.hpp" // <<< ADICIONAR ESTE INCLUDE
+#include "utils/timeService.hpp"
+#include "sensors/sensorManager.hpp" // Para getCurrentHumidity
+
+#include <Arduino.h>
+#include <time.h>
+#include <math.h>
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+
+// ==========================================================================
+// !!! WARNING: Global Dependency !!! <-- REMOVER ESTE COMENTÁRIO E O EXTERN ABAIXO
+// extern TargetValues target; // <<< REMOVER ESTA LINHA
+// ==========================================================================
+
+// --- Static Variables ---
+static int lastLightState = -1;
+
+// --- Estrutura para Parâmetros das Tarefas --- <<< ADICIONADO
+struct ActuatorTaskParams {
+    const GPIOControlConfig* gpioConfig;
+    GrowController::TargetDataManager* targetManager; // Ponteiro para o manager
+};
+
  /**
   * @brief Initializes the GPIO pins defined in the configuration as OUTPUTs.
   * Sets the initial state of the pins to LOW (off).
@@ -150,64 +150,74 @@
  }
  
  /**
-  * @brief FreeRTOS task function for periodically controlling the light.
-  * Retrieves the light schedule from the global 'target' struct and calls
-  * checkAndControlLight at regular intervals.
-  * 
-  * @param parameter Pointer to the GPIOControlConfig struct containing pin definitions.
-  */
- void lightControlTask(void *parameter)
- {
-     const GPIOControlConfig *gpioConfig = static_cast<const GPIOControlConfig *>(parameter);
-     if (gpioConfig == nullptr)
-     {
-         Serial.println(F("ActuatorManager FATAL ERROR: Invalid GPIO config passed to lightControlTask!"));
-         vTaskDelete(NULL); // Abort task
-         return; // Should not be reached
-     }
- 
-     const TickType_t checkInterval = pdMS_TO_TICKS(5000); // Check every 5 seconds
-     Serial.println(F("Light Control Task started."));
- 
-     while (true)
-     {
-         // Note: Accessing global 'target' directly is not ideal.
-         checkAndControlLight(target.lightOnTime, target.lightOffTime, gpioConfig->lightControlPin);
-         vTaskDelay(checkInterval);
-     }
- }
- 
- /**
-  * @brief FreeRTOS task function for periodically controlling humidity.
-  * Retrieves the current humidity from the sensor manager's cache (getCurrentHumidity)
-  * and the target humidity from the global 'target' struct. Calls
-  * checkAndControlHumidity at regular intervals.
-  * 
-  * @param parameter Pointer to the GPIOControlConfig struct containing pin definitions.
-  */
- void humidityControlTask(void *parameter)
- {
-     const GPIOControlConfig *gpioConfig = static_cast<const GPIOControlConfig *>(parameter);
-     if (gpioConfig == nullptr)
-     {
-         Serial.println(F("ActuatorManager FATAL ERROR: Invalid GPIO config passed to humidityControlTask!"));
-         vTaskDelete(NULL); // Abort task
-         return; // Should not be reached
-     }
- 
-     const TickType_t checkInterval = pdMS_TO_TICKS(10000); // Check every 10 seconds
-     Serial.println(F("Humidity Control Task started."));
- 
-     while (true)
-     {
-         // Get humidity from the centralized cache (thread-safe)
-         float currentAirHumidity = getCurrentHumidity(); 
-         
-         // Get target humidity (still uses global 'target')
-         float targetAirHumidity = target.airHumidity; 
- 
-         checkAndControlHumidity(currentAirHumidity, targetAirHumidity, gpioConfig->humidityControlPin);
- 
-         vTaskDelay(checkInterval);
-     }
- }
+ * @brief FreeRTOS task function for periodically controlling the light.
+ * Retrieves the light schedule from the TargetDataManager and calls
+ * checkAndControlLight at regular intervals.
+ *
+ * @param parameter Pointer to the ActuatorTaskParams struct. // <<< ATUALIZADO
+ */
+void lightControlTask(void *parameter)
+{
+    // Faz o cast do parâmetro para o tipo esperado
+    ActuatorTaskParams* params = static_cast<ActuatorTaskParams*>(parameter);
+    if (params == nullptr || params->gpioConfig == nullptr || params->targetManager == nullptr) // <<< Checagem robusta
+    {
+        Serial.println(F("ActuatorManager FATAL ERROR: Invalid parameters passed to lightControlTask!"));
+        vTaskDelete(NULL); // Abort task
+        return;
+    }
+    const GPIOControlConfig *gpioConfig = params->gpioConfig;
+    GrowController::TargetDataManager *targetMgr = params->targetManager; // Obter ponteiro para o manager
+
+
+    const TickType_t checkInterval = pdMS_TO_TICKS(5000); // Check every 5 seconds
+    Serial.println(F("Light Control Task started."));
+
+    while (true)
+    {
+        // Usa os getters do TargetDataManager (que são thread-safe)
+        struct tm onTime = targetMgr->getLightOnTime();
+        struct tm offTime = targetMgr->getLightOffTime();
+
+        checkAndControlLight(onTime, offTime, gpioConfig->lightControlPin);
+        vTaskDelay(checkInterval);
+    }
+}
+
+/**
+ * @brief FreeRTOS task function for periodically controlling humidity.
+ * Retrieves the current humidity from the sensor manager's cache (getCurrentHumidity)
+ * and the target humidity from the TargetDataManager. Calls
+ * checkAndControlHumidity at regular intervals.
+ *
+ * @param parameter Pointer to the ActuatorTaskParams struct. // <<< ATUALIZADO
+ */
+void humidityControlTask(void *parameter)
+{
+     // Faz o cast do parâmetro para o tipo esperado
+    ActuatorTaskParams* params = static_cast<ActuatorTaskParams*>(parameter);
+     if (params == nullptr || params->gpioConfig == nullptr || params->targetManager == nullptr) // <<< Checagem robusta
+    {
+        Serial.println(F("ActuatorManager FATAL ERROR: Invalid parameters passed to humidityControlTask!"));
+        vTaskDelete(NULL); // Abort task
+        return;
+    }
+    const GPIOControlConfig *gpioConfig = params->gpioConfig;
+    GrowController::TargetDataManager *targetMgr = params->targetManager; // Obter ponteiro para o manager
+
+    const TickType_t checkInterval = pdMS_TO_TICKS(10000); // Check every 10 seconds
+    Serial.println(F("Humidity Control Task started."));
+
+    while (true)
+    {
+        // Get humidity from the centralized cache (thread-safe)
+        float currentAirHumidity = getCurrentHumidity();
+
+        // Get target humidity from TargetDataManager (thread-safe)
+        float targetAirHumidity = targetMgr->getTargetAirHumidity();
+
+        checkAndControlHumidity(currentAirHumidity, targetAirHumidity, gpioConfig->humidityControlPin);
+
+        vTaskDelay(checkInterval);
+    }
+}

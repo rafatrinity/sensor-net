@@ -1,9 +1,12 @@
+// src/actuators/actuatorManager.hpp (Corrigido)
 #ifndef ACTUATOR_MANAGER_HPP
 #define ACTUATOR_MANAGER_HPP
 
-#include <time.h>              // Para struct tm (necessário para TargetValues)
-#include "sensors/targets.hpp" // Para a definição da struct TargetValues
-#include "config.hpp"          // Para a definição da struct GPIOControlConfig
+#include <time.h>     // Para struct tm (usado em checkAndControlLight)
+#include "config.hpp" // Para a definição da struct GPIOControlConfig
+
+// Estrutura definida no .cpp, não precisa ser exposta aqui
+// struct ActuatorTaskParams;
 
 /**
  * @brief Inicializa os pinos GPIO definidos na configuração como OUTPUT.
@@ -14,7 +17,10 @@ void initializeActuators(const GPIOControlConfig& config);
 
 /**
  * @brief Verifica a hora atual contra os horários alvo e controla o pino da luz.
- * // ... (comentário existente) ...
+ * Calcula tempo em minutos desde a meia-noite para comparação, lidando com horários noturnos.
+ * @param lightOn Referência constante à struct tm representando o horário de LIGAR (HH:MM).
+ * @param lightOff Referência constante à struct tm representando o horário de DESLIGAR (HH:MM).
+ * @param lightPin O pino GPIO que controla a luz.
  */
 void checkAndControlLight(const struct tm& lightOn, const struct tm& lightOff, int lightPin);
 
@@ -32,17 +38,19 @@ void checkAndControlHumidity(float currentHumidity, float targetHumidity, int hu
 
 /**
  * @brief Função da tarefa FreeRTOS para controle periódico da iluminação.
- * // ... (comentário existente) ...
+ * Recupera o horário agendado do TargetDataManager e chama checkAndControlLight.
+ * @param parameter Ponteiro para a estrutura ActuatorTaskParams contendo
+ *                  GPIOControlConfig e um ponteiro para TargetDataManager. // <<< CORRIGIDO
  */
 void lightControlTask(void *parameter);
 
 /**
  * @brief Função da tarefa FreeRTOS para controle periódico da umidade.
- * Esta tarefa lê periodicamente a umidade do ar (através do sensorManager)
- * e chama checkAndControlHumidity() para atualizar o estado do atuador.
- *
- * @param parameter Ponteiro para a estrutura GPIOControlConfig.
+ * Recupera a umidade atual (via sensorManager) e o alvo (via TargetDataManager),
+ * então chama checkAndControlHumidity().
+ * @param parameter Ponteiro para a estrutura ActuatorTaskParams contendo
+ *                  GPIOControlConfig e um ponteiro para TargetDataManager. // <<< CORRIGIDO
  */
-void humidityControlTask(void *parameter); // <<< ADICIONADO
+void humidityControlTask(void *parameter);
 
 #endif // ACTUATOR_MANAGER_HPP
