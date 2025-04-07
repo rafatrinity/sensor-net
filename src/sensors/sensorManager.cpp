@@ -1,6 +1,5 @@
-// src/sensors/sensorManager.cpp
+
 #include "sensorManager.hpp"
-#include "targets.hpp"
 #include "config.hpp"
 
 #include <vector>
@@ -9,27 +8,19 @@
 #include <math.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
-#include "freertos/semphr.h" // <<< ADICIONADO para Mutex
+#include "freertos/semphr.h"
 
-// Includes para a tarefa readSensors (mantidos por enquanto)
-#include <ArduinoJson.h>
-#include "network/mqtt.hpp"
+// Includes para a tarefa readSensors
+#include <ArduinoJson.h> // <<< MANTER
 #include "ui/displayManager.hpp"
 
-// Variáveis Globais Externas (Dependências da tarefa readSensors)
-extern TargetValues target;
-extern JsonDocument doc;
-extern PubSubClient mqttClient;
-extern SemaphoreHandle_t mqttMutex; // Mutex do MQTT, não o nosso novo
-
-// --- Variáveis Estáticas do Módulo ---
+// ... Variáveis estáticas (dht_sensor, config, cache, mutex) ...
 static DHT* dht_sensor = nullptr;
-static SensorConfig sensor_config; // Configuração dos sensores
-static float cached_temperature = NAN; // <<< ADICIONADO: Cache para temperatura
-static float cached_humidity = NAN;    // <<< ADICIONADO: Cache para umidade
-static SemaphoreHandle_t sensorDataMutex = nullptr; // <<< ADICIONADO: Mutex para proteger o cache
+static SensorConfig sensor_config;
+static float cached_temperature = NAN;
+static float cached_humidity = NAN;
+static SemaphoreHandle_t sensorDataMutex = nullptr;
 
-// --- Funções Auxiliares Internas (Opcional, ou lógica dentro da tarefa) ---
 /**
  * @brief Realiza a leitura direta do sensor de temperatura DHT.
  * @warning NÃO É THREAD-SAFE. Deve ser chamada apenas pela tarefa readSensors.
@@ -53,7 +44,6 @@ static float _readHumidityFromSensor() {
     float h = dht_sensor->readHumidity();
     return h;
 }
-
 
 /**
  * @brief Inicializa os sensores e o mutex de cache.
@@ -86,8 +76,6 @@ void initializeSensors(const SensorConfig& config) {
      Serial.println("Sensors Initialized.");
 }
 
-// <<< FUNÇÕES readTemperature() e readHumidity() PÚBLICAS REMOVIDAS >>>
-
 /**
  * @brief Obtém a última leitura de temperatura válida armazenada em cache.
  */
@@ -117,7 +105,6 @@ float getCurrentHumidity() {
     }
     return hum;
 }
-
 
 /**
  * @brief Lê a umidade do solo do sensor analógico. (Função inalterada)
@@ -170,88 +157,72 @@ float calculateVpd(float tem, float hum)
     return vpd_kpa;
 }
 
-
 /**
  * @brief Tarefa FreeRTOS para leitura periódica dos sensores e atualização do cache.
+ * @param parameter Ponteiro para a estrutura AppConfig (usado para obter config do sensor).
+ *                  Futuramente, receberá ponteiros para outros managers (MQTT, Display).
  */
 void readSensors(void *parameter)
 {
     const AppConfig* config = static_cast<const AppConfig*>(parameter);
-    // Ajustar delay se necessário, 3s é geralmente ok para DHT22 se for a única tarefa lendo
+     if (config == nullptr) {
+         Serial.println("SensorTask FATAL ERROR: Received NULL config!");
+         vTaskDelete(NULL);
+         return;
+     }
+     int soilPin = config->sensor.soilHumiditySensorPin;
+
     const TickType_t loopDelay = pdMS_TO_TICKS(3000);
-    Serial.println("Sensor Reading Task started (Centralized DHT Read).");
+    Serial.println("Sensor Reading Task started.");
+
+    // Alocar JsonDocument localmente usando StaticJsonDocument <<< CORRIGIDO
+    StaticJsonDocument<256> sensorDoc; // 256 bytes de buffer no stack
 
     while (true)
     {
-        // --- 1. Ler Sensores (DHT e Solo) ---
-        // Somente esta tarefa lê o DHT agora
-        float currentTemperature = _readTemperatureFromSensor(); // Leitura direta
-        float currentAirHumidity = _readHumidityFromSensor();    // Leitura direta
-        float currentSoilHumidity = readSoilHumidity(sensor_config.soilHumiditySensorPin); // Leitura do solo
+        // --- 1. Ler Sensores ---
+        float currentTemperature = _readTemperatureFromSensor();
+        float currentAirHumidity = _readHumidityFromSensor();
+        float currentSoilHumidity = readSoilHumidity(soilPin);
 
-        // --- 2. Atualizar Cache (Thread-Safe) ---
+        // --- 2. Atualizar Cache ---
         if (sensorDataMutex != nullptr && xSemaphoreTake(sensorDataMutex, pdMS_TO_TICKS(50)) == pdTRUE)
         {
-            // Atualiza o cache APENAS se a leitura do DHT foi válida (não NAN)
             if (!isnan(currentTemperature)) {
                 cached_temperature = currentTemperature;
             }
             if (!isnan(currentAirHumidity)) {
                  cached_humidity = currentAirHumidity;
             }
-            // Se a leitura falhou (NAN), o cache mantém o último valor válido.
-            // Você pode optar por atualizar para NAN aqui se preferir que getCurrent* retorne NAN após uma falha.
-            // else { cached_temperature = NAN; cached_humidity = NAN; } // Opção: invalidar cache na falha
-
             xSemaphoreGive(sensorDataMutex);
         } else {
              Serial.println("SensorTask WARN: Failed acquire sensorDataMutex to update cache.");
         }
 
-        // --- 3. Calcular VPD (usando os valores lidos *nesta* iteração) ---
+        // --- 3. Calcular VPD ---
         float currentVpd = calculateVpd(currentTemperature, currentAirHumidity);
 
-        // --- 4. Processar e Enviar Dados (MQTT) ---
-        // Usar os valores lidos nesta iteração (current*) para consistência
+        // --- 4. Processar ---
         if (!isnan(currentTemperature) && !isnan(currentAirHumidity) && !isnan(currentSoilHumidity) && !isnan(currentVpd))
         {
-            // A lógica de garantir conexão MQTT pode permanecer aqui por enquanto,
-            // mas idealmente seria abstraída.
-            ensureMQTTConnection(config->mqtt);
-
-            doc.clear();
-            doc["temperature"] = currentTemperature; // Usar valor lido nesta iteração
-            doc["airHumidity"] = currentAirHumidity; // Usar valor lido nesta iteração
-            doc["soilHumidity"] = currentSoilHumidity;
-            doc["vpd"] = currentVpd;
+            sensorDoc.clear(); // Limpa antes de reusar
+            sensorDoc["temperature"] = currentTemperature;
+            sensorDoc["airHumidity"] = currentAirHumidity;
+            sensorDoc["soilHumidity"] = currentSoilHumidity;
+            sensorDoc["vpd"] = currentVpd;
 
             String payload;
-            serializeJson(doc, payload);
+            serializeJson(sensorDoc, payload);
+             // Serial.print("Sensor JSON: "); Serial.println(payload); // Debug
 
-            if (xSemaphoreTake(mqttMutex, pdMS_TO_TICKS(100)) == pdTRUE)
-            {
-                String topic = String(config->mqtt.roomTopic) + "/sensors";
-                if (!mqttClient.publish(topic.c_str(), payload.c_str(), true))
-                {
-                    Serial.println("SensorTask: Failed to publish sensor data.");
-                }
-                xSemaphoreGive(mqttMutex);
-            }
-            else
-            {
-                Serial.println("SensorTask: Failed to acquire MQTT mutex for publishing.");
-            }
+            // Lógica MQTT removida temporariamente
         }
         else
         {
-            Serial.println("SensorTask: Invalid sensor readings obtained, skipping MQTT publish for this cycle.");
-            // Logar quais leituras falharam pode ser útil
-             Serial.printf(" Readings: T=%.1f, AH=%.1f, SH=%.1f, VPD=%.2f\n",
-                           currentTemperature, currentAirHumidity, currentSoilHumidity, currentVpd);
+            Serial.println("SensorTask: Invalid sensor readings obtained.");
         }
 
         // --- 5. Atualizar Display ---
-        // Passar os valores lidos nesta iteração para o display
         displayManagerShowSensorData(currentTemperature, currentAirHumidity, currentSoilHumidity);
 
         // --- 6. Aguardar próximo ciclo ---
