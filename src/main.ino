@@ -1,26 +1,24 @@
-// main.ino
+#include "config.hpp"
+#include "network/wifi.hpp"
+#include "network/mqtt.hpp"          // Ainda necessário para a tarefa antiga
+#include "sensors/sensorManager.hpp"
+#include "actuators/actuatorManager.hpp"
+#include "data/targetDataManager.hpp" 
+#include "utils/timeService.hpp"
+#include "ui/displayManager.hpp"
 
-#include "config.hpp"                // Configurações gerais e de placa
-#include "network/wifi.hpp"          // Para connectToWiFi task
-#include "network/mqtt.hpp"          // Para manageMQTT task
-#include "sensors/sensorManager.hpp" // Para initializeSensors e readSensors task
-#include "actuatorManager.hpp"       // Para initializeActuators e lightControlTask task
-#include "sensors/targets.hpp"       // Para a struct TargetValues (ainda global)
-#include "utils/timeService.hpp"     // Para initializeTimeService
-#include "ui/displayManager.hpp"     // Para todas as interações com o display
+#include <Wire.h>
+#include <ArduinoJson.h> // Ainda necessário para readSensors localmente
 
-#include <Wire.h>        // Necessário para I2C
-#include <ArduinoJson.h> // Para o JsonDocument global 'doc'
-
-// --- Variáveis Globais Remanescentes ---
-JsonDocument doc; // Usado na tarefa readSensors (ainda global)
-SemaphoreHandle_t mqttMutex = xSemaphoreCreateMutex();
-TargetValues target; // Definido em mqttHandler.cpp (ainda global)
-
-// --- Instância Principal da Configuração ---
-// Agora é uma variável com escopo global *apenas* dentro deste arquivo .ino
-// As tarefas e funções receberão ponteiros/referências para ela ou suas partes.
+// --- Instâncias Principais ---
 AppConfig appConfig;
+GrowController::TargetDataManager targetManager; // <<< INSTANCIAR O MANAGER
+
+// Estrutura para passar parâmetros para as tarefas de atuadores <<< ADICIONADO
+struct ActuatorTaskParams {
+    const GPIOControlConfig* gpioConfig;
+    GrowController::TargetDataManager* targetManager;
+};
 // -----------------------------------------------------------
 
 void setup()
@@ -29,95 +27,100 @@ void setup()
     Serial.println("\n--- Booting Application ---");
 
     // 1. Inicializa módulos independentes
-    // Passa a parte relevante da config por referência constante
     initializeSensors(appConfig.sensor);
+    // Mover initializeActuators para src/actuators se ainda não o fez
     initializeActuators(appConfig.gpioControl);
 
-    // 2. Inicializa comunicação I2C e o Display Manager
+    // 2. Inicializa I2C e Display
     Wire.begin(SDA, SCL);
-    if (!displayManagerInit(0x27, 16, 2))
-    {
+    if (!displayManagerInit(0x27, 16, 2)) { // Endereço e tamanho como exemplo
         Serial.println("FATAL ERROR: Display Manager Initialization Failed!");
+        // Lidar com erro? Parar?
     }
     displayManagerShowBooting();
 
-    // 3. Inicia a Tarefa de Conexão WiFi
+    // 3. Inicia Tarefa WiFi
     Serial.println("Starting WiFi Task...");
     xTaskCreate(
-        connectToWiFi,           // Função da tarefa
-        "WiFiTask",              // Nome
-        4096,                    // Pilha
-        (void *)&appConfig.wifi, // <<< MODIFICADO: Passa ponteiro para WiFiConfig
-        1,                       // Prioridade
-        NULL                     // Handle
-    );
+        connectToWiFi,
+        "WiFiTask",
+        4096,
+        (void *)&appConfig.wifi,
+        1,
+        NULL);
 
-    // 4. Aguarda Conexão WiFi
+    // 4. Aguarda WiFi
     Serial.print("Waiting for WiFi connection...");
-    while (WiFi.status() != WL_CONNECTED)
-    {
-        vTaskDelay(pdMS_TO_TICKS(500));
+    displayManagerShowConnectingWiFi(); // Mostrar antes do loop
+    while (WiFi.status() != WL_CONNECTED) {
+         displayManagerUpdateSpinner(); // Atualizar spinner enquanto espera
+        vTaskDelay(pdMS_TO_TICKS(100)); // Espera mais curta para spinner mais fluido
     }
     Serial.println("\nWiFi Connected!");
+    // Display já é atualizado por connectToWiFi ao conectar
 
-    // 5. Inicializa o Serviço de Tempo (depende de WiFi)
+    // 5. Inicializa Time Service
     Serial.println("Initializing Time Service...");
     displayManagerShowNtpSyncing();
-    // Passa a parte relevante da config por referência constante
-    if (!initializeTimeService(appConfig.time))
-    { // Já estava correto
+    if (!initializeTimeService(appConfig.time)) {
         Serial.println("ERROR: Failed to initialize Time Service!");
         displayManagerShowError("NTP Fail");
-    }
-    else
-    {
-        displayManagerShowNtpSynced();
+    } else {
+        // Display já é atualizado por initializeTimeService se for bem-sucedido
+        displayManagerShowNtpSynced(); // Ou pode ser redundante
     }
 
-    // 6. Inicia Tarefa MQTT (depende de WiFi)
+    // 6. Inicia Tarefa MQTT (Ainda usando a versão antiga por enquanto)
     Serial.println("Starting MQTT Task...");
     displayManagerShowMqttConnecting();
     xTaskCreate(
-        manageMQTT,              // Função da tarefa
-        "MQTTTask",              // Nome
-        4096,                    // Pilha
-        (void *)&appConfig.mqtt, // <<< MODIFICADO: Passa ponteiro para MQTTConfig
-        2,                       // Prioridade
-        NULL                     // Handle
-    );
+        manageMQTT,             // Função antiga
+        "MQTTTask",
+        4096,
+        (void *)&appConfig.mqtt, // Passa config antiga
+        2,
+        NULL);
 
     // 7. Inicia Tarefa de Leitura de Sensores
+    //    Esta tarefa agora precisa de acesso ao MqttManager e DisplayManager.
+    //    Temporariamente, vamos remover a parte de publicação MQTT até MqttManager estar pronto.
     Serial.println("Starting Sensor Reading Task...");
     xTaskCreate(
         readSensors,        // Função da tarefa
-        "SensorTask",       // Nome
-        4096,               // Pilha
-        (void *)&appConfig, // <<< MODIFICADO: Passa ponteiro para AppConfig completo
-        1,                  // Prioridade
-        NULL                // Handle
-    );
+        "SensorTask",
+        4096,               // Pilha pode precisar de ajuste
+        (void *)&appConfig, // Passa AppConfig (ainda usa para ler config de pinos)
+                            // Futuramente passará ponteiros para MqttManager, DisplayManager
+        1,
+        NULL);
 
-    // 8. Inicia Tarefa de Controle de Atuadores (Luz)
+
+    // --- Preparar parâmetros para tarefas de atuadores --- <<< ADICIONADO
+    ActuatorTaskParams actuatorParams = {
+        &appConfig.gpioControl,
+        &targetManager // Passa o ponteiro para o manager instanciado
+    };
+
+
+    // 8. Inicia Tarefa de Controle de Luz
     Serial.println("Starting Light Control Task...");
     xTaskCreate(
-        lightControlTask,               // Função da tarefa
-        "LightControlTask",             // Nome
-        2048,                           // Pilha
-        (void *)&appConfig.gpioControl, // <<< MODIFICADO: Passa ponteiro para GPIOControlConfig
-        1,                              // Prioridade
-        NULL                            // Handle
-    );
+        lightControlTask,
+        "LightControlTask",
+        2048,
+        (void *)&actuatorParams, // <<< Passa a struct de parâmetros
+        1,
+        NULL);
 
-    // 9. Inicia Tarefa de Controle de Atuadores (Umidade) <<< ADICIONADO
+    // 9. Inicia Tarefa de Controle de Umidade
     Serial.println("Starting Humidity Control Task...");
     xTaskCreate(
-        humidityControlTask,            // Função da tarefa
-        "HumidityCtrlTask",             // Nome (um pouco diferente para clareza)
-        2560,                           // Pilha (um pouco mais que a luz, pois chama readHumidity)
-        (void *)&appConfig.gpioControl, // Passa ponteiro para GPIOControlConfig
-        1,                              // Prioridade (mesma da luz e sensores)
-        NULL                            // Handle
-    );
+        humidityControlTask,
+        "HumidityCtrlTask",
+        2560,
+        (void *)&actuatorParams, // <<< Passa a struct de parâmetros
+        1,
+        NULL);
 
     vTaskDelay(pdMS_TO_TICKS(500));
     Serial.println("--- Setup Complete ---");
@@ -127,5 +130,6 @@ void setup()
 
 void loop()
 {
-    vTaskDelay(pdMS_TO_TICKS(1000));
+    // O loop principal pode ficar vazio ou fazer tarefas de baixa prioridade/verificações
+    vTaskDelay(portMAX_DELAY); // Dorme indefinidamente se não houver nada a fazer
 }
