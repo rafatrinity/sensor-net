@@ -1,6 +1,5 @@
 #ifndef MQTT_HANDLER_H
 #define MQTT_HANDLER_H
-#include "sensors/targets.hpp"
 #include "config.hpp"
 #include <Arduino.h>
 #include <ArduinoJson.h>
