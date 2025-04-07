@@ -5,8 +5,11 @@
 #include <PubSubClient.h>
 #include <WiFi.h>
 #include "config.hpp"
+#include <freertos/FreeRTOS.h>
+#include <freertos/semphr.h>
 
 extern PubSubClient mqttClient; // Ainda global por enquanto
+extern SemaphoreHandle_t mqttMutex;
 
 void setupMQTT(const MQTTConfig& config);
 void ensureMQTTConnection(const MQTTConfig& config);

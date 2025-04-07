@@ -1,6 +1,7 @@
-// mqttHandler.cpp
+// src/network/mqttHandler.cpp (Modificado Temporariamente)
 #include "mqttHandler.hpp"
-#include "config.hpp" // Ainda necessário para TargetValues (via targets.hpp incluso)
+//#include "config.hpp" // Não precisa mais de TargetValues daqui
+#include "data/targetDataManager.hpp" // Incluir o novo manager (para referência futura)
 
 #include <Arduino.h>
 #include <ArduinoJson.h>
@@ -8,9 +9,11 @@
 #include <cstdio>
 
 // --- Dependência Externa ---
-extern TargetValues target; // Ainda global, precisa de refatoração (TargetManager/Fila)
-extern String staticRoomTopic; // <<< USA A VARIÁVEL ESTÁTICA DECLARADA EM mqtt.cpp
-// -------------------------
+// extern TargetValues target; // <<< REMOVIDO/COMENTADO
+extern String staticRoomTopic; // <<< Ainda aqui, será removido com MqttManager
+
+// Instância do TargetDataManager (será injetada depois)
+// GrowController::TargetDataManager* targetManagerInstance = nullptr; // Exemplo
 
 void mqttCallback(char* topic, byte* payload, unsigned int length) {
   Serial.println("===================================");
@@ -23,12 +26,11 @@ void mqttCallback(char* topic, byte* payload, unsigned int length) {
   Serial.print("Raw Message: ");
   Serial.println(message);
 
-  // Usa a variável estática para construir o tópico de controle esperado
   String expectedControlTopic = staticRoomTopic + "/control";
 
-  if (String(topic) == expectedControlTopic) { // <<< COMPARA COM TOPIC ESPERADO
+  if (String(topic) == expectedControlTopic) {
       Serial.println("Processing control message...");
-      JsonDocument doc; // Usa um JsonDocument local
+      JsonDocument doc;
       DeserializationError error = deserializeJson(doc, message);
       if (error) {
           Serial.print("JSON deserialization failed: ");
@@ -36,27 +38,37 @@ void mqttCallback(char* topic, byte* payload, unsigned int length) {
           return;
       }
 
-      // Atualiza target (AINDA PROBLEMÁTICO - acoplamento alto)
-      // ... (lógica de atualização do target permanece a mesma por enquanto) ...
+      // <<< LÓGICA DE ATUALIZAÇÃO COMENTADA/REMOVIDA >>>
+      // Esta lógica agora pertence a TargetDataManager::updateTargetsFromJson
+      // A chamada será feita em MqttManager::messageCallback
+      /*
+       if (targetManagerInstance) { // Exemplo de como seria chamado
+           targetManagerInstance->updateTargetsFromJson(doc);
+       } else {
+           Serial.println("ERROR: TargetDataManager instance not available in callback!");
+       }
+      */
+       Serial.println("Control message parsed (update logic deferred to TargetDataManager).");
+
+
+      /* // Código antigo removido:
        if (!doc["airHumidity"].isNull() && doc["airHumidity"].is<double>()) {
           target.airHumidity = doc["airHumidity"].as<float>();
           Serial.print("Updated airHumidity to: ");
           Serial.println(target.airHumidity);
       }
-      // ... resto das atualizações ...
        if (doc["lightOnTime"].is<String>()) {
           sscanf(doc["lightOnTime"], "%d:%d", &target.lightOnTime.tm_hour, &target.lightOnTime.tm_min);
           Serial.printf("Horário de ligar atualizado para %02d:%02d\n", target.lightOnTime.tm_hour, target.lightOnTime.tm_min);
       }
-
       if (doc["lightOffTime"].is<String>()) {
           sscanf(doc["lightOffTime"], "%d:%d", &target.lightOffTime.tm_hour, &target.lightOffTime.tm_min);
           Serial.printf("Horário de desligar atualizado para %02d:%02d\n", target.lightOffTime.tm_hour, target.lightOffTime.tm_min);
       }
-
+      */
   }
 }
 
 // Declaração da variável estática para satisfazer o linker
 // O valor será atribuído em setupMQTT.
-extern String staticRoomTopic;
+// extern String staticRoomTopic; // <<< Mantido por enquanto
