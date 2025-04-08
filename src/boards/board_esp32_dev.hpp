@@ -15,6 +15,11 @@
 #define SDA 33               // Pino SDA do I2C
 #define SCL 32               // Pino SCL do I2C
 
+// --- Configuração do Display LCD ---
+#define LCD_I2C_ADDR 0x27
+#define LCD_COLS 16
+#define LCD_ROWS 2
+
 // --- Definições Específicas da Instalação/Board ---
 // (Podem variar dependendo de como você quer identificar esta unidade)
 #define MQTT_ROOM_TOPIC "01"       // Identificador do cômodo/estufa para MQTT

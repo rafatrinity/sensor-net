@@ -18,6 +18,12 @@
 #define SDA 6                // (D6) Pino SDA do I2C
 #define SCL 7                // (D7) Pino SCL do I2C
 
+// --- Configuração do Display LCD/OLED ---
+// Verifique o endereço do seu display! 0x3C ou 0x3D são comuns para OLEDs. 0x27 para LCDs.
+#define LCD_I2C_ADDR 0x3C    // Exemplo para OLED comum no XIAO C3 (VERIFIQUE O SEU!)
+#define LCD_COLS 16          // Ajuste se usar OLED maior/diferente
+#define LCD_ROWS 2           // Ajuste se usar OLED maior/diferente
+
 // --- Definições Específicas da Instalação/Board ---
 // (Podem variar dependendo de como você quer identificar esta unidade)
 #define MQTT_ROOM_TOPIC "02"         // Identificador do cômodo/estufa para MQTT

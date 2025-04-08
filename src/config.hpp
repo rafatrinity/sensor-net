@@ -17,9 +17,6 @@
 #else
     #error "Placa não suportada. Crie um arquivo 'src/boards/board_your_board_name.hpp' e inclua-o condicionalmente em config.hpp."
 #endif
-// ---------------------------------------------------------
-
-// extern LiquidCrystal_I2C LCD; // <-- REMOVIDO
 
 // Credenciais do WiFi (Mantém a lógica de UNIT_TEST)
 #ifdef UNIT_TEST
