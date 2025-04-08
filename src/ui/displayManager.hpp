@@ -1,110 +1,119 @@
+// src/ui/displayManager.hpp
 #ifndef DISPLAY_MANAGER_HPP
 #define DISPLAY_MANAGER_HPP
 
-#include <stdint.h> // Para uint8_t
+#include <stdint.h>           // Para uint8_t
+#include <memory>             // Para std::unique_ptr
+#include <LiquidCrystal_I2C.h> // Biblioteca do LCD
+#include "utils/freeRTOSMutex.hpp" // Nosso wrapper RAII para Mutex
 
-// --- Configuração ---
-// Poderíamos ter uma struct DisplayConfig, mas por enquanto passamos diretamente.
-
-// --- Funções de Gerenciamento ---
-
-/**
- * @brief Inicializa o DisplayManager e o hardware LCD.
- * Deve ser chamado uma vez no setup(), após Wire.begin().
- *
- * @param i2c_addr Endereço I2C do display LCD.
- * @param cols Número de colunas do display.
- * @param rows Número de linhas do display.
- * @return true Se a inicialização foi bem-sucedida (mutex criado, LCD inicializado).
- * @return false Se a inicialização falhou.
- */
-bool displayManagerInit(uint8_t i2c_addr, uint8_t cols, uint8_t rows);
+namespace GrowController {
 
 /**
- * @brief Limpa completamente o display LCD.
+ * @brief Gerencia a interação com um display LCD I2C de forma thread-safe.
+ * Utiliza RAII para gerenciar o objeto LCD e o Mutex.
  */
-void displayManagerClear();
+class DisplayManager {
+public:
+    /**
+     * @brief Construtor. Apenas armazena parâmetros de configuração.
+     * A inicialização real do hardware é feita em initialize().
+     * @param i2c_addr Endereço I2C do display.
+     * @param cols Número de colunas.
+     * @param rows Número de linhas.
+     */
+    DisplayManager(uint8_t i2c_addr, uint8_t cols, uint8_t rows);
 
-/**
- * @brief Controla a luz de fundo do LCD.
- *
- * @param enable true para ligar, false para desligar.
- */
-void displayManagerSetBacklight(bool enable);
+    /**
+     * @brief Destrutor. Garante a liberação de recursos (automática via RAII).
+     */
+    ~DisplayManager();
 
-// --- Funções de Exibição de Conteúdo ---
+    // Desabilitar cópia e atribuição
+    DisplayManager(const DisplayManager&) = delete;
+    DisplayManager& operator=(const DisplayManager&) = delete;
 
-/**
- * @brief Imprime texto em uma linha específica, limpando o restante da linha.
- * Usa snprintf internamente para segurança e formatação.
- *
- * @param line O número da linha (0 ou 1 para um display 16x2).
- * @param format Ponteiro para a string de formato (estilo printf).
- * @param ... Argumentos variáveis para a string de formato.
- */
-void displayManagerPrintLine(uint8_t line, const char* format, ...);
+    /**
+     * @brief Inicializa o hardware do LCD e o mutex.
+     * Deve ser chamado uma vez após Wire.begin().
+     * @return true Se a inicialização foi bem-sucedida.
+     * @return false Se houve falha (ex: mutex não criado, LCD não alocado/inicializado).
+     */
+    bool initialize();
 
-/**
- * @brief Exibe uma mensagem de erro genérica (geralmente na linha inferior).
- *
- * @param message A mensagem de erro a ser exibida.
- */
-void displayManagerShowError(const char* message);
+    /**
+     * @brief Limpa completamente o display LCD. Thread-safe.
+     */
+    void clear();
 
-// --- Funções de Exibição de Status Específico ---
+    /**
+     * @brief Controla a luz de fundo do LCD. Thread-safe.
+     * @param enable true para ligar, false para desligar.
+     */
+    void setBacklight(bool enable);
 
-/**
- * @brief Exibe a mensagem inicial de boot.
- */
-void displayManagerShowBooting();
+    /**
+     * @brief Imprime texto formatado em uma linha específica, limpando o restante. Thread-safe.
+     * @param line O número da linha (base 0).
+     * @param format String de formato estilo printf.
+     * @param ... Argumentos variáveis.
+     */
+    void printLine(uint8_t line, const char* format, ...);
 
-/**
- * @brief Exibe o status de conexão WiFi.
- */
-void displayManagerShowConnectingWiFi();
+    /**
+     * @brief Exibe uma mensagem de erro (geralmente na última linha). Thread-safe.
+     * @param message Mensagem de erro.
+     */
+    void showError(const char* message);
 
-/**
- * @brief Exibe o status de WiFi conectado com o IP.
- *
- * @param ip String contendo o endereço IP obtido.
- */
-void displayManagerShowWiFiConnected(const char* ip);
+    // --- Funções de Status Específico ---
+    void showBooting();
+    void showConnectingWiFi();
+    void showWiFiConnected(const char* ip);
+    void showNtpSyncing();
+    void showNtpSynced();
+    void showMqttConnecting();
+    void showMqttConnected();
 
-/**
- * @brief Exibe o status de sincronização NTP.
- */
-void displayManagerShowNtpSyncing();
+    /**
+     * @brief Atualiza a exibição principal com dados de sensores e hora. Thread-safe.
+     * @param temp Temperatura em Celsius.
+     * @param airHum Umidade do ar em %.
+     * @param soilHum Umidade do solo em %.
+     */
+    void showSensorData(float temp, float airHum, float soilHum);
 
-/**
- * @brief Exibe o status de NTP sincronizado.
- */
-void displayManagerShowNtpSynced();
+    /**
+     * @brief Atualiza o caractere do spinner no canto inferior direito. Thread-safe.
+     */
+    void updateSpinner();
 
-/**
- * @brief Exibe o status de conexão MQTT.
- */
-void displayManagerShowMqttConnecting();
+    /**
+     * @brief Verifica se o display manager foi inicializado com sucesso.
+     * @return true se inicializado, false caso contrário.
+     */
+    bool isInitialized() const;
 
-/**
- * @brief Exibe o status de MQTT conectado.
- */
-void displayManagerShowMqttConnected(); // Pode não ser necessário se a UI principal sobrescrever
+private:
+    const uint8_t i2cAddr; // Guardar endereço I2C
+    const uint8_t lcdCols;
+    const uint8_t lcdRows;
+    std::unique_ptr<LiquidCrystal_I2C> lcd = nullptr; // Ponteiro inteligente para o LCD
+    FreeRTOSMutex lcdMutex; // Wrapper RAII para o Mutex
+    bool initialized = false;
 
-/**
- * @brief Atualiza a exibição principal com os dados dos sensores.
- * Formata e exibe temperatura, umidade do ar e umidade do solo.
- *
- * @param temp Temperatura em graus Celsius.
- * @param airHum Umidade do ar em %.
- * @param soilHum Umidade do solo em %.
- */
-void displayManagerShowSensorData(float temp, float airHum, float soilHum);
+    // Estado interno para otimizar atualizações do display
+    int8_t spinnerCounter = 0;
+    float lastTemp = NAN;
+    float lastAirHum = NAN;
+    float lastSoilHum = NAN;
+    int lastMinute = -1;
 
-/**
- * @brief Atualiza o caractere do spinner em um local fixo (canto inferior direito).
- * Deve ser chamado periodicamente quando uma operação longa está em andamento.
- */
-void displayManagerUpdateSpinner();
+    // Constantes internas
+    static const char* SPINNER_GLYPHS;
+    static const TickType_t MUTEX_TIMEOUT;
+};
 
+} // namespace GrowController
 
 #endif // DISPLAY_MANAGER_HPP
