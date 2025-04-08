@@ -2,60 +2,140 @@
 #ifndef SENSOR_MANAGER_HPP
 #define SENSOR_MANAGER_HPP
 
-#include "config.hpp"
-#include <DHT.h>
-#include "freertos/FreeRTOS.h" // Para SemaphoreHandle_t
-#include "freertos/semphr.h"
+#include "config.hpp"             // Para SensorConfig
+#include <memory>                // Para std::unique_ptr
+#include <DHT.h>                 // Biblioteca DHT
+#include <vector>                // Para leitura do sensor de solo
+#include <numeric>               // Para std::accumulate
+#include "utils/freeRTOSMutex.hpp" // Wrapper RAII do Mutex
+#include "freertos/FreeRTOS.h"   // Para tipos FreeRTOS
+#include "freertos/task.h"       // Para TaskHandle_t
 
-// --- Funções do Módulo SensorManager ---
+// Forward declaration para dependências (se necessário no futuro)
+namespace GrowController {
+    class DisplayManager;
+    class MqttManager;
+}
 
-/**
- * @brief Inicializa os sensores gerenciados por este módulo e o mecanismo de cache.
- * @param config Referência constante à configuração dos sensores.
- */
-void initializeSensors(const SensorConfig& config);
-
-/**
- * @brief Obtém a última leitura de temperatura válida armazenada em cache.
- * Esta função é segura para ser chamada de múltiplas tarefas (thread-safe).
- *
- * @return float A última temperatura lida em graus Celsius, ou NAN se nenhuma leitura válida foi feita ainda.
- */
-float getCurrentTemperature(); // <<< NOVA FUNÇÃO GETTER PÚBLICA >>>
+namespace GrowController {
 
 /**
- * @brief Obtém a última leitura de umidade do ar válida armazenada em cache.
- * Esta função é segura para ser chamada de múltiplas tarefas (thread-safe).
- *
- * @return float A última umidade relativa lida em porcentagem (%), ou NAN se nenhuma leitura válida foi feita ainda.
+ * @brief Gerencia a leitura de sensores (DHT, Solo) e o cálculo de VPD.
+ * Atualiza um cache interno thread-safe e executa uma tarefa dedicada
+ * para leituras periódicas. Utiliza RAII para recursos.
  */
-float getCurrentHumidity(); // <<< NOVA FUNÇÃO GETTER PÚBLICA >>>
+class SensorManager {
+public:
+    /**
+     * @brief Construtor. Recebe configuração e dependências.
+     * @param config Configuração específica dos sensores.
+     * @param displayMgr Ponteiro para o DisplayManager (opcional, para atualização direta).
+     * @param mqttMgr Ponteiro para o MqttManager (opcional, para publicação direta).
+     */
+    SensorManager(const SensorConfig& config,
+                  DisplayManager* displayMgr = nullptr, /* Passar outras dependências */
+                  MqttManager* mqttMgr = nullptr);
+
+    /**
+     * @brief Destrutor. Para a tarefa e libera recursos (automático via RAII).
+     */
+    ~SensorManager();
+
+    // Desabilitar cópia e atribuição
+    SensorManager(const SensorManager&) = delete;
+    SensorManager& operator=(const SensorManager&) = delete;
+
+    /**
+     * @brief Inicializa o hardware do sensor DHT e o mutex.
+     * @return true Se a inicialização foi bem-sucedida.
+     * @return false Se houve falha.
+     */
+    bool initialize();
+
+    /**
+     * @brief Inicia a tarefa FreeRTOS para leitura periódica dos sensores.
+     * @param priority Prioridade da tarefa.
+     * @param stackSize Tamanho da pilha da tarefa em palavras (words).
+     * @return true Se a tarefa foi criada com sucesso.
+     * @return false Se a criação da tarefa falhou.
+     */
+    bool startSensorTask(UBaseType_t priority = 1, uint32_t stackSize = 4096);
+
+    /**
+     * @brief Obtém a última leitura de temperatura válida do cache. Thread-safe.
+     * @return float Temperatura em Celsius ou NAN.
+     */
+    float getCurrentTemperature() const;
+
+    /**
+     * @brief Obtém a última leitura de umidade do ar válida do cache. Thread-safe.
+     * @return float Umidade em % ou NAN.
+     */
+    float getCurrentHumidity() const;
+
+    /**
+     * @brief Lê a umidade do solo diretamente do pino ADC configurado.
+     * Esta função realiza a leitura no momento da chamada. Thread-safe (leitura ADC é).
+     * @return float Umidade do solo em % ou NAN.
+     */
+    float readSoilHumidity() const;
+
+    /**
+     * @brief Calcula o Déficit de Pressão de Vapor (VPD).
+     * Função utilitária, pode ser chamada a qualquer momento.
+     * @param temp Temperatura em Celsius.
+     * @param hum Umidade do ar em %.
+     * @return float VPD em kPa ou NAN se entradas inválidas.
+     */
+    float calculateVpd(float temp, float hum) const;
+
+    /**
+     * @brief Verifica se o manager foi inicializado.
+     * @return true se inicializado, false caso contrário.
+     */
+    bool isInitialized() const;
 
 
-/**
- * @brief Lê a umidade do solo do sensor analógico.
- * (Esta função permanece inalterada, pois não envolve o DHT)
- * @param soilPin O pino ADC conectado ao sensor de umidade do solo.
- * @return float A umidade do solo calculada em porcentagem (%), ou 0.0 se nenhuma leitura válida for obtida.
- */
-float readSoilHumidity(int soilPin);
+private:
+    /**
+     * @brief Função executada pelo loop da tarefa FreeRTOS.
+     */
+    void runSensorTask();
 
-/**
- * @brief Calcula o Déficit de Pressão de Vapor (VPD) com base na temperatura e umidade.
- * (Esta função permanece inalterada)
- * @param tem A temperatura em graus Celsius.
- * @param hum A umidade relativa em porcentagem (%).
- * @return float O valor do VPD calculado em kiloPascals (kPa), ou NAN se as entradas forem inválidas.
- */
-float calculateVpd(float tem, float hum);
+    /**
+     * @brief Realiza a leitura direta do sensor de temperatura DHT. Não thread-safe.
+     * @return float Temperatura em Celsius ou NAN.
+     */
+    float _readTemperatureFromSensor();
 
-/**
- * @brief Função da tarefa FreeRTOS para leitura periódica dos sensores.
- * AGORA É A ÚNICA RESPONSÁVEL por ler o sensor DHT e atualizar o cache.
- * Continua responsável por ler o sensor de solo, calcular VPD, publicar MQTT e atualizar display.
- *
- * @param parameter Ponteiro para a estrutura AppConfig completa.
- */
-void readSensors(void *parameter);
+    /**
+     * @brief Realiza a leitura direta do sensor de umidade DHT. Não thread-safe.
+     * @return float Umidade em % ou NAN.
+     */
+    float _readHumidityFromSensor();
+
+    /**
+     * @brief Wrapper estático para a função da tarefa FreeRTOS.
+     * @param pvParameters Ponteiro para a instância de SensorManager.
+     */
+    static void readSensorsTaskWrapper(void *pvParameters);
+
+    // --- Membros ---
+    const SensorConfig& sensorConfig;        // Referência à configuração
+    DisplayManager* displayManager = nullptr;  // Dependência opcional
+    MqttManager* mqttManager = nullptr;      // Dependência opcional
+    std::unique_ptr<DHT> dhtSensor = nullptr; // Ponteiro inteligente para o sensor
+    FreeRTOSMutex sensorDataMutex;           // Mutex para o cache
+    float cachedTemperature = NAN;
+    float cachedHumidity = NAN;
+    TaskHandle_t readTaskHandle = nullptr;   // Handle da tarefa criada
+    bool initialized = false;
+
+    // Constantes internas
+    static const TickType_t SENSOR_READ_INTERVAL_MS;
+    static const TickType_t MUTEX_TIMEOUT;
+};
+
+} // namespace GrowController
 
 #endif // SENSOR_MANAGER_HPP
