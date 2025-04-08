@@ -19,10 +19,9 @@ void connectToWiFi(void *parameter) {
 
     const uint32_t maxRetries = 20;
     const uint32_t retryDelayMs = 500;
+    displayMgr->showConnectingWiFi();
 
     while (true) {
-        Serial.println("Connecting to WiFi...");
-        displayMgr->showConnectingWiFi();
 
         WiFi.begin(wifiConfig->ssid, wifiConfig->password);
 
