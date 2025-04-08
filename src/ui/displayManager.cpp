@@ -12,7 +12,7 @@ namespace GrowController {
 
 // Definição das constantes estáticas
 const char* DisplayManager::SPINNER_GLYPHS = "|/-\\";
-const TickType_t DisplayManager::MUTEX_TIMEOUT = pdMS_TO_TICKS(50); // 50ms timeout
+const TickType_t DisplayManager::MUTEX_TIMEOUT = pdMS_TO_TICKS(100);
 
 // --- Construtor e Destrutor ---
 
