@@ -232,7 +232,7 @@ void SensorManager::runSensorTask() {
     // Serial.println("SensorManager: runSensorTask loop entered.");
 
     // Opcional: Alocar JSON doc uma vez se for usar sempre
-    StaticJsonDocument<256> sensorDoc; // Requer #include <ArduinoJson.h>
+    JsonDocument sensorDoc;
 
     while (true) {
         if (!initialized) {
