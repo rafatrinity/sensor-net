@@ -8,6 +8,7 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/semphr.h"
 #include "freertos/task.h"
+#include <ArduinoJson.h> // Include needed for JsonDocument if used internally
 
 namespace GrowController {
 
@@ -16,6 +17,11 @@ public:
     // Passa dependências (config, target manager) pelo construtor (Injeção de Dependência)
     MqttManager(const MQTTConfig& config, TargetDataManager& targetMgr);
     ~MqttManager(); // Limpa recursos se necessário
+
+    // Desabilitar cópia e atribuição
+    MqttManager(const MqttManager&) = delete;
+    MqttManager& operator=(const MqttManager&) = delete;
+
 
     /**
      * @brief Inicializa o cliente MQTT (servidor, porta, callback).
@@ -65,17 +71,20 @@ private:
 
     /**
      * @brief Processa mensagens MQTT recebidas e mantém a conexão ativa.
-     * Chamado por run().
+     * Chamado por run(). DEPRECATED - loop() is handled in run()
      */
-    void loop();
+    // void loop(); // This method seems redundant with run() handling pubSubClient.loop()
 
      /**
      * @brief Callback interno para mensagens MQTT recebidas.
-     * Chamado pelo PubSubClient. Usa targetDataManager para atualizar alvos.
+     * Chamado pelo PubSubClient via lambda. Usa targetDataManager para atualizar alvos.
+     * NOTE: Changed byte* to unsigned char* to match PubSubClient's std::function expectation
      */
-    void messageCallback(char* topic, byte* payload, unsigned int length);
-     // Função estática wrapper para o callback do PubSubClient
-     static void staticCallback(char* topic, byte* payload, unsigned int length, void* object);
+    void messageCallback(char* topic, unsigned char* payload, unsigned int length);
+
+    // --- REMOVED STATIC MEMBERS ---
+    // static void staticCallback(char* topic, byte* payload, unsigned int length, void* object);
+    // static MqttManager* s_instance; // No longer needed with lambda callback
 
     const MQTTConfig& mqttConfig; // Referência à configuração
     TargetDataManager& targetDataManager; // Referência ao gerenciador de alvos
