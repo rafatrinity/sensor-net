@@ -86,7 +86,6 @@ void setup()
     Serial.print("Waiting for WiFi connection...");
     displayMgr.showConnectingWiFi(); // Atualiza display
     while (WiFi.status() != WL_CONNECTED) {
-         displayMgr.updateSpinner(); // Mostra atividade
         vTaskDelay(pdMS_TO_TICKS(200));
     }
     Serial.println("\nWiFi Connected!");
