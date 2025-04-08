@@ -7,43 +7,43 @@
 #include <WiFi.h>
 
 
-void connectToWiFi(void * parameter) {
-    // Faz o cast do parâmetro para o tipo esperado
-    const WiFiConfig* wifiConfig = static_cast<const WiFiConfig*>(parameter);
-     if (wifiConfig == nullptr) {
-        Serial.println("FATAL ERROR: WiFiTask received NULL config!");
-        vTaskDelete(NULL); // Aborta a tarefa
+void connectToWiFi(void *parameter) {
+    WiFiTaskParams* params = static_cast<WiFiTaskParams*>(parameter);
+    if (params == nullptr || params->wifiConfig == nullptr || params->displayMgr == nullptr) {
+        Serial.println("FATAL ERROR: WiFiTask received NULL parameters!");
+        vTaskDelete(NULL);
         return;
     }
+    const WiFiConfig* wifiConfig = params->wifiConfig;
+    GrowController::DisplayManager* displayMgr = params->displayMgr;
 
     const uint32_t maxRetries = 20;
     const uint32_t retryDelayMs = 500;
 
     while (true) {
         Serial.println("Connecting to WiFi...");
-        displayManagerShowConnectingWiFi();
+        displayMgr->showConnectingWiFi();
 
-        // Usa a configuração recebida via parâmetro
-        WiFi.begin(wifiConfig->ssid, wifiConfig->password); // <<< USA CONFIG
+        WiFi.begin(wifiConfig->ssid, wifiConfig->password);
 
         uint32_t attempt = 0;
         while (WiFi.status() != WL_CONNECTED && attempt < maxRetries) {
             vTaskDelay(pdMS_TO_TICKS(retryDelayMs));
             Serial.print(".");
-            displayManagerUpdateSpinner();
+            displayMgr->updateSpinner();
             attempt++;
         }
 
         if (WiFi.status() == WL_CONNECTED) {
             String ipAddr = WiFi.localIP().toString();
             Serial.println(ipAddr.c_str());
-            displayManagerShowWiFiConnected(ipAddr.c_str());
+            displayMgr->showWiFiConnected(ipAddr.c_str());
             break;
         } else {
             Serial.println("\nFailed to connect to WiFi, retrying in 5 seconds...");
-            displayManagerShowError("WiFi Fail");
+            displayMgr->showError("WiFi Fail");
             vTaskDelay(pdMS_TO_TICKS(5000));
-            displayManagerClear();
+            displayMgr->clear();
         }
     }
 
