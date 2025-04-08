@@ -4,7 +4,7 @@
 #include <WiFiClient.h>
 #include <PubSubClient.h>
 #include "config.hpp"
-#include "targetDataManager.hpp" // Dependência para o callback
+#include "data/targetDataManager.hpp" // Dependência para o callback
 #include "freertos/FreeRTOS.h"
 #include "freertos/semphr.h"
 #include "freertos/task.h"
