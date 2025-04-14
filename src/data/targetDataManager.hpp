@@ -103,7 +103,7 @@ namespace GrowController
 
     TargetValues currentTargets;                              // Armazena os valores
     mutable SemaphoreHandle_t dataMutex;                      // Mutex para proteger currentTargets (mutable para getters const)
-    static const TickType_t mutexTimeout = pdMS_TO_TICKS(50); // Timeout para leituras
+    static const TickType_t mutexTimeout = pdMS_TO_TICKS(200); // Timeout para leituras
   };
 
 } // namespace GrowController

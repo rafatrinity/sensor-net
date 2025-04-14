@@ -31,6 +31,10 @@
 
 #define BAUD 115200
 
+// --- Initialization Retry Configuration ---
+#define INIT_RETRY_COUNT 3       // Number of initialization attempts
+#define INIT_RETRY_DELAY_MS 1000 // Delay between attempts in milliseconds
+
 // Semáforos (Ainda como extern - próximos alvos de refatoração)
 extern SemaphoreHandle_t mqttMutex; // OK por enquanto, será encapsulado no MqttManager
 

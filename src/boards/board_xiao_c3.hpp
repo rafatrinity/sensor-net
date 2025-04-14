@@ -26,7 +26,11 @@
 
 // --- Definições Específicas da Instalação/Board ---
 // (Podem variar dependendo de como você quer identificar esta unidade)
-#define MQTT_ROOM_TOPIC "02"         // Identificador do cômodo/estufa para MQTT
-#define MQTT_CLIENT_ID "ESP32Client2" // ID único do cliente MQTT para esta placa
-
+#ifdef UNIT_TEST
+    #define MQTT_ROOM_TOPIC "test"       // Identificador do cômodo/estufa para MQTT
+    #define MQTT_CLIENT_ID "Xiao_C3_test" // ID único do cliente MQTT para esta placa
+#else
+    #define MQTT_ROOM_TOPIC "02"       // Identificador do cômodo/estuf
+    #define MQTT_CLIENT_ID "Xiao_C3" // ID único do cliente MQTT para esta placa
+#endif
 #endif // BOARD_XIAO_C3_HPP

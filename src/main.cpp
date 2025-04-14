@@ -7,144 +7,218 @@
 #include "data/targetDataManager.hpp" // Classe TargetDataManager
 #include "utils/timeService.hpp"      // Funções C-style (a refatorar)
 #include "ui/displayManager.hpp"      // Classe DisplayManager refatorada
-#include "utils/freeRTOSMutex.hpp"  // Wrapper Mutex RAII
 
 #include <WiFi.h>                 // Para WiFi.status() e WL_CONNECTED
 #include <Wire.h>                 // Para I2C
 #include <ArduinoJson.h>          // Usado em alguns managers
 
-// --- Instâncias Principais (Managers) ---
-// Ordem pode ser importante para injeção de dependência
+// --- Instâncias Principais (Managers - Construídos no Setup ou Globalmente se sem deps complexas) ---
 AppConfig appConfig;
-GrowController::TargetDataManager targetManager;
-GrowController::DisplayManager displayMgr(LCD_I2C_ADDR, LCD_COLS, LCD_ROWS); // Usa defines dos board files
-GrowController::MqttManager mqttMgr(appConfig.mqtt, targetManager); // Depende de TargetDataManager
-GrowController::SensorManager sensorMgr(appConfig.sensor, &displayMgr, &mqttMgr); // Depende de DisplayManager e MqttManager
-GrowController::ActuatorManager actuatorMgr(appConfig.gpioControl, targetManager, sensorMgr); // Depende de TargetDataManager e SensorManager
+GrowController::TargetDataManager targetManager; // OK Global - Sem deps complexas no construtor
+GrowController::DisplayManager displayMgr(LCD_I2C_ADDR, LCD_COLS, LCD_ROWS); // OK Global - Deps simples no construtor
+GrowController::MqttManager mqttMgr(appConfig.mqtt, targetManager); // OK Global - Depende de targetManager global
 // TimeService ainda é C-style
+
+// --- Flags de Status da Inicialização ---
+bool displayOk = false;
+bool sensorsOk = false;
+bool actuatorsOk = false;
+bool wifiOk = false;
+bool timeOk = false;
+bool mqttSetupOk = false; // Para setup() do MQTT
+bool mqttTaskOk = false;
+bool sensorTaskOk = false;
+bool actuatorTasksOk = false;
 
 /**
  * @brief Função principal de configuração da aplicação.
  * Inicializa hardware, managers e cria as tarefas FreeRTOS.
  */
-void setup()
-{
+ void setup() {
     Serial.begin(BAUD);
-    Serial.println("\n--- Booting Application (RAII Refactor) ---");
+    Serial.println("\n--- Booting Application (RAII Refactor w/ Retries) ---");
 
     // 1. Inicializa I2C (necessário para o Display)
-    Wire.begin(SDA, SCL); // Usa pinos definidos em board_*.hpp via config.hpp
+    Wire.begin(SDA, SCL); // Usa defines dos board files
 
     // 2. Inicializa Display Manager
     Serial.println("Initializing Display Manager...");
-    if (!displayMgr.initialize()) {
-        Serial.println("FATAL ERROR: Display Manager Initialization Failed!");
-        // Loop infinito ou reinicialização seria apropriado aqui
-        while(1) { vTaskDelay(1000); }
-    }
-    displayMgr.showBooting();
-
-    // 3. Inicializa Sensor Manager
-    Serial.println("Initializing Sensor Manager...");
-    if (!sensorMgr.initialize()) {
-         Serial.println("FATAL ERROR: Sensor Manager Initialization Failed!");
-         displayMgr.showError("Sensor Init");
-         while(1) { vTaskDelay(1000); }
+    displayOk = displayMgr.initialize();
+    if (!displayOk) {
+        Serial.println("FATAL: Display Manager Initialization Failed after retries!");
+        // Continuar sem display
+    } else {
+        displayMgr.showBooting();
     }
 
-    // 4. Inicializa Actuator Manager
-    Serial.println("Initializing Actuator Manager...");
-    if (!actuatorMgr.initialize()) {
-         Serial.println("FATAL ERROR: Actuator Manager Initialization Failed!");
-         displayMgr.showError("Actuator Init");
-         while(1) { vTaskDelay(1000); }
-    }
-
-    // 5. Configura MqttManager (antes de iniciar tarefas que dependem dele)
+    // 3. Configura MqttManager (antes de construir SensorManager que depende dele)
     Serial.println("Setting up MQTT Manager...");
     mqttMgr.setup(); // Configura cliente, servidor, callback
-    // Adicionar verificação de sucesso se setup() for modificado para retornar bool
+    mqttSetupOk = true; // Assumindo que setup não falha criticamente por enquanto
+
+    // --- Construção e Inicialização dos Managers com Dependências ---
+    // SensorManager precisa de DisplayManager* e MqttManager*
+    // ActuatorManager precisa de TargetDataManager& e SensorManager&
+
+    // 4. Construir e Inicializar Sensor Manager AGORA
+    Serial.println("Initializing Sensor Manager...");
+    GrowController::SensorManager sensorMgr(appConfig.sensor,
+                                            (displayOk ? &displayMgr : nullptr),
+                                            (mqttSetupOk ? &mqttMgr : nullptr)); // Passa ponteiros no construtor
+    sensorsOk = sensorMgr.initialize(); // Tenta inicializar hardware do sensor
+    if (!sensorsOk) {
+        Serial.println("ERROR: Sensor Manager Initialization Failed after retries!");
+        if (displayOk) displayMgr.showError("Sensor Init Fail");
+        // Continuar sem sensores? O controle baseado em sensor não funcionará.
+    }
+
+    // 5. Construir e Inicializar Actuator Manager AGORA (depende de sensorMgr)
+    Serial.println("Initializing Actuator Manager...");
+    GrowController::ActuatorManager actuatorMgr(appConfig.gpioControl, targetManager, sensorMgr); // Passa referências no construtor
+    actuatorsOk = actuatorMgr.initialize(); // Tenta inicializar GPIOs dos atuadores
+    if (!actuatorsOk) {
+        Serial.println("ERROR: Actuator Manager Initialization Failed!");
+        if (displayOk) displayMgr.showError("Actuator Init Fail");
+        // Continuar sem atuadores? O controle não funcionará.
+    }
+
+    // --- Fim da construção/inicialização dos managers principais ---
 
     // 6. Inicia Tarefa WiFi
     Serial.println("Starting WiFi Task...");
-    WiFiTaskParams wifiParams = { &appConfig.wifi, &displayMgr }; // Usa struct definida em wifi.hpp
+    // Passa displayMgr somente se OK
+    WiFiTaskParams wifiParams = { &appConfig.wifi, (displayOk ? &displayMgr : nullptr) };
     BaseType_t wifiTaskResult = xTaskCreate(
-        connectToWiFi,   // Função da tarefa
-        "WiFiTask",      // Nome
-        4096,            // Stack size
-        (void *)&wifiParams, // Parâmetro (struct)
-        1,               // Prioridade
-        NULL             // Handle (opcional)
-    );
+        connectToWiFi, "WiFiTask", 4096, (void *)&wifiParams, 1, NULL );
     if (wifiTaskResult != pdPASS) {
          Serial.println("FATAL ERROR: Failed to start WiFi Task!");
-         displayMgr.showError("Task WiFi Fail");
-         while(1) { vTaskDelay(1000); }
+         if (displayOk) displayMgr.showError("Task WiFi Fail");
+         while(1) { vTaskDelay(1000); } // Parada crítica
     }
 
-    // 7. Aguarda Conexão WiFi (Bloqueia setup até conectar)
+    // 7. Aguarda Conexão WiFi
     Serial.print("Waiting for WiFi connection...");
-    displayMgr.showConnectingWiFi(); // Atualiza display
-    while (WiFi.status() != WL_CONNECTED) {
+    if (displayOk) displayMgr.showConnectingWiFi();
+    uint32_t wifiWaitStart = millis();
+    while (WiFi.status() != WL_CONNECTED && (millis() - wifiWaitStart < 60000)) { // Timeout de 60s
         vTaskDelay(pdMS_TO_TICKS(200));
     }
-    Serial.println("\nWiFi Connected!");
-    // O display é atualizado pela própria tarefa connectToWiFi ao sucesso
 
-    // 8. Inicializa Time Service (após WiFi conectar)
-    Serial.println("Initializing Time Service...");
-    displayMgr.showNtpSyncing();
-    // Ainda usando a função C-style - refatorar para classe TimeService depois
-    if (!initializeTimeService(appConfig.time)) {
-        Serial.println("ERROR: Failed to initialize Time Service!");
-        displayMgr.showError("NTP Fail");
-        // Pode continuar mesmo com falha no NTP? Depende do requisito.
+    if (WiFi.status() == WL_CONNECTED) {
+        wifiOk = true;
+        Serial.println("\nWiFi Connected!");
+        // Display atualizado pela tarefa connectToWiFi
     } else {
-        displayMgr.showNtpSynced();
+        wifiOk = false;
+        Serial.println("\nERROR: WiFi Connection Failed (Timeout?)!");
+        if (displayOk) displayMgr.showError("WiFi Fail");
+        // Continuar sem WiFi? NTP e MQTT não funcionarão.
     }
 
-    // 9. Inicia Tarefa MQTT (Usando MqttManager)
-    Serial.println("Starting MQTT Task...");
-    displayMgr.showMqttConnecting(); // Atualiza display
-    BaseType_t mqttTaskResult = xTaskCreate(
-        GrowController::MqttManager::taskRunner, // Método estático da classe
-        "MQTTTask",        // Nome
-        4096,              // Stack size (ajuste se necessário)
-        &mqttMgr,          // Passa ponteiro para a instância MqttManager
-        2,                 // Prioridade (maior que WiFi/Sensores?)
-        nullptr            // Handle (pode ser armazenado em mqttMgr.taskHandle)
-    );
-     if (mqttTaskResult != pdPASS) {
-        Serial.println("FATAL ERROR: Failed to start MQTT Task!");
-        displayMgr.showError("Task MQTT Fail");
-        while(1) { vTaskDelay(1000); }
+    // 8. Inicializa Time Service (SOMENTE se WiFi conectou)
+    if (wifiOk) {
+        Serial.println("Initializing Time Service...");
+        if (displayOk) displayMgr.showNtpSyncing();
+        timeOk = initializeTimeService(appConfig.time);
+        if (!timeOk) {
+            Serial.println("ERROR: Failed to initialize Time Service (NTP Sync Failed?)!");
+            if (displayOk) displayMgr.showError("NTP Fail");
+            // Continuar sem hora exata? Controle de luz pode falhar.
+        } else {
+             if (displayOk) displayMgr.showNtpSynced();
+        }
+    } else {
+        Serial.println("Skipping Time Service initialization (No WiFi).");
+        timeOk = false;
     }
 
-    // 10. Inicia Tarefa de Leitura de Sensores (Usando SensorManager)
-     Serial.println("Starting Sensor Reading Task...");
-     if (!sensorMgr.startSensorTask(1 /* Prioridade */, 4096 /* Stack */)) { // Passa prioridade/stack
-         Serial.println("FATAL ERROR: Failed to start Sensor Task!");
-         displayMgr.showError("Task Sens Fail");
-         while(1) { vTaskDelay(1000); }
-     }
-
-    // 11. Inicia Tarefas de Controle de Atuadores (Usando ActuatorManager)
-    Serial.println("Starting Actuator Control Tasks...");
-    if (!actuatorMgr.startControlTasks(1 /* Prioridade Luz */, 1 /* Prioridade Umid */, 2560 /* Stack */)) {
-         Serial.println("FATAL ERROR: Failed to start Actuator Tasks!");
-         displayMgr.showError("Task Act Fail");
-         while(1) { vTaskDelay(1000); }
+    // 9. Inicia Tarefa MQTT (SOMENTE se WiFi conectou e setup MQTT foi ok)
+    if (wifiOk && mqttSetupOk) {
+        Serial.println("Starting MQTT Task...");
+        if (displayOk) displayMgr.showMqttConnecting();
+        // Passa o endereço do mqttMgr global
+        BaseType_t mqttTaskResult = xTaskCreate(
+            GrowController::MqttManager::taskRunner, "MQTTTask", 4096, &mqttMgr, 2, nullptr );
+        if (mqttTaskResult != pdPASS) {
+            Serial.println("ERROR: Failed to start MQTT Task!");
+            if (displayOk) displayMgr.showError("Task MQTT Fail");
+            mqttTaskOk = false;
+        } else {
+            mqttTaskOk = true;
+        }
+    } else {
+        Serial.println("Skipping MQTT Task start (No WiFi or MQTT Setup failed).");
+        mqttTaskOk = false;
     }
+
+    // 10. Inicia Tarefa de Leitura de Sensores (SOMENTE se sensoresOk)
+    if (sensorsOk) {
+         Serial.println("Starting Sensor Reading Task...");
+         // Passa o endereço do sensorMgr local do setup
+         sensorTaskOk = sensorMgr.startSensorTask(1, 4096);
+         if (!sensorTaskOk) {
+             Serial.println("ERROR: Failed to start Sensor Task!");
+             if (displayOk) displayMgr.showError("Task Sens Fail");
+         }
+    } else {
+         Serial.println("Skipping Sensor Task start (Sensor Init failed).");
+         sensorTaskOk = false;
+    }
+
+    // 11. Inicia Tarefas de Controle de Atuadores (SOMENTE se actuatorsOk e dependências atendidas)
+    bool canStartLightTask = actuatorsOk && timeOk; // Controle de Luz precisa de hora
+    bool canStartHumidityTask = actuatorsOk && sensorsOk; // Controle de Umidade precisa de sensores (a task buscará os dados)
+
+    if (actuatorsOk && (canStartLightTask || canStartHumidityTask)) { // Tenta iniciar se atuadores OK e pelo menos uma condição de controle é possível
+        Serial.println("Starting Actuator Control Tasks...");
+        // Passa o endereço do actuatorMgr local do setup
+        // Idealmente, startControlTasks poderia receber flags para iniciar apenas tarefas viáveis,
+        // mas por enquanto, inicia ambas se actuatorsOk. As tarefas internas devem lidar
+        // com a falta temporária de dados (ex: hora não sincronizada, sensor NAN).
+        actuatorTasksOk = actuatorMgr.startControlTasks(1, 1, 2560);
+        if (!actuatorTasksOk) {
+             Serial.println("ERROR: Failed to start one or both Actuator Tasks!");
+             if (displayOk) displayMgr.showError("Task Act Fail");
+        } else {
+             Serial.println("Actuator Tasks started (individual tasks might wait for dependencies like time/sensor data).");
+        }
+    } else {
+        Serial.println("Skipping Actuator Tasks start (Actuators not initialized or critical dependencies missing).");
+        actuatorTasksOk = false;
+    }
+
 
     // --- Setup Concluído ---
-    vTaskDelay(pdMS_TO_TICKS(500)); // Pequeno delay para estabilizar
+    vTaskDelay(pdMS_TO_TICKS(500)); // Pequeno delay para mensagens de log finalizarem
     Serial.println("--- Setup Complete ---");
+    Serial.println("Initialization Status:");
+    Serial.printf("  Display:     %s\n", displayOk ? "OK" : "FAILED");
+    Serial.printf("  MQTT Setup:  %s\n", mqttSetupOk ? "OK" : "ASSUMED_OK"); // Mudança aqui, pois não verificamos falha
+    Serial.printf("  Sensors:     %s\n", sensorsOk ? "OK" : "FAILED");
+    Serial.printf("  Actuators:   %s\n", actuatorsOk ? "OK" : "FAILED");
+    Serial.printf("  WiFi:        %s\n", wifiOk ? "OK" : "FAILED");
+    Serial.printf("  Time:        %s\n", timeOk ? "OK" : "FAILED");
+    Serial.printf("  MQTT Task:   %s\n", mqttTaskOk ? "OK" : "FAILED/SKIPPED");
+    Serial.printf("  Sensor Task: %s\n", sensorTaskOk ? "OK" : "FAILED/SKIPPED");
+    Serial.printf("  Actuator Tsk:%s\n", actuatorTasksOk ? "OK" : "FAILED/SKIPPED");
     Serial.print("Free Heap: "); Serial.println(ESP.getFreeHeap());
-    displayMgr.clear(); // Limpa mensagens de inicialização
-    // O display agora será atualizado principalmente pela tarefa do SensorManager
+
+    if (displayOk) {
+        // Mostrar um resumo do status ou limpar
+        if (!sensorsOk || !actuatorsOk || !wifiOk || !mqttTaskOk || !timeOk) { // Adicionado !timeOk
+             displayMgr.printLine(0, "System Started");
+             displayMgr.printLine(1, "Degraded Mode"); // Indica que algo falhou ou está faltando
+        } else {
+            // A task do SensorManager começará a atualizar o display com dados
+            // Poderia limpar aqui, mas a task sobrescreverá em breve.
+             // displayMgr.clear(); // Opcional: Limpa mensagens de inicialização se tudo OK
+        }
+    }
+    // O display agora será atualizado pelo SensorManager (se ok e a task rodar)
+    // ou mostrará o erro/status final da inicialização.
 }
 
-/**
+ /**
  * @brief Loop principal do Arduino.
  * No nosso caso com FreeRTOS, pode ficar vazio ou realizar tarefas de baixa prioridade.
  */
