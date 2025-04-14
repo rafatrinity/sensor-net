@@ -87,7 +87,7 @@ public:
      * @param hum Umidade do ar em %.
      * @return float VPD em kPa ou NAN se entradas inválidas.
      */
-    float calculateVpd(float temp, float hum) const;
+    static float calculateVpd(float temp, float hum);
 
     /**
      * @brief Verifica se o manager foi inicializado.

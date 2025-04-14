@@ -6,7 +6,7 @@
 #include <ArduinoJson.h> // Para o callback
 
 // --- Constantes ---
-const TickType_t MQTT_MUTEX_TIMEOUT = pdMS_TO_TICKS(100); // Timeout para operações MQTT
+const TickType_t MQTT_MUTEX_TIMEOUT = pdMS_TO_TICKS(200); // Timeout para operações MQTT
 const TickType_t MQTT_LOOP_DELAY_MS = pdMS_TO_TICKS(500); // Intervalo do loop principal da tarefa
 const TickType_t MQTT_RECONNECT_DELAY_MS = pdMS_TO_TICKS(5000); // Delay antes de tentar reconectar
 const uint8_t MQTT_CONNECT_RETRIES = 3; // Tentativas antes de um delay maior

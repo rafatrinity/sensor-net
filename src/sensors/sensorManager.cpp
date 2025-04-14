@@ -7,6 +7,7 @@
 #include <vector>                   // Para leitura do sensor de solo
 #include <numeric>                  // Para std::accumulate
 #include <ArduinoJson.h>            // Para publicação JSON (opcional)
+#include "config.hpp" 
 
 namespace GrowController {
 
@@ -41,30 +42,58 @@ SensorManager::~SensorManager() {
 // --- Inicialização ---
 
 bool SensorManager::initialize() {
-     if (initialized) {
-        Serial.println("SensorManager WARN: Already initialized.");
-        return true;
-    }
-    Serial.println("SensorManager: Initializing...");
+    if (initialized) {
+       Serial.println("SensorManager WARN: Already initialized.");
+       return true;
+   }
+   Serial.println("SensorManager: Initializing...");
 
-    if (!sensorDataMutex) {
-        Serial.println("SensorManager ERROR: Failed to create data mutex!");
-        return false;
-    }
-    Serial.println("SensorManager: Data mutex verified.");
+   if (!sensorDataMutex) {
+       Serial.println("SensorManager ERROR: Failed to create data mutex! Cannot initialize.");
+       return false; // Cannot proceed without mutex
+   }
+   Serial.println("SensorManager: Data mutex verified.");
 
-    dhtSensor.reset(new (std::nothrow) DHT(sensorConfig.dhtPin, sensorConfig.dhtType));
-    if (!dhtSensor) {
-        Serial.println("SensorManager ERROR: Failed to allocate DHT sensor object!");
-        return false;
-    }
+   // Retry Loop for DHT Sensor Initialization
+   for (int attempt = 1; attempt <= INIT_RETRY_COUNT; ++attempt) {
+       Serial.printf("SensorManager: Attempt %d/%d to initialize DHT sensor...\n", attempt, INIT_RETRY_COUNT);
 
-    dhtSensor->begin();
-    Serial.println("SensorManager: DHT Sensor Initialized via begin().");
+       dhtSensor.reset(new (std::nothrow) DHT(sensorConfig.dhtPin, sensorConfig.dhtType));
+       if (!dhtSensor) {
+           Serial.println("SensorManager ERROR: Failed to allocate DHT sensor object!");
+            if (attempt < INIT_RETRY_COUNT) {
+                vTaskDelay(pdMS_TO_TICKS(INIT_RETRY_DELAY_MS));
+            }
+           continue; // Try next attempt
+       }
 
-    initialized = true;
-    Serial.println("SensorManager: Initialization successful.");
-    return true;
+       dhtSensor->begin(); // begin() não retorna status, mas pode demorar um pouco
+
+       // Tentativa de leitura inicial para verificar se o sensor responde
+       // Isso pode levar tempo e falhar na primeira vez, por isso o retry é útil.
+       float initialTemp = dhtSensor->readTemperature();
+       float initialHum = dhtSensor->readHumidity();
+
+       if (isnan(initialTemp) || isnan(initialHum)) {
+           Serial.printf("SensorManager WARN: DHT sensor did not return valid data on attempt %d.\n", attempt);
+           dhtSensor.reset(); // Libera o objeto falho
+           if (attempt < INIT_RETRY_COUNT) {
+               vTaskDelay(pdMS_TO_TICKS(INIT_RETRY_DELAY_MS));
+           }
+           // Continue para a próxima tentativa
+       } else {
+           Serial.printf("SensorManager: DHT Sensor Initialized successfully (Initial read: %.1fC, %.1f%%).\n", initialTemp, initialHum);
+           initialized = true;
+           Serial.println("SensorManager: Initialization successful.");
+           return true; // Sai do loop e da função com sucesso
+       }
+   } // End of retry loop
+
+   // Se o loop terminou sem sucesso
+   Serial.println("SensorManager ERROR: Initialization failed after all retries.");
+   dhtSensor.reset(); // Garante que o ponteiro é nulo
+   initialized = false;
+   return false;
 }
 
 bool SensorManager::isInitialized() const {
@@ -147,26 +176,22 @@ float SensorManager::readSoilHumidity() const {
     }
 }
 
-float SensorManager::calculateVpd(float temp, float hum) const {
+float SensorManager::calculateVpd(float temp, float hum) { // NOVO
     if (isnan(temp) || isnan(hum) || hum < 0.0f || hum > 100.0f) {
-        return NAN;
+        return NAN; // Entradas inválidas
     }
 
-    const float A = 17.67f;
-    const float B = 243.5f;
-    const float ES_FACTOR = 6.112f; // hPa
+    // Fórmula de Buck para pressão de vapor de saturação (SVP) em kPa
+    float svp = 0.61078f * exp((17.27f * temp) / (temp + 237.3f));
 
-    float es = ES_FACTOR * expf((A * temp) / (temp + B)); // Pressão de vapor de saturação
-    float ea = (hum / 100.0f) * es; // Pressão de vapor atual
-    float vpd_hpa = es - ea;
-    if (vpd_hpa < 0.0f) {
-        vpd_hpa = 0.0f; // VPD não pode ser negativo
-    }
-    float vpd_kpa = vpd_hpa / 10.0f; // Converte para kPa
+    // Pressão de vapor atual (AVP) em kPa
+    float avp = svp * (hum / 100.0f);
 
-    return vpd_kpa;
+    // Déficit de Pressão de Vapor (VPD)
+    float vpd = svp - avp;
+
+    return vpd;
 }
-
 
 // --- Leitura Interna de Sensores DHT (Métodos Privados, Não Thread-Safe) ---
 
