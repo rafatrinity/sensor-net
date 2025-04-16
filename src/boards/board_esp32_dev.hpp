@@ -21,12 +21,18 @@
 #define LCD_ROWS 2
 
 // --- Definições Específicas da Instalação/Board ---
-// (Podem variar dependendo de como você quer identificar esta unidade)
 #ifdef UNIT_TEST
+    // --- Configurações para WOKWI / Teste ---
+    #define MQTT_SERVER "mqtt.wokwi.com" // <--- ADICIONE/MODIFIQUE ESTA LINHA
+    #define MQTT_PORT 1883               // <--- ADICIONE ESTA LINHA
     #define MQTT_ROOM_TOPIC "test"       // Identificador do cômodo/estufa para MQTT
     #define MQTT_CLIENT_ID "ESP32dev_test" // ID único do cliente MQTT para esta placa
 #else
-    #define MQTT_ROOM_TOPIC "01"       // Identificador do cômodo/estuf
-    #define MQTT_CLIENT_ID "ESP32dev" // ID único do cliente MQTT para esta placa
+    // --- Configurações para Placa Real ---
+    #define MQTT_SERVER "192.168.1.11"  // <--- ADICIONE/MODIFIQUE ESTA LINHA (Seu IP real)
+    #define MQTT_PORT 1883              // <--- ADICIONE ESTA LINHA
+    #define MQTT_ROOM_TOPIC "01"        // Identificador do cômodo/estufa real
+    #define MQTT_CLIENT_ID "ESP32dev"   // ID único do cliente MQTT real
 #endif
+
 #endif // BOARD_ESP32_DEV_HPP
