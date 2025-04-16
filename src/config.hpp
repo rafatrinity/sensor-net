@@ -45,8 +45,8 @@ struct WiFiConfig {
 };
 
 struct MQTTConfig {
-    const char* server = "192.168.1.11"; // TODO: Tornar configurável (NVS?)
-    int port = 1883;
+    const char* server = MQTT_SERVER; 
+    int port = MQTT_PORT;             
     const char* clientId = MQTT_CLIENT_ID;
     const char* roomTopic = MQTT_ROOM_TOPIC;
 };

@@ -11,7 +11,7 @@
 #include "freertos/FreeRTOS.h"   // Para tipos FreeRTOS
 #include "freertos/task.h"       // Para TaskHandle_t
 
-// Forward declaration para dependências (se necessário no futuro)
+// Forward declaration para dependências
 namespace GrowController {
     class DisplayManager;
     class MqttManager;
@@ -20,7 +20,8 @@ namespace GrowController {
 namespace GrowController {
 
 /**
- * @brief Gerencia a leitura de sensores (DHT, Solo) e o cálculo de VPD.
+ * @brief Gerencia a leitura de sensores (DHT, Solo), cálculo de VPD,
+ *        e armazena os resultados em cache.
  * Atualiza um cache interno thread-safe e executa uma tarefa dedicada
  * para leituras periódicas. Utiliza RAII para recursos.
  */
@@ -33,7 +34,7 @@ public:
      * @param mqttMgr Ponteiro para o MqttManager (opcional, para publicação direta).
      */
     SensorManager(const SensorConfig& config,
-                  DisplayManager* displayMgr = nullptr, /* Passar outras dependências */
+                  DisplayManager* displayMgr = nullptr,
                   MqttManager* mqttMgr = nullptr);
 
     /**
@@ -65,29 +66,25 @@ public:
      * @brief Obtém a última leitura de temperatura válida do cache. Thread-safe.
      * @return float Temperatura em Celsius ou NAN.
      */
-    float getCurrentTemperature() const;
+    float getTemperature() const;
 
     /**
      * @brief Obtém a última leitura de umidade do ar válida do cache. Thread-safe.
      * @return float Umidade em % ou NAN.
      */
-    float getCurrentHumidity() const;
+    float getHumidity() const;
 
     /**
-     * @brief Lê a umidade do solo diretamente do pino ADC configurado.
-     * Esta função realiza a leitura no momento da chamada. Thread-safe (leitura ADC é).
+     * @brief Obtém a última leitura de umidade do solo válida do cache. Thread-safe.
      * @return float Umidade do solo em % ou NAN.
      */
-    float readSoilHumidity() const;
+    float getSoilHumidity() const; // NOVO GETTER
 
     /**
-     * @brief Calcula o Déficit de Pressão de Vapor (VPD).
-     * Função utilitária, pode ser chamada a qualquer momento.
-     * @param temp Temperatura em Celsius.
-     * @param hum Umidade do ar em %.
-     * @return float VPD em kPa ou NAN se entradas inválidas.
+     * @brief Obtém o último valor calculado de VPD do cache. Thread-safe.
+     * @return float VPD em kPa ou NAN.
      */
-    static float calculateVpd(float temp, float hum);
+    float getVpd() const; // NOVO GETTER
 
     /**
      * @brief Verifica se o manager foi inicializado.
@@ -114,6 +111,22 @@ private:
      */
     float _readHumidityFromSensor();
 
+     /**
+     * @brief Lê a umidade do solo diretamente do pino ADC configurado.
+     * Esta função realiza a leitura no momento da chamada. Não thread-safe por si só,
+     * mas chamada apenas pela tarefa interna.
+     * @return float Umidade do solo em % ou NAN.
+     */
+    float _readSoilHumidityFromSensor() const; // MOVIDO PARA PRIVATE, RENOMEADO
+
+    /**
+     * @brief Calcula o Déficit de Pressão de Vapor (VPD).
+     * @param temp Temperatura em Celsius.
+     * @param hum Umidade do ar em %.
+     * @return float VPD em kPa ou NAN se entradas inválidas.
+     */
+    float _calculateVpd(float temp, float hum); // MOVIDO PARA PRIVATE, RENOMEADO, NÃO ESTÁTICO
+
     /**
      * @brief Wrapper estático para a função da tarefa FreeRTOS.
      * @param pvParameters Ponteiro para a instância de SensorManager.
@@ -128,6 +141,8 @@ private:
     FreeRTOSMutex sensorDataMutex;           // Mutex para o cache
     float cachedTemperature = NAN;
     float cachedHumidity = NAN;
+    float cachedSoilHumidity = NAN;         // NOVO CACHE
+    float cachedVpd = NAN;                  // NOVO CACHE
     TaskHandle_t readTaskHandle = nullptr;   // Handle da tarefa criada
     bool initialized = false;
 

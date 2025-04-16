@@ -79,7 +79,6 @@ void ActuatorManager::checkAndControlLight(const struct tm& lightOn, const struc
         return;
     }
 
-    // Lógica de cálculo de minutos e verificação de horário (igual à anterior)
     int nowMinutes = timeinfo.tm_hour * 60 + timeinfo.tm_min;
     int startMinutes = lightOn.tm_hour * 60 + lightOn.tm_min;
     int endMinutes = lightOff.tm_hour * 60 + lightOff.tm_min;
@@ -235,8 +234,7 @@ void ActuatorManager::runHumidityControlTask() {
     Serial.println("ActuatorManager: Humidity Control Task started.");
     while (true) {
         // Obtém umidade atual do SensorManager injetado (THREAD-SAFE getter)
-        // ----------> CORREÇÃO PRINCIPAL AQUI <----------
-        float currentAirHumidity = sensorManager.getCurrentHumidity();
+        float currentAirHumidity = sensorManager.getHumidity();
 
         // Obtém umidade alvo do TargetDataManager injetado (THREAD-SAFE getter)
         float targetAirHumidity = targetDataManager.getTargetAirHumidity();
