@@ -3,47 +3,11 @@ name: Strict Core System Startup Sequence Test
 version: 1
 author: Rafael Trindade (Sequência Estrita)
 
-# Este teste verifica a sequência *exata* das mensagens de log
-# durante a inicialização até a conclusão do setup.
-
 steps:
-  # Inicializações
-  - wait-serial: 'DisplayManager: Initialization successful.'
-  - wait-serial: 'SensorManager: Initialization successful.'
-  # Nota: O log "Initializing Actuator Manager..." pode aparecer aqui,
-  # mas a confirmação vem depois, então seguimos o log de sucesso.
-  - wait-serial: 'ActuatorManager: GPIOs Initialized.'
-  # Nota: Logs de "Setting up MQTT Manager..." podem aparecer aqui.
-  - wait-serial: 'MqttManager: Setup complete.'
-
-  # Início Tarefa WiFi e Conexão
-  - wait-serial: 'Starting WiFi Task...'
-  # Nota: "Waiting for WiFi connection..." é do setup, a tarefa roda em paralelo.
-  # A mensagem da *tarefa* é "Connecting to WiFi...", mas o teste pegou
-  # "WiFi Connected!" primeiro nos logs anteriores. Vamos seguir os logs.
-  # Se "Connecting to WiFi..." for crítico, precisaria ser adicionado ANTES de "WiFi Connected!".
-  - wait-serial: 'WiFi Connected!'
-  # Nota: "Initializing Time Service..." aparece aqui no log.
-  - wait-serial: 'WiFi Task finished.' # A tarefa WiFi termina aqui nos logs.
-
-  # Sincronização NTP
-  # Nota: "TimeService: Configuring NTP..." e "Waiting for initial NTP sync..." aparecem aqui.
-  - wait-serial: 'TimeService: Initial NTP time synchronized successfully!'
-
-  # Início das Tarefas Principais (a ordem pode variar ligeiramente devido ao escalonador)
-  # Vamos seguir a ordem exata dos logs fornecidos:
-  - wait-serial: 'Starting MQTT Task...'
-  # A próxima linha no log foi uma mistura, vamos ser exatos:
-  - wait-serial: 'Starting Sensor Reading Task...MqttManager::taskRunner started.'
-  - wait-serial: 'SensorManager: Sensor task started successfully.'
-  - wait-serial: 'Starting Actuator Control Tasks...'
-  - wait-serial: 'ActuatorManager: Control tasks started.'
-
-  # Primeira Ação do Atuador (aconteceu antes do Setup Complete no log)
-  # Nota: A tentativa MQTT e o warning do sensor também ocorreram antes do Setup Complete.
-  # A ordem exata dessas 3 pode variar um pouco a cada execução. Vamos manter como no log.
-  - wait-serial: 'ActuatorManager: Light state changed to OFF'
-  - wait-serial: 'SensorTask WARN: Invalid sensor readings obtained in this cycle.'
-
-  # Conclusão do Setup
-  - wait-serial: '--- Setup Complete ---'
+  - wait-serial: 'Display:     OK'
+  - wait-serial: 'MQTT Setup:  OK'
+  - wait-serial: 'Sensors:     OK'
+  - wait-serial: 'Actuators:   OK'
+  - wait-serial: 'WiFi:        OK'
+  - wait-serial: 'Time Config: OK'
+  

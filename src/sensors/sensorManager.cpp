@@ -24,7 +24,7 @@ SensorManager::SensorManager(const SensorConfig& config, DisplayManager* display
     dhtSensor(nullptr),
     cachedTemperature(NAN),
     cachedHumidity(NAN),
-    cachedSoilHumidity(NAN), // Inicializa novo cache
+    cachedSoilHumidity(NAN),
     cachedVpd(NAN),          // Inicializa novo cache
     readTaskHandle(nullptr),
     initialized(false)
@@ -112,7 +112,7 @@ float SensorManager::getTemperature() const {
         xSemaphoreGive(sensorDataMutex.get());
     } else {
         // Evitar log excessivo em caso de timeout frequente
-        // Serial.println("SensorManager WARN: getTemperature - Mutex timeout or invalid.");
+        Serial.println("SensorManager WARN: getTemperature - Mutex timeout or invalid.");
     }
     return temp;
 }
@@ -138,7 +138,7 @@ float SensorManager::getSoilHumidity() const { // IMPLEMENTAÇÃO DO NOVO GETTER
         soilHum = this->cachedSoilHumidity;
         xSemaphoreGive(sensorDataMutex.get());
     } else {
-        // Serial.println("SensorManager WARN: getSoilHumidity - Mutex timeout or invalid.");
+        Serial.println("SensorManager WARN: getSoilHumidity - Mutex timeout or invalid.");
     }
     return soilHum;
 }
@@ -151,7 +151,7 @@ float SensorManager::getVpd() const { // IMPLEMENTAÇÃO DO NOVO GETTER
         vpd = this->cachedVpd;
         xSemaphoreGive(sensorDataMutex.get());
     } else {
-        // Serial.println("SensorManager WARN: getVpd - Mutex timeout or invalid.");
+        Serial.println("SensorManager WARN: getVpd - Mutex timeout or invalid.");
     }
     return vpd;
 }
@@ -169,11 +169,9 @@ float SensorManager::_readHumidityFromSensor() {
      return dhtSensor->readHumidity();
 }
 
-float SensorManager::_readSoilHumidityFromSensor() const { // RENOMEADO E PRIVADO
-     if (!initialized) return NAN; // Check initialization although called internally
-
-    const int NUM_READINGS = 10;
-    const float ADC_MAX = 4095.0f;
+float SensorManager::_readSoilHumidityFromSensor() const {
+    const int NUM_READINGS = 5;
+    const float ADC_MAX = 4095;
     const int MAX_READING_ATTEMPTS = NUM_READINGS * 2; // Limite para evitar bloqueio
     const int MIN_VALID_VALUE = 1; // Valor mínimo considerado válido
 
@@ -182,7 +180,7 @@ float SensorManager::_readSoilHumidityFromSensor() const { // RENOMEADO E PRIVAD
     int attempts = 0;
 
     // Ensure pin is configured (optional, good practice)
-    // pinMode(this->sensorConfig.soilHumiditySensorPin, INPUT);
+    pinMode(this->sensorConfig.soilHumiditySensorPin, INPUT);
 
     while (validReadings.size() < NUM_READINGS && attempts < MAX_READING_ATTEMPTS) {
         int analogValue = analogRead(this->sensorConfig.soilHumiditySensorPin);
@@ -195,7 +193,7 @@ float SensorManager::_readSoilHumidityFromSensor() const { // RENOMEADO E PRIVAD
         }
         attempts++;
         if (validReadings.size() < NUM_READINGS) {
-             vTaskDelay(pdMS_TO_TICKS(5)); // Pequeno delay entre leituras
+             vTaskDelay(pdMS_TO_TICKS(1)); // Pequeno delay entre leituras
         }
     }
 

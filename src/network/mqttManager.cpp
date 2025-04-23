@@ -3,7 +3,7 @@
 #include "utils/freeRTOSMutex.hpp" // Assumindo que usaremos nosso wrapper
 #include <Arduino.h>
 #include <WiFi.h>
-#include <ArduinoJson.h> // Para o callback
+#include <ArduinoJson.h>
 
 // --- Constantes ---
 const TickType_t MQTT_MUTEX_TIMEOUT = pdMS_TO_TICKS(200); // Timeout para operações MQTT
@@ -118,10 +118,7 @@ void MqttManager::messageCallback(char* topic, unsigned char* payload, unsigned 
     if (String(topic) == this->controlTopic) {
         Serial.println("MqttManager: Processing control message...");
 
-        // *** Use JsonDocument instead of StaticJsonDocument ***
-        JsonDocument doc; // Let ArduinoJson manage size, or use JsonDocument<SIZE> doc;
-        // Using a fixed size on stack is often safer on ESP32:
-        // JsonDocument<512> doc; // Allocate on stack
+        JsonDocument doc; // Usa alocação dinâmica padrão do ArduinoJson v7+
 
         DeserializationError error = deserializeJson(doc, message); // Pass message String or payload directly
 

@@ -1,9 +1,8 @@
 // src/actuators/actuatorManager.cpp
 #include "actuatorManager.hpp"
-#include "utils/timeService.hpp" // Para getCurrentTime
 #include <Arduino.h>           // Para pinMode, digitalWrite, Serial, etc.
 #include <math.h>              // Para isnan
-#include <time.h>
+#include <time.h>              // Para struct tm
 
 namespace GrowController {
 
@@ -13,17 +12,20 @@ const TickType_t ActuatorManager::HUMIDITY_CHECK_INTERVAL_MS = pdMS_TO_TICKS(100
 
 // --- Construtor e Destrutor ---
 
+// <<< ASSINATURA DO CONSTRUTOR ATUALIZADA para receber TimeService&
 ActuatorManager::ActuatorManager(const GPIOControlConfig& config,
                                  TargetDataManager& targetMgr,
-                                 SensorManager& sensorMgr) :
+                                 SensorManager& sensorMgr,
+                                 TimeService& timeSvc) : // <<< Parâmetro timeSvc adicionado
     gpioConfig(config),
     targetDataManager(targetMgr),
     sensorManager(sensorMgr),
-    lastLightState(-1), // Ou LOW / HIGH se preferir
+    timeService(timeSvc),       // <<< Inicializa o membro timeService com o parâmetro timeSvc
+    lastLightState(-1),
     lightTaskHandle(nullptr),
     humidityTaskHandle(nullptr),
     initialized(false)
-{}
+{} // Corpo do construtor vazio, inicialização feita na lista
 
 ActuatorManager::~ActuatorManager() {
     // Parar tarefas se estiverem rodando
@@ -70,12 +72,10 @@ bool ActuatorManager::isInitialized() const {
 // --- Métodos de Controle (Internos) ---
 
 void ActuatorManager::checkAndControlLight(const struct tm& lightOn, const struct tm& lightOff, int lightPin) {
-    struct tm timeinfo = {0}; // Inicializar struct
-    // Usa o getCurrentTime global (precisa ser refatorado para TimeService injetado eventualmente)
-    if (!getCurrentTime(timeinfo)) {
+    struct tm timeinfo = {0};
+    // <<< USA O MEMBRO timeService injetado para chamar getCurrentTime
+    if (!timeService.getCurrentTime(timeinfo)) {
         Serial.println("ActuatorManager WARN: Failed to get current time for light control!");
-        // Considerar uma ação segura? Manter estado atual? Desligar?
-        // digitalWrite(lightPin, LOW); // Ex: Desligar como segurança
         return;
     }
 
@@ -214,7 +214,7 @@ void ActuatorManager::runLightControlTask() {
         struct tm onTime = targetDataManager.getLightOnTime();
         struct tm offTime = targetDataManager.getLightOffTime();
 
-        // Chama método de controle interno
+        // Chama método de controle interno (que agora usa o timeService injetado)
         checkAndControlLight(onTime, offTime, gpioConfig.lightControlPin);
 
         vTaskDelay(LIGHT_CHECK_INTERVAL_MS);
