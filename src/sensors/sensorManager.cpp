@@ -130,7 +130,7 @@ float SensorManager::getHumidity() const {
     return hum;
 }
 
-float SensorManager::getSoilHumidity() const { // IMPLEMENTAÇÃO DO NOVO GETTER
+float SensorManager::getSoilHumidity() const {
     float soilHum = NAN;
      if (!initialized) return NAN;
 
@@ -143,7 +143,7 @@ float SensorManager::getSoilHumidity() const { // IMPLEMENTAÇÃO DO NOVO GETTER
     return soilHum;
 }
 
-float SensorManager::getVpd() const { // IMPLEMENTAÇÃO DO NOVO GETTER
+float SensorManager::getVpd() const {
     float vpd = NAN;
      if (!initialized) return NAN;
 
@@ -172,8 +172,8 @@ float SensorManager::_readHumidityFromSensor() {
 float SensorManager::_readSoilHumidityFromSensor() const {
     const int NUM_READINGS = 5;
     const float ADC_MAX = 4095;
-    const int MAX_READING_ATTEMPTS = NUM_READINGS * 2; // Limite para evitar bloqueio
-    const int MIN_VALID_VALUE = 1; // Valor mínimo considerado válido
+    const int MAX_READING_ATTEMPTS = NUM_READINGS * 2;
+    const int MIN_VALID_VALUE = 1;
 
     std::vector<int> validReadings;
     validReadings.reserve(NUM_READINGS);
@@ -215,7 +215,7 @@ float SensorManager::_readSoilHumidityFromSensor() const {
     }
 }
 
-float SensorManager::_calculateVpd(float temp, float hum) { // RENOMEADO E PRIVADO (não estático)
+float SensorManager::_calculateVpd(float temp, float hum) {
     if (isnan(temp) || isnan(hum) || hum < 0.0f || hum > 100.0f) {
         return NAN; // Entradas inválidas
     }
@@ -325,20 +325,20 @@ void SensorManager::runSensorTask() {
             // Publicação MQTT via MqttManager injetado
             if (this->mqttManager != nullptr ) {
                 // // Publicar valores individuais (agora usando as variáveis locais do ciclo)
-                // this->mqttManager->publish("sensors/temperature", currentTemperature);
-                // this->mqttManager->publish("sensors/air_humidity", currentAirHumidity);
-                // this->mqttManager->publish("sensors/soil_humidity", currentSoilHumidity);
-                // this->mqttManager->publish("sensors/vpd", currentVpd);
+                this->mqttManager->publish("sensors/temperature", currentTemperature);
+                this->mqttManager->publish("sensors/air_humidity", currentAirHumidity);
+                this->mqttManager->publish("sensors/soil_humidity", currentSoilHumidity);
+                this->mqttManager->publish("sensors/vpd", currentVpd);
 
                 // Ou publicar um único JSON
-                sensorDoc.clear();
-                sensorDoc["temperature"] = round(currentTemperature * 10.0) / 10.0;
-                sensorDoc["airHumidity"] = round(currentAirHumidity);
-                sensorDoc["soilHumidity"] = round(currentSoilHumidity);
-                sensorDoc["vpd"] = round(currentVpd * 100.0) / 100.0;
-                String payload;
-                serializeJson(sensorDoc, payload);
-                this->mqttManager->publish("sensors", payload.c_str());
+                // sensorDoc.clear();
+                // sensorDoc["temperature"] = round(currentTemperature * 10.0) / 10.0;
+                // sensorDoc["airHumidity"] = round(currentAirHumidity);
+                // sensorDoc["soilHumidity"] = round(currentSoilHumidity);
+                // sensorDoc["vpd"] = round(currentVpd * 100.0) / 100.0;
+                // String payload;
+                // serializeJson(sensorDoc, payload);
+                // this->mqttManager->publish("sensors", payload.c_str());
                 
             }
         } else {
