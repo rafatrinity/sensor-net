@@ -66,8 +66,7 @@ class CharacteristicCallbacks : public BLECharacteristicCallbacks {
             Serial.println("BLE: Dados recebidos na característica:");
             Serial.println(value.c_str());
 
-            // Analisar os dados recebidos. Supondo formato JSON:
-            StaticJsonDocument<256> doc;
+            JsonDocument doc;
             DeserializationError error = deserializeJson(doc, value);
 
             if (error) {
