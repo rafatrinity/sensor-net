@@ -13,6 +13,10 @@
 #define DHT_PIN 10           // (D10) Pino de dados do sensor DHT22
 #define SOIL_HUMIDITY_PIN 2 // (D2 - ADC1_CH2) Pino para o sensor de umidade do solo
 
+// Define o pino do botão para ativar o modo de pareamento
+#define PAIRING_BUTTON_PIN 1
+
+
 // Pinos I2C para o LCD
 // No XIAO ESP32-C3, os pinos padrão para I2C são:
 #define SDA 6                // (D6) Pino SDA do I2C
@@ -37,7 +41,7 @@
     // --- Configurações para Placa Real ---
     #define MQTT_SERVER "192.168.1.11"  // <--- ADICIONE/MODIFIQUE ESTA LINHA (Seu IP real)
     #define MQTT_PORT 1883              // <--- ADICIONE ESTA LINHA
-    #define MQTT_ROOM_TOPIC "02"        // Identificador do cômodo/estufa real
+    #define MQTT_ROOM_TOPIC "01"        // Identificador do cômodo/estufa real
     #define MQTT_CLIENT_ID "ESP-xiao-C3"   // ID único do cliente MQTT real
 #endif
 #endif // BOARD_XIAO_C3_HPP
