@@ -61,6 +61,16 @@ void setup() {
 
     pinMode(PAIRING_BUTTON_PIN, INPUT_PULLUP); // Configura o botão como entrada com pull-up
 
+    char ssid[32];
+    char password[64];
+
+    if (loadWiFiCredentials(ssid, password, sizeof(ssid))) {
+        Serial.printf("Conectando ao Wi-Fi salvo: %s\n", ssid);
+        WiFi.begin(ssid, password);
+    } else {
+        Serial.println("Nenhuma credencial Wi-Fi salva encontrada.");
+    }
+
     // Verifica se o botão está pressionado na inicialização
     if (digitalRead(PAIRING_BUTTON_PIN) == LOW) {
         activatePairingMode();

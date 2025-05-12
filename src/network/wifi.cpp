@@ -5,7 +5,31 @@
 
 #include <Arduino.h>
 #include <WiFi.h>
+#include <Preferences.h>
 
+Preferences preferences;
+
+void saveWiFiCredentials(const char* ssid, const char* password) {
+    preferences.begin("wifi", false);
+    preferences.putString("ssid", ssid);
+    preferences.putString("password", password);
+    preferences.end();
+    Serial.println("Credenciais do Wi-Fi salvas com sucesso.");
+}
+
+bool loadWiFiCredentials(char* ssid, char* password, size_t maxLength) {
+    preferences.begin("wifi", true);
+    String storedSSID = preferences.getString("ssid", "");
+    String storedPassword = preferences.getString("password", "");
+    preferences.end();
+
+    if (storedSSID.length() > 0 && storedPassword.length() > 0) {
+        strncpy(ssid, storedSSID.c_str(), maxLength);
+        strncpy(password, storedPassword.c_str(), maxLength);
+        return true;
+    }
+    return false;
+}
 
 void connectToWiFi(void *parameter) {
     WiFiTaskParams* params = static_cast<WiFiTaskParams*>(parameter);
