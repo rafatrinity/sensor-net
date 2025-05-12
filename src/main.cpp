@@ -11,6 +11,7 @@
 #include <WiFi.h>
 #include <Wire.h>
 #include <ArduinoJson.h>
+#include <BluetoothSerial.h>
 
 // --- Instâncias Principais (Managers Globais) ---
 AppConfig appConfig;
@@ -30,6 +31,9 @@ GrowController::SensorManager sensorMgr(appConfig.sensor, &displayMgr, &mqttMgr)
 // ActuatorManager depende de appConfig.gpioControl, targetManager, sensorMgr, timeService
 GrowController::ActuatorManager actuatorMgr(appConfig.gpioControl, targetManager, sensorMgr, timeService); // Instância global
 
+// Instância para comunicação Bluetooth
+BluetoothSerial SerialBT;
+
 // --- Flags de Status da Inicialização ---
 bool displayOk = false;
 bool sensorsOk = false;
@@ -41,13 +45,26 @@ bool mqttTaskOk = false;
 bool sensorTaskOk = false;
 bool actuatorTasksOk = false;
 
+// Função para ativar o modo de pareamento
+void activatePairingMode() {
+    Serial.println("Modo de pareamento ativado.");
+    SerialBT.begin("SensorNet"); // Nome do dispositivo Bluetooth
+    // Lógica adicional para receber credenciais via Bluetooth
+}
 
 /**
  * @brief Função principal de configuração da aplicação.
  */
- void setup() {
+void setup() {
     Serial.begin(BAUD);
     Serial.println("\n--- Booting Application (RAII Refactor w/ Dep Injection Fixes) ---");
+
+    pinMode(PAIRING_BUTTON_PIN, INPUT_PULLUP); // Configura o botão como entrada com pull-up
+
+    // Verifica se o botão está pressionado na inicialização
+    if (digitalRead(PAIRING_BUTTON_PIN) == LOW) {
+        activatePairingMode();
+    }
 
     // 1. Inicializa I2C
     Wire.begin(SDA, SCL);
@@ -219,5 +236,10 @@ bool actuatorTasksOk = false;
 }
 
 void loop() {
+    // Verifica se o botão foi pressionado durante a execução
+    if (digitalRead(PAIRING_BUTTON_PIN) == LOW) {
+        activatePairingMode();
+    }
+
     vTaskSuspend(NULL);
 }

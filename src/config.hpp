@@ -31,6 +31,9 @@
 
 #define BAUD 115200
 
+// Define o pino do botão para ativar o modo de pareamento
+#define PAIRING_BUTTON_PIN 0 // Substitua pelo número do pino correto
+
 // --- Initialization Retry Configuration ---
 #define INIT_RETRY_COUNT 3       // Number of initialization attempts
 #define INIT_RETRY_DELAY_MS 1000 // Delay between attempts in milliseconds
