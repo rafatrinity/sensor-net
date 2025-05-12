@@ -59,6 +59,7 @@ bool actuatorTasksOk = false;
 
 class CharacteristicCallbacks : public BLECharacteristicCallbacks {
     void onWrite(BLECharacteristic *pChar) override {
+        Serial.println("Callback onWrite acionado."); // Log adicional para depuração
         std::string value = pChar->getValue();
 
         if (value.length() > 0) {
@@ -95,6 +96,8 @@ class CharacteristicCallbacks : public BLECharacteristicCallbacks {
                 Serial.println("BLE Error: SSID ou senha ausentes nos dados JSON recebidos.");
                 pChar->setValue("Erro: Dados incompletos");
             }
+        } else {
+            Serial.println("BLE: Nenhum dado recebido na característica.");
         }
     }
 };
