@@ -15,6 +15,11 @@
 #include <BLEUtils.h>
 #include <BLEServer.h>
 
+// Variáveis globais para sinalizar o recebimento de credenciais
+volatile bool g_bleCredentialsReceived = false;
+char g_receivedSsid[32];
+char g_receivedPassword[64];
+
 // --- Instâncias Principais (Managers Globais) ---
 AppConfig appConfig;
 GrowController::TargetDataManager targetManager;
@@ -52,6 +57,48 @@ bool mqttTaskOk = false;
 bool sensorTaskOk = false;
 bool actuatorTasksOk = false;
 
+class CharacteristicCallbacks : public BLECharacteristicCallbacks {
+    void onWrite(BLECharacteristic *pChar) override {
+        std::string value = pChar->getValue();
+
+        if (value.length() > 0) {
+            Serial.println("BLE: Dados recebidos na característica:");
+            Serial.println(value.c_str());
+
+            // Analisar os dados recebidos. Supondo formato JSON:
+            StaticJsonDocument<256> doc;
+            DeserializationError error = deserializeJson(doc, value);
+
+            if (error) {
+                Serial.print("BLE Error: Falha ao analisar JSON: ");
+                Serial.println(error.c_str());
+                pChar->setValue("Erro: JSON invalido");
+                return;
+            }
+
+            const char* ssid = doc["ssid"];
+            const char* password = doc["password"];
+
+            if (ssid && password) {
+                Serial.print("SSID Recebido via BLE: "); Serial.println(ssid);
+                Serial.print("Senha Recebida via BLE: "); Serial.println(password);
+
+                saveWiFiCredentials(ssid, password);
+                Serial.println("Credenciais Wi-Fi salvas. Reiniciando o dispositivo para aplicar.");
+
+                g_bleCredentialsReceived = true;
+                strncpy(g_receivedSsid, ssid, sizeof(g_receivedSsid) - 1);
+                strncpy(g_receivedPassword, password, sizeof(g_receivedPassword) - 1);
+
+                ESP.restart();
+            } else {
+                Serial.println("BLE Error: SSID ou senha ausentes nos dados JSON recebidos.");
+                pChar->setValue("Erro: Dados incompletos");
+            }
+        }
+    }
+};
+
 // Função para ativar o modo de pareamento
 void activatePairingMode() {
     Serial.println("Modo de pareamento BLE ativado.");
@@ -69,6 +116,8 @@ void activatePairingMode() {
                         BLECharacteristic::PROPERTY_WRITE
                       );
 
+    pCharacteristic->setCallbacks(new CharacteristicCallbacks());
+
     // Configura o modo de segurança BLE
     BLESecurity* pSecurity = new BLESecurity();
     pSecurity->setAuthenticationMode(ESP_LE_AUTH_BOND);
@@ -84,7 +133,12 @@ void activatePairingMode() {
     pAdvertising->addServiceUUID(SERVICE_UUID);
     pAdvertising->start();
 
-    Serial.println("Aguardando credenciais via BLE...");
+    Serial.println("Aguardando credenciais via BLE... (Callback configurado)");
+    if (displayOk) {
+        displayMgr.clear();
+        displayMgr.printLine(0, "Modo Config BLE");
+        displayMgr.printLine(1, "Envie WiFi Creds");
+    }
 }
 
 /**
