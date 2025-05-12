@@ -21,7 +21,7 @@ public:
     ActuatorManager(const GPIOControlConfig& config,
                     TargetDataManager& targetMgr,
                     SensorManager& sensorMgr,
-                    TimeService& timeSvc); // Assinatura OK
+                    TimeService& timeSvc);
 
     ~ActuatorManager();
 
