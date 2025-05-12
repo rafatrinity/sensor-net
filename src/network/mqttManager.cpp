@@ -12,10 +12,6 @@ const TickType_t MQTT_RECONNECT_DELAY_MS = pdMS_TO_TICKS(5000); // Delay antes d
 const uint8_t MQTT_CONNECT_RETRIES = 3; // Tentativas antes de um delay maior
 
 namespace GrowController {
-
-// --- REMOVED STATIC VARIABLE DEFINITION ---
-// MqttManager* MqttManager::s_instance = nullptr;
-
 // --- Construtor / Destrutor ---
 
 MqttManager::MqttManager(const MQTTConfig& config, TargetDataManager& targetMgr) :
@@ -76,27 +72,10 @@ void MqttManager::setup() {
     });
     Serial.println("MqttManager: Callback set using lambda.");
 
-    // --- REMOVED s_instance logic ---
-    // s_instance = this; // Armazena 'this' na variável estática
-    // pubSubClient.setCallback(staticCallback); // A função estática usará s_instance
-
     // 4. Marcar como configurado
     isSetup = true;
     Serial.println("MqttManager: Setup complete.");
 }
-
-// --- REMOVED STATIC CALLBACK ---
-/*
-void MqttManager::staticCallback(char* topic, byte* payload, unsigned int length) {
-    Serial.println("MqttManager: staticCallback invoked.");
-    if (s_instance != nullptr) {
-        // Chama o método de membro da instância armazenada
-        s_instance->messageCallback(topic, payload, length);
-    } else {
-        Serial.println("MqttManager ERROR: staticCallback invoked but s_instance is null!");
-    }
-}
-*/
 
 // --- Callback de Membro (Lógica Real) ---
 // *** NOTE: Signature changed to use unsigned char* ***
