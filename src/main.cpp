@@ -11,7 +11,9 @@
 #include <WiFi.h>
 #include <Wire.h>
 #include <ArduinoJson.h>
-#include <BluetoothSerial.h>
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEServer.h>
 
 // --- Instâncias Principais (Managers Globais) ---
 AppConfig appConfig;
@@ -31,8 +33,13 @@ GrowController::SensorManager sensorMgr(appConfig.sensor, &displayMgr, &mqttMgr)
 // ActuatorManager depende de appConfig.gpioControl, targetManager, sensorMgr, timeService
 GrowController::ActuatorManager actuatorMgr(appConfig.gpioControl, targetManager, sensorMgr, timeService); // Instância global
 
-// Instância para comunicação Bluetooth
-BluetoothSerial SerialBT;
+// Instâncias para comunicação BLE
+BLEServer* pServer = nullptr;
+BLECharacteristic* pCharacteristic = nullptr;
+
+// UUIDs para o serviço e característica BLE
+#define SERVICE_UUID        "12345678-1234-1234-1234-123456789abc"
+#define CHARACTERISTIC_UUID "abcd1234-5678-1234-5678-123456789abc"
 
 // --- Flags de Status da Inicialização ---
 bool displayOk = false;
@@ -47,9 +54,30 @@ bool actuatorTasksOk = false;
 
 // Função para ativar o modo de pareamento
 void activatePairingMode() {
-    Serial.println("Modo de pareamento ativado.");
-    SerialBT.begin("SensorNet"); // Nome do dispositivo Bluetooth
-    // Lógica adicional para receber credenciais via Bluetooth
+    Serial.println("Modo de pareamento BLE ativado.");
+
+    // Inicializa o dispositivo BLE
+    BLEDevice::init("SensorNet");
+    pServer = BLEDevice::createServer();
+
+    // Cria o serviço BLE
+    BLEService* pService = pServer->createService(SERVICE_UUID);
+
+    // Cria a característica BLE para receber credenciais
+    pCharacteristic = pService->createCharacteristic(
+                        CHARACTERISTIC_UUID,
+                        BLECharacteristic::PROPERTY_WRITE
+                      );
+
+    // Inicia o serviço BLE
+    pService->start();
+
+    // Inicia a publicidade BLE
+    BLEAdvertising* pAdvertising = BLEDevice::getAdvertising();
+    pAdvertising->addServiceUUID(SERVICE_UUID);
+    pAdvertising->start();
+
+    Serial.println("Aguardando credenciais via BLE...");
 }
 
 /**
@@ -149,24 +177,23 @@ void setup() {
 
     // 8. Inicializa Time Service
     if (wifiOk) {
-        Serial.println("Initializing Time Service...");
         if (displayOk) displayMgr.showNtpSyncing();
         timeOk = timeService.initialize(appConfig.time);
         if (!timeOk) {
             Serial.println("ERROR: Failed to configure Time Service!");
             if (displayOk) displayMgr.showError("NTP Cfg Fail");
         } else {
-             struct tm timeinfo;
-             if (timeService.getCurrentTime(timeinfo)) { // Verifica sync inicial
-                 if (displayOk) displayMgr.showNtpSynced(); // Usa displayMgr global
-                 Serial.println("Time Service initial sync successful.");
-             } else {
-                 if (displayOk) displayMgr.showError("NTP Sync Fail"); // Usa displayMgr global
-                 Serial.println("WARN: Time Service configured, but initial sync failed. Will retry.");
-             }
+            struct tm timeinfo;
+            if (timeService.getCurrentTime(timeinfo)) { // Verifica sync inicial
+                if (displayOk) displayMgr.showNtpSynced(); // Usa displayMgr global
+                Serial.println("Time Service initial sync successful.");
+            } else {
+                if (displayOk) displayMgr.showError("NTP Sync Fail"); // Usa displayMgr global
+                Serial.println("WARN: Time Service configured, but initial sync failed. Will retry.");
+            }
         }
     } else {
-        Serial.println("Skipping Time Service initialization (No WiFi).");
+        Serial.println("Skipping Time Service initialization (No WiFi).\n");
         timeOk = false;
     }
 
