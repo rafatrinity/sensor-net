@@ -12,10 +12,10 @@ namespace GrowController
 
   struct TargetValues
   {
-    float airHumidity = 68;
+    float airHumidity = 73;
     float vpd = NAN;
     float soilHumidity = NAN;
-    float temperature = NAN;
+    float temperature = 25;
     struct tm lightOnTime;
     struct tm lightOffTime;
   };
