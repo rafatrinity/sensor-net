@@ -16,7 +16,7 @@
 #define SCL 32               // Pino SCL do I2C
 
 // Define o pino do botão para ativar o modo de pareamento
-#define PAIRING_BUTTON_PIN 0
+#define PAIRING_BUTTON_PIN 13
 
 // --- Configuração do Display LCD ---
 #define LCD_I2C_ADDR 0x27
