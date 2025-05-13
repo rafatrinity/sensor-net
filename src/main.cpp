@@ -7,6 +7,7 @@
 #include "data/targetDataManager.hpp"
 #include "utils/timeService.hpp"
 #include "ui/displayManager.hpp"
+#include "network/webServerManager.hpp"
 
 #include <WiFi.h>
 #include <Wire.h>
@@ -14,6 +15,7 @@
 #include <BLEDevice.h>
 #include <BLEUtils.h>
 #include <BLEServer.h>
+#include <LittleFS.h> 
 
 // Variáveis globais para sinalizar o recebimento de credenciais
 volatile bool g_bleCredentialsReceived = false;
@@ -24,25 +26,15 @@ char g_receivedPassword[64];
 AppConfig appConfig;
 GrowController::TargetDataManager targetManager;
 GrowController::TimeService timeService;
-
-// DisplayManager depende de timeService
+GrowController::WebServerManager webServerManager(&sensorMgr, &targetManager, &actuatorMgr);
 GrowController::DisplayManager displayMgr(LCD_I2C_ADDR, LCD_COLS, LCD_ROWS, timeService);
-
-// MqttManager depende de appConfig.mqtt e targetManager
 GrowController::MqttManager mqttMgr(appConfig.mqtt, targetManager);
+GrowController::SensorManager sensorMgr(appConfig.sensor, &displayMgr, &mqttMgr);
+GrowController::ActuatorManager actuatorMgr(appConfig.gpioControl, targetManager, sensorMgr, timeService);
 
-// SensorManager depende de appConfig.sensor, displayMgr*, mqttMgr*
-// displayMgr e mqttMgr são passados como ponteiros opcionais.
-GrowController::SensorManager sensorMgr(appConfig.sensor, &displayMgr, &mqttMgr); // Instância global
-
-// ActuatorManager depende de appConfig.gpioControl, targetManager, sensorMgr, timeService
-GrowController::ActuatorManager actuatorMgr(appConfig.gpioControl, targetManager, sensorMgr, timeService); // Instância global
-
-// Instâncias para comunicação BLE
 BLEServer* pServer = nullptr;
 BLECharacteristic* pCharacteristic = nullptr;
 
-// UUIDs para o serviço e característica BLE
 #define SERVICE_UUID        "12345678-1234-1234-1234-123456789abc"
 #define CHARACTERISTIC_UUID "abcd1234-5678-1234-5678-123456789abc"
 
@@ -56,6 +48,12 @@ bool mqttSetupOk = false;
 bool mqttTaskOk = false;
 bool sensorTaskOk = false;
 bool actuatorTasksOk = false;
+
+IPAddress local_IP(192, 168, 1, 180);
+IPAddress gateway(192, 168, 1, 1);
+IPAddress subnet(255, 255, 255, 0);
+IPAddress primaryDNS(8, 8, 8, 8);
+IPAddress secondaryDNS(8, 8, 4, 4);
 
 class CharacteristicCallbacks : public BLECharacteristicCallbacks {
     void onWrite(BLECharacteristic *pChar) override {
@@ -157,6 +155,10 @@ void setup() {
 
     if (loadWiFiCredentials(ssid, password, sizeof(ssid))) {
         Serial.printf("Conectando ao Wi-Fi salvo: %s\n", ssid);
+        if (!WiFi.config(local_IP, gateway, subnet, primaryDNS, secondaryDNS)) {
+            Serial.println("STA Failed to configure static IP");
+            // Lidar com o erro, talvez tentar DHCP?
+        }
         WiFi.begin(ssid, password);
     } else {
         Serial.println("Nenhuma credencial Wi-Fi salva encontrada.");
@@ -179,6 +181,34 @@ void setup() {
         displayMgr.showBooting();
     }
 
+    Serial.println("Initializing LittleFS...");
+    if (!LittleFS.begin(true)) { // true para formatar se não conseguir montar
+        Serial.println("LittleFS Mount Failed!");
+        if (displayOk) displayMgr.showError("FS Mount Fail");
+        // Decidir se é uma falha fatal ou se o sistema pode continuar sem o WebServer
+    } else {
+        Serial.println("LittleFS Mounted.");
+        // Listar arquivos para depuração (opcional)
+        File root = LittleFS.open("/");
+        File file = root.openNextFile();
+        while(file){
+            Serial.print("FILE: ");
+            Serial.println(file.name());
+            file.close();
+            file = root.openNextFile();
+        }
+    }
+
+    if (wifiOk && LittleFS.mounted()) { // Adicione LittleFS.mounted() ou uma flag
+        Serial.println("Starting Web Server...");
+        webServerManager.begin(); // Método que você criará no WebServerManager
+        if (displayOk) { // Supondo que você adicione uma mensagem no display para o servidor web
+            // displayMgr.showWebServerRunning(WiFi.localIP().toString().c_str());
+        }
+    } else {
+        Serial.println("Skipping Web Server start (No WiFi or LittleFS not mounted).");
+    }
+    
     // 3. Configura MqttManager
     Serial.println("Setting up MQTT Manager...");
     mqttMgr.setup();
