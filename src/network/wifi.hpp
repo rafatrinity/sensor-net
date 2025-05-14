@@ -31,4 +31,5 @@ void saveWiFiCredentials(const char* ssid, const char* password);
 // Função para carregar credenciais do Wi-Fi
 bool loadWiFiCredentials(char* ssid, char* password, size_t maxLength);
 
+extern void activatePairingMode();
 #endif // WIFI_H

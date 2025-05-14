@@ -50,7 +50,7 @@ void connectToWiFi(void *parameter) {
 
     if (loadWiFiCredentials(loaded_ssid, loaded_password, sizeof(loaded_ssid))) {
         Serial.printf("Credenciais carregadas: SSID=%s\n", loaded_ssid);
-        if (!WiFi.config(local_IP, gateway, subnet, primaryDNS, secondaryDNS)) {
+        if (!WiFi.config(LOCAL_IP, GATEWAY_IP, SUBNET_MASK, PRIMARY_DNS_IP, SECONDARY_DNS_IP)) {
             Serial.println("Falha ao configurar IP estático, tentando DHCP...");
         }
         WiFi.begin(loaded_ssid, loaded_password);
