@@ -15,7 +15,7 @@
 #include <BLEDevice.h>
 #include <BLEUtils.h>
 #include <BLEServer.h>
-#include <LittleFS.h> 
+#include <LittleFS.h>
 
 // Variáveis globais para sinalizar o recebimento de credenciais
 volatile bool g_bleCredentialsReceived = false;
@@ -23,14 +23,17 @@ char g_receivedSsid[32];
 char g_receivedPassword[64];
 
 // --- Instâncias Principais (Managers Globais) ---
-AppConfig appConfig;
+AppConfig appConfig; // appConfig deve ser preenchido com os valores de config.hpp
 GrowController::TargetDataManager targetManager;
 GrowController::TimeService timeService;
-GrowController::WebServerManager webServerManager(&sensorMgr, &targetManager, &actuatorMgr);
+
+// Managers que dependem de outros devem ser declarados após suas dependências
 GrowController::DisplayManager displayMgr(LCD_I2C_ADDR, LCD_COLS, LCD_ROWS, timeService);
 GrowController::MqttManager mqttMgr(appConfig.mqtt, targetManager);
-GrowController::SensorManager sensorMgr(appConfig.sensor, &displayMgr, &mqttMgr);
+GrowController::SensorManager sensorMgr(appConfig.sensor, &displayMgr, &mqttMgr); // Passar WebServerManager aqui se ele for chamar eventos SSE
 GrowController::ActuatorManager actuatorMgr(appConfig.gpioControl, targetManager, sensorMgr, timeService);
+GrowController::WebServerManager webServerManager(&sensorMgr, &targetManager, &actuatorMgr); // Agora sensorMgr e actuatorMgr existem
+
 
 BLEServer* pServer = nullptr;
 BLECharacteristic* pCharacteristic = nullptr;
@@ -48,46 +51,40 @@ bool mqttSetupOk = false;
 bool mqttTaskOk = false;
 bool sensorTaskOk = false;
 bool actuatorTasksOk = false;
+bool littleFsOk = false; // Nova flag para LittleFS
 
-IPAddress local_IP(192, 168, 1, 180);
-IPAddress gateway(192, 168, 1, 1);
-IPAddress subnet(255, 255, 255, 0);
-IPAddress primaryDNS(8, 8, 8, 8);
-IPAddress secondaryDNS(8, 8, 4, 4);
+// As variáveis de IP estático foram movidas para config.hpp
 
-class CharacteristicCallbacks : public BLECharacteristicCallbacks {
+// Definição da função (estava faltando no seu wifi.cpp, mas é de main.cpp)
+
+class CharacteristicCallbacks : public BLECharacteristicCallbacks { // Definição antes de ser usada
     void onWrite(BLECharacteristic *pChar) override {
-        Serial.println("Callback onWrite acionado."); // Log adicional para depuração
+        // ... (seu código do callback)
+        Serial.println("Callback onWrite acionado.");
         std::string value = pChar->getValue();
-
         if (value.length() > 0) {
             Serial.println("BLE: Dados recebidos na característica:");
             Serial.println(value.c_str());
-
             JsonDocument doc;
             DeserializationError error = deserializeJson(doc, value);
-
             if (error) {
                 Serial.print("BLE Error: Falha ao analisar JSON: ");
                 Serial.println(error.c_str());
                 pChar->setValue("Erro: JSON invalido");
                 return;
             }
-
-            const char* ssid = doc["ssid"];
-            const char* password = doc["password"];
-
-            if (ssid && password) {
-                Serial.print("SSID Recebido via BLE: "); Serial.println(ssid);
-                Serial.print("Senha Recebida via BLE: "); Serial.println(password);
-
-                saveWiFiCredentials(ssid, password);
+            const char* ssid_ble = doc["ssid"]; // Renomeado para evitar conflito com char ssid[32]
+            const char* password_ble = doc["password"]; // Renomeado
+            if (ssid_ble && password_ble) {
+                Serial.print("SSID Recebido via BLE: "); Serial.println(ssid_ble);
+                Serial.print("Senha Recebida via BLE: "); Serial.println(password_ble);
+                saveWiFiCredentials(ssid_ble, password_ble);
                 Serial.println("Credenciais Wi-Fi salvas. Reiniciando o dispositivo para aplicar.");
-
                 g_bleCredentialsReceived = true;
-                strncpy(g_receivedSsid, ssid, sizeof(g_receivedSsid) - 1);
-                strncpy(g_receivedPassword, password, sizeof(g_receivedPassword) - 1);
-
+                strncpy(g_receivedSsid, ssid_ble, sizeof(g_receivedSsid) - 1);
+                g_receivedSsid[sizeof(g_receivedSsid) - 1] = '\0';
+                strncpy(g_receivedPassword, password_ble, sizeof(g_receivedPassword) - 1);
+                g_receivedPassword[sizeof(g_receivedPassword) - 1] = '\0';
                 ESP.restart();
             } else {
                 Serial.println("BLE Error: SSID ou senha ausentes nos dados JSON recebidos.");
@@ -99,40 +96,26 @@ class CharacteristicCallbacks : public BLECharacteristicCallbacks {
     }
 };
 
-// Função para ativar o modo de pareamento
 void activatePairingMode() {
     Serial.println("Modo de pareamento BLE ativado.");
-
-    // Inicializa o dispositivo BLE
+    // ... (resto da sua função activatePairingMode)
     BLEDevice::init("SensorNet");
     pServer = BLEDevice::createServer();
-
-    // Cria o serviço BLE
     BLEService* pService = pServer->createService(SERVICE_UUID);
-
-    // Cria a característica BLE para receber credenciais
     pCharacteristic = pService->createCharacteristic(
                         CHARACTERISTIC_UUID,
                         BLECharacteristic::PROPERTY_WRITE
                       );
-
-    pCharacteristic->setCallbacks(new CharacteristicCallbacks());
-
-    // Configura o modo de segurança BLE
+    pCharacteristic->setCallbacks(new CharacteristicCallbacks()); // CharacteristicCallbacks precisa estar definido antes
     BLESecurity* pSecurity = new BLESecurity();
     pSecurity->setAuthenticationMode(ESP_LE_AUTH_BOND);
     pSecurity->setCapability(ESP_IO_CAP_NONE);
     pSecurity->setKeySize(16);
     pSecurity->setInitEncryptionKey(ESP_BLE_ENC_KEY_MASK | ESP_BLE_ID_KEY_MASK);
-
-    // Inicia o serviço BLE
     pService->start();
-
-    // Inicia a publicidade BLE
     BLEAdvertising* pAdvertising = BLEDevice::getAdvertising();
     pAdvertising->addServiceUUID(SERVICE_UUID);
     pAdvertising->start();
-
     Serial.println("Aguardando credenciais via BLE... (Callback configurado)");
     if (displayOk) {
         displayMgr.clear();
@@ -141,130 +124,117 @@ void activatePairingMode() {
     }
 }
 
-/**
- * @brief Função principal de configuração da aplicação.
- */
+
 void setup() {
     Serial.begin(BAUD);
-    Serial.println("\n--- Booting Application (RAII Refactor w/ Dep Injection Fixes) ---");
+    Serial.println("\n--- Booting Application ---");
 
-    pinMode(PAIRING_BUTTON_PIN, INPUT_PULLUP); // Configura o botão como entrada com pull-up
-
-    char ssid[32];
-    char password[64];
-
-    if (loadWiFiCredentials(ssid, password, sizeof(ssid))) {
-        Serial.printf("Conectando ao Wi-Fi salvo: %s\n", ssid);
-        // Removido WiFi.config e WiFi.begin daqui
-    } else {
-        Serial.println("Nenhuma credencial Wi-Fi salva encontrada.");
-    }
-
-    // Verifica se o botão está pressionado na inicialização
-    if (digitalRead(PAIRING_BUTTON_PIN) == LOW) {
-        activatePairingMode();
-    }
+    pinMode(PAIRING_BUTTON_PIN, INPUT_PULLUP);
 
     // 1. Inicializa I2C
     Wire.begin(SDA, SCL);
 
-    // 2. Inicializa Display Manager (instância global)
+    // 2. Inicializa Display Manager
     Serial.println("Initializing Display Manager...");
     displayOk = displayMgr.initialize();
-    if (!displayOk) {
-        Serial.println("FATAL: Display Manager Initialization Failed after retries!");
-    } else {
-        displayMgr.showBooting();
-    }
+    if (!displayOk) Serial.println("FATAL: Display Manager Initialization Failed!");
+    else displayMgr.showBooting();
 
+    // 3. Inicializa LittleFS
     Serial.println("Initializing LittleFS...");
     if (!LittleFS.begin(true)) { // true para formatar se não conseguir montar
         Serial.println("LittleFS Mount Failed!");
         if (displayOk) displayMgr.showError("FS Mount Fail");
-        // Decidir se é uma falha fatal ou se o sistema pode continuar sem o WebServer
+        littleFsOk = false;
     } else {
         Serial.println("LittleFS Mounted.");
-        // Listar arquivos para depuração (opcional)
+        littleFsOk = true;
+        // Opcional: Listar arquivos para depuração
         File root = LittleFS.open("/");
         File file = root.openNextFile();
         while(file){
-            Serial.print("FILE: ");
-            Serial.println(file.name());
+            Serial.printf("  FILE: /%s (Size: %lu)\n", file.name(), file.size());
             file.close();
             file = root.openNextFile();
         }
+        root.close();
     }
 
-    if (wifiOk && LittleFS.mounted()) { // Adicione LittleFS.mounted() ou uma flag
-        Serial.println("Starting Web Server...");
-        webServerManager.begin(); // Método que você criará no WebServerManager
-        if (displayOk) { // Supondo que você adicione uma mensagem no display para o servidor web
-            // displayMgr.showWebServerRunning(WiFi.localIP().toString().c_str());
-        }
-    } else {
-        Serial.println("Skipping Web Server start (No WiFi or LittleFS not mounted).");
-    }
-    
-    // 3. Configura MqttManager
-    Serial.println("Setting up MQTT Manager...");
-    mqttMgr.setup();
-    mqttSetupOk = true;
-
-    // --- Construção e Inicialização dos Managers Locais (se houver) ou uso dos Globais ---
-
-    // 4. Inicializar Sensor Manager (instância global)
-    Serial.println("Initializing Sensor Manager...");
-    // Atualiza os ponteiros opcionais caso display/mqtt tenham falhado a inicialização
-    // (Embora já tenham sido passados no construtor, isso garante consistência se
-    // a lógica de passagem de ponteiro fosse feita aqui em vez de no construtor)
-    // sensorMgr.setDisplayManager(displayOk ? &displayMgr : nullptr); // Exemplo se tivesse setters
-    // sensorMgr.setMqttManager(mqttSetupOk ? &mqttMgr : nullptr);    // Exemplo se tivesse setters
-    sensorsOk = sensorMgr.initialize(); // Usa instância global
-    if (!sensorsOk) {
-        Serial.println("ERROR: Sensor Manager Initialization Failed after retries!");
-        if (displayOk) displayMgr.showError("Sensor Init Fail");
+    // Verifica se o botão está pressionado na inicialização ANTES de iniciar a tarefa WiFi
+    if (digitalRead(PAIRING_BUTTON_PIN) == LOW) {
+        // Se LittleFS falhou, o BLE ainda pode funcionar para obter credenciais
+        activatePairingMode(); // Esta função agora está definida globalmente
+        // O dispositivo pode reiniciar dentro de activatePairingMode se credenciais forem recebidas.
+        // Se não, a execução continua.
     }
 
-    
-    // 5. Inicializar Actuator Manager (instância global)
-    Serial.println("Initializing Actuator Manager...");
-    actuatorsOk = actuatorMgr.initialize(); // Usa instância global
-    if (!actuatorsOk) {
-        Serial.println("ERROR: Actuator Manager Initialization Failed!");
-        if (displayOk) displayMgr.showError("Actuator Init Fail");
-    }
-
-    // --- Fim da inicialização dos managers ---
-
-     // 6. Inicia Tarefa WiFi
-     Serial.println("Starting WiFi Task...");
-     WiFiTaskParams wifiParams = { &appConfig.wifi, (displayOk ? &displayMgr : nullptr) };
-     BaseType_t wifiTaskResult = xTaskCreate( connectToWiFi, "WiFiTask", 4096, (void *)&wifiParams, 1, NULL );
-     if (wifiTaskResult != pdPASS) {
+    // 4. Inicia Tarefa WiFi (que agora lida com config de IP e begin)
+    Serial.println("Starting WiFi Task...");
+    WiFiTaskParams wifiParams = { &appConfig.wifi, (displayOk ? &displayMgr : nullptr) };
+    BaseType_t wifiTaskResult = xTaskCreate( connectToWiFi, "WiFiTask", 4096, (void *)&wifiParams, 1, NULL );
+    if (wifiTaskResult != pdPASS) {
           Serial.println("FATAL ERROR: Failed to start WiFi Task!");
           if (displayOk) displayMgr.showError("Task WiFi Fail");
-          while(1) { vTaskDelay(1000); }
-     }
- 
+          while(1) { vTaskDelay(1000); } // Trava se a tarefa WiFi não puder ser criada
+    }
 
-    // 7. Aguarda Conexão WiFi
-    Serial.print("Waiting for WiFi connection...");
-    if (displayOk) displayMgr.showConnectingWiFi();
+    // 5. Aguarda Conexão WiFi
+    Serial.print("Waiting for WiFi connection from task...");
+    if (displayOk) displayMgr.showConnectingWiFi(); // A tarefa WiFi também pode chamar isso
     uint32_t wifiWaitStart = millis();
-    while (WiFi.status() != WL_CONNECTED && (millis() - wifiWaitStart < 60000)) {
-        vTaskDelay(pdMS_TO_TICKS(200)); // Spinner atualizado pela task WiFi
+    // A tarefa connectToWiFi agora é responsável por definir WiFi.status()
+    while (WiFi.status() != WL_CONNECTED && (millis() - wifiWaitStart < 60000)) { // Timeout de 60s
+        vTaskDelay(pdMS_TO_TICKS(200));
+        // O spinner é atualizado pela tarefa WiFi
     }
 
     if (WiFi.status() == WL_CONNECTED) {
         wifiOk = true;
         Serial.println("\nWiFi Connected!");
+        Serial.print("IP Address: ");
+        Serial.println(WiFi.localIP());
+        // O display é atualizado pela tarefa WiFi
     } else {
         wifiOk = false;
-        Serial.println("\nERROR: WiFi Connection Failed (Timeout?)!");
+        Serial.println("\nERROR: WiFi Connection Failed (Timeout or from task)!");
         if (displayOk) displayMgr.showError("WiFi Fail");
+        // A tarefa connectToWiFi pode ter chamado activatePairingMode se falhou
     }
 
-    // 8. Inicializa Time Service
+    // 6. Inicializa WebServer (APÓS WiFi e LittleFS)
+    if (wifiOk && littleFsOk) {
+        Serial.println("Starting Web Server...");
+        webServerManager.begin();
+        if (displayOk) {
+             displayMgr.printLine(1, WiFi.localIP().toString().c_str()); // Mostra IP no display
+        }
+    } else {
+        Serial.println("Skipping Web Server start (No WiFi or LittleFS not mounted).");
+        if (displayOk && !littleFsOk) displayMgr.showError("Web Srv Skip");
+    }
+
+    // 7. Configura MqttManager
+    Serial.println("Setting up MQTT Manager...");
+    mqttMgr.setup(); // Não depende de conexão, apenas configura
+    mqttSetupOk = true;
+
+    // 8. Inicializar Sensor Manager
+    Serial.println("Initializing Sensor Manager...");
+    sensorsOk = sensorMgr.initialize();
+    if (!sensorsOk) {
+        Serial.println("ERROR: Sensor Manager Initialization Failed!");
+        if (displayOk) displayMgr.showError("Sensor Init Fail");
+    }
+
+    // 9. Inicializar Actuator Manager
+    Serial.println("Initializing Actuator Manager...");
+    actuatorsOk = actuatorMgr.initialize();
+    if (!actuatorsOk) {
+        Serial.println("ERROR: Actuator Manager Initialization Failed!");
+        if (displayOk) displayMgr.showError("Actuator Init Fail");
+    }
+
+    // 10. Inicializa Time Service (APÓS WiFi)
     if (wifiOk) {
         if (displayOk) displayMgr.showNtpSyncing();
         timeOk = timeService.initialize(appConfig.time);
@@ -273,41 +243,38 @@ void setup() {
             if (displayOk) displayMgr.showError("NTP Cfg Fail");
         } else {
             struct tm timeinfo;
-            if (timeService.getCurrentTime(timeinfo)) { // Verifica sync inicial
-                if (displayOk) displayMgr.showNtpSynced(); // Usa displayMgr global
+            if (timeService.getCurrentTime(timeinfo)) {
+                if (displayOk) displayMgr.showNtpSynced();
                 Serial.println("Time Service initial sync successful.");
             } else {
-                if (displayOk) displayMgr.showError("NTP Sync Fail"); // Usa displayMgr global
-                Serial.println("WARN: Time Service configured, but initial sync failed. Will retry.");
+                if (displayOk) displayMgr.showError("NTP Sync Fail");
+                Serial.println("WARN: Time Service configured, but initial sync failed.");
             }
         }
     } else {
-        Serial.println("Skipping Time Service initialization (No WiFi).\n");
+        Serial.println("Skipping Time Service initialization (No WiFi).");
         timeOk = false;
     }
 
-    // 9. Inicia Tarefa MQTT (usa instância global mqttMgr)
+    // 11. Inicia Tarefa MQTT
     if (wifiOk && mqttSetupOk) {
         Serial.println("Starting MQTT Task...");
         if (displayOk) displayMgr.showMqttConnecting();
         BaseType_t mqttTaskResult = xTaskCreate( GrowController::MqttManager::taskRunner, "MQTTTask", 4096, &mqttMgr, 2, nullptr );
-        if (mqttTaskResult != pdPASS) {
+        mqttTaskOk = (mqttTaskResult == pdPASS);
+        if (!mqttTaskOk) {
             Serial.println("ERROR: Failed to start MQTT Task!");
             if (displayOk) displayMgr.showError("Task MQTT Fail");
-            mqttTaskOk = false;
-        } else {
-            mqttTaskOk = true;
         }
     } else {
         Serial.println("Skipping MQTT Task start (No WiFi or MQTT Setup failed).");
         mqttTaskOk = false;
     }
 
-    // 10. Inicia Tarefa de Leitura de Sensores (usa instância global sensorMgr)
+    // 12. Inicia Tarefa de Leitura de Sensores
     if (sensorsOk) {
         Serial.println("Starting Sensor Reading Task...");
-        // Passa o endereço da instância global sensorMgr
-        sensorTaskOk = sensorMgr.startSensorTask(1, 4096);
+        sensorTaskOk = sensorMgr.startSensorTask(1, 4096); // Prioridade 1
         if (!sensorTaskOk) {
             Serial.println("ERROR: Failed to start Sensor Task!");
             if (displayOk) displayMgr.showError("Task Sens Fail");
@@ -317,12 +284,12 @@ void setup() {
         sensorTaskOk = false;
    }
 
-    // 11. Inicia Tarefas de Controle de Atuadores (usa instância global actuatorMgr)
-    bool canStartLightTask = actuatorsOk && timeOk;
-    bool canStartHumidityTask = actuatorsOk && sensorsOk;
+    // 13. Inicia Tarefas de Controle de Atuadores
+    bool canStartLightTask = actuatorsOk && timeOk; // Precisa de hora para a luz
+    bool canStartHumidityTask = actuatorsOk && sensorsOk; // Precisa de sensor de umidade do ar
     if (actuatorsOk && (canStartLightTask || canStartHumidityTask)) {
         Serial.println("Starting Actuator Control Tasks...");
-        actuatorTasksOk = actuatorMgr.startControlTasks(1, 1, 2560);
+        actuatorTasksOk = actuatorMgr.startControlTasks(1, 1, 2560); // Prioridade 1
         if (!actuatorTasksOk) {
              Serial.println("ERROR: Failed to start one or both Actuator Tasks!");
              if (displayOk) displayMgr.showError("Task Act Fail");
@@ -330,20 +297,19 @@ void setup() {
              Serial.println("Actuator Tasks started.");
         }
     } else {
-        Serial.println("Skipping Actuator Tasks start (Actuators not initialized or critical dependencies missing/failed).");
+        Serial.println("Skipping Actuator Tasks start (Actuators/Sensors/Time not ready).");
         actuatorTasksOk = false;
     }
 
-    // --- Setup Concluído ---
-    vTaskDelay(pdMS_TO_TICKS(500));
     Serial.println("--- Setup Complete ---");
-    // (Restante do log de status sem alterações)
     Serial.println("Initialization Status:");
     Serial.printf("  Display:     %s\n", displayOk ? "OK" : "FAILED");
-    Serial.printf("  MQTT Setup:  %s\n", mqttSetupOk ? "OK" : "ASSUMED_OK");
+    Serial.printf("  LittleFS:    %s\n", littleFsOk ? "OK" : "FAILED");
+    Serial.printf("  WiFi:        %s (IP: %s)\n", wifiOk ? "OK" : "FAILED", WiFi.localIP().toString().c_str());
+    Serial.printf("  WebServer:   %s\n", (wifiOk && littleFsOk) ? "RUNNING" : "SKIPPED");
+    Serial.printf("  MQTT Setup:  %s\n", mqttSetupOk ? "OK" : "FAILED");
     Serial.printf("  Sensors:     %s\n", sensorsOk ? "OK" : "FAILED");
     Serial.printf("  Actuators:   %s\n", actuatorsOk ? "OK" : "FAILED");
-    Serial.printf("  WiFi:        %s\n", wifiOk ? "OK" : "FAILED");
     Serial.printf("  Time Config: %s\n", timeOk ? "OK" : "FAILED/SKIPPED");
     Serial.printf("  MQTT Task:   %s\n", mqttTaskOk ? "OK" : "FAILED/SKIPPED");
     Serial.printf("  Sensor Task: %s\n", sensorTaskOk ? "OK" : "FAILED/SKIPPED");
@@ -351,21 +317,42 @@ void setup() {
     Serial.print("Free Heap: "); Serial.println(ESP.getFreeHeap());
 
     if (displayOk) {
-        bool systemDegraded = !sensorsOk || !actuatorsOk || !wifiOk || !timeOk || !mqttTaskOk || !sensorTaskOk || !actuatorTasksOk;
-        if (systemDegraded) {
+        bool systemDegraded = !littleFsOk || !sensorsOk || !actuatorsOk || !wifiOk || !timeOk || !mqttTaskOk || !sensorTaskOk || !actuatorTasksOk;
+        if (systemDegraded && !(digitalRead(PAIRING_BUTTON_PIN) == LOW)) { // Não mostrar degradado se estiver em modo de pareamento
              displayMgr.printLine(0, "System Started");
-             displayMgr.printLine(1, "Degraded Mode");
-        } else {
-            displayMgr.clear(); // Limpa se tudo OK
+             displayMgr.printLine(1, wifiOk ? WiFi.localIP().toString().c_str() : "Degraded Mode");
+        } else if (wifiOk && littleFsOk && !systemDegraded) {
+            // Se tudo OK e web server rodando, o display pode mostrar o IP e dados dos sensores
+            // A tarefa de sensores já atualiza o display.
+             displayMgr.printLine(0, "System OK");
+             displayMgr.printLine(1, WiFi.localIP().toString().c_str());
         }
     }
 }
 
+// Loop principal - Chamada para enviar eventos SSE
 void loop() {
     // Verifica se o botão foi pressionado durante a execução
     if (digitalRead(PAIRING_BUTTON_PIN) == LOW) {
-        activatePairingMode();
+        // Adicionar um debounce simples para evitar múltiplas ativações
+        vTaskDelay(pdMS_TO_TICKS(50)); // Debounce delay
+        if (digitalRead(PAIRING_BUTTON_PIN) == LOW) {
+            activatePairingMode();
+            // A função activatePairingMode pode reiniciar o dispositivo.
+            // Se não reiniciar, o loop continua.
+        }
     }
 
-    vTaskSuspend(NULL);
+    // Enviar eventos SSE periodicamente se o servidor web estiver ativo
+    // Esta é uma forma simples. Idealmente, os eventos seriam enviados
+    // apenas quando os dados mudam, disparados pelos respectivos managers.
+    static unsigned long lastSseSendTime = 0;
+    if (wifiOk && littleFsOk && (millis() - lastSseSendTime > 2000)) { // Envia a cada 2 segundos
+        webServerManager.sendSensorUpdateEvent();
+        webServerManager.sendStatusUpdateEvent();
+        lastSseSendTime = millis();
+    }
+
+    vTaskDelay(pdMS_TO_TICKS(100)); // Reduz a carga da CPU no loop principal
+    // vTaskSuspend(NULL); // Se o loop principal não tiver mais nada para fazer
 }
