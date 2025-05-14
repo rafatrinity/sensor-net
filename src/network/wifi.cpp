@@ -45,29 +45,36 @@ void connectToWiFi(void *parameter) {
     const uint32_t retryDelayMs = 500;
     displayMgr->showConnectingWiFi();
 
-    while (true) {
+    char loaded_ssid[32];
+    char loaded_password[64];
 
-        WiFi.begin(wifiConfig->ssid, wifiConfig->password);
-
-        uint32_t attempt = 0;
-        while (WiFi.status() != WL_CONNECTED && attempt < maxRetries) {
-            vTaskDelay(pdMS_TO_TICKS(retryDelayMs));
-            Serial.print(".");
-            displayMgr->updateSpinner();
-            attempt++;
+    if (loadWiFiCredentials(loaded_ssid, loaded_password, sizeof(loaded_ssid))) {
+        Serial.printf("Credenciais carregadas: SSID=%s\n", loaded_ssid);
+        if (!WiFi.config(local_IP, gateway, subnet, primaryDNS, secondaryDNS)) {
+            Serial.println("Falha ao configurar IP estático, tentando DHCP...");
         }
+        WiFi.begin(loaded_ssid, loaded_password);
+    } else {
+        Serial.println("Nenhuma credencial Wi-Fi salva encontrada. Tentando credenciais armazenadas no ESP32...");
+        WiFi.begin(); // Tenta usar credenciais armazenadas no ESP32
+    }
 
-        if (WiFi.status() == WL_CONNECTED) {
-            String ipAddr = WiFi.localIP().toString();
-            Serial.println(ipAddr.c_str());
-            displayMgr->showWiFiConnected(ipAddr.c_str());
-            break;
-        } else {
-            Serial.println("\nFailed to connect to WiFi, retrying in 5 seconds...");
-            displayMgr->showError("WiFi Fail");
-            vTaskDelay(pdMS_TO_TICKS(5000));
-            displayMgr->clear();
-        }
+    uint32_t attempt = 0;
+    while (WiFi.status() != WL_CONNECTED && attempt < maxRetries) {
+        vTaskDelay(pdMS_TO_TICKS(retryDelayMs));
+        Serial.print(".");
+        displayMgr->updateSpinner();
+        attempt++;
+    }
+
+    if (WiFi.status() == WL_CONNECTED) {
+        String ipAddr = WiFi.localIP().toString();
+        Serial.println(ipAddr.c_str());
+        displayMgr->showWiFiConnected(ipAddr.c_str());
+    } else {
+        Serial.println("\nFalha ao conectar ao Wi-Fi, entrando em modo de configuração BLE...");
+        displayMgr->showError("WiFi Fail");
+        activatePairingMode(); // Função para entrar no modo de configuração BLE
     }
 
     Serial.println("WiFi Task finished.");

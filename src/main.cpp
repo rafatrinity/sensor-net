@@ -155,11 +155,7 @@ void setup() {
 
     if (loadWiFiCredentials(ssid, password, sizeof(ssid))) {
         Serial.printf("Conectando ao Wi-Fi salvo: %s\n", ssid);
-        if (!WiFi.config(local_IP, gateway, subnet, primaryDNS, secondaryDNS)) {
-            Serial.println("STA Failed to configure static IP");
-            // Lidar com o erro, talvez tentar DHCP?
-        }
-        WiFi.begin(ssid, password);
+        // Removido WiFi.config e WiFi.begin daqui
     } else {
         Serial.println("Nenhuma credencial Wi-Fi salva encontrada.");
     }
