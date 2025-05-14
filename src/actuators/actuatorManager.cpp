@@ -246,4 +246,14 @@ void ActuatorManager::runHumidityControlTask() {
     }
 }
 
+bool ActuatorManager::isLightRelayOn() const {
+    if (!initialized) return false; // Ou o estado padrão que você preferir se não inicializado
+    // A lógica do relé pode ser invertida (LOW para ON). Ajuste conforme necessário.
+    return digitalRead(gpioConfig.lightControlPin) == HIGH;
+}
+
+bool ActuatorManager::isHumidifierRelayOn() const {
+    if (!initialized) return false;
+    return digitalRead(gpioConfig.humidityControlPin) == HIGH;
+}
 } // namespace GrowController

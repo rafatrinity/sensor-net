@@ -33,6 +33,8 @@ public:
                            UBaseType_t humidityTaskPriority = 1,
                            uint32_t stackSize = 2560);
     bool isInitialized() const;
+    bool isLightRelayOn() const;
+    bool isHumidifierRelayOn() const;
 
 private:
     void checkAndControlLight(const struct tm& lightOn, const struct tm& lightOff, int lightPin);
