@@ -6,6 +6,7 @@
 #include <DHT.h>
 #include <freertos/FreeRTOS.h>
 #include <freertos/semphr.h>
+#include <IPAddress.h>
 
 // --- Inclusão Condicional das Configurações da Placa ---
 #if defined(ARDUINO_ESP32_DEV)
@@ -25,6 +26,17 @@
 #else
     #define WIFI_SSID "Casa" // TODO: Mudar para método seguro
     #define WIFI_PASSWORD "12345678" // TODO: Mudar para método seguro
+#endif
+
+#define STATIC_IP_ENABLED 1 // 1 para habilitar IP estático, 0 para DHCP (se loadWiFiCredentials falhar)
+
+#if STATIC_IP_ENABLED
+    const IPAddress LOCAL_IP(192, 168, 1, 180);
+    
+    const IPAddress GATEWAY_IP(192, 168, 1, 1);
+    const IPAddress SUBNET_MASK(255, 255, 255, 0);
+    const IPAddress PRIMARY_DNS_IP(8, 8, 8, 8);     // Opcional
+    const IPAddress SECONDARY_DNS_IP(8, 8, 4, 4); // Opcional
 #endif
 
 // --- Configurações Gerais da Aplicação ---
