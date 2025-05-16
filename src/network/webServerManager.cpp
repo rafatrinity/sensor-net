@@ -1,16 +1,15 @@
 #include "webServerManager.hpp"
-#include "config.hpp" // Para acesso às GPIO pins se necessário (embora melhor via ActuatorManager)
 #include <LittleFS.h>
-#include <Arduino.h> // Para Serial
-
+#include <Arduino.h> 
 namespace GrowController {
 
-WebServerManager::WebServerManager(SensorManager* sensorMgr, TargetDataManager* targetMgr, ActuatorManager* actuatorMgr) :
+WebServerManager::WebServerManager(uint16_t port, SensorManager* sensorMgr, TargetDataManager* targetMgr, ActuatorManager* actuatorMgr) :
     sensorManager_(sensorMgr),
     targetDataManager_(targetMgr),
     actuatorManager_(actuatorMgr),
-    server_(80),
-    events_("/events")
+    server_(port),
+    events_("/events"),
+    port_(port)
 {
     if (!sensorManager_ || !targetDataManager_ || !actuatorManager_) {
         Serial.println("WebServerManager ERROR: Null manager pointer(s) passed to constructor!");
@@ -19,7 +18,7 @@ WebServerManager::WebServerManager(SensorManager* sensorMgr, TargetDataManager* 
 
 WebServerManager::~WebServerManager() {
     server_.end();
-    events_.close(); // Fechar a fonte de eventos
+    events_.close();
 }
 
 void WebServerManager::begin() {

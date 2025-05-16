@@ -32,29 +32,34 @@
 
 #if STATIC_IP_ENABLED
     const IPAddress LOCAL_IP(192, 168, 1, 180);
-    
     const IPAddress GATEWAY_IP(192, 168, 1, 1);
     const IPAddress SUBNET_MASK(255, 255, 255, 0);
-    const IPAddress PRIMARY_DNS_IP(8, 8, 8, 8);     // Opcional
-    const IPAddress SECONDARY_DNS_IP(8, 8, 4, 4); // Opcional
+    const IPAddress PRIMARY_DNS_IP(8, 8, 8, 8);
+    const IPAddress SECONDARY_DNS_IP(8, 8, 4, 4);
 #endif
 
-// --- Configurações Gerais da Aplicação ---
+// --- Configurações do Servidor Web e mDNS ---
+#define HTTP_PORT 80
+#define MDNS_HOSTNAME "greenhouse"
+#define MDNS_SERVICE_NAME "webserver"
+
+    // --- Configurações Gerais da Aplicação ---
 
 #define BAUD 115200
 
-// --- Initialization Retry Configuration ---
+    // --- Initialization Retry Configuration ---
 #define INIT_RETRY_COUNT 3       // Number of initialization attempts
 #define INIT_RETRY_DELAY_MS 1000 // Delay between attempts in milliseconds
 
-// Semáforos (Ainda como extern - próximos alvos de refatoração)
-extern SemaphoreHandle_t mqttMutex; // OK por enquanto, será encapsulado no MqttManager
+    // Semáforos (Ainda como extern - próximos alvos de refatoração)
+    extern SemaphoreHandle_t mqttMutex; // OK por enquanto, será encapsulado no MqttManager
 
-// Estruturas de Configuração
-struct WiFiConfig {
-    const char* ssid = WIFI_SSID;
-    const char* password = WIFI_PASSWORD;
-};
+    // Estruturas de Configuração
+    struct WiFiConfig
+    {
+        const char *ssid = WIFI_SSID;
+        const char *password = WIFI_PASSWORD;
+    };
 
 struct MQTTConfig {
     const char* server = MQTT_SERVER; 

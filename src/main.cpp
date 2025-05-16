@@ -16,6 +16,7 @@
 #include <BLEUtils.h>
 #include <BLEServer.h>
 #include <LittleFS.h>
+#include <ESPmDNS.h>
 
 // Variáveis globais para sinalizar o recebimento de credenciais
 volatile bool g_bleCredentialsReceived = false;
@@ -32,8 +33,7 @@ GrowController::DisplayManager displayMgr(LCD_I2C_ADDR, LCD_COLS, LCD_ROWS, time
 GrowController::MqttManager mqttMgr(appConfig.mqtt, targetManager);
 GrowController::SensorManager sensorMgr(appConfig.sensor, &displayMgr, &mqttMgr); // Passar WebServerManager aqui se ele for chamar eventos SSE
 GrowController::ActuatorManager actuatorMgr(appConfig.gpioControl, targetManager, sensorMgr, timeService);
-GrowController::WebServerManager webServerManager(&sensorMgr, &targetManager, &actuatorMgr); // Agora sensorMgr e actuatorMgr existem
-
+GrowController::WebServerManager webServerManager(HTTP_PORT, &sensorMgr, &targetManager, &actuatorMgr);
 
 BLEServer* pServer = nullptr;
 BLECharacteristic* pCharacteristic = nullptr;
@@ -178,6 +178,7 @@ void setup() {
           while(1) { vTaskDelay(1000); } // Trava se a tarefa WiFi não puder ser criada
     }
 
+
     // 5. Aguarda Conexão WiFi
     Serial.print("Waiting for WiFi connection from task...");
     if (displayOk) displayMgr.showConnectingWiFi(); // A tarefa WiFi também pode chamar isso
@@ -199,6 +200,20 @@ void setup() {
         Serial.println("\nERROR: WiFi Connection Failed (Timeout or from task)!");
         if (displayOk) displayMgr.showError("WiFi Fail");
         // A tarefa connectToWiFi pode ter chamado activatePairingMode se falhou
+    }
+
+    if (wifiOk) {
+        Serial.println("Configuring mDNS responder...");
+        if (MDNS.begin(MDNS_HOSTNAME)) {
+            Serial.printf("MDNS responder started. You can now access the device at: http://%s.local\n", MDNS_HOSTNAME);
+            MDNS.addService("http", "tcp", HTTP_PORT);
+            Serial.printf("mDNS service _http._tcp announced on port %d\n", HTTP_PORT);
+        } else {
+            Serial.println("Error setting up MDNS responder!");
+            if (displayOk) displayMgr.showError("mDNS Fail");
+        }
+    } else {
+        Serial.println("Skipping mDNS setup (No WiFi).");
     }
 
     // 6. Inicializa WebServer (APÓS WiFi e LittleFS)
@@ -332,20 +347,16 @@ void setup() {
 
 // Loop principal - Chamada para enviar eventos SSE
 void loop() {
-    // Verifica se o botão foi pressionado durante a execução
     if (digitalRead(PAIRING_BUTTON_PIN) == LOW) {
-        // Adicionar um debounce simples para evitar múltiplas ativações
         vTaskDelay(pdMS_TO_TICKS(50)); // Debounce delay
         if (digitalRead(PAIRING_BUTTON_PIN) == LOW) {
             activatePairingMode();
-            // A função activatePairingMode pode reiniciar o dispositivo.
-            // Se não reiniciar, o loop continua.
         }
     }
 
     // Enviar eventos SSE periodicamente se o servidor web estiver ativo
     // Esta é uma forma simples. Idealmente, os eventos seriam enviados
-    // apenas quando os dados mudam, disparados pelos respectivos managers.
+    // TODO: Implementar um sistema de eventos SSE mais robusto, como um sistema de eventos SSE. (apenas quando os dados mudam, disparados pelos respectivos managers.)
     static unsigned long lastSseSendTime = 0;
     if (wifiOk && littleFsOk && (millis() - lastSseSendTime > 2000)) { // Envia a cada 2 segundos
         webServerManager.sendSensorUpdateEvent();
