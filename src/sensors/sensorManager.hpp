@@ -10,11 +10,13 @@
 #include "utils/freeRTOSMutex.hpp" // Wrapper RAII do Mutex
 #include "freertos/FreeRTOS.h"   // Para tipos FreeRTOS
 #include "freertos/task.h"       // Para TaskHandle_t
+#include "utils/timeService.hpp"
 
 // Forward declaration para dependências
 namespace GrowController {
     class DisplayManager;
     class MqttManager;
+    class DataHistoryManager;
 }
 
 namespace GrowController {
@@ -30,10 +32,14 @@ public:
     /**
      * @brief Construtor. Recebe configuração e dependências.
      * @param config Configuração específica dos sensores.
+     * @param timeSvc Serviço de tempo (para leitura de tempo).
+     * @param historyMgr Ponteiro para o DataHistoryManager (opcional, para armazenamento em cache).
      * @param displayMgr Ponteiro para o DisplayManager (opcional, para atualização direta).
      * @param mqttMgr Ponteiro para o MqttManager (opcional, para publicação direta).
      */
     SensorManager(const SensorConfig& config,
+                  TimeService& timeSvc,
+                  DataHistoryManager* historyMgr,
                   DisplayManager* displayMgr = nullptr,
                   MqttManager* mqttMgr = nullptr);
 
@@ -134,17 +140,30 @@ private:
     static void readSensorsTaskWrapper(void *pvParameters);
 
     // --- Membros ---
-    const SensorConfig& sensorConfig;        // Referência à configuração
-    DisplayManager* displayManager = nullptr;  // Dependência opcional
-    MqttManager* mqttManager = nullptr;      // Dependência opcional
-    std::unique_ptr<DHT> dhtSensor = nullptr; // Ponteiro inteligente para o sensor
-    FreeRTOSMutex sensorDataMutex;           // Mutex para o cache
+    const SensorConfig& sensorConfig;
+    TimeService& timeServiceRef;
+    DataHistoryManager* dataHistoryManagerPtr;
+    DisplayManager* displayManager = nullptr;
+    MqttManager* mqttManager = nullptr;
+    std::unique_ptr<DHT> dhtSensor = nullptr;
+    FreeRTOSMutex sensorDataMutex;
     float cachedTemperature = NAN;
     float cachedHumidity = NAN;
-    float cachedSoilHumidity = NAN;         // NOVO CACHE
-    float cachedVpd = NAN;                  // NOVO CACHE
-    TaskHandle_t readTaskHandle = nullptr;   // Handle da tarefa criada
+    float cachedSoilHumidity = NAN;
+    float cachedVpd = NAN;
+    TaskHandle_t readTaskHandle = nullptr;
     bool initialized = false;
+
+     // Membros para acumulação de médias
+    float currentTempSum = 0.0f;
+    int validTempReadings = 0;
+    float currentAirHumSum = 0.0f;
+    int validAirHumReadings = 0;
+    float currentSoilHumSum = 0.0f;
+    int validSoilHumReadings = 0;
+
+    unsigned long lastSaveToFlashMillis = 0;
+    static const unsigned long SAVE_INTERVAL_MILLIS = 30UL * 60UL * 1000UL;
 
     // Constantes internas
     static const TickType_t SENSOR_READ_INTERVAL_MS;

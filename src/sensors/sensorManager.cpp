@@ -1,167 +1,237 @@
 // src/sensors/sensorManager.cpp
 #include "sensorManager.hpp"
-#include "ui/displayManager.hpp"      // Para interação com o display
-#include "network/mqttManager.hpp"  // Para publicação MQTT
-#include <Arduino.h>                // Funções Core Arduino/ESP-IDF
-#include <math.h>                   // Para isnan, expf, abs, round
-#include <vector>                   // Para leitura do sensor de solo
-#include <numeric>                  // Para std::accumulate
-#include <ArduinoJson.h>            // Para publicação JSON (opcional)
+#include "ui/displayManager.hpp"
+#include "network/mqttManager.hpp"
+#include "data/dataHistoryManager.hpp"
+#include <Arduino.h>
+#include <math.h>
+#include <vector>
+#include <numeric>
+#include <ArduinoJson.h>
 #include "config.hpp"
+#include "utils/logger.hpp"
+#include "utils/timeService.hpp"
+#include "data/historicDataPoint.hpp"
 
 namespace GrowController {
 
-// Definição das constantes estáticas declaradas no .hpp
-const TickType_t SensorManager::SENSOR_READ_INTERVAL_MS = pdMS_TO_TICKS(3000);
+const TickType_t SensorManager::SENSOR_READ_INTERVAL_MS = pdMS_TO_TICKS(10000);
 const TickType_t SensorManager::MUTEX_TIMEOUT = pdMS_TO_TICKS(500);
 
 // --- Construtor e Destrutor ---
 
-SensorManager::SensorManager(const SensorConfig& config, DisplayManager* displayMgr, MqttManager* mqttMgr) :
+SensorManager::SensorManager(const SensorConfig& config,
+                             TimeService& timeSvc,
+                             DataHistoryManager* historyMgr,
+                             DisplayManager* displayMgr,
+                             MqttManager* mqttMgr) :
     sensorConfig(config),
+    timeServiceRef(timeSvc),                  
+    dataHistoryManagerPtr(historyMgr),        
     displayManager(displayMgr),
     mqttManager(mqttMgr),
     dhtSensor(nullptr),
     cachedTemperature(NAN),
     cachedHumidity(NAN),
     cachedSoilHumidity(NAN),
-    cachedVpd(NAN),          // Inicializa novo cache
+    cachedVpd(NAN),
     readTaskHandle(nullptr),
-    initialized(false)
-{}
+    initialized(false),
+    lastSaveToFlashMillis(0)
+{
+    // Logger::info("SensorManager: Constructor called.");
+}
 
 SensorManager::~SensorManager() {
-    // Garante que a tarefa seja parada e deletada se estiver rodando
     if (readTaskHandle != nullptr) {
-        Serial.println("SensorManager: Stopping sensor task...");
+        // Logger::info("SensorManager: Stopping sensor task...");
         vTaskDelete(readTaskHandle);
         readTaskHandle = nullptr;
     }
-    // Limpeza de dhtSensor (unique_ptr) e sensorDataMutex (FreeRTOSMutex) é automática (RAII)
-    Serial.println("SensorManager: Destroyed.");
+    // Logger::info("SensorManager: Destroyed.");
 }
-
-// --- Inicialização ---
 
 bool SensorManager::initialize() {
     if (initialized) {
-       Serial.println("SensorManager WARN: Already initialized.");
+       Logger::warn("SensorManager: Already initialized.");
        return true;
    }
-   Serial.println("SensorManager: Initializing...");
+   Logger::info("SensorManager: Initializing...");
 
    if (!sensorDataMutex) {
-       Serial.println("SensorManager ERROR: Failed to create data mutex! Cannot initialize.");
-       return false; // Cannot proceed without mutex
+       Logger::error("SensorManager: Failed to create data mutex! Cannot initialize.");
+       return false;
    }
-   Serial.println("SensorManager: Data mutex verified.");
+   // Logger::debug("SensorManager: Data mutex verified.");
 
-   // Retry Loop for DHT Sensor Initialization
    for (int attempt = 1; attempt <= INIT_RETRY_COUNT; ++attempt) {
-       Serial.printf("SensorManager: Attempt %d/%d to initialize DHT sensor...\n", attempt, INIT_RETRY_COUNT);
+       // Logger::debug("SensorManager: Attempt %d/%d to initialize DHT sensor...", attempt, INIT_RETRY_COUNT);
 
        dhtSensor.reset(new (std::nothrow) DHT(sensorConfig.dhtPin, sensorConfig.dhtType));
        if (!dhtSensor) {
-           Serial.println("SensorManager ERROR: Failed to allocate DHT sensor object!");
+           Logger::error("SensorManager ERROR: Failed to allocate DHT sensor object!");
             if (attempt < INIT_RETRY_COUNT) {
                 vTaskDelay(pdMS_TO_TICKS(INIT_RETRY_DELAY_MS));
             }
-           continue; // Try next attempt
+           continue;
        }
 
-       dhtSensor->begin(); // begin() não retorna status, mas pode demorar um pouco
+       dhtSensor->begin(); // begin() não retorna status
 
-       // Tentativa de leitura inicial para verificar se o sensor responde
-       float initialTemp = dhtSensor->readTemperature();
-       float initialHum = dhtSensor->readHumidity();
+       float initialTemp = dhtSensor->readTemperature(); // Leitura de teste
+       float initialHum = dhtSensor->readHumidity();   // Leitura de teste
 
        if (isnan(initialTemp) || isnan(initialHum)) {
-           Serial.printf("SensorManager WARN: DHT sensor did not return valid data on attempt %d.\n", attempt);
+           Logger::warn("SensorManager: DHT sensor did not return valid data on init attempt %d.", attempt);
            dhtSensor.reset(); // Libera o objeto falho
            if (attempt < INIT_RETRY_COUNT) {
                vTaskDelay(pdMS_TO_TICKS(INIT_RETRY_DELAY_MS));
            }
-           // Continue para a próxima tentativa
        } else {
-           Serial.printf("SensorManager: DHT Sensor Initialized successfully (Initial read: %.1fC, %.1f%%).\n", initialTemp, initialHum);
+           Logger::info("SensorManager: DHT Sensor Initialized successfully (Initial read: %.1fC, %.1f%%).", initialTemp, initialHum);
            initialized = true;
-           Serial.println("SensorManager: Initialization successful.");
+           // Logger::info("SensorManager: Initialization successful.");
            return true; // Sai do loop e da função com sucesso
        }
-   } // End of retry loop
+   }
 
-   // Se o loop terminou sem sucesso
-   Serial.println("SensorManager ERROR: Initialization failed after all retries.");
-   dhtSensor.reset(); // Garante que o ponteiro é nulo
+   Logger::error("SensorManager ERROR: DHT Initialization failed after all retries.");
+   dhtSensor.reset(); // Garante que o ponteiro é nulo se falhar
    initialized = false;
    return false;
 }
 
-bool SensorManager::isInitialized() const {
-    return initialized;
-}
+// Modificar runSensorTask
+void SensorManager::runSensorTask() {
+    Logger::info("SensorManager: runSensorTask loop entered. Read interval: %lu ms, Save interval: %lu ms.",
+                 (unsigned long)SENSOR_READ_INTERVAL_MS / portTICK_PERIOD_MS, SAVE_INTERVAL_MILLIS);
 
-// --- Leitura de Cache (Métodos Públicos Thread-Safe) ---
+    // Inicializa lastSaveToFlashMillis para que o primeiro salvamento ocorra após o primeiro intervalo
+    lastSaveToFlashMillis = millis();
 
-float SensorManager::getTemperature() const {
-    float temp = NAN;
-    if (!initialized) return NAN;
+    while (true) {
+        if (!initialized) {
+             Logger::error("SensorTask ERROR: Manager is no longer initialized. Exiting task.");
+             break; // Sai do loop while(true), tarefa será deletada
+        }
 
-    if (sensorDataMutex && xSemaphoreTake(sensorDataMutex.get(), MUTEX_TIMEOUT) == pdTRUE) {
-        temp = this->cachedTemperature;
-        xSemaphoreGive(sensorDataMutex.get());
-    } else {
-        // Evitar log excessivo em caso de timeout frequente
-        Serial.println("SensorManager WARN: getTemperature - Mutex timeout or invalid.");
+        unsigned long currentMillisCycle = millis(); // Obter millis uma vez por ciclo
+
+        // --- 1. Ler Sensores ---
+        float currentTemperature = _readTemperatureFromSensor();
+        float currentAirHumidity = _readHumidityFromSensor();
+        float currentSoilHumidity = _readSoilHumidityFromSensor();
+        float currentVpd = _calculateVpd(currentTemperature, currentAirHumidity);
+
+        // Logger::debug("[SensorTask] Raw - T:%.1f, AH:%.1f, SH:%.1f, VPD:%.2f",
+        //             currentTemperature, currentAirHumidity, currentSoilHumidity, currentVpd);
+
+        // --- 2. Acumular leituras para média ---
+        if (!isnan(currentTemperature)) {
+            currentTempSum += currentTemperature;
+            validTempReadings++;
+        }
+        if (!isnan(currentAirHumidity)) {
+            currentAirHumSum += currentAirHumidity;
+            validAirHumReadings++;
+        }
+        if (!isnan(currentSoilHumidity)) {
+            currentSoilHumSum += currentSoilHumidity;
+            validSoilHumReadings++;
+        }
+        // VPD não é somado diretamente, será recalculado a partir das médias de T e H.
+
+        // --- 3. Atualizar Cache com leituras instantâneas ---
+        if (sensorDataMutex && xSemaphoreTake(sensorDataMutex.get(), MUTEX_TIMEOUT) == pdTRUE) {
+            if (!isnan(currentTemperature)) { this->cachedTemperature = currentTemperature; }
+            if (!isnan(currentAirHumidity)) { this->cachedHumidity = currentAirHumidity; }
+            if (!isnan(currentSoilHumidity)) { this->cachedSoilHumidity = currentSoilHumidity; }
+            if (!isnan(currentVpd)) { this->cachedVpd = currentVpd; }
+            xSemaphoreGive(sensorDataMutex.get());
+        } else {
+             // Logger::warn("SensorTask WARN: Failed acquire mutex to update cache.");
+        }
+
+        // --- 4. Processar/Publicar leituras instantâneas (MQTT, Display) ---
+        bool validInstantReadings = !isnan(currentTemperature) && !isnan(currentAirHumidity);
+                                  // SoilHumidity e VPD podem ser NAN e ainda assim T/AH serem válidos.
+
+        if (this->mqttManager != nullptr ) { // Publicar mesmo se alguns forem NAN, o broker/cliente trata
+            if(!isnan(currentTemperature)) this->mqttManager->publish("sensors/temperature", currentTemperature);
+            if(!isnan(currentAirHumidity)) this->mqttManager->publish("sensors/air_humidity", currentAirHumidity);
+            if(!isnan(currentSoilHumidity)) this->mqttManager->publish("sensors/soil_humidity", currentSoilHumidity);
+            if(!isnan(currentVpd)) this->mqttManager->publish("sensors/vpd", currentVpd);
+        }
+
+        if (this->displayManager != nullptr && this->displayManager->isInitialized()) {
+            this->displayManager->showSensorData(currentTemperature, currentAirHumidity, currentSoilHumidity);
+        }
+
+        // --- 5. Verificar se é hora de salvar a média na Flash ---
+        if (currentMillisCycle - lastSaveToFlashMillis >= SAVE_INTERVAL_MILLIS) {
+            Logger::info("SensorTask: Save interval reached. Calculating and saving averages.");
+            HistoricDataPoint dp;
+            struct tm timeinfo; // struct tm para mktime
+
+            // Obter timestamp
+            if (timeServiceRef.getCurrentTime(timeinfo)) {
+                dp.timestamp = mktime(&timeinfo); // mktime converte tm local para Unix timestamp UTC
+                // Logger::debug("SensorTask: Timestamp for save: %lu", dp.timestamp);
+            } else {
+                dp.timestamp = 0; // Indica timestamp inválido/não disponível
+                Logger::warn("SensorTask: Failed to get current time for historic data point. Timestamp set to 0.");
+            }
+
+            // Calcular médias
+            dp.avgTemperature = (validTempReadings > 0) ? (currentTempSum / validTempReadings) : NAN;
+            dp.avgAirHumidity = (validAirHumReadings > 0) ? (currentAirHumSum / validAirHumReadings) : NAN;
+            dp.avgSoilHumidity = (validSoilHumReadings > 0) ? (currentSoilHumSum / validSoilHumReadings) : NAN;
+            
+            // Calcular VPD a partir das médias de Temperatura e Umidade do Ar
+            if (validTempReadings > 0 && validAirHumReadings > 0 && !isnan(dp.avgTemperature) && !isnan(dp.avgAirHumidity)) {
+                 dp.avgVpd = _calculateVpd(dp.avgTemperature, dp.avgAirHumidity);
+            } else {
+                 dp.avgVpd = NAN;
+            }
+
+            Logger::info("SensorTask: Averages to save - T:%.1f, AH:%.1f, SH:%.1f, VPD:%.2f (TS: %lu)",
+                         dp.avgTemperature, dp.avgAirHumidity, dp.avgSoilHumidity, dp.avgVpd, dp.timestamp);
+
+            // Salvar ponto de dado histórico
+            if (dataHistoryManagerPtr) {
+                if (dataHistoryManagerPtr->addDataPoint(dp)) {
+                    Logger::info("SensorTask: Historic data point saved successfully.");
+                } else {
+                    Logger::error("SensorTask: Failed to save historic data point.");
+                }
+            } else {
+                Logger::warn("SensorTask: DataHistoryManager is null. Cannot save historic data.");
+            }
+
+            // Resetar somas e contagens para o próximo intervalo
+            currentTempSum = 0.0f;
+            validTempReadings = 0;
+            currentAirHumSum = 0.0f;
+            validAirHumReadings = 0;
+            currentSoilHumSum = 0.0f;
+            validSoilHumReadings = 0;
+            // VPD não precisa resetar soma, pois é recalculado
+
+            lastSaveToFlashMillis = currentMillisCycle; // Atualiza o tempo do último salvamento
+        }
+
+        // --- 6. Aguardar próximo ciclo de leitura ---
+        vTaskDelay(SENSOR_READ_INTERVAL_MS);
     }
-    return temp;
 }
 
-float SensorManager::getHumidity() const {
-    float hum = NAN;
-     if (!initialized) return NAN;
-
-    if (sensorDataMutex && xSemaphoreTake(sensorDataMutex.get(), MUTEX_TIMEOUT) == pdTRUE) {
-        hum = this->cachedHumidity;
-        xSemaphoreGive(sensorDataMutex.get());
-    } else {
-        // Serial.println("SensorManager WARN: getHumidity - Mutex timeout or invalid.");
-    }
-    return hum;
-}
-
-float SensorManager::getSoilHumidity() const {
-    float soilHum = NAN;
-     if (!initialized) return NAN;
-
-    if (sensorDataMutex && xSemaphoreTake(sensorDataMutex.get(), MUTEX_TIMEOUT) == pdTRUE) {
-        soilHum = this->cachedSoilHumidity;
-        xSemaphoreGive(sensorDataMutex.get());
-    } else {
-        Serial.println("SensorManager WARN: getSoilHumidity - Mutex timeout or invalid.");
-    }
-    return soilHum;
-}
-
-float SensorManager::getVpd() const {
-    float vpd = NAN;
-     if (!initialized) return NAN;
-
-    if (sensorDataMutex && xSemaphoreTake(sensorDataMutex.get(), MUTEX_TIMEOUT) == pdTRUE) {
-        vpd = this->cachedVpd;
-        xSemaphoreGive(sensorDataMutex.get());
-    } else {
-        Serial.println("SensorManager WARN: getVpd - Mutex timeout or invalid.");
-    }
-    return vpd;
-}
-
-
-// --- Leitura Interna de Sensores e Cálculos (Métodos Privados) ---
+// _readTemperatureFromSensor, _readHumidityFromSensor, _readSoilHumidityFromSensor, _calculateVpd
+// startSensorTask, readSensorsTaskWrapper, getters (getTemperature etc.)
+// permanecem como no seu código original ou com pequenas adaptações já feitas.
 
 float SensorManager::_readTemperatureFromSensor() {
     if (!dhtSensor) { return NAN; }
-    return dhtSensor->readTemperature();
+    return dhtSensor->readTemperature(); // Adicionar false para não ler umidade se for DHT11/21/22
 }
 
 float SensorManager::_readHumidityFromSensor() {
@@ -171,191 +241,140 @@ float SensorManager::_readHumidityFromSensor() {
 
 float SensorManager::_readSoilHumidityFromSensor() const {
     const int NUM_READINGS = 5;
-    const float ADC_MAX = 4095;
-    const int MAX_READING_ATTEMPTS = NUM_READINGS * 2;
-    const int MIN_VALID_VALUE = 1;
+    const float ADC_MAX = 4095.0f;
+    // Valores de calibração (EXEMPLOS! DEVEM SER AJUSTADOS PARA SEU SENSOR)
+    // ADC mais alto = mais seco, ADC mais baixo = mais molhado (para sensores resistivos comuns)
+    const float SOIL_ADC_AIR_VALUE = 3200.0f;  // Valor ADC do sensor no ar (0% umidade)
+    const float SOIL_ADC_WATER_VALUE = 1200.0f; // Valor ADC do sensor na água (100% umidade)
 
-    std::vector<int> validReadings;
-    validReadings.reserve(NUM_READINGS);
-    int attempts = 0;
+    std::vector<int> readings;
+    readings.reserve(NUM_READINGS);
 
-    // Ensure pin is configured (optional, good practice)
-    pinMode(this->sensorConfig.soilHumiditySensorPin, INPUT);
-
-    while (validReadings.size() < NUM_READINGS && attempts < MAX_READING_ATTEMPTS) {
-        int analogValue = analogRead(this->sensorConfig.soilHumiditySensorPin);
-        // Assumindo leitura direta (0 = seco, 4095 = molhado) - Inverta se necessário
-        int reading = analogValue;
-        // Exemplo de inversão: int reading = ADC_MAX - analogValue;
-
-        if (reading >= MIN_VALID_VALUE && reading <= ADC_MAX) {
-            validReadings.push_back(reading);
-        }
-        attempts++;
-        if (validReadings.size() < NUM_READINGS) {
-             vTaskDelay(pdMS_TO_TICKS(1)); // Pequeno delay entre leituras
-        }
+    for (int i = 0; i < NUM_READINGS; ++i) {
+        readings.push_back(analogRead(this->sensorConfig.soilHumiditySensorPin));
+        if (i < NUM_READINGS - 1) vTaskDelay(pdMS_TO_TICKS(20)); // Pequeno delay
     }
 
-    if (!validReadings.empty()) {
-        double sum = std::accumulate(validReadings.begin(), validReadings.end(), 0.0);
-        float average = static_cast<float>(sum) / validReadings.size();
+    // Remover outliers simples (opcional, mas pode ajudar)
+    // std::sort(readings.begin(), readings.end());
+    // if (NUM_READINGS >= 5) { // Pega os 3 do meio de 5
+    //     sum = readings[1] + readings[2] + readings[3];
+    //     average = sum / 3.0;
+    // } else { ... }
 
-        // Fórmula de porcentagem - AJUSTE CONFORME SEU SENSOR E CALIBRAÇÃO
-        // Exemplo 1: Mapeamento linear invertido (ADC_MAX = 0%, 0 = 100%)
-        float percentage = 100.0f * (ADC_MAX - average) / ADC_MAX;
-        // Exemplo 2: Mapeamento linear direto (0 = 0%, ADC_MAX = 100%)
-        // float percentage = 100.0f * average / ADC_MAX;
+    double sum = std::accumulate(readings.begin(), readings.end(), 0.0);
+    if (readings.empty()) return NAN;
+    
+    float averageAdc = static_cast<float>(sum) / readings.size();
 
-        percentage = constrain(percentage, 0.0f, 100.0f); // Garante faixa 0-100%
-        return percentage;
-    } else {
-        Serial.println("SensorManager WARN: No valid readings from Soil Sensor.");
-        return NAN;
-    }
+    // Mapear o valor ADC para porcentagem
+    float percentage = 100.0f * (SOIL_ADC_AIR_VALUE - averageAdc) / (SOIL_ADC_AIR_VALUE - SOIL_ADC_WATER_VALUE);
+    
+    // Limitar entre 0% e 100%
+    percentage = constrain(percentage, 0.0f, 100.0f);
+    return percentage;
 }
 
 float SensorManager::_calculateVpd(float temp, float hum) {
-    if (isnan(temp) || isnan(hum) || hum < 0.0f || hum > 100.0f) {
-        return NAN; // Entradas inválidas
+    if (isnan(temp) || isnan(hum) || hum < 0.0f || hum > 100.0f || temp < -20.0f || temp > 70.0f ) {
+        return NAN;
     }
-
-    // Fórmula de Buck para pressão de vapor de saturação (SVP) em kPa
-    float svp = 0.61078f * expf((17.27f * temp) / (temp + 237.3f)); // Usar expf para float
+    // Pressão de vapor de saturação (SVP) em kPa usando a fórmula de Tetens ou similar.
+    // SVP(Pa) = 610.78 * exp((17.27 * T_celsius) / (T_celsius + 237.3))
+    // Para kPa, dividir por 1000
+    float svp_kpa = 0.61078f * expf((17.27f * temp) / (temp + 237.3f));
 
     // Pressão de vapor atual (AVP) em kPa
-    float avp = svp * (hum / 100.0f);
+    float avp_kpa = svp_kpa * (hum / 100.0f);
 
     // Déficit de Pressão de Vapor (VPD)
-    float vpd = svp - avp;
-
-    // Retornar valor positivo ou NAN
-    return (vpd > 0.0f ? vpd : NAN); // VPD não deve ser negativo
+    float vpd = svp_kpa - avp_kpa;
+    return (vpd >= 0.0f ? vpd : 0.0f); // VPD não deve ser negativo
 }
 
-// --- Gerenciamento da Tarefa ---
+float SensorManager::getTemperature() const {
+    float temp = NAN;
+    if (!initialized) return NAN;
+    if (sensorDataMutex && xSemaphoreTake(sensorDataMutex.get(), MUTEX_TIMEOUT) == pdTRUE) {
+        temp = this->cachedTemperature;
+        xSemaphoreGive(sensorDataMutex.get());
+    }
+    return temp;
+}
+
+float SensorManager::getHumidity() const {
+    float hum = NAN;
+     if (!initialized) return NAN;
+    if (sensorDataMutex && xSemaphoreTake(sensorDataMutex.get(), MUTEX_TIMEOUT) == pdTRUE) {
+        hum = this->cachedHumidity;
+        xSemaphoreGive(sensorDataMutex.get());
+    }
+    return hum;
+}
+
+float SensorManager::getSoilHumidity() const {
+    float soilHum = NAN;
+     if (!initialized) return NAN;
+    if (sensorDataMutex && xSemaphoreTake(sensorDataMutex.get(), MUTEX_TIMEOUT) == pdTRUE) {
+        soilHum = this->cachedSoilHumidity;
+        xSemaphoreGive(sensorDataMutex.get());
+    }
+    return soilHum;
+}
+
+float SensorManager::getVpd() const {
+    float vpd_val = NAN;
+     if (!initialized) return NAN;
+    if (sensorDataMutex && xSemaphoreTake(sensorDataMutex.get(), MUTEX_TIMEOUT) == pdTRUE) {
+        vpd_val = this->cachedVpd;
+        xSemaphoreGive(sensorDataMutex.get());
+    }
+    return vpd_val;
+}
+
+bool SensorManager::isInitialized() const {
+    return initialized;
+}
 
 bool SensorManager::startSensorTask(UBaseType_t priority, uint32_t stackSize) {
     if (!initialized) {
-         Serial.println("SensorManager ERROR: Cannot start task, manager not initialized.");
+         Logger::error("SensorManager: Cannot start task, manager not initialized.");
          return false;
     }
     if (readTaskHandle != nullptr) {
-        Serial.println("SensorManager WARN: Sensor task already started.");
+        Logger::warn("SensorManager: Sensor task already started.");
         return true;
     }
 
-    Serial.println("SensorManager: Starting sensor reading task...");
+    // Logger::info("SensorManager: Starting sensor reading task...");
     BaseType_t result = xTaskCreate(
         readSensorsTaskWrapper,
         "SensorTask",
         stackSize,
-        this, // Passa ponteiro da instância atual como parâmetro
+        this,
         priority,
         &this->readTaskHandle
     );
 
     if (result != pdPASS) {
         readTaskHandle = nullptr;
-        Serial.print("SensorManager ERROR: Failed to create sensor task! Error code: ");
-        Serial.println(result);
+        Logger::error("SensorManager: Failed to create sensor task! Error code: %d", result);
         return false;
     }
 
-    Serial.println("SensorManager: Sensor task started successfully.");
+    Logger::info("SensorManager: Sensor task started successfully.");
     return true;
 }
 
-// --- Implementação da Tarefa (Wrapper Estático e Loop Principal) ---
-
 void SensorManager::readSensorsTaskWrapper(void *pvParameters) {
-    // Serial.println("SensorTaskWrapper: Task initiated."); // Log de baixo nível
     SensorManager* instance = static_cast<SensorManager*>(pvParameters);
     if (instance != nullptr) {
-        // Serial.println("SensorTaskWrapper: Instance valid, entering runSensorTask loop.");
-        instance->runSensorTask(); // Chama o loop da instância
+        instance->runSensorTask();
     } else {
-        Serial.println("SensorTaskWrapper ERROR: Received null instance pointer! Cannot run task.");
+        // Logger::error("SensorTaskWrapper ERROR: Received null instance pointer! Task cannot run.");
     }
-    Serial.println("SensorTaskWrapper: Task finishing. Deleting task.");
-    vTaskDelete(NULL); // Auto-deleta a tarefa ao sair (embora não deva sair)
-}
-
-void SensorManager::runSensorTask() {
-    // Serial.println("SensorManager: runSensorTask loop entered.");
-
-    JsonDocument sensorDoc; // Opcional: Alocar JSON doc uma vez
-
-    while (true) {
-        if (!initialized) {
-             Serial.println("SensorTask ERROR: Manager is no longer initialized. Stopping task.");
-             break; // Sai do loop while(true), tarefa será deletada
-        }
-
-        // --- 1. Ler Sensores ---
-        float currentTemperature = _readTemperatureFromSensor();
-        float currentAirHumidity = _readHumidityFromSensor();
-        float currentSoilHumidity = _readSoilHumidityFromSensor(); // Chama o método privado
-
-        // --- 2. Calcular VPD ---
-        // Chamar _calculateVpd após ter as leituras de temp/hum do ciclo atual
-        float currentVpd = _calculateVpd(currentTemperature, currentAirHumidity); // Chama o método privado
-
-        // --- 3. Atualizar Cache (AGORA INCLUI SOLO E VPD) ---
-        if (sensorDataMutex && xSemaphoreTake(sensorDataMutex.get(), MUTEX_TIMEOUT) == pdTRUE) {
-            if (!isnan(currentTemperature)) { this->cachedTemperature = currentTemperature; }
-            if (!isnan(currentAirHumidity)) { this->cachedHumidity = currentAirHumidity; }
-            if (!isnan(currentSoilHumidity)) { this->cachedSoilHumidity = currentSoilHumidity; } // Atualiza cache solo
-            if (!isnan(currentVpd)) { this->cachedVpd = currentVpd; }                   // Atualiza cache VPD
-            xSemaphoreGive(sensorDataMutex.get());
-        } else {
-             Serial.println("SensorTask WARN: Failed acquire mutex to update cache.");
-             // Considerar se deve continuar sem atualizar cache ou tentar novamente?
-             // Por agora, continua, os valores antigos permanecem no cache.
-        }
-
-
-        // --- 4. Processar/Publicar ---
-        bool validReadings = !isnan(currentTemperature) &&
-                             !isnan(currentAirHumidity) &&
-                             !isnan(currentSoilHumidity) && // Incluído na validação
-                             !isnan(currentVpd);           // Incluído na validação
-
-        if (validReadings) {
-            // Publicação MQTT via MqttManager injetado
-            if (this->mqttManager != nullptr ) {
-                // // Publicar valores individuais (agora usando as variáveis locais do ciclo)
-                this->mqttManager->publish("sensors/temperature", currentTemperature);
-                this->mqttManager->publish("sensors/air_humidity", currentAirHumidity);
-                this->mqttManager->publish("sensors/soil_humidity", currentSoilHumidity);
-                this->mqttManager->publish("sensors/vpd", currentVpd);
-
-                // Ou publicar um único JSON
-                // sensorDoc.clear();
-                // sensorDoc["temperature"] = round(currentTemperature * 10.0) / 10.0;
-                // sensorDoc["airHumidity"] = round(currentAirHumidity);
-                // sensorDoc["soilHumidity"] = round(currentSoilHumidity);
-                // sensorDoc["vpd"] = round(currentVpd * 100.0) / 100.0;
-                // String payload;
-                // serializeJson(sensorDoc, payload);
-                // this->mqttManager->publish("sensors", payload.c_str());
-                
-            }
-        } else {
-            Serial.println("SensorTask WARN: Invalid sensor readings obtained in this cycle.");
-            // Considerar publicar um status de erro ou valores NAN aqui?
-        }
-
-        // --- 5. Atualizar Display via DisplayManager injetado ---
-        if (this->displayManager != nullptr && this->displayManager->isInitialized()) {
-            // Passa as leituras do ciclo atual (display trata NAN)
-            // Note: showSensorData pode não mostrar VPD, ajuste se necessário.
-            this->displayManager->showSensorData(currentTemperature, currentAirHumidity, currentSoilHumidity);
-        }
-
-        // --- 6. Aguardar próximo ciclo ---
-        vTaskDelay(SENSOR_READ_INTERVAL_MS);
-    }
+    // Logger::info("SensorTaskWrapper: Task loop exited. Deleting task.");
+    vTaskDelete(NULL); // Auto-deleta a tarefa ao sair do loop
 }
 
 } // namespace GrowController
