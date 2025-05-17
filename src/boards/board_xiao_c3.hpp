@@ -33,15 +33,15 @@
 // --- Definições Específicas da Instalação/Board ---
 #ifdef UNIT_TEST
     // --- Configurações para WOKWI / Teste ---
-    #define MQTT_SERVER "mqtt.wokwi.com" // <--- ADICIONE/MODIFIQUE ESTA LINHA
-    #define MQTT_PORT 1883               // <--- ADICIONE ESTA LINHA
-    #define MQTT_ROOM_TOPIC "test"       // Identificador do cômodo/estufa para MQTT
-    #define MQTT_CLIENT_ID "ESP-xiao-C3_test" // ID único do cliente MQTT para esta placa
+    #define MQTT_SERVER "mqtt.wokwi.com" 
+    #define MQTT_PORT 1883               
+    #define MQTT_ROOM_TOPIC "test"       
+    #define MQTT_CLIENT_ID "ESP-xiao-C3_test" 
 #else
     // --- Configurações para Placa Real ---
-    #define MQTT_SERVER "192.168.1.11"  // <--- ADICIONE/MODIFIQUE ESTA LINHA (Seu IP real)
-    #define MQTT_PORT 1883              // <--- ADICIONE ESTA LINHA
-    #define MQTT_ROOM_TOPIC "01"        // Identificador do cômodo/estufa real
-    #define MQTT_CLIENT_ID "ESP-xiao-C3"   // ID único do cliente MQTT real
+    #define MQTT_SERVER "192.168.1.11"  
+    #define MQTT_PORT 1883              
+    #define MQTT_ROOM_TOPIC "01"        
+    #define MQTT_CLIENT_ID "ESP-xiao-C3"   
 #endif
 #endif // BOARD_XIAO_C3_HPP
