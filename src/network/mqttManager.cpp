@@ -78,45 +78,35 @@ void MqttManager::setup() {
 }
 
 // --- Callback de Membro (Lógica Real) ---
-// *** NOTE: Signature changed to use unsigned char* ***
 void MqttManager::messageCallback(char* topic, unsigned char* payload, unsigned int length) {
     Serial.println("===================================");
     Serial.print("MqttManager: Message arrived on topic: ");
     Serial.println(topic);
 
-    // Criar uma String para facilitar o manuseio (cuidado com alocação)
     String message;
-    message.reserve(length); // Pre-aloca espaço
+    message.reserve(length);
     for (unsigned int i = 0; i < length; i++) {
-        message += (char)payload[i]; // Cast unsigned char to char
+        message += (char)payload[i];
     }
     Serial.print("MqttManager: Raw Message: ");
     Serial.println(message);
 
-    // Compara com o tópico de controle armazenado
     if (String(topic) == this->controlTopic) {
         Serial.println("MqttManager: Processing control message...");
-
-        JsonDocument doc; // Usa alocação dinâmica padrão do ArduinoJson v7+
-
-        DeserializationError error = deserializeJson(doc, message); // Pass message String or payload directly
-
+        JsonDocument doc;
+        DeserializationError error = deserializeJson(doc, message);
         if (error) {
             Serial.print("MqttManager ERROR: JSON deserialization failed: ");
             Serial.println(error.c_str());
             return;
         }
-
-        // Chama o método do TargetDataManager injetado (THREAD-SAFE)
         Serial.println("MqttManager: Deserialized OK, updating targets via TargetDataManager...");
-        // Pass the JsonDocument content (usually as JsonVariant or specific type)
         bool updated = targetDataManager.updateTargetsFromJson(doc);
         if (updated) {
             Serial.println("MqttManager: Targets updated successfully by callback.");
         } else {
             Serial.println("MqttManager WARN: TargetDataManager reported no targets were updated from JSON.");
         }
-
     } else {
         Serial.println("MqttManager: Message ignored (topic mismatch).");
     }
@@ -125,10 +115,27 @@ void MqttManager::messageCallback(char* topic, unsigned char* payload, unsigned 
 
 
 // --- Publicação ---
+// Função privada que não bloqueia o mutex, assume que já está bloqueado
+bool MqttManager::_publish_nolock(const char* fullTopic, const char* payload, bool retained) {
+    if (pubSubClient.connected()) {
+        if (pubSubClient.publish(fullTopic, payload, retained)) {
+            // Serial.printf("MqttManager (nolock): Published [%s]: %s\n", fullTopic, payload); // Log opcional
+            return true;
+        } else {
+            Serial.print("MqttManager ERROR (nolock): Publish Failed! State: ");
+            Serial.println(pubSubClient.state());
+            Serial.printf("  Topic: %s, Payload: %s\n", fullTopic, payload);
+            return false;
+        }
+    } else {
+        Serial.print("MqttManager WARN (nolock): Cannot publish, client not connected. Topic: ");
+        Serial.println(fullTopic);
+        return false;
+    }
+}
 
 bool MqttManager::publish(const char* subTopic, float value, bool retained) {
-    // Converte float para string
-    char messageBuffer[16]; // Ajustar tamanho se necessário
+    char messageBuffer[16];
     snprintf(messageBuffer, sizeof(messageBuffer), "%.2f", value);
     return publish(subTopic, messageBuffer, retained);
 }
@@ -145,20 +152,11 @@ bool MqttManager::publish(const char* subTopic, const char* payload, bool retain
 
     bool success = false;
     if (xSemaphoreTake(clientMutex, MQTT_MUTEX_TIMEOUT) == pdTRUE) {
-        if (pubSubClient.connected()) {
-            String fullTopic = baseTopic + "/" + subTopic;
-            if (pubSubClient.publish(fullTopic.c_str(), payload, retained)) {
-                // Serial.printf("MqttManager: Published [%s]: %s\n", fullTopic.c_str(), payload); // Verbose log
-                success = true;
-            } else {
-                Serial.print("MqttManager ERROR: Publish Failed! State: ");
-                Serial.println(pubSubClient.state());
-                Serial.printf("  Topic: %s, Payload: %s\n", fullTopic.c_str(), payload);
-            }
-        } else {
-            Serial.print("MqttManager WARN: Cannot publish, client not connected. Topic: ");
-            Serial.print(baseTopic); Serial.print("/"); Serial.println(subTopic);
-        }
+        // A função publish pública agora chama _publish_nolock,
+        // então não há necessidade de verificar pubSubClient.connected() aqui novamente,
+        // pois _publish_nolock já faz isso.
+        String fullTopic = baseTopic + "/" + subTopic;
+        success = _publish_nolock(fullTopic.c_str(), payload, retained); // Usa a versão _nolock
         xSemaphoreGive(clientMutex);
     } else {
         Serial.println("MqttManager WARN: Could not acquire mutex for publish.");
@@ -172,15 +170,14 @@ void MqttManager::taskRunner(void *pvParameter) {
     Serial.println("MqttManager::taskRunner started.");
     MqttManager* instance = static_cast<MqttManager*>(pvParameter);
     if (instance) {
-        instance->run(); // Chama o loop principal da instância
+        instance->run();
     } else {
         Serial.println("MqttManager ERROR: taskRunner received null parameter!");
     }
      Serial.println("MqttManager::taskRunner finishing. Deleting task.");
-    vTaskDelete(nullptr); // Deleta a tarefa atual
+    vTaskDelete(nullptr);
 }
 
-// Loop principal da tarefa
 void MqttManager::run() {
     if (!isSetup) {
         Serial.println("MqttManager ERROR: Cannot run task, setup not complete.");
@@ -190,12 +187,13 @@ void MqttManager::run() {
     Serial.println("MqttManager: Task run loop started.");
     while (true) {
         if (WiFi.status() == WL_CONNECTED) {
-            ensureConnection();
+            ensureConnection(); // Tenta conectar/reconectar se necessário
 
+            // Loop do cliente MQTT (se conectado)
             if (pubSubClient.connected()) {
                  if (clientMutex && xSemaphoreTake(clientMutex, MQTT_MUTEX_TIMEOUT) == pdTRUE) {
                       if(pubSubClient.connected()) { // Double check connection inside mutex
-                         if (!pubSubClient.loop()) {
+                         if (!pubSubClient.loop()) { // Processa mensagens recebidas e mantém a conexão
                             Serial.println("MqttManager WARN: pubSubClient.loop() returned false. Possible disconnection.");
                          }
                       }
@@ -203,6 +201,7 @@ void MqttManager::run() {
                  } // else { Serial.println("MqttManager WARN: Failed acquire mutex for loop."); }
             }
         } else {
+             // Se o WiFi desconectar, desconecta o cliente MQTT também
              if (pubSubClient.connected()) {
                  if (clientMutex && xSemaphoreTake(clientMutex, MQTT_MUTEX_TIMEOUT) == pdTRUE) {
                      Serial.println("MqttManager INFO: WiFi disconnected, disconnecting MQTT client.");
@@ -221,32 +220,37 @@ void MqttManager::ensureConnection() {
          return;
      }
 
+    // Se já estiver conectado, não faz nada
     if (pubSubClient.connected()) {
         return;
     }
 
+    // Tenta adquirir o mutex para a operação de conexão
     if (xSemaphoreTake(clientMutex, MQTT_MUTEX_TIMEOUT) == pdTRUE) {
-        if (!pubSubClient.connected()) { // Double-check inside mutex
+        // Double-check a conexão DENTRO do mutex, caso outra tarefa tenha conectado enquanto esperava
+        if (!pubSubClient.connected()) {
             Serial.print("MqttManager: Attempting MQTT connection to ");
             Serial.print(mqttConfig.server); Serial.print(":"); Serial.print(mqttConfig.port);
             Serial.print(" as client '"); Serial.print(mqttConfig.clientId); Serial.println("'...");
 
-            // A lambda callback foi configurada no setup()
+            // Tenta conectar
             if (pubSubClient.connect(mqttConfig.clientId)) {
                 Serial.println("MqttManager: Connection successful!");
 
-                // Publish Presence
-                String presenceTopic = "devices"; // Example topic
-                // Publish the base topic (room ID) to the presence topic
-                if (publish(presenceTopic.c_str(), baseTopic.c_str(), true)) { // Retained = true for presence
-                    Serial.printf("MqttManager: Published presence to '%s': %s\n", presenceTopic.c_str(), baseTopic.c_str());
+                // Publish Presence (usando _publish_nolock pois o mutex já está bloqueado)
+                String presenceSubTopic = "devices"; // Subtópico para presença
+                String fullPresenceTopic = baseTopic + "/" + presenceSubTopic; // Tópico completo: <roomTopic>/devices
+                
+                // O payload da mensagem de presença será o ID do cômodo (baseTopic)
+                if (_publish_nolock(fullPresenceTopic.c_str(), baseTopic.c_str(), true)) { // Retained = true
+                    Serial.printf("MqttManager: Published presence to '%s': %s\n", fullPresenceTopic.c_str(), baseTopic.c_str());
                 } else {
                     Serial.println("MqttManager WARN: Failed to publish presence message after connect.");
                 }
 
                 // Subscribe to Control Topic
-                 Serial.print("MqttManager: Subscribing to control topic: ");
-                 Serial.println(controlTopic);
+                Serial.print("MqttManager: Subscribing to control topic: ");
+                Serial.println(controlTopic);
                 if (pubSubClient.subscribe(controlTopic.c_str())) {
                     Serial.println("MqttManager: Subscription successful.");
                 } else {
@@ -257,9 +261,10 @@ void MqttManager::ensureConnection() {
                 Serial.print("MqttManager ERROR: Connection Failed, state= ");
                 Serial.print(pubSubClient.state());
                 Serial.println(". Retrying later.");
+                // Não há delay aqui, o loop run() já tem um vTaskDelay
             }
         }
-        xSemaphoreGive(clientMutex);
+        xSemaphoreGive(clientMutex); // Libera o mutex
     } // else { Serial.println("MqttManager WARN: Could not acquire mutex for connection attempt."); }
 }
 

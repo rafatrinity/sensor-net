@@ -82,10 +82,9 @@ private:
      */
     void messageCallback(char* topic, unsigned char* payload, unsigned int length);
 
-    // --- REMOVED STATIC MEMBERS ---
-    // static void staticCallback(char* topic, byte* payload, unsigned int length, void* object);
-    // static MqttManager* s_instance; // No longer needed with lambda callback
+    bool _publish_nolock(const char* fullTopic, const char* payload, bool retained);
 
+    
     const MQTTConfig& mqttConfig; // Referência à configuração
     TargetDataManager& targetDataManager; // Referência ao gerenciador de alvos
     WiFiClient wifiClient;
