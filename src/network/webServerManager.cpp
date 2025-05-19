@@ -47,10 +47,11 @@ void WebServerManager::begin() {
         float airHum = sensorManager_->getHumidity();
         float soilHum = sensorManager_->getSoilHumidity();
         float vpd = sensorManager_->getVpd();
-        doc["temperature"] = !isnan(temp) ? temp : nullptr;
-        doc["airHumidity"] = !isnan(airHum) ? airHum : nullptr;
-        doc["soilHumidity"] = !isnan(soilHum) ? soilHum : nullptr;
-        doc["vpd"] = !isnan(vpd) ? vpd : nullptr;
+
+        if (!isnan(temp)) doc["temperature"] = temp;
+        if (!isnan(airHum)) doc["airHumidity"] = airHum;
+        if (!isnan(soilHum)) doc["soilHumidity"] = soilHum;
+        if (!isnan(vpd)) doc["vpd"] = vpd;
 
         String jsonResponse;
         serializeJson(doc, jsonResponse);
@@ -76,7 +77,7 @@ void WebServerManager::begin() {
         JsonObject humidifier = doc["humidifier"].to<JsonObject>();
         humidifier["isOn"] = actuatorManager_->isHumidifierRelayOn();
         float targetAirHum = targetDataManager_->getTargetAirHumidity();
-        humidifier["targetAirHumidity"] = !isnan(targetAirHum) ? targetAirHum : nullptr;
+        if (!isnan(targetAirHum)) humidifier["targetAirHumidity"] = targetAirHum;
 
         String jsonResponse;
         serializeJson(doc, jsonResponse);
@@ -100,10 +101,11 @@ void WebServerManager::begin() {
         for (const auto& point : history) {
             JsonObject obj = array.add<JsonObject>();
             obj["timestamp"] = point.timestamp;
-            if (!isnan(point.avgTemperature)) obj["avgTemperature"] = point.avgTemperature; else obj["avgTemperature"] = nullptr;
-            if (!isnan(point.avgAirHumidity)) obj["avgAirHumidity"] = point.avgAirHumidity; else obj["avgAirHumidity"] = nullptr;
-            if (!isnan(point.avgSoilHumidity)) obj["avgSoilHumidity"] = point.avgSoilHumidity; else obj["avgSoilHumidity"] = nullptr;
-            if (!isnan(point.avgVpd)) obj["avgVpd"] = point.avgVpd; else obj["avgVpd"] = nullptr;
+            
+            if (!isnan(point.avgTemperature)) obj["avgTemperature"] = point.avgTemperature;
+            if (!isnan(point.avgAirHumidity)) obj["avgAirHumidity"] = point.avgAirHumidity;
+            if (!isnan(point.avgSoilHumidity)) obj["avgSoilHumidity"] = point.avgSoilHumidity;
+            if (!isnan(point.avgVpd)) obj["avgVpd"] = point.avgVpd;
         }
 
         String jsonResponse;
@@ -201,10 +203,10 @@ void WebServerManager::sendSensorUpdateEvent() {
     float airHum = sensorManager_->getHumidity();
     float soilHum = sensorManager_->getSoilHumidity();
     float vpd = sensorManager_->getVpd();
-    doc["temperature"] = !isnan(temp) ? temp : nullptr;
-    doc["airHumidity"] = !isnan(airHum) ? airHum : nullptr;
-    doc["soilHumidity"] = !isnan(soilHum) ? soilHum : nullptr;
-    doc["vpd"] = !isnan(vpd) ? vpd : nullptr;
+    if (!isnan(temp)) doc["temperature"] = temp;
+    if (!isnan(airHum)) doc["airHumidity"] = airHum;
+    if (!isnan(soilHum)) doc["soilHumidity"] = soilHum;
+    if (!isnan(vpd)) doc["vpd"] = vpd;
 
     String jsonString;
     serializeJson(doc, jsonString);
@@ -234,7 +236,8 @@ void WebServerManager::sendStatusUpdateEvent() {
     JsonObject humidifier = doc["humidifier"].to<JsonObject>();
     humidifier["isOn"] = actuatorManager_->isHumidifierRelayOn();
     float targetAirHum = targetDataManager_->getTargetAirHumidity();
-    humidifier["targetAirHumidity"] = !isnan(targetAirHum) ? targetAirHum : nullptr;
+    if (isnan(targetAirHum)) humidifier["targetAirHumidity"] = nullptr;
+    else humidifier["targetAirHumidity"] = targetAirHum;
 
     String jsonString;
     serializeJson(doc, jsonString);
