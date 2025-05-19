@@ -17,10 +17,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const formMessageEl = document.getElementById('form-message');
 
     function updateSensorUI(data) {
-        tempValueEl.textContent = data.temperature !== null ? data.temperature.toFixed(1) : 'ERR';
-        airHumidityValueEl.textContent = data.airHumidity !== null ? data.airHumidity.toFixed(1) : 'ERR';
-        soilHumidityValueEl.textContent = data.soilHumidity !== null ? data.soilHumidity.toFixed(1) : 'ERR';
-        vpdValueEl.textContent = data.vpd !== null ? data.vpd.toFixed(2) : 'ERR';
+        tempValueEl.textContent = (typeof data.temperature === 'number') ? data.temperature.toFixed(1) : 'ERR';
+        airHumidityValueEl.textContent = (typeof data.airHumidity === 'number') ? data.airHumidity.toFixed(1) : 'ERR';
+        soilHumidityValueEl.textContent = (typeof data.soilHumidity === 'number') ? data.soilHumidity.toFixed(1) : 'ERR';
+        vpdValueEl.textContent = (typeof data.vpd === 'number') ? data.vpd.toFixed(2) : 'ERR';
     }
 
     function updateStatusUI(data) {
@@ -29,11 +29,13 @@ document.addEventListener('DOMContentLoaded', function() {
         lightOffTimeEl.textContent = data.light.offTime;
 
         humidifierStatusEl.textContent = data.humidifier.isOn ? 'Ligado' : 'Desligado';
-        currentTargetAirHumidityEl.textContent = data.humidifier.targetAirHumidity.toFixed(1);
-
-        // Pre-fill form with current targets for convenience
-        if (targetAirHumidityInput.value === '') { // Only if not already filled by user
-             targetAirHumidityInput.value = data.humidifier.targetAirHumidity.toFixed(1);
+        if (typeof data.humidifier.targetAirHumidity === 'number') {
+            currentTargetAirHumidityEl.textContent = data.humidifier.targetAirHumidity.toFixed(1);
+            if (targetAirHumidityInput.value === '') {
+                targetAirHumidityInput.value = data.humidifier.targetAirHumidity.toFixed(1);
+            }
+        } else {
+            currentTargetAirHumidityEl.textContent = '--';
         }
         if (targetLightOnInput.value === '') {
             targetLightOnInput.value = data.light.onTime;
