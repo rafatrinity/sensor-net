@@ -9,12 +9,11 @@
 namespace GrowController {
     class DisplayManager;
 }
-// #include "ui/displayManager.hpp" // Alternativamente, incluir se forward declaration não bastar
 
 // --- Estrutura de Parâmetros para a Tarefa WiFi ---
 struct WiFiTaskParams {
-    const WiFiConfig* wifiConfig;                // Ponteiro para a configuração WiFi
-    GrowController::DisplayManager* displayMgr; // Ponteiro para o Display Manager
+    const WiFiConfig* wifiConfig;
+    GrowController::DisplayManager* displayMgr;
 };
 
 
