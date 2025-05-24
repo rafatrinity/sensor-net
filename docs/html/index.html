@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.17"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Smart Garden - Sistema de Controle de Ambiente: Página Principal</title>
+<title>Smart Garden - Sistema de Controle de Ambiente: ESP32 HTTP Client</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -62,11 +62,31 @@ $(function() {
 </iframe>
 </div>
 
-<div class="header">
+<div class="PageDoc"><div class="header">
   <div class="headertitle">
-<div class="title">Smart Garden - Sistema de Controle de Ambiente Documentação</div>  </div>
+<div class="title">ESP32 HTTP Client </div>  </div>
 </div><!--header-->
 <div class="contents">
+<div class="textblock"><p>A simple HTTP Client example that connects to <a href="http://example.org">http://example.org</a> and prints the response to the serial port.</p>
+<p>Includes an <a href="./http-client.test.yaml">automated test scenario</a> that runs the simulation and validates the serial output.</p>
+<p>Use <a href="https://marketplace.visualstudio.com/items?itemName=wokwi.wokwi-vscode">Wokwi</a> to simulate this project, and the <a href="https://github.com/wokwi/wokwi-cli">Wokwi CLI</a> to run the automated test.</p>
+<h1><a class="anchor" id="autotoc_md1"></a>
+Building</h1>
+<p>This is a <a href="https://platformio.org">PlatformIO</a> project. To build it, <a href="https://docs.platformio.org/en/latest/core/installation/index.html">install PlatformIO</a>, and then run the following command:</p>
+<div class="fragment"><div class="line">pio run</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md2"></a>
+Simulate the project</h1>
+<p>To simulate this project, install <a href="https://marketplace.visualstudio.com/items?itemName=wokwi.wokwi-vscode">Wokwi for VS Code</a>. Open the project directory in Visual Studio Code, press <b>F1</b> and select "Wokwi: Start Simulator".</p>
+<h1><a class="anchor" id="autotoc_md3"></a>
+Run in wokwi-cli</h1>
+<p>To run the automated test scenario, install the <a href="https://github.com/wokwi/wokwi-cli/#installation">Wokwi CLI</a>, and create a <a href="https://wokwi.com/dashboard/ci">Wokwi CLI token</a>. Then run the following commands:</p>
+<p>Linux/Mac:</p>
+<div class="fragment"><div class="line">export WOKWI_CLI_TOKEN=&quot;your token goes here&quot;</div>
+<div class="line">wokwi-cli --scenario http-client.test.yaml .</div>
+</div><!-- fragment --><p>Windows:</p>
+<div class="fragment"><div class="line">$env:WOKWI_CLI_TOKEN=&quot;your token goes here&quot;</div>
+<div class="line">wokwi-cli --scenario http-client.test.yaml .</div>
+</div><!-- fragment --> </div></div><!-- PageDoc -->
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

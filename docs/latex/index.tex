@@ -1,0 +1,32 @@
+A simple H\+T\+TP Client example that connects to \href{http://example.org}{\texttt{ http\+://example.\+org}} and prints the response to the serial port.
+
+Includes an \href{./http-client.test.yaml}{\texttt{ automated test scenario}} that runs the simulation and validates the serial output.
+
+Use \href{https://marketplace.visualstudio.com/items?itemName=wokwi.wokwi-vscode}{\texttt{ Wokwi}} to simulate this project, and the \href{https://github.com/wokwi/wokwi-cli}{\texttt{ Wokwi C\+LI}} to run the automated test.\hypertarget{index_autotoc_md1}{}\doxysection{Building}\label{index_autotoc_md1}
+This is a \href{https://platformio.org}{\texttt{ Platform\+IO}} project. To build it, \href{https://docs.platformio.org/en/latest/core/installation/index.html}{\texttt{ install Platform\+IO}}, and then run the following command\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{pio run}
+\end{DoxyCode}
+\hypertarget{index_autotoc_md2}{}\doxysection{Simulate the project}\label{index_autotoc_md2}
+To simulate this project, install \href{https://marketplace.visualstudio.com/items?itemName=wokwi.wokwi-vscode}{\texttt{ Wokwi for VS Code}}. Open the project directory in Visual Studio Code, press {\bfseries{F1}} and select \char`\"{}\+Wokwi\+: Start Simulator\char`\"{}.\hypertarget{index_autotoc_md3}{}\doxysection{Run in wokwi-\/cli}\label{index_autotoc_md3}
+To run the automated test scenario, install the \href{https://github.com/wokwi/wokwi-cli/\#installation}{\texttt{ Wokwi C\+LI}}, and create a \href{https://wokwi.com/dashboard/ci}{\texttt{ Wokwi C\+LI token}}. Then run the following commands\+:
+
+Linux/\+Mac\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{export WOKWI\_CLI\_TOKEN="your token goes here"}
+\DoxyCodeLine{wokwi-\/cli -\/-\/scenario http-\/client.test.yaml .}
+\end{DoxyCode}
+
+
+Windows\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$env:WOKWI\_CLI\_TOKEN="your token goes here"}
+\DoxyCodeLine{wokwi-\/cli -\/-\/scenario http-\/client.test.yaml .}
+\end{DoxyCode}
+ 
