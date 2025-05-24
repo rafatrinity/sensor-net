@@ -61,4 +61,4 @@ dkms.conf
 *.env
 
 *.txt
-./docs/*
+docs/*
