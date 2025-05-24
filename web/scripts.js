@@ -24,11 +24,20 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function updateStatusUI(data) {
+        // Atualiza status da luz
         lightStatusEl.textContent = data.light.isOn ? 'Ligada' : 'Desligada';
+        const lightIcon = document.getElementById('light-status-icon');
+        lightIcon.classList.toggle('active', data.light.isOn);
+        lightIcon.classList.toggle('inactive', !data.light.isOn);
         lightOnTimeEl.textContent = data.light.onTime;
         lightOffTimeEl.textContent = data.light.offTime;
 
+        // Atualiza status do umidificador
         humidifierStatusEl.textContent = data.humidifier.isOn ? 'Ligado' : 'Desligado';
+        const humidifierIcon = document.getElementById('humidifier-status-icon');
+        humidifierIcon.classList.toggle('active', data.humidifier.isOn);
+        humidifierIcon.classList.toggle('inactive', !data.humidifier.isOn);
+        
         if (typeof data.humidifier.targetAirHumidity === 'number') {
             currentTargetAirHumidityEl.textContent = data.humidifier.targetAirHumidity.toFixed(1);
             if (targetAirHumidityInput.value === '') {
@@ -37,6 +46,8 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             currentTargetAirHumidityEl.textContent = '--';
         }
+
+        // Atualiza campos do formulário se vazios
         if (targetLightOnInput.value === '') {
             targetLightOnInput.value = data.light.onTime;
         }

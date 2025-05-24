@@ -18,3 +18,50 @@ body {
 .footer {
     font-size: 0.9em;
 }
+
+/* Estilos para atuadores */
+.actuator-status {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.status-icon {
+    margin-right: 1rem;
+    font-size: 2rem;
+    transition: color 0.3s ease;
+}
+
+.status-icon.active {
+    color: #00ff00;
+}
+
+.status-icon.inactive {
+    color: #666;
+}
+
+.status-text {
+    flex: 1;
+}
+
+.status-text p {
+    margin-bottom: 0.25rem;
+}
+
+.status-text p:last-child {
+    margin-bottom: 0;
+}
+
+/* Ajuste para ícones específicos */
+#light-status-icon i {
+    color: #ffd700; /* Amarelo dourado para a luz */
+}
+
+#humidifier-status-icon i {
+    color: #00bfff; /* Azul claro para o umidificador */
+}
+
+#light-status-icon.inactive i,
+#humidifier-status-icon.inactive i {
+    opacity: 0.3;
+}
