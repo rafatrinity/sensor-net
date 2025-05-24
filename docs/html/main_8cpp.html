@@ -1,0 +1,739 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.17"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Smart Garden - Sistema de Controle de Ambiente: Referência do Arquivo src/main.cpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Smart Garden - Sistema de Controle de Ambiente
+   &#160;<span id="projectnumber">v1.0</span>
+   </div>
+   <div id="projectbrief">Sistema embarcado para monitoramento e controle de ambiente para cultivo</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Gerado por Doxygen 1.8.17 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Busca');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Busca');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Componentes</a> &#124;
+<a href="#define-members">Definições e Macros</a> &#124;
+<a href="#func-members">Funções</a> &#124;
+<a href="#var-members">Variáveis</a>  </div>
+  <div class="headertitle">
+<div class="title">Referência do Arquivo main.cpp</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><code>#include &quot;<a class="el" href="config_8hpp_source.html">config.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="wifi_8hpp_source.html">network/wifi.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="mqttManager_8hpp_source.html">network/mqttManager.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="sensorManager_8hpp_source.html">sensors/sensorManager.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="actuatorManager_8hpp_source.html">actuators/actuatorManager.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="targetDataManager_8hpp_source.html">data/targetDataManager.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="timeService_8hpp_source.html">utils/timeService.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="displayManager_8hpp_source.html">ui/displayManager.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="webServerManager_8hpp_source.html">network/webServerManager.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="dataHistoryManager_8hpp_source.html">data/dataHistoryManager.hpp</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="logger_8hpp_source.html">utils/logger.hpp</a>&quot;</code><br />
+<code>#include &lt;WiFi.h&gt;</code><br />
+<code>#include &lt;Wire.h&gt;</code><br />
+<code>#include &lt;ArduinoJson.h&gt;</code><br />
+<code>#include &lt;BLEDevice.h&gt;</code><br />
+<code>#include &lt;BLEUtils.h&gt;</code><br />
+<code>#include &lt;BLEServer.h&gt;</code><br />
+<code>#include &lt;LittleFS.h&gt;</code><br />
+<code>#include &lt;ESPmDNS.h&gt;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Gráfico de dependência de inclusões para main.cpp:</div>
+<div class="dyncontent">
+<div class="center"><img src="main_8cpp__incl.png" border="0" usemap="#src_2main_8cpp" alt=""/></div>
+<!-- MAP 0 -->
+</div>
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Componentes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCharacteristicCallbacks.html">CharacteristicCallbacks</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Definições e Macros</h2></td></tr>
+<tr class="memitem:a445125ee8c34695376c85f10b38844d6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a445125ee8c34695376c85f10b38844d6">SERVICE_UUID</a>&#160;&#160;&#160;&quot;12345678-1234-1234-1234-123456789abc&quot;</td></tr>
+<tr class="separator:a445125ee8c34695376c85f10b38844d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a94aefdd5f54049079364e832dc15b336"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a94aefdd5f54049079364e832dc15b336">CHARACTERISTIC_UUID</a>&#160;&#160;&#160;&quot;abcd1234-5678-1234-5678-123456789abc&quot;</td></tr>
+<tr class="separator:a94aefdd5f54049079364e832dc15b336"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Funções</h2></td></tr>
+<tr class="memitem:ab1c8cf8a043a91e16ad57c858efc3bdc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGrowController_1_1MqttManager.html">GrowController::MqttManager</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#ab1c8cf8a043a91e16ad57c858efc3bdc">mqttMgr</a> (appConfig.mqtt, <a class="el" href="main_8cpp.html#a37cea87c0cdcea6e88e1042480d38fca">targetManager</a>)</td></tr>
+<tr class="separator:ab1c8cf8a043a91e16ad57c858efc3bdc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0842d72fac8fae67e8c146789ca6a52"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGrowController_1_1SensorManager.html">GrowController::SensorManager</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#aa0842d72fac8fae67e8c146789ca6a52">sensorMgr</a> (appConfig.sensor, <a class="el" href="main_8cpp.html#ab7d6d4c245477f932421f8244e69f208">timeService</a>, &amp;<a class="el" href="main_8cpp.html#a98eda483434b49876bd92863225ef84e">dataHistoryMgr</a>, &amp;<a class="el" href="main_8cpp.html#ad24f69a894bc0b331de070f0219b2abc">displayMgr</a>, &amp;<a class="el" href="main_8cpp.html#ab1c8cf8a043a91e16ad57c858efc3bdc">mqttMgr</a>)</td></tr>
+<tr class="separator:aa0842d72fac8fae67e8c146789ca6a52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0727fe3b048e428a2fbcb2a88a8a635a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGrowController_1_1ActuatorManager.html">GrowController::ActuatorManager</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a0727fe3b048e428a2fbcb2a88a8a635a">actuatorMgr</a> (appConfig.gpioControl, <a class="el" href="main_8cpp.html#a37cea87c0cdcea6e88e1042480d38fca">targetManager</a>, <a class="el" href="main_8cpp.html#aa0842d72fac8fae67e8c146789ca6a52">sensorMgr</a>, <a class="el" href="main_8cpp.html#ab7d6d4c245477f932421f8244e69f208">timeService</a>)</td></tr>
+<tr class="separator:a0727fe3b048e428a2fbcb2a88a8a635a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea688647c52934655dc26d0d805c5e3f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGrowController_1_1WebServerManager.html">GrowController::WebServerManager</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#aea688647c52934655dc26d0d805c5e3f">webServerManager</a> (<a class="el" href="config_8hpp.html#a0906dae4a42c1fef9ec0cd0a5212ed4a">HTTP_PORT</a>, &amp;<a class="el" href="main_8cpp.html#aa0842d72fac8fae67e8c146789ca6a52">sensorMgr</a>, &amp;<a class="el" href="main_8cpp.html#a37cea87c0cdcea6e88e1042480d38fca">targetManager</a>, &amp;<a class="el" href="main_8cpp.html#a0727fe3b048e428a2fbcb2a88a8a635a">actuatorMgr</a>, &amp;<a class="el" href="main_8cpp.html#a98eda483434b49876bd92863225ef84e">dataHistoryMgr</a>)</td></tr>
+<tr class="separator:aea688647c52934655dc26d0d805c5e3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa4fb9434ca07cbc5da12697498c264d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#aaa4fb9434ca07cbc5da12697498c264d">activatePairingMode</a> ()</td></tr>
+<tr class="separator:aaa4fb9434ca07cbc5da12697498c264d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fc01d736fe50cf5b977f755b675f11d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a4fc01d736fe50cf5b977f755b675f11d">setup</a> ()</td></tr>
+<tr class="separator:a4fc01d736fe50cf5b977f755b675f11d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe461d27b9c48d5921c00d521181f12f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#afe461d27b9c48d5921c00d521181f12f">loop</a> ()</td></tr>
+<tr class="separator:afe461d27b9c48d5921c00d521181f12f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variáveis</h2></td></tr>
+<tr class="memitem:a895ef072aaa3dd70f3b3a5ccfca0f91b"><td class="memItemLeft" align="right" valign="top">volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a895ef072aaa3dd70f3b3a5ccfca0f91b">g_bleCredentialsReceived</a> = false</td></tr>
+<tr class="separator:a895ef072aaa3dd70f3b3a5ccfca0f91b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f4d0ac17aed124f0158d92b6a8478ae"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a7f4d0ac17aed124f0158d92b6a8478ae">g_receivedSsid</a> [32]</td></tr>
+<tr class="separator:a7f4d0ac17aed124f0158d92b6a8478ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95d308dd4b563c790badaf5e0b48f9d3"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a95d308dd4b563c790badaf5e0b48f9d3">g_receivedPassword</a> [64]</td></tr>
+<tr class="separator:a95d308dd4b563c790badaf5e0b48f9d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a469af310bb72a10118a9fd721676f560"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structAppConfig.html">AppConfig</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a469af310bb72a10118a9fd721676f560">appConfig</a></td></tr>
+<tr class="separator:a469af310bb72a10118a9fd721676f560"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37cea87c0cdcea6e88e1042480d38fca"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGrowController_1_1TargetDataManager.html">GrowController::TargetDataManager</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a37cea87c0cdcea6e88e1042480d38fca">targetManager</a></td></tr>
+<tr class="separator:a37cea87c0cdcea6e88e1042480d38fca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab7d6d4c245477f932421f8244e69f208"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGrowController_1_1TimeService.html">GrowController::TimeService</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#ab7d6d4c245477f932421f8244e69f208">timeService</a></td></tr>
+<tr class="separator:ab7d6d4c245477f932421f8244e69f208"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98eda483434b49876bd92863225ef84e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGrowController_1_1DataHistoryManager.html">GrowController::DataHistoryManager</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a98eda483434b49876bd92863225ef84e">dataHistoryMgr</a></td></tr>
+<tr class="separator:a98eda483434b49876bd92863225ef84e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad24f69a894bc0b331de070f0219b2abc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGrowController_1_1DisplayManager.html">GrowController::DisplayManager</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#ad24f69a894bc0b331de070f0219b2abc">displayMgr</a> (<a class="el" href="board__xiao__c3_8hpp.html#af679cf68e64fdb5d310a0d9944142c76">LCD_I2C_ADDR</a>, <a class="el" href="board__xiao__c3_8hpp.html#a0afb537ac0813a7acc2f797a4d3baa0b">LCD_COLS</a>, <a class="el" href="board__xiao__c3_8hpp.html#a9a59fc4d524d3519a6bd0cb451850a65">LCD_ROWS</a>, <a class="el" href="main_8cpp.html#ab7d6d4c245477f932421f8244e69f208">timeService</a>)</td></tr>
+<tr class="separator:ad24f69a894bc0b331de070f0219b2abc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac871c365764e0411a3c3806439b2b19d"><td class="memItemLeft" align="right" valign="top">BLEServer *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#ac871c365764e0411a3c3806439b2b19d">pServer</a> = nullptr</td></tr>
+<tr class="separator:ac871c365764e0411a3c3806439b2b19d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83949d215e88efee5fc4f312ea2692e7"><td class="memItemLeft" align="right" valign="top">BLECharacteristic *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a83949d215e88efee5fc4f312ea2692e7">pCharacteristic</a> = nullptr</td></tr>
+<tr class="separator:a83949d215e88efee5fc4f312ea2692e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada514f1620c2957453865607d778d2c9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#ada514f1620c2957453865607d778d2c9">bleAdvertising</a> = false</td></tr>
+<tr class="separator:ada514f1620c2957453865607d778d2c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd844c94d106beaf78109862902528e5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#abd844c94d106beaf78109862902528e5">displayOk</a> = false</td></tr>
+<tr class="separator:abd844c94d106beaf78109862902528e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b630fbd37ff6a0f950de3b549e39609"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a3b630fbd37ff6a0f950de3b549e39609">sensorsOk</a> = false</td></tr>
+<tr class="separator:a3b630fbd37ff6a0f950de3b549e39609"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f53f786695ed831edfbcff8ebe1606d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a0f53f786695ed831edfbcff8ebe1606d">actuatorsOk</a> = false</td></tr>
+<tr class="separator:a0f53f786695ed831edfbcff8ebe1606d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af80c34747656b263fece5b92e5786fab"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#af80c34747656b263fece5b92e5786fab">wifiOk</a> = false</td></tr>
+<tr class="separator:af80c34747656b263fece5b92e5786fab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acce88861973ab7865ae0c05d30cfe815"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#acce88861973ab7865ae0c05d30cfe815">timeOk</a> = false</td></tr>
+<tr class="separator:acce88861973ab7865ae0c05d30cfe815"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af3130f9b664940960d3138cd4ed7fcc4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#af3130f9b664940960d3138cd4ed7fcc4">mqttSetupOk</a> = false</td></tr>
+<tr class="separator:af3130f9b664940960d3138cd4ed7fcc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef52feaaa2ad0ac2a5a50240b12d3bbe"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#aef52feaaa2ad0ac2a5a50240b12d3bbe">mqttTaskOk</a> = false</td></tr>
+<tr class="separator:aef52feaaa2ad0ac2a5a50240b12d3bbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5cec6e1afe54a898c13da9e950a3dd41"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a5cec6e1afe54a898c13da9e950a3dd41">sensorTaskOk</a> = false</td></tr>
+<tr class="separator:a5cec6e1afe54a898c13da9e950a3dd41"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1e4f023ae987b4d06d559afcea01747"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#ab1e4f023ae987b4d06d559afcea01747">actuatorTasksOk</a> = false</td></tr>
+<tr class="separator:ab1e4f023ae987b4d06d559afcea01747"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab9e9561bf6d2103bb4bf831352194584"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#ab9e9561bf6d2103bb4bf831352194584">littleFsOk</a> = false</td></tr>
+<tr class="separator:ab9e9561bf6d2103bb4bf831352194584"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0872e96064f5144949d0ab6b147417e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#af0872e96064f5144949d0ab6b147417e">dataHistoryOk</a> = false</td></tr>
+<tr class="separator:af0872e96064f5144949d0ab6b147417e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Definições e macros</h2>
+<a id="a94aefdd5f54049079364e832dc15b336"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a94aefdd5f54049079364e832dc15b336">&#9670;&nbsp;</a></span>CHARACTERISTIC_UUID</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CHARACTERISTIC_UUID&#160;&#160;&#160;&quot;abcd1234-5678-1234-5678-123456789abc&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a445125ee8c34695376c85f10b38844d6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a445125ee8c34695376c85f10b38844d6">&#9670;&nbsp;</a></span>SERVICE_UUID</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define SERVICE_UUID&#160;&#160;&#160;&quot;12345678-1234-1234-1234-123456789abc&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Funções</h2>
+<a id="aaa4fb9434ca07cbc5da12697498c264d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaa4fb9434ca07cbc5da12697498c264d">&#9670;&nbsp;</a></span>activatePairingMode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void activatePairingMode </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0727fe3b048e428a2fbcb2a88a8a635a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0727fe3b048e428a2fbcb2a88a8a635a">&#9670;&nbsp;</a></span>actuatorMgr()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classGrowController_1_1ActuatorManager.html">GrowController::ActuatorManager</a> actuatorMgr </td>
+          <td>(</td>
+          <td class="paramtype">appConfig.&#160;</td>
+          <td class="paramname"><em>gpioControl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="main_8cpp.html#a37cea87c0cdcea6e88e1042480d38fca">targetManager</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="main_8cpp.html#aa0842d72fac8fae67e8c146789ca6a52">sensorMgr</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="main_8cpp.html#ab7d6d4c245477f932421f8244e69f208">timeService</a>&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="afe461d27b9c48d5921c00d521181f12f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afe461d27b9c48d5921c00d521181f12f">&#9670;&nbsp;</a></span>loop()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void loop </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab1c8cf8a043a91e16ad57c858efc3bdc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab1c8cf8a043a91e16ad57c858efc3bdc">&#9670;&nbsp;</a></span>mqttMgr()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classGrowController_1_1MqttManager.html">GrowController::MqttManager</a> mqttMgr </td>
+          <td>(</td>
+          <td class="paramtype">appConfig.&#160;</td>
+          <td class="paramname"><em>mqtt</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="main_8cpp.html#a37cea87c0cdcea6e88e1042480d38fca">targetManager</a>&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa0842d72fac8fae67e8c146789ca6a52"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa0842d72fac8fae67e8c146789ca6a52">&#9670;&nbsp;</a></span>sensorMgr()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classGrowController_1_1SensorManager.html">GrowController::SensorManager</a> sensorMgr </td>
+          <td>(</td>
+          <td class="paramtype">appConfig.&#160;</td>
+          <td class="paramname"><em>sensor</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="main_8cpp.html#ab7d6d4c245477f932421f8244e69f208">timeService</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&amp;&#160;</td>
+          <td class="paramname"><em>dataHistoryMgr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&amp;&#160;</td>
+          <td class="paramname"><em>displayMgr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&amp;&#160;</td>
+          <td class="paramname"><em>mqttMgr</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a4fc01d736fe50cf5b977f755b675f11d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4fc01d736fe50cf5b977f755b675f11d">&#9670;&nbsp;</a></span>setup()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void setup </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aea688647c52934655dc26d0d805c5e3f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aea688647c52934655dc26d0d805c5e3f">&#9670;&nbsp;</a></span>webServerManager()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classGrowController_1_1WebServerManager.html">GrowController::WebServerManager</a> webServerManager </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="config_8hpp.html#a0906dae4a42c1fef9ec0cd0a5212ed4a">HTTP_PORT</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&amp;&#160;</td>
+          <td class="paramname"><em>sensorMgr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&amp;&#160;</td>
+          <td class="paramname"><em>targetManager</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&amp;&#160;</td>
+          <td class="paramname"><em>actuatorMgr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&amp;&#160;</td>
+          <td class="paramname"><em>dataHistoryMgr</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Variáveis</h2>
+<a id="a0f53f786695ed831edfbcff8ebe1606d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0f53f786695ed831edfbcff8ebe1606d">&#9670;&nbsp;</a></span>actuatorsOk</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool actuatorsOk = false</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab1e4f023ae987b4d06d559afcea01747"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab1e4f023ae987b4d06d559afcea01747">&#9670;&nbsp;</a></span>actuatorTasksOk</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool actuatorTasksOk = false</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a469af310bb72a10118a9fd721676f560"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a469af310bb72a10118a9fd721676f560">&#9670;&nbsp;</a></span>appConfig</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structAppConfig.html">AppConfig</a> appConfig</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ada514f1620c2957453865607d778d2c9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada514f1620c2957453865607d778d2c9">&#9670;&nbsp;</a></span>bleAdvertising</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool bleAdvertising = false</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a98eda483434b49876bd92863225ef84e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a98eda483434b49876bd92863225ef84e">&#9670;&nbsp;</a></span>dataHistoryMgr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classGrowController_1_1DataHistoryManager.html">GrowController::DataHistoryManager</a> dataHistoryMgr</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="af0872e96064f5144949d0ab6b147417e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af0872e96064f5144949d0ab6b147417e">&#9670;&nbsp;</a></span>dataHistoryOk</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool dataHistoryOk = false</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad24f69a894bc0b331de070f0219b2abc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad24f69a894bc0b331de070f0219b2abc">&#9670;&nbsp;</a></span>displayMgr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classGrowController_1_1DisplayManager.html">GrowController::DisplayManager</a> displayMgr(<a class="el" href="board__xiao__c3_8hpp.html#af679cf68e64fdb5d310a0d9944142c76">LCD_I2C_ADDR</a>, <a class="el" href="board__xiao__c3_8hpp.html#a0afb537ac0813a7acc2f797a4d3baa0b">LCD_COLS</a>, <a class="el" href="board__xiao__c3_8hpp.html#a9a59fc4d524d3519a6bd0cb451850a65">LCD_ROWS</a>, <a class="el" href="main_8cpp.html#ab7d6d4c245477f932421f8244e69f208">timeService</a>)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="abd844c94d106beaf78109862902528e5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abd844c94d106beaf78109862902528e5">&#9670;&nbsp;</a></span>displayOk</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool displayOk = false</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a895ef072aaa3dd70f3b3a5ccfca0f91b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a895ef072aaa3dd70f3b3a5ccfca0f91b">&#9670;&nbsp;</a></span>g_bleCredentialsReceived</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">volatile bool g_bleCredentialsReceived = false</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a95d308dd4b563c790badaf5e0b48f9d3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a95d308dd4b563c790badaf5e0b48f9d3">&#9670;&nbsp;</a></span>g_receivedPassword</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char g_receivedPassword[64]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a7f4d0ac17aed124f0158d92b6a8478ae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f4d0ac17aed124f0158d92b6a8478ae">&#9670;&nbsp;</a></span>g_receivedSsid</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char g_receivedSsid[32]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab9e9561bf6d2103bb4bf831352194584"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab9e9561bf6d2103bb4bf831352194584">&#9670;&nbsp;</a></span>littleFsOk</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool littleFsOk = false</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="af3130f9b664940960d3138cd4ed7fcc4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af3130f9b664940960d3138cd4ed7fcc4">&#9670;&nbsp;</a></span>mqttSetupOk</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mqttSetupOk = false</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aef52feaaa2ad0ac2a5a50240b12d3bbe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aef52feaaa2ad0ac2a5a50240b12d3bbe">&#9670;&nbsp;</a></span>mqttTaskOk</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool mqttTaskOk = false</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a83949d215e88efee5fc4f312ea2692e7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a83949d215e88efee5fc4f312ea2692e7">&#9670;&nbsp;</a></span>pCharacteristic</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">BLECharacteristic* pCharacteristic = nullptr</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac871c365764e0411a3c3806439b2b19d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac871c365764e0411a3c3806439b2b19d">&#9670;&nbsp;</a></span>pServer</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">BLEServer* pServer = nullptr</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a3b630fbd37ff6a0f950de3b549e39609"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3b630fbd37ff6a0f950de3b549e39609">&#9670;&nbsp;</a></span>sensorsOk</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool sensorsOk = false</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a5cec6e1afe54a898c13da9e950a3dd41"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5cec6e1afe54a898c13da9e950a3dd41">&#9670;&nbsp;</a></span>sensorTaskOk</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool sensorTaskOk = false</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a37cea87c0cdcea6e88e1042480d38fca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a37cea87c0cdcea6e88e1042480d38fca">&#9670;&nbsp;</a></span>targetManager</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classGrowController_1_1TargetDataManager.html">GrowController::TargetDataManager</a> targetManager</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="acce88861973ab7865ae0c05d30cfe815"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acce88861973ab7865ae0c05d30cfe815">&#9670;&nbsp;</a></span>timeOk</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool timeOk = false</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab7d6d4c245477f932421f8244e69f208"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab7d6d4c245477f932421f8244e69f208">&#9670;&nbsp;</a></span>timeService</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classGrowController_1_1TimeService.html">GrowController::TimeService</a> timeService</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="af80c34747656b263fece5b92e5786fab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af80c34747656b263fece5b92e5786fab">&#9670;&nbsp;</a></span>wifiOk</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool wifiOk = false</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Gerado por &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.17
+</small></address>
+</body>
+</html>

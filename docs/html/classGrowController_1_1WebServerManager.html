@@ -1,0 +1,308 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.17"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Smart Garden - Sistema de Controle de Ambiente: Referência da Classe GrowController::WebServerManager</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Smart Garden - Sistema de Controle de Ambiente
+   &#160;<span id="projectnumber">v1.0</span>
+   </div>
+   <div id="projectbrief">Sistema embarcado para monitoramento e controle de ambiente para cultivo</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Gerado por Doxygen 1.8.17 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Busca');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Busca');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="namespaceGrowController.html">GrowController</a></li><li class="navelem"><a class="el" href="classGrowController_1_1WebServerManager.html">WebServerManager</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Membros Públicos</a> &#124;
+<a href="classGrowController_1_1WebServerManager-members.html">Lista de todos os Membros</a>  </div>
+  <div class="headertitle">
+<div class="title">Referência da Classe GrowController::WebServerManager</div>  </div>
+</div><!--header-->
+<div class="contents">
+
+<p>Manages the ESPAsyncWebServer, handling HTTP requests and Server-Sent Events (SSE).  
+ <a href="classGrowController_1_1WebServerManager.html#details">Mais...</a></p>
+
+<p><code>#include &lt;<a class="el" href="webServerManager_8hpp_source.html">webServerManager.hpp</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Membros Públicos</h2></td></tr>
+<tr class="memitem:a6afcd4c39d5168c08a81929fff8fc211"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1WebServerManager.html#a6afcd4c39d5168c08a81929fff8fc211">WebServerManager</a> (uint16_t port, <a class="el" href="classGrowController_1_1SensorManager.html">SensorManager</a> *<a class="el" href="main_8cpp.html#aa0842d72fac8fae67e8c146789ca6a52">sensorMgr</a>, <a class="el" href="classGrowController_1_1TargetDataManager.html">TargetDataManager</a> *targetMgr, <a class="el" href="classGrowController_1_1ActuatorManager.html">ActuatorManager</a> *<a class="el" href="main_8cpp.html#a0727fe3b048e428a2fbcb2a88a8a635a">actuatorMgr</a>, <a class="el" href="classGrowController_1_1DataHistoryManager.html">DataHistoryManager</a> *historyMgr)</td></tr>
+<tr class="memdesc:a6afcd4c39d5168c08a81929fff8fc211"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new <a class="el" href="classGrowController_1_1WebServerManager.html" title="Manages the ESPAsyncWebServer, handling HTTP requests and Server-Sent Events (SSE).">WebServerManager</a> instance.  <a href="classGrowController_1_1WebServerManager.html#a6afcd4c39d5168c08a81929fff8fc211">Mais...</a><br /></td></tr>
+<tr class="separator:a6afcd4c39d5168c08a81929fff8fc211"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3396dd74cdc0e0d7a87a18dbd4dddd28"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1WebServerManager.html#a3396dd74cdc0e0d7a87a18dbd4dddd28">~WebServerManager</a> ()</td></tr>
+<tr class="memdesc:a3396dd74cdc0e0d7a87a18dbd4dddd28"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroys the <a class="el" href="classGrowController_1_1WebServerManager.html" title="Manages the ESPAsyncWebServer, handling HTTP requests and Server-Sent Events (SSE).">WebServerManager</a> instance.  <a href="classGrowController_1_1WebServerManager.html#a3396dd74cdc0e0d7a87a18dbd4dddd28">Mais...</a><br /></td></tr>
+<tr class="separator:a3396dd74cdc0e0d7a87a18dbd4dddd28"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1e2fc9569c2623dfba8d58d231aa304"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1WebServerManager.html#ab1e2fc9569c2623dfba8d58d231aa304">WebServerManager</a> (const <a class="el" href="classGrowController_1_1WebServerManager.html">WebServerManager</a> &amp;)=delete</td></tr>
+<tr class="separator:ab1e2fc9569c2623dfba8d58d231aa304"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01f1d535259341b1f0b6dc1dd263f5f1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGrowController_1_1WebServerManager.html">WebServerManager</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1WebServerManager.html#a01f1d535259341b1f0b6dc1dd263f5f1">operator=</a> (const <a class="el" href="classGrowController_1_1WebServerManager.html">WebServerManager</a> &amp;)=delete</td></tr>
+<tr class="separator:a01f1d535259341b1f0b6dc1dd263f5f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c7c8ff3c095c357d41883feecb65a1f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1WebServerManager.html#a1c7c8ff3c095c357d41883feecb65a1f">begin</a> ()</td></tr>
+<tr class="memdesc:a1c7c8ff3c095c357d41883feecb65a1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the web server and starts listening for incoming connections. This method should set up all HTTP routes and SSE endpoints.  <a href="classGrowController_1_1WebServerManager.html#a1c7c8ff3c095c357d41883feecb65a1f">Mais...</a><br /></td></tr>
+<tr class="separator:a1c7c8ff3c095c357d41883feecb65a1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af684e2ab62b4f522ccdbb9ebbbdf6721"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1WebServerManager.html#af684e2ab62b4f522ccdbb9ebbbdf6721">sendSensorUpdateEvent</a> ()</td></tr>
+<tr class="memdesc:af684e2ab62b4f522ccdbb9ebbbdf6721"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends an SSE event with the current sensor readings. This method is typically called periodically or when sensor data changes significantly. It respects the <code>eventIntervalMs_</code> to avoid flooding clients.  <a href="classGrowController_1_1WebServerManager.html#af684e2ab62b4f522ccdbb9ebbbdf6721">Mais...</a><br /></td></tr>
+<tr class="separator:af684e2ab62b4f522ccdbb9ebbbdf6721"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37e7d31113de29165dba878d38d9ec69"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1WebServerManager.html#a37e7d31113de29165dba878d38d9ec69">sendStatusUpdateEvent</a> ()</td></tr>
+<tr class="memdesc:a37e7d31113de29165dba878d38d9ec69"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends an SSE event with the current status of actuators and target values. This method is typically called periodically or when status/target data changes. It respects the <code>eventIntervalMs_</code> to avoid flooding clients.  <a href="classGrowController_1_1WebServerManager.html#a37e7d31113de29165dba878d38d9ec69">Mais...</a><br /></td></tr>
+<tr class="separator:a37e7d31113de29165dba878d38d9ec69"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Descrição detalhada</h2>
+<div class="textblock"><p>Manages the ESPAsyncWebServer, handling HTTP requests and Server-Sent Events (SSE). </p>
+<p>This class is responsible for initializing the web server, setting up routes (though route setup is typically done in the .cpp file), and sending real-time updates to connected clients via SSE. </p>
+</div><h2 class="groupheader">Construtores e Destrutores</h2>
+<a id="a6afcd4c39d5168c08a81929fff8fc211"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6afcd4c39d5168c08a81929fff8fc211">&#9670;&nbsp;</a></span>WebServerManager() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">GrowController::WebServerManager::WebServerManager </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>port</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classGrowController_1_1SensorManager.html">SensorManager</a> *&#160;</td>
+          <td class="paramname"><em>sensorMgr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classGrowController_1_1TargetDataManager.html">TargetDataManager</a> *&#160;</td>
+          <td class="paramname"><em>targetMgr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classGrowController_1_1ActuatorManager.html">ActuatorManager</a> *&#160;</td>
+          <td class="paramname"><em>actuatorMgr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classGrowController_1_1DataHistoryManager.html">DataHistoryManager</a> *&#160;</td>
+          <td class="paramname"><em>historyMgr</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructs a new <a class="el" href="classGrowController_1_1WebServerManager.html" title="Manages the ESPAsyncWebServer, handling HTTP requests and Server-Sent Events (SSE).">WebServerManager</a> instance. </p>
+<dl class="params"><dt>Parâmetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">port</td><td>The network port on which the server will listen. </td></tr>
+    <tr><td class="paramname">sensorMgr</td><td>Pointer to the <a class="el" href="classGrowController_1_1SensorManager.html" title="Gerencia a leitura de sensores (DHT, Solo), cálculo de VPD, e armazena os resultados em cache....">SensorManager</a> for accessing sensor data. </td></tr>
+    <tr><td class="paramname">targetMgr</td><td>Pointer to the <a class="el" href="classGrowController_1_1TargetDataManager.html">TargetDataManager</a> for accessing target data. </td></tr>
+    <tr><td class="paramname">actuatorMgr</td><td>Pointer to the <a class="el" href="classGrowController_1_1ActuatorManager.html" title="Manages the control of actuators like lights and humidifiers.">ActuatorManager</a> for accessing actuator status. </td></tr>
+    <tr><td class="paramname">historyMgr</td><td>Pointer to the <a class="el" href="classGrowController_1_1DataHistoryManager.html">DataHistoryManager</a> for accessing historical data. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a3396dd74cdc0e0d7a87a18dbd4dddd28"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3396dd74cdc0e0d7a87a18dbd4dddd28">&#9670;&nbsp;</a></span>~WebServerManager()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">GrowController::WebServerManager::~WebServerManager </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Destroys the <a class="el" href="classGrowController_1_1WebServerManager.html" title="Manages the ESPAsyncWebServer, handling HTTP requests and Server-Sent Events (SSE).">WebServerManager</a> instance. </p>
+
+</div>
+</div>
+<a id="ab1e2fc9569c2623dfba8d58d231aa304"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab1e2fc9569c2623dfba8d58d231aa304">&#9670;&nbsp;</a></span>WebServerManager() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">GrowController::WebServerManager::WebServerManager </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classGrowController_1_1WebServerManager.html">WebServerManager</a> &amp;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Funções membros</h2>
+<a id="a1c7c8ff3c095c357d41883feecb65a1f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1c7c8ff3c095c357d41883feecb65a1f">&#9670;&nbsp;</a></span>begin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GrowController::WebServerManager::begin </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initializes the web server and starts listening for incoming connections. This method should set up all HTTP routes and SSE endpoints. </p>
+
+</div>
+</div>
+<a id="a01f1d535259341b1f0b6dc1dd263f5f1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a01f1d535259341b1f0b6dc1dd263f5f1">&#9670;&nbsp;</a></span>operator=()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classGrowController_1_1WebServerManager.html">WebServerManager</a>&amp; GrowController::WebServerManager::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classGrowController_1_1WebServerManager.html">WebServerManager</a> &amp;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="af684e2ab62b4f522ccdbb9ebbbdf6721"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af684e2ab62b4f522ccdbb9ebbbdf6721">&#9670;&nbsp;</a></span>sendSensorUpdateEvent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GrowController::WebServerManager::sendSensorUpdateEvent </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sends an SSE event with the current sensor readings. This method is typically called periodically or when sensor data changes significantly. It respects the <code>eventIntervalMs_</code> to avoid flooding clients. </p>
+
+</div>
+</div>
+<a id="a37e7d31113de29165dba878d38d9ec69"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a37e7d31113de29165dba878d38d9ec69">&#9670;&nbsp;</a></span>sendStatusUpdateEvent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void GrowController::WebServerManager::sendStatusUpdateEvent </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sends an SSE event with the current status of actuators and target values. This method is typically called periodically or when status/target data changes. It respects the <code>eventIntervalMs_</code> to avoid flooding clients. </p>
+
+</div>
+</div>
+<hr/>A documentação para essa classe foi gerada a partir dos seguintes arquivos:<ul>
+<li>src/network/<a class="el" href="webServerManager_8hpp_source.html">webServerManager.hpp</a></li>
+<li>src/network/<a class="el" href="webServerManager_8cpp.html">webServerManager.cpp</a></li>
+</ul>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Gerado por &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.17
+</small></address>
+</body>
+</html>
