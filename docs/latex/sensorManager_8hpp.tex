@@ -1,14 +1,14 @@
-\hypertarget{sensorManager_8hpp}{}\doxysection{Referência do Arquivo src/sensors/sensor\+Manager.hpp}
-\label{sensorManager_8hpp}\index{src/sensors/sensorManager.hpp@{src/sensors/sensorManager.hpp}}
-{\ttfamily \#include \char`\"{}config.\+hpp\char`\"{}}\newline
+\doxysection{Referência do Arquivo src/sensors/sensor\+Manager.hpp}
+\hypertarget{sensorManager_8hpp}{}\label{sensorManager_8hpp}\index{src/sensors/sensorManager.hpp@{src/sensors/sensorManager.hpp}}
+{\ttfamily \#include "{}config.\+hpp"{}}\newline
 {\ttfamily \#include $<$memory$>$}\newline
-{\ttfamily \#include $<$D\+H\+T.\+h$>$}\newline
+{\ttfamily \#include $<$DHT.\+h$>$}\newline
 {\ttfamily \#include $<$vector$>$}\newline
 {\ttfamily \#include $<$numeric$>$}\newline
-{\ttfamily \#include \char`\"{}utils/free\+R\+T\+O\+S\+Mutex.\+hpp\char`\"{}}\newline
-{\ttfamily \#include \char`\"{}freertos/\+Free\+R\+T\+O\+S.\+h\char`\"{}}\newline
-{\ttfamily \#include \char`\"{}freertos/task.\+h\char`\"{}}\newline
-{\ttfamily \#include \char`\"{}utils/time\+Service.\+hpp\char`\"{}}\newline
+{\ttfamily \#include "{}utils/free\+RTOSMutex.\+hpp"{}}\newline
+{\ttfamily \#include "{}freertos/\+Free\+RTOS.\+h"{}}\newline
+{\ttfamily \#include "{}freertos/task.\+h"{}}\newline
+{\ttfamily \#include "{}utils/time\+Service.\+hpp"{}}\newline
 Gráfico de dependência de inclusões para sensor\+Manager.\+hpp\+:
 \nopagebreak
 \begin{figure}[H]
@@ -25,13 +25,13 @@ Este grafo mostra quais arquivos estão direta ou indiretamente relacionados com
 \includegraphics[width=350pt]{sensorManager_8hpp__dep__incl}
 \end{center}
 \end{figure}
-\doxysubsection*{Componentes}
+\doxysubsubsection*{Componentes}
 \begin{DoxyCompactItemize}
 \item 
 class \mbox{\hyperlink{classGrowController_1_1SensorManager}{Grow\+Controller\+::\+Sensor\+Manager}}
-\begin{DoxyCompactList}\small\item\em Gerencia a leitura de sensores (D\+HT, Solo), cálculo de V\+PD, e armazena os resultados em cache. Atualiza um cache interno thread-\/safe e executa uma tarefa dedicada para leituras periódicas. Utiliza R\+A\+II para recursos. \end{DoxyCompactList}\end{DoxyCompactItemize}
-\doxysubsection*{$<$em$>$Namespaces$<$/em$>$}
+\begin{DoxyCompactList}\small\item\em Gerencia a leitura de sensores (DHT, Solo), cálculo de VPD, e armazena os resultados em cache. Atualiza um cache interno thread-\/safe e executa uma tarefa dedicada para leituras periódicas. Utiliza RAII para recursos. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
 \begin{DoxyCompactItemize}
 \item 
- \mbox{\hyperlink{namespaceGrowController}{Grow\+Controller}}
+namespace \mbox{\hyperlink{namespaceGrowController}{Grow\+Controller}}
 \end{DoxyCompactItemize}

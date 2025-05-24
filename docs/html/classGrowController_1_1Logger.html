@@ -1,9 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<meta name="generator" content="Doxygen 1.8.17"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Smart Garden - Sistema de Controle de Ambiente: Referência da Classe GrowController::Logger</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
@@ -19,10 +19,9 @@
 <div id="titlearea">
 <table cellspacing="0" cellpadding="0">
  <tbody>
- <tr style="height: 56px;">
-  <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Smart Garden - Sistema de Controle de Ambiente
-   &#160;<span id="projectnumber">v1.0</span>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Smart Garden - Sistema de Controle de Ambiente<span id="projectnumber">&#160;v1.0</span>
    </div>
    <div id="projectbrief">Sistema embarcado para monitoramento e controle de ambiente para cultivo</div>
   </td>
@@ -31,21 +30,22 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- Gerado por Doxygen 1.8.17 -->
+<!-- Gerado por Doxygen 1.9.8 -->
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
-var searchBox = new SearchBox("searchBox", "search",false,'Busca');
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
 /* @license-end */
 </script>
 <script type="text/javascript" src="menudata.js"></script>
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
   initMenu('',true,false,'search.php','Busca');
   $(document).ready(function() { init_search(); });
 });
-/* @license-end */</script>
+/* @license-end */
+</script>
 <div id="main-nav"></div>
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -56,9 +56,16 @@ $(function() {
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
-<iframe src="javascript:void(0)" frameborder="0" 
-        name="MSearchResults" id="MSearchResults">
-</iframe>
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Carregando...</div>
+<div class="SRStatus" id="Searching">Procurando...</div>
+<div class="SRStatus" id="NoMatches">Nenhuma entrada encontrado</div>
+</div>
+</div>
+</div>
 </div>
 
 <div id="nav-path" class="navpath">
@@ -68,33 +75,32 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#pub-static-methods">Membros Públicos Estáticos</a> &#124;
+<a href="#pub-static-methods">Membros públicos estáticos</a> &#124;
 <a href="classGrowController_1_1Logger-members.html">Lista de todos os Membros</a>  </div>
-  <div class="headertitle">
-<div class="title">Referência da Classe GrowController::Logger</div>  </div>
+  <div class="headertitle"><div class="title">Referência da Classe GrowController::Logger</div></div>
 </div><!--header-->
 <div class="contents">
 
 <p><code>#include &lt;<a class="el" href="logger_8hpp_source.html">logger.hpp</a>&gt;</code></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
-Membros Públicos Estáticos</h2></td></tr>
-<tr class="memitem:adf36e4109208b52d1689b136f937f628"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1Logger.html#adf36e4109208b52d1689b136f937f628">init</a> (Print &amp;printPort=Serial, <a class="el" href="namespaceGrowController.html#ab214a15da82c771b20ed62b225b1a28c">LogLevel</a> level=<a class="el" href="namespaceGrowController.html#ab214a15da82c771b20ed62b225b1a28ca551b723eafd6a31d444fcb2f5920fbd3">LogLevel::INFO</a>)</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
+Membros públicos estáticos</h2></td></tr>
+<tr class="memitem:adf36e4109208b52d1689b136f937f628" id="r_adf36e4109208b52d1689b136f937f628"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1Logger.html#adf36e4109208b52d1689b136f937f628">init</a> (Print &amp;printPort=Serial, <a class="el" href="namespaceGrowController.html#ab214a15da82c771b20ed62b225b1a28c">LogLevel</a> level=<a class="el" href="namespaceGrowController.html#ab214a15da82c771b20ed62b225b1a28ca551b723eafd6a31d444fcb2f5920fbd3">LogLevel::INFO</a>)</td></tr>
 <tr class="separator:adf36e4109208b52d1689b136f937f628"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a94cd307b1ca65aafe3627672e65c114a"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1Logger.html#a94cd307b1ca65aafe3627672e65c114a">setLevel</a> (<a class="el" href="namespaceGrowController.html#ab214a15da82c771b20ed62b225b1a28c">LogLevel</a> level)</td></tr>
+<tr class="memitem:a94cd307b1ca65aafe3627672e65c114a" id="r_a94cd307b1ca65aafe3627672e65c114a"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1Logger.html#a94cd307b1ca65aafe3627672e65c114a">setLevel</a> (<a class="el" href="namespaceGrowController.html#ab214a15da82c771b20ed62b225b1a28c">LogLevel</a> level)</td></tr>
 <tr class="separator:a94cd307b1ca65aafe3627672e65c114a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0a8925f5c23b634be2d6bc667a51106a"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1Logger.html#a0a8925f5c23b634be2d6bc667a51106a">debug</a> (const char *format,...)</td></tr>
+<tr class="memitem:a0a8925f5c23b634be2d6bc667a51106a" id="r_a0a8925f5c23b634be2d6bc667a51106a"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1Logger.html#a0a8925f5c23b634be2d6bc667a51106a">debug</a> (const char *format,...)</td></tr>
 <tr class="separator:a0a8925f5c23b634be2d6bc667a51106a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a23d4b8016c75e52c5322c786388a84a0"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1Logger.html#a23d4b8016c75e52c5322c786388a84a0">info</a> (const char *format,...)</td></tr>
+<tr class="memitem:a23d4b8016c75e52c5322c786388a84a0" id="r_a23d4b8016c75e52c5322c786388a84a0"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1Logger.html#a23d4b8016c75e52c5322c786388a84a0">info</a> (const char *format,...)</td></tr>
 <tr class="separator:a23d4b8016c75e52c5322c786388a84a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa5611778cf2310140d357c7eb5a4833d"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1Logger.html#aa5611778cf2310140d357c7eb5a4833d">warn</a> (const char *format,...)</td></tr>
+<tr class="memitem:aa5611778cf2310140d357c7eb5a4833d" id="r_aa5611778cf2310140d357c7eb5a4833d"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1Logger.html#aa5611778cf2310140d357c7eb5a4833d">warn</a> (const char *format,...)</td></tr>
 <tr class="separator:aa5611778cf2310140d357c7eb5a4833d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3afba5bd4459a46e07727208109683a6"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1Logger.html#a3afba5bd4459a46e07727208109683a6">error</a> (const char *format,...)</td></tr>
+<tr class="memitem:a3afba5bd4459a46e07727208109683a6" id="r_a3afba5bd4459a46e07727208109683a6"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1Logger.html#a3afba5bd4459a46e07727208109683a6">error</a> (const char *format,...)</td></tr>
 <tr class="separator:a3afba5bd4459a46e07727208109683a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Funções membros</h2>
-<a id="a0a8925f5c23b634be2d6bc667a51106a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0a8925f5c23b634be2d6bc667a51106a">&#9670;&nbsp;</a></span>debug()</h2>
+<h2 class="groupheader">Documentação das funções</h2>
+<a id="a0a8925f5c23b634be2d6bc667a51106a" name="a0a8925f5c23b634be2d6bc667a51106a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0a8925f5c23b634be2d6bc667a51106a">&#9670;&#160;</a></span>debug()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -129,8 +135,8 @@ Membros Públicos Estáticos</h2></td></tr>
 
 </div>
 </div>
-<a id="a3afba5bd4459a46e07727208109683a6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3afba5bd4459a46e07727208109683a6">&#9670;&nbsp;</a></span>error()</h2>
+<a id="a3afba5bd4459a46e07727208109683a6" name="a3afba5bd4459a46e07727208109683a6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3afba5bd4459a46e07727208109683a6">&#9670;&#160;</a></span>error()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -165,8 +171,8 @@ Membros Públicos Estáticos</h2></td></tr>
 
 </div>
 </div>
-<a id="a23d4b8016c75e52c5322c786388a84a0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a23d4b8016c75e52c5322c786388a84a0">&#9670;&nbsp;</a></span>info()</h2>
+<a id="a23d4b8016c75e52c5322c786388a84a0" name="a23d4b8016c75e52c5322c786388a84a0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a23d4b8016c75e52c5322c786388a84a0">&#9670;&#160;</a></span>info()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -201,8 +207,8 @@ Membros Públicos Estáticos</h2></td></tr>
 
 </div>
 </div>
-<a id="adf36e4109208b52d1689b136f937f628"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adf36e4109208b52d1689b136f937f628">&#9670;&nbsp;</a></span>init()</h2>
+<a id="adf36e4109208b52d1689b136f937f628" name="adf36e4109208b52d1689b136f937f628"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adf36e4109208b52d1689b136f937f628">&#9670;&#160;</a></span>init()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -237,8 +243,8 @@ Membros Públicos Estáticos</h2></td></tr>
 
 </div>
 </div>
-<a id="a94cd307b1ca65aafe3627672e65c114a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a94cd307b1ca65aafe3627672e65c114a">&#9670;&nbsp;</a></span>setLevel()</h2>
+<a id="a94cd307b1ca65aafe3627672e65c114a" name="a94cd307b1ca65aafe3627672e65c114a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a94cd307b1ca65aafe3627672e65c114a">&#9670;&#160;</a></span>setLevel()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -263,8 +269,8 @@ Membros Públicos Estáticos</h2></td></tr>
 
 </div>
 </div>
-<a id="aa5611778cf2310140d357c7eb5a4833d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa5611778cf2310140d357c7eb5a4833d">&#9670;&nbsp;</a></span>warn()</h2>
+<a id="aa5611778cf2310140d357c7eb5a4833d" name="aa5611778cf2310140d357c7eb5a4833d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa5611778cf2310140d357c7eb5a4833d">&#9670;&#160;</a></span>warn()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -306,9 +312,7 @@ Membros Públicos Estáticos</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Gerado por &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.17
+Gerado por&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

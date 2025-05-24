@@ -1,9 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<meta name="generator" content="Doxygen 1.8.17"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Smart Garden - Sistema de Controle de Ambiente: Referência do Arquivo src/network/mqttManager.cpp</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
@@ -19,10 +19,9 @@
 <div id="titlearea">
 <table cellspacing="0" cellpadding="0">
  <tbody>
- <tr style="height: 56px;">
-  <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Smart Garden - Sistema de Controle de Ambiente
-   &#160;<span id="projectnumber">v1.0</span>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Smart Garden - Sistema de Controle de Ambiente<span id="projectnumber">&#160;v1.0</span>
    </div>
    <div id="projectbrief">Sistema embarcado para monitoramento e controle de ambiente para cultivo</div>
   </td>
@@ -31,21 +30,22 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- Gerado por Doxygen 1.8.17 -->
+<!-- Gerado por Doxygen 1.9.8 -->
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
-var searchBox = new SearchBox("searchBox", "search",false,'Busca');
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
 /* @license-end */
 </script>
 <script type="text/javascript" src="menudata.js"></script>
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
   initMenu('',true,false,'search.php','Busca');
   $(document).ready(function() { init_search(); });
 });
-/* @license-end */</script>
+/* @license-end */
+</script>
 <div id="main-nav"></div>
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -56,9 +56,16 @@ $(function() {
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
-<iframe src="javascript:void(0)" frameborder="0" 
-        name="MSearchResults" id="MSearchResults">
-</iframe>
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Carregando...</div>
+<div class="SRStatus" id="Searching">Procurando...</div>
+<div class="SRStatus" id="NoMatches">Nenhuma entrada encontrado</div>
+</div>
+</div>
+</div>
 </div>
 
 <div id="nav-path" class="navpath">
@@ -68,10 +75,9 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#namespaces"><em>Namespaces</em></a> &#124;
+<a href="#namespaces">Namespaces</a> &#124;
 <a href="#var-members">Variáveis</a>  </div>
-  <div class="headertitle">
-<div class="title">Referência do Arquivo mqttManager.cpp</div>  </div>
+  <div class="headertitle"><div class="title">Referência do Arquivo mqttManager.cpp</div></div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="mqttManager_8hpp_source.html">mqttManager.hpp</a>&quot;</code><br />
@@ -82,46 +88,70 @@ $(function() {
 </div><div class="textblock"><div class="dynheader">
 Gráfico de dependência de inclusões para mqttManager.cpp:</div>
 <div class="dyncontent">
-<div class="center"><img src="mqttManager_8cpp__incl.png" border="0" usemap="#src_2network_2mqttManager_8cpp" alt=""/></div>
-<map name="src_2network_2mqttManager_8cpp" id="src_2network_2mqttManager_8cpp">
-<area shape="rect" title=" " alt="" coords="407,5,623,32"/>
-<area shape="rect" href="mqttManager_8hpp.html" title=" " alt="" coords="447,80,584,107"/>
-<area shape="rect" title=" " alt="" coords="5,229,116,256"/>
-<area shape="rect" title=" " alt="" coords="164,229,248,256"/>
-<area shape="rect" href="freeRTOSMutex_8hpp.html" title=" " alt="" coords="844,155,1027,181"/>
-<area shape="rect" title=" " alt="" coords="660,80,723,107"/>
-<area shape="rect" title=" " alt="" coords="99,155,199,181"/>
-<area shape="rect" title=" " alt="" coords="598,155,718,181"/>
-<area shape="rect" href="config_8hpp.html" title=" " alt="" coords="1051,155,1140,181"/>
-<area shape="rect" title=" " alt="" coords="683,229,833,256"/>
-<area shape="rect" title=" " alt="" coords="863,229,1000,256"/>
-<area shape="rect" href="targetDataManager_8hpp.html" title=" " alt="" coords="223,155,432,181"/>
-<area shape="rect" title=" " alt="" coords="457,155,574,181"/>
-<area shape="rect" title=" " alt="" coords="1158,229,1219,256"/>
-<area shape="rect" title=" " alt="" coords="1036,229,1133,256"/>
-<area shape="rect" title=" " alt="" coords="295,229,359,256"/>
+<div class="center"><img src="mqttManager_8cpp__incl.png" border="0" usemap="#asrc_2network_2mqttManager_8cpp" alt=""/></div>
+<map name="asrc_2network_2mqttManager_8cpp" id="asrc_2network_2mqttManager_8cpp">
+<area shape="rect" title=" " alt="" coords="407,5,623,31"/>
+<area shape="rect" href="mqttManager_8hpp.html" title=" " alt="" coords="447,79,584,104"/>
+<area shape="poly" title=" " alt="" coords="518,31,518,65,513,65,513,31"/>
+<area shape="rect" title=" " alt="" coords="5,225,116,251"/>
+<area shape="poly" title=" " alt="" coords="407,25,349,31,287,42,223,58,163,81,134,95,113,109,95,127,78,153,67,182,63,211,58,211,62,181,73,151,91,123,109,105,131,91,161,76,222,53,286,37,349,26,407,20"/>
+<area shape="rect" title=" " alt="" coords="164,225,248,251"/>
+<area shape="poly" title=" " alt="" coords="447,33,350,52,242,79,147,114,112,133,89,154,84,164,84,173,97,191,122,206,152,219,150,224,119,211,93,195,79,175,79,163,85,150,109,129,145,109,241,74,349,47,445,28"/>
+<area shape="rect" href="freeRTOSMutex_8hpp.html" title=" " alt="" coords="844,152,1027,177"/>
+<area shape="poly" title=" " alt="" coords="531,29,582,65,615,85,650,102,741,130,831,148,830,154,740,136,648,106,612,89,579,69,528,33"/>
+<area shape="rect" title=" " alt="" coords="660,79,723,104"/>
+<area shape="poly" title=" " alt="" coords="545,28,651,71,649,76,543,33"/>
+<area shape="rect" title=" " alt="" coords="99,152,199,177"/>
+<area shape="poly" title=" " alt="" coords="457,107,213,154,212,148,456,101"/>
+<area shape="rect" title=" " alt="" coords="598,152,718,177"/>
+<area shape="poly" title=" " alt="" coords="539,102,624,143,621,148,537,106"/>
+<area shape="rect" href="config_8hpp.html" title=" " alt="" coords="1051,152,1140,177"/>
+<area shape="poly" title=" " alt="" coords="585,96,784,116,1037,149,1037,154,783,121,584,101"/>
+<area shape="rect" title=" " alt="" coords="683,225,833,251"/>
+<area shape="poly" title=" " alt="" coords="583,101,669,122,707,135,732,150,743,164,751,180,759,211,753,212,746,181,738,167,728,154,705,140,668,127,582,107"/>
+<area shape="rect" title=" " alt="" coords="863,225,1000,251"/>
+<area shape="poly" title=" " alt="" coords="577,101,664,121,758,149,835,183,900,216,898,221,833,188,756,155,662,126,576,107"/>
+<area shape="rect" href="targetDataManager_8hpp.html" title=" " alt="" coords="223,152,432,177"/>
+<area shape="poly" title=" " alt="" coords="486,107,372,149,370,144,484,102"/>
+<area shape="poly" title=" " alt="" coords="447,96,353,100,247,110,151,127,115,139,89,154,79,166,71,181,64,212,59,211,66,179,74,163,86,150,112,134,150,122,246,104,353,95,447,91"/>
+<area shape="rect" title=" " alt="" coords="457,152,574,177"/>
+<area shape="poly" title=" " alt="" coords="518,104,518,138,513,138,513,104"/>
+<area shape="rect" title=" " alt="" coords="1158,225,1219,251"/>
+<area shape="poly" title=" " alt="" coords="1112,175,1164,215,1161,219,1109,179"/>
+<area shape="poly" title=" " alt="" coords="1051,178,826,225,825,220,1050,173"/>
+<area shape="poly" title=" " alt="" coords="1070,180,972,222,969,217,1068,175"/>
+<area shape="rect" title=" " alt="" coords="1036,225,1133,251"/>
+<area shape="poly" title=" " alt="" coords="1096,178,1091,212,1086,211,1091,177"/>
+<area shape="poly" title=" " alt="" coords="397,175,675,220,675,226,396,180"/>
+<area shape="poly" title=" " alt="" coords="432,175,846,223,849,223,849,228,846,228,431,180"/>
+<area shape="poly" title=" " alt="" coords="285,180,118,224,117,219,284,175"/>
+<area shape="rect" title=" " alt="" coords="295,225,359,251"/>
+<area shape="poly" title=" " alt="" coords="330,178,330,212,325,212,325,178"/>
+<area shape="poly" title=" " alt="" coords="309,180,239,221,236,216,306,175"/>
+<area shape="poly" title=" " alt="" coords="908,180,800,223,798,218,906,175"/>
+<area shape="poly" title=" " alt="" coords="937,178,935,212,930,212,932,178"/>
 </map>
 </div>
 </div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
-&lt;em&gt;Namespaces&lt;/em&gt;</h2></td></tr>
-<tr class="memitem:namespaceGrowController"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGrowController.html">GrowController</a></td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
+Namespaces</h2></td></tr>
+<tr class="memitem:namespaceGrowController" id="r_namespaceGrowController"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGrowController.html">GrowController</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variáveis</h2></td></tr>
-<tr class="memitem:a3421d6497e8adbba570b9d256aa12f1c"><td class="memItemLeft" align="right" valign="top">const TickType_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mqttManager_8cpp.html#a3421d6497e8adbba570b9d256aa12f1c">MQTT_MUTEX_TIMEOUT</a> = pdMS_TO_TICKS(200)</td></tr>
+<tr class="memitem:a3421d6497e8adbba570b9d256aa12f1c" id="r_a3421d6497e8adbba570b9d256aa12f1c"><td class="memItemLeft" align="right" valign="top">const TickType_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mqttManager_8cpp.html#a3421d6497e8adbba570b9d256aa12f1c">MQTT_MUTEX_TIMEOUT</a> = pdMS_TO_TICKS(200)</td></tr>
 <tr class="separator:a3421d6497e8adbba570b9d256aa12f1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7f82b130c7b29d53c91930c6e60d534a"><td class="memItemLeft" align="right" valign="top">const TickType_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mqttManager_8cpp.html#a7f82b130c7b29d53c91930c6e60d534a">MQTT_LOOP_DELAY_MS</a> = pdMS_TO_TICKS(500)</td></tr>
+<tr class="memitem:a7f82b130c7b29d53c91930c6e60d534a" id="r_a7f82b130c7b29d53c91930c6e60d534a"><td class="memItemLeft" align="right" valign="top">const TickType_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mqttManager_8cpp.html#a7f82b130c7b29d53c91930c6e60d534a">MQTT_LOOP_DELAY_MS</a> = pdMS_TO_TICKS(500)</td></tr>
 <tr class="separator:a7f82b130c7b29d53c91930c6e60d534a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4756f105cf91bb743d80207386ab4a33"><td class="memItemLeft" align="right" valign="top">const TickType_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mqttManager_8cpp.html#a4756f105cf91bb743d80207386ab4a33">MQTT_RECONNECT_DELAY_MS</a> = pdMS_TO_TICKS(5000)</td></tr>
+<tr class="memitem:a4756f105cf91bb743d80207386ab4a33" id="r_a4756f105cf91bb743d80207386ab4a33"><td class="memItemLeft" align="right" valign="top">const TickType_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mqttManager_8cpp.html#a4756f105cf91bb743d80207386ab4a33">MQTT_RECONNECT_DELAY_MS</a> = pdMS_TO_TICKS(5000)</td></tr>
 <tr class="separator:a4756f105cf91bb743d80207386ab4a33"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afbb722449abde71b13551ae96cb1f02d"><td class="memItemLeft" align="right" valign="top">const uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mqttManager_8cpp.html#afbb722449abde71b13551ae96cb1f02d">MQTT_CONNECT_RETRIES</a> = 3</td></tr>
+<tr class="memitem:afbb722449abde71b13551ae96cb1f02d" id="r_afbb722449abde71b13551ae96cb1f02d"><td class="memItemLeft" align="right" valign="top">const uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mqttManager_8cpp.html#afbb722449abde71b13551ae96cb1f02d">MQTT_CONNECT_RETRIES</a> = 3</td></tr>
 <tr class="separator:afbb722449abde71b13551ae96cb1f02d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Variáveis</h2>
-<a id="afbb722449abde71b13551ae96cb1f02d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afbb722449abde71b13551ae96cb1f02d">&#9670;&nbsp;</a></span>MQTT_CONNECT_RETRIES</h2>
+<a id="afbb722449abde71b13551ae96cb1f02d" name="afbb722449abde71b13551ae96cb1f02d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afbb722449abde71b13551ae96cb1f02d">&#9670;&#160;</a></span>MQTT_CONNECT_RETRIES</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -134,8 +164,8 @@ Variáveis</h2></td></tr>
 
 </div>
 </div>
-<a id="a7f82b130c7b29d53c91930c6e60d534a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7f82b130c7b29d53c91930c6e60d534a">&#9670;&nbsp;</a></span>MQTT_LOOP_DELAY_MS</h2>
+<a id="a7f82b130c7b29d53c91930c6e60d534a" name="a7f82b130c7b29d53c91930c6e60d534a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f82b130c7b29d53c91930c6e60d534a">&#9670;&#160;</a></span>MQTT_LOOP_DELAY_MS</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -148,8 +178,8 @@ Variáveis</h2></td></tr>
 
 </div>
 </div>
-<a id="a3421d6497e8adbba570b9d256aa12f1c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3421d6497e8adbba570b9d256aa12f1c">&#9670;&nbsp;</a></span>MQTT_MUTEX_TIMEOUT</h2>
+<a id="a3421d6497e8adbba570b9d256aa12f1c" name="a3421d6497e8adbba570b9d256aa12f1c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3421d6497e8adbba570b9d256aa12f1c">&#9670;&#160;</a></span>MQTT_MUTEX_TIMEOUT</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -162,8 +192,8 @@ Variáveis</h2></td></tr>
 
 </div>
 </div>
-<a id="a4756f105cf91bb743d80207386ab4a33"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4756f105cf91bb743d80207386ab4a33">&#9670;&nbsp;</a></span>MQTT_RECONNECT_DELAY_MS</h2>
+<a id="a4756f105cf91bb743d80207386ab4a33" name="a4756f105cf91bb743d80207386ab4a33"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4756f105cf91bb743d80207386ab4a33">&#9670;&#160;</a></span>MQTT_RECONNECT_DELAY_MS</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -179,9 +209,7 @@ Variáveis</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Gerado por &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.17
+Gerado por&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

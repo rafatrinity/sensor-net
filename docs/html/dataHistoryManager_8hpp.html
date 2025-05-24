@@ -1,9 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<meta name="generator" content="Doxygen 1.8.17"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Smart Garden - Sistema de Controle de Ambiente: Referência do Arquivo src/data/dataHistoryManager.hpp</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
@@ -19,10 +19,9 @@
 <div id="titlearea">
 <table cellspacing="0" cellpadding="0">
  <tbody>
- <tr style="height: 56px;">
-  <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Smart Garden - Sistema de Controle de Ambiente
-   &#160;<span id="projectnumber">v1.0</span>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Smart Garden - Sistema de Controle de Ambiente<span id="projectnumber">&#160;v1.0</span>
    </div>
    <div id="projectbrief">Sistema embarcado para monitoramento e controle de ambiente para cultivo</div>
   </td>
@@ -31,21 +30,22 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- Gerado por Doxygen 1.8.17 -->
+<!-- Gerado por Doxygen 1.9.8 -->
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
-var searchBox = new SearchBox("searchBox", "search",false,'Busca');
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
 /* @license-end */
 </script>
 <script type="text/javascript" src="menudata.js"></script>
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
   initMenu('',true,false,'search.php','Busca');
   $(document).ready(function() { init_search(); });
 });
-/* @license-end */</script>
+/* @license-end */
+</script>
 <div id="main-nav"></div>
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -56,9 +56,16 @@ $(function() {
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
-<iframe src="javascript:void(0)" frameborder="0" 
-        name="MSearchResults" id="MSearchResults">
-</iframe>
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Carregando...</div>
+<div class="SRStatus" id="Searching">Procurando...</div>
+<div class="SRStatus" id="NoMatches">Nenhuma entrada encontrado</div>
+</div>
+</div>
+</div>
 </div>
 
 <div id="nav-path" class="navpath">
@@ -69,9 +76,8 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Componentes</a> &#124;
-<a href="#namespaces"><em>Namespaces</em></a>  </div>
-  <div class="headertitle">
-<div class="title">Referência do Arquivo dataHistoryManager.hpp</div>  </div>
+<a href="#namespaces">Namespaces</a>  </div>
+  <div class="headertitle"><div class="title">Referência do Arquivo dataHistoryManager.hpp</div></div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="historicDataPoint_8hpp_source.html">historicDataPoint.hpp</a>&quot;</code><br />
@@ -84,55 +90,74 @@ $(function() {
 </div><div class="textblock"><div class="dynheader">
 Gráfico de dependência de inclusões para dataHistoryManager.hpp:</div>
 <div class="dyncontent">
-<div class="center"><img src="dataHistoryManager_8hpp__incl.png" border="0" usemap="#src_2data_2dataHistoryManager_8hpp" alt=""/></div>
-<map name="src_2data_2dataHistoryManager_8hpp" id="src_2data_2dataHistoryManager_8hpp">
-<area shape="rect" title=" " alt="" coords="347,5,585,32"/>
-<area shape="rect" href="historicDataPoint_8hpp.html" title=" " alt="" coords="6,80,169,107"/>
-<area shape="rect" title=" " alt="" coords="193,80,275,107"/>
-<area shape="rect" title=" " alt="" coords="300,80,411,107"/>
-<area shape="rect" title=" " alt="" coords="435,80,497,107"/>
-<area shape="rect" title=" " alt="" coords="488,155,572,181"/>
-<area shape="rect" href="logger_8hpp.html" title=" " alt="" coords="573,80,695,107"/>
-<area shape="rect" href="freeRTOSMutex_8hpp.html" title=" " alt="" coords="720,80,903,107"/>
-<area shape="rect" title=" " alt="" coords="5,155,76,181"/>
-<area shape="rect" title=" " alt="" coords="100,155,168,181"/>
-<area shape="rect" title=" " alt="" coords="597,155,671,181"/>
-<area shape="rect" title=" " alt="" coords="696,155,847,181"/>
-<area shape="rect" title=" " alt="" coords="871,155,1008,181"/>
+<div class="center"><img src="dataHistoryManager_8hpp__incl.png" border="0" usemap="#asrc_2data_2dataHistoryManager_8hpp" alt=""/></div>
+<map name="asrc_2data_2dataHistoryManager_8hpp" id="asrc_2data_2dataHistoryManager_8hpp">
+<area shape="rect" title=" " alt="" coords="347,5,585,31"/>
+<area shape="rect" href="historicDataPoint_8hpp.html" title=" " alt="" coords="6,79,169,104"/>
+<area shape="poly" title=" " alt="" coords="406,33,162,79,161,73,405,28"/>
+<area shape="rect" title=" " alt="" coords="193,79,275,104"/>
+<area shape="poly" title=" " alt="" coords="430,33,285,77,284,72,428,28"/>
+<area shape="rect" title=" " alt="" coords="300,79,411,104"/>
+<area shape="poly" title=" " alt="" coords="450,33,387,73,384,69,447,28"/>
+<area shape="rect" title=" " alt="" coords="435,79,497,104"/>
+<area shape="poly" title=" " alt="" coords="469,31,469,65,463,65,463,31"/>
+<area shape="rect" title=" " alt="" coords="488,152,572,177"/>
+<area shape="poly" title=" " alt="" coords="478,29,495,51,511,78,522,109,529,138,524,139,517,110,506,80,491,54,474,32"/>
+<area shape="rect" href="logger_8hpp.html" title=" " alt="" coords="573,79,695,104"/>
+<area shape="poly" title=" " alt="" coords="494,28,595,71,593,76,492,33"/>
+<area shape="rect" href="freeRTOSMutex_8hpp.html" title=" " alt="" coords="720,79,903,104"/>
+<area shape="poly" title=" " alt="" coords="522,28,743,73,742,78,521,33"/>
+<area shape="rect" title=" " alt="" coords="5,152,76,177"/>
+<area shape="poly" title=" " alt="" coords="82,106,58,142,54,139,77,103"/>
+<area shape="rect" title=" " alt="" coords="100,152,168,177"/>
+<area shape="poly" title=" " alt="" coords="97,103,121,139,117,142,93,106"/>
+<area shape="poly" title=" " alt="" coords="619,106,560,146,557,142,616,102"/>
+<area shape="rect" title=" " alt="" coords="597,152,671,177"/>
+<area shape="poly" title=" " alt="" coords="637,104,637,138,631,138,631,104"/>
+<area shape="rect" title=" " alt="" coords="696,152,847,177"/>
+<area shape="poly" title=" " alt="" coords="657,102,738,143,736,148,655,106"/>
+<area shape="rect" title=" " alt="" coords="871,152,1008,177"/>
+<area shape="poly" title=" " alt="" coords="684,101,877,146,876,151,682,107"/>
+<area shape="poly" title=" " alt="" coords="807,106,787,141,782,139,802,103"/>
+<area shape="poly" title=" " alt="" coords="833,102,907,143,905,147,831,106"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
 Este grafo mostra quais arquivos estão direta ou indiretamente relacionados com esse arquivo:</div>
 <div class="dyncontent">
-<div class="center"><img src="dataHistoryManager_8hpp__dep__incl.png" border="0" usemap="#src_2data_2dataHistoryManager_8hppdep" alt=""/></div>
-<map name="src_2data_2dataHistoryManager_8hppdep" id="src_2data_2dataHistoryManager_8hppdep">
-<area shape="rect" title=" " alt="" coords="243,5,482,32"/>
-<area shape="rect" href="dataHistoryManager_8cpp.html" title=" " alt="" coords="5,80,243,107"/>
-<area shape="rect" href="webServerManager_8hpp.html" title=" " alt="" coords="318,80,573,107"/>
-<area shape="rect" href="main_8cpp.html" title=" " alt="" coords="227,155,333,181"/>
-<area shape="rect" href="sensorManager_8cpp.html" title=" " alt="" coords="597,80,822,107"/>
-<area shape="rect" href="webServerManager_8cpp.html" title=" " alt="" coords="357,155,611,181"/>
+<div class="center"><img src="dataHistoryManager_8hpp__dep__incl.png" border="0" usemap="#asrc_2data_2dataHistoryManager_8hppdep" alt=""/></div>
+<map name="asrc_2data_2dataHistoryManager_8hppdep" id="asrc_2data_2dataHistoryManager_8hppdep">
+<area shape="rect" title=" " alt="" coords="243,5,482,31"/>
+<area shape="rect" href="dataHistoryManager_8cpp.html" title=" " alt="" coords="5,79,243,104"/>
+<area shape="poly" title=" " alt="" coords="312,37,163,81,162,76,310,32"/>
+<area shape="rect" href="main_8cpp.html" title=" " alt="" coords="227,152,333,177"/>
+<area shape="poly" title=" " alt="" coords="341,42,324,60,309,80,293,119,285,152,279,151,288,117,304,77,320,56,337,38"/>
+<area shape="rect" href="webServerManager_8hpp.html" title=" " alt="" coords="318,79,573,104"/>
+<area shape="poly" title=" " alt="" coords="388,38,434,76,430,80,385,42"/>
+<area shape="rect" href="sensorManager_8cpp.html" title=" " alt="" coords="597,79,822,104"/>
+<area shape="poly" title=" " alt="" coords="432,31,654,76,653,81,431,36"/>
+<area shape="poly" title=" " alt="" coords="407,112,308,154,306,149,405,107"/>
+<area shape="rect" href="webServerManager_8cpp.html" title=" " alt="" coords="357,152,611,177"/>
+<area shape="poly" title=" " alt="" coords="461,115,480,151,475,153,456,118"/>
 </map>
 </div>
 </div>
-<p><a href="dataHistoryManager_8hpp_source.html">Vá para o código-fonte desse arquivo.</a></p>
+<p><a href="dataHistoryManager_8hpp_source.html">Ir para o código-fonte desse arquivo.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Componentes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1DataHistoryManager.html">GrowController::DataHistoryManager</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
-&lt;em&gt;Namespaces&lt;/em&gt;</h2></td></tr>
-<tr class="memitem:namespaceGrowController"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGrowController.html">GrowController</a></td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
+Namespaces</h2></td></tr>
+<tr class="memitem:namespaceGrowController" id="r_namespaceGrowController"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGrowController.html">GrowController</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Gerado por &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.17
+Gerado por&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

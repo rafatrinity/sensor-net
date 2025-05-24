@@ -1,9 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<meta name="generator" content="Doxygen 1.8.17"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Smart Garden - Sistema de Controle de Ambiente: Referência da Classe GrowController::MqttManager</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
@@ -19,10 +19,9 @@
 <div id="titlearea">
 <table cellspacing="0" cellpadding="0">
  <tbody>
- <tr style="height: 56px;">
-  <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Smart Garden - Sistema de Controle de Ambiente
-   &#160;<span id="projectnumber">v1.0</span>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Smart Garden - Sistema de Controle de Ambiente<span id="projectnumber">&#160;v1.0</span>
    </div>
    <div id="projectbrief">Sistema embarcado para monitoramento e controle de ambiente para cultivo</div>
   </td>
@@ -31,21 +30,22 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- Gerado por Doxygen 1.8.17 -->
+<!-- Gerado por Doxygen 1.9.8 -->
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
-var searchBox = new SearchBox("searchBox", "search",false,'Busca');
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
 /* @license-end */
 </script>
 <script type="text/javascript" src="menudata.js"></script>
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
   initMenu('',true,false,'search.php','Busca');
   $(document).ready(function() { init_search(); });
 });
-/* @license-end */</script>
+/* @license-end */
+</script>
 <div id="main-nav"></div>
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -56,9 +56,16 @@ $(function() {
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
-<iframe src="javascript:void(0)" frameborder="0" 
-        name="MSearchResults" id="MSearchResults">
-</iframe>
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Carregando...</div>
+<div class="SRStatus" id="Searching">Procurando...</div>
+<div class="SRStatus" id="NoMatches">Nenhuma entrada encontrado</div>
+</div>
+</div>
+</div>
 </div>
 
 <div id="nav-path" class="navpath">
@@ -69,44 +76,43 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Membros Públicos</a> &#124;
-<a href="#pub-static-methods">Membros Públicos Estáticos</a> &#124;
+<a href="#pub-static-methods">Membros públicos estáticos</a> &#124;
 <a href="classGrowController_1_1MqttManager-members.html">Lista de todos os Membros</a>  </div>
-  <div class="headertitle">
-<div class="title">Referência da Classe GrowController::MqttManager</div>  </div>
+  <div class="headertitle"><div class="title">Referência da Classe GrowController::MqttManager</div></div>
 </div><!--header-->
 <div class="contents">
 
 <p><code>#include &lt;<a class="el" href="mqttManager_8hpp_source.html">mqttManager.hpp</a>&gt;</code></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Membros Públicos</h2></td></tr>
-<tr class="memitem:aac2506de0e65348f96f8f238749b2273"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1MqttManager.html#aac2506de0e65348f96f8f238749b2273">MqttManager</a> (const <a class="el" href="structMQTTConfig.html">MQTTConfig</a> &amp;config, <a class="el" href="classGrowController_1_1TargetDataManager.html">TargetDataManager</a> &amp;targetMgr)</td></tr>
+<tr class="memitem:aac2506de0e65348f96f8f238749b2273" id="r_aac2506de0e65348f96f8f238749b2273"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1MqttManager.html#aac2506de0e65348f96f8f238749b2273">MqttManager</a> (const <a class="el" href="structMQTTConfig.html">MQTTConfig</a> &amp;config, <a class="el" href="classGrowController_1_1TargetDataManager.html">TargetDataManager</a> &amp;targetMgr)</td></tr>
 <tr class="separator:aac2506de0e65348f96f8f238749b2273"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a02dfb9c0959e7590cceddc1380738861"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1MqttManager.html#a02dfb9c0959e7590cceddc1380738861">~MqttManager</a> ()</td></tr>
+<tr class="memitem:a02dfb9c0959e7590cceddc1380738861" id="r_a02dfb9c0959e7590cceddc1380738861"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1MqttManager.html#a02dfb9c0959e7590cceddc1380738861">~MqttManager</a> ()</td></tr>
 <tr class="separator:a02dfb9c0959e7590cceddc1380738861"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acb3612edaa462d364d205c8cda42829e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1MqttManager.html#acb3612edaa462d364d205c8cda42829e">MqttManager</a> (const <a class="el" href="classGrowController_1_1MqttManager.html">MqttManager</a> &amp;)=delete</td></tr>
+<tr class="memitem:acb3612edaa462d364d205c8cda42829e" id="r_acb3612edaa462d364d205c8cda42829e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1MqttManager.html#acb3612edaa462d364d205c8cda42829e">MqttManager</a> (const <a class="el" href="classGrowController_1_1MqttManager.html">MqttManager</a> &amp;)=delete</td></tr>
 <tr class="separator:acb3612edaa462d364d205c8cda42829e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3b7423b7a9b8e1c20ddb9e80c184bad3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGrowController_1_1MqttManager.html">MqttManager</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1MqttManager.html#a3b7423b7a9b8e1c20ddb9e80c184bad3">operator=</a> (const <a class="el" href="classGrowController_1_1MqttManager.html">MqttManager</a> &amp;)=delete</td></tr>
-<tr class="separator:a3b7423b7a9b8e1c20ddb9e80c184bad3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abf878fce38c05d6e83e6a1c30f7c7f70"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1MqttManager.html#abf878fce38c05d6e83e6a1c30f7c7f70">setup</a> ()</td></tr>
-<tr class="memdesc:abf878fce38c05d6e83e6a1c30f7c7f70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inicializa o cliente MQTT (servidor, porta, callback). Não conecta ainda.  <a href="classGrowController_1_1MqttManager.html#abf878fce38c05d6e83e6a1c30f7c7f70">Mais...</a><br /></td></tr>
+<tr class="memitem:a9824cde7b18bd2733f35d477bc8b13b6" id="r_a9824cde7b18bd2733f35d477bc8b13b6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGrowController_1_1MqttManager.html">MqttManager</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1MqttManager.html#a9824cde7b18bd2733f35d477bc8b13b6">operator=</a> (const <a class="el" href="classGrowController_1_1MqttManager.html">MqttManager</a> &amp;)=delete</td></tr>
+<tr class="separator:a9824cde7b18bd2733f35d477bc8b13b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf878fce38c05d6e83e6a1c30f7c7f70" id="r_abf878fce38c05d6e83e6a1c30f7c7f70"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1MqttManager.html#abf878fce38c05d6e83e6a1c30f7c7f70">setup</a> ()</td></tr>
+<tr class="memdesc:abf878fce38c05d6e83e6a1c30f7c7f70"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inicializa o cliente MQTT (servidor, porta, callback). Não conecta ainda.  <br /></td></tr>
 <tr class="separator:abf878fce38c05d6e83e6a1c30f7c7f70"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acb7a8d0bdb341b434c7480ee8716551b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1MqttManager.html#acb7a8d0bdb341b434c7480ee8716551b">publish</a> (const char *subTopic, float value, bool retained=false)</td></tr>
-<tr class="memdesc:acb7a8d0bdb341b434c7480ee8716551b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Publica uma mensagem float em um tópico específico. Thread-safe. Assume que o tópico base (room) já está configurado.  <a href="classGrowController_1_1MqttManager.html#acb7a8d0bdb341b434c7480ee8716551b">Mais...</a><br /></td></tr>
+<tr class="memitem:acb7a8d0bdb341b434c7480ee8716551b" id="r_acb7a8d0bdb341b434c7480ee8716551b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1MqttManager.html#acb7a8d0bdb341b434c7480ee8716551b">publish</a> (const char *subTopic, float value, bool retained=false)</td></tr>
+<tr class="memdesc:acb7a8d0bdb341b434c7480ee8716551b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Publica uma mensagem float em um tópico específico. Thread-safe. Assume que o tópico base (room) já está configurado.  <br /></td></tr>
 <tr class="separator:acb7a8d0bdb341b434c7480ee8716551b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7e3a987d8d46785d3d3533fe3e51bce0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1MqttManager.html#a7e3a987d8d46785d3d3533fe3e51bce0">publish</a> (const char *subTopic, const char *payload, bool retained=false)</td></tr>
-<tr class="memdesc:a7e3a987d8d46785d3d3533fe3e51bce0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Publica uma mensagem string em um tópico específico. Thread-safe. Assume que o tópico base (room) já está configurado.  <a href="classGrowController_1_1MqttManager.html#a7e3a987d8d46785d3d3533fe3e51bce0">Mais...</a><br /></td></tr>
+<tr class="memitem:a7e3a987d8d46785d3d3533fe3e51bce0" id="r_a7e3a987d8d46785d3d3533fe3e51bce0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1MqttManager.html#a7e3a987d8d46785d3d3533fe3e51bce0">publish</a> (const char *subTopic, const char *payload, bool retained=false)</td></tr>
+<tr class="memdesc:a7e3a987d8d46785d3d3533fe3e51bce0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Publica uma mensagem string em um tópico específico. Thread-safe. Assume que o tópico base (room) já está configurado.  <br /></td></tr>
 <tr class="separator:a7e3a987d8d46785d3d3533fe3e51bce0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
-Membros Públicos Estáticos</h2></td></tr>
-<tr class="memitem:aa9a0e65ad7578d07eb17b112fd04989e"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1MqttManager.html#aa9a0e65ad7578d07eb17b112fd04989e">taskRunner</a> (void *pvParameter)</td></tr>
-<tr class="memdesc:aa9a0e65ad7578d07eb17b112fd04989e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Função da tarefa FreeRTOS para gerenciar a conexão e o loop MQTT.  <a href="classGrowController_1_1MqttManager.html#aa9a0e65ad7578d07eb17b112fd04989e">Mais...</a><br /></td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
+Membros públicos estáticos</h2></td></tr>
+<tr class="memitem:aa9a0e65ad7578d07eb17b112fd04989e" id="r_aa9a0e65ad7578d07eb17b112fd04989e"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1MqttManager.html#aa9a0e65ad7578d07eb17b112fd04989e">taskRunner</a> (void *pvParameter)</td></tr>
+<tr class="memdesc:aa9a0e65ad7578d07eb17b112fd04989e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Função da tarefa FreeRTOS para gerenciar a conexão e o loop MQTT.  <br /></td></tr>
 <tr class="separator:aa9a0e65ad7578d07eb17b112fd04989e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Construtores e Destrutores</h2>
-<a id="aac2506de0e65348f96f8f238749b2273"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aac2506de0e65348f96f8f238749b2273">&#9670;&nbsp;</a></span>MqttManager() <span class="overload">[1/2]</span></h2>
+<a id="aac2506de0e65348f96f8f238749b2273" name="aac2506de0e65348f96f8f238749b2273"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aac2506de0e65348f96f8f238749b2273">&#9670;&#160;</a></span>MqttManager() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -133,8 +139,8 @@ Membros Públicos Estáticos</h2></td></tr>
 
 </div>
 </div>
-<a id="a02dfb9c0959e7590cceddc1380738861"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a02dfb9c0959e7590cceddc1380738861">&#9670;&nbsp;</a></span>~MqttManager()</h2>
+<a id="a02dfb9c0959e7590cceddc1380738861" name="a02dfb9c0959e7590cceddc1380738861"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a02dfb9c0959e7590cceddc1380738861">&#9670;&#160;</a></span>~MqttManager()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -150,8 +156,8 @@ Membros Públicos Estáticos</h2></td></tr>
 
 </div>
 </div>
-<a id="acb3612edaa462d364d205c8cda42829e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acb3612edaa462d364d205c8cda42829e">&#9670;&nbsp;</a></span>MqttManager() <span class="overload">[2/2]</span></h2>
+<a id="acb3612edaa462d364d205c8cda42829e" name="acb3612edaa462d364d205c8cda42829e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acb3612edaa462d364d205c8cda42829e">&#9670;&#160;</a></span>MqttManager() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -176,9 +182,9 @@ Membros Públicos Estáticos</h2></td></tr>
 
 </div>
 </div>
-<h2 class="groupheader">Funções membros</h2>
-<a id="a3b7423b7a9b8e1c20ddb9e80c184bad3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3b7423b7a9b8e1c20ddb9e80c184bad3">&#9670;&nbsp;</a></span>operator=()</h2>
+<h2 class="groupheader">Documentação das funções</h2>
+<a id="a9824cde7b18bd2733f35d477bc8b13b6" name="a9824cde7b18bd2733f35d477bc8b13b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9824cde7b18bd2733f35d477bc8b13b6">&#9670;&#160;</a></span>operator=()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -187,7 +193,7 @@ Membros Públicos Estáticos</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classGrowController_1_1MqttManager.html">MqttManager</a>&amp; GrowController::MqttManager::operator= </td>
+          <td class="memname"><a class="el" href="classGrowController_1_1MqttManager.html">MqttManager</a> &amp; GrowController::MqttManager::operator= </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classGrowController_1_1MqttManager.html">MqttManager</a> &amp;&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -203,8 +209,8 @@ Membros Públicos Estáticos</h2></td></tr>
 
 </div>
 </div>
-<a id="a7e3a987d8d46785d3d3533fe3e51bce0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7e3a987d8d46785d3d3533fe3e51bce0">&#9670;&nbsp;</a></span>publish() <span class="overload">[1/2]</span></h2>
+<a id="a7e3a987d8d46785d3d3533fe3e51bce0" name="a7e3a987d8d46785d3d3533fe3e51bce0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7e3a987d8d46785d3d3533fe3e51bce0">&#9670;&#160;</a></span>publish() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -250,8 +256,8 @@ false Se o cliente não está conectado ou houve erro ao publicar. </dd></dl>
 
 </div>
 </div>
-<a id="acb7a8d0bdb341b434c7480ee8716551b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acb7a8d0bdb341b434c7480ee8716551b">&#9670;&nbsp;</a></span>publish() <span class="overload">[2/2]</span></h2>
+<a id="acb7a8d0bdb341b434c7480ee8716551b" name="acb7a8d0bdb341b434c7480ee8716551b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acb7a8d0bdb341b434c7480ee8716551b">&#9670;&#160;</a></span>publish() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -297,8 +303,8 @@ false Se o cliente não está conectado ou houve erro ao publicar. </dd></dl>
 
 </div>
 </div>
-<a id="abf878fce38c05d6e83e6a1c30f7c7f70"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abf878fce38c05d6e83e6a1c30f7c7f70">&#9670;&nbsp;</a></span>setup()</h2>
+<a id="abf878fce38c05d6e83e6a1c30f7c7f70" name="abf878fce38c05d6e83e6a1c30f7c7f70"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abf878fce38c05d6e83e6a1c30f7c7f70">&#9670;&#160;</a></span>setup()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -316,8 +322,8 @@ false Se o cliente não está conectado ou houve erro ao publicar. </dd></dl>
 
 </div>
 </div>
-<a id="aa9a0e65ad7578d07eb17b112fd04989e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa9a0e65ad7578d07eb17b112fd04989e">&#9670;&nbsp;</a></span>taskRunner()</h2>
+<a id="aa9a0e65ad7578d07eb17b112fd04989e" name="aa9a0e65ad7578d07eb17b112fd04989e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa9a0e65ad7578d07eb17b112fd04989e">&#9670;&#160;</a></span>taskRunner()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -357,9 +363,7 @@ false Se o cliente não está conectado ou houve erro ao publicar. </dd></dl>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Gerado por &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.17
+Gerado por&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

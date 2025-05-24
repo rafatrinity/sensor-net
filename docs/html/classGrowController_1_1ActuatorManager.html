@@ -1,9 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<meta name="generator" content="Doxygen 1.8.17"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Smart Garden - Sistema de Controle de Ambiente: Referência da Classe GrowController::ActuatorManager</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
@@ -19,10 +19,9 @@
 <div id="titlearea">
 <table cellspacing="0" cellpadding="0">
  <tbody>
- <tr style="height: 56px;">
-  <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Smart Garden - Sistema de Controle de Ambiente
-   &#160;<span id="projectnumber">v1.0</span>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Smart Garden - Sistema de Controle de Ambiente<span id="projectnumber">&#160;v1.0</span>
    </div>
    <div id="projectbrief">Sistema embarcado para monitoramento e controle de ambiente para cultivo</div>
   </td>
@@ -31,21 +30,22 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- Gerado por Doxygen 1.8.17 -->
+<!-- Gerado por Doxygen 1.9.8 -->
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
-var searchBox = new SearchBox("searchBox", "search",false,'Busca');
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
 /* @license-end */
 </script>
 <script type="text/javascript" src="menudata.js"></script>
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
   initMenu('',true,false,'search.php','Busca');
   $(document).ready(function() { init_search(); });
 });
-/* @license-end */</script>
+/* @license-end */
+</script>
 <div id="main-nav"></div>
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -56,9 +56,16 @@ $(function() {
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
-<iframe src="javascript:void(0)" frameborder="0" 
-        name="MSearchResults" id="MSearchResults">
-</iframe>
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Carregando...</div>
+<div class="SRStatus" id="Searching">Procurando...</div>
+<div class="SRStatus" id="NoMatches">Nenhuma entrada encontrado</div>
+</div>
+</div>
+</div>
 </div>
 
 <div id="nav-path" class="navpath">
@@ -70,8 +77,7 @@ $(function() {
   <div class="summary">
 <a href="#pub-methods">Membros Públicos</a> &#124;
 <a href="classGrowController_1_1ActuatorManager-members.html">Lista de todos os Membros</a>  </div>
-  <div class="headertitle">
-<div class="title">Referência da Classe GrowController::ActuatorManager</div>  </div>
+  <div class="headertitle"><div class="title">Referência da Classe GrowController::ActuatorManager</div></div>
 </div><!--header-->
 <div class="contents">
 
@@ -80,40 +86,40 @@ $(function() {
 
 <p><code>#include &lt;<a class="el" href="actuatorManager_8hpp_source.html">actuatorManager.hpp</a>&gt;</code></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Membros Públicos</h2></td></tr>
-<tr class="memitem:ac6d0f94e0e66cba38f136566afa21d27"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1ActuatorManager.html#ac6d0f94e0e66cba38f136566afa21d27">ActuatorManager</a> (const <a class="el" href="structGPIOControlConfig.html">GPIOControlConfig</a> &amp;config, <a class="el" href="classGrowController_1_1TargetDataManager.html">TargetDataManager</a> &amp;targetMgr, <a class="el" href="classGrowController_1_1SensorManager.html">SensorManager</a> &amp;<a class="el" href="main_8cpp.html#aa0842d72fac8fae67e8c146789ca6a52">sensorMgr</a>, <a class="el" href="classGrowController_1_1TimeService.html">TimeService</a> &amp;timeSvc)</td></tr>
-<tr class="memdesc:ac6d0f94e0e66cba38f136566afa21d27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new <a class="el" href="classGrowController_1_1ActuatorManager.html" title="Manages the control of actuators like lights and humidifiers.">ActuatorManager</a> instance.  <a href="classGrowController_1_1ActuatorManager.html#ac6d0f94e0e66cba38f136566afa21d27">Mais...</a><br /></td></tr>
+<tr class="memitem:ac6d0f94e0e66cba38f136566afa21d27" id="r_ac6d0f94e0e66cba38f136566afa21d27"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1ActuatorManager.html#ac6d0f94e0e66cba38f136566afa21d27">ActuatorManager</a> (const <a class="el" href="structGPIOControlConfig.html">GPIOControlConfig</a> &amp;config, <a class="el" href="classGrowController_1_1TargetDataManager.html">TargetDataManager</a> &amp;targetMgr, <a class="el" href="classGrowController_1_1SensorManager.html">SensorManager</a> &amp;<a class="el" href="main_8cpp.html#aa0842d72fac8fae67e8c146789ca6a52">sensorMgr</a>, <a class="el" href="classGrowController_1_1TimeService.html">TimeService</a> &amp;timeSvc)</td></tr>
+<tr class="memdesc:ac6d0f94e0e66cba38f136566afa21d27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a new <a class="el" href="classGrowController_1_1ActuatorManager.html" title="Manages the control of actuators like lights and humidifiers.">ActuatorManager</a> instance.  <br /></td></tr>
 <tr class="separator:ac6d0f94e0e66cba38f136566afa21d27"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a316993feb24797065bc93ded8ea1c10f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1ActuatorManager.html#a316993feb24797065bc93ded8ea1c10f">~ActuatorManager</a> ()</td></tr>
-<tr class="memdesc:a316993feb24797065bc93ded8ea1c10f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroys the <a class="el" href="classGrowController_1_1ActuatorManager.html" title="Manages the control of actuators like lights and humidifiers.">ActuatorManager</a> instance. Ensures that control tasks are stopped and resources are cleaned up.  <a href="classGrowController_1_1ActuatorManager.html#a316993feb24797065bc93ded8ea1c10f">Mais...</a><br /></td></tr>
+<tr class="memitem:a316993feb24797065bc93ded8ea1c10f" id="r_a316993feb24797065bc93ded8ea1c10f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1ActuatorManager.html#a316993feb24797065bc93ded8ea1c10f">~ActuatorManager</a> ()</td></tr>
+<tr class="memdesc:a316993feb24797065bc93ded8ea1c10f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroys the <a class="el" href="classGrowController_1_1ActuatorManager.html" title="Manages the control of actuators like lights and humidifiers.">ActuatorManager</a> instance. Ensures that control tasks are stopped and resources are cleaned up.  <br /></td></tr>
 <tr class="separator:a316993feb24797065bc93ded8ea1c10f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aabc8b62f32e4d31445edf946a2dd6102"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1ActuatorManager.html#aabc8b62f32e4d31445edf946a2dd6102">ActuatorManager</a> (const <a class="el" href="classGrowController_1_1ActuatorManager.html">ActuatorManager</a> &amp;)=delete</td></tr>
+<tr class="memitem:aabc8b62f32e4d31445edf946a2dd6102" id="r_aabc8b62f32e4d31445edf946a2dd6102"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1ActuatorManager.html#aabc8b62f32e4d31445edf946a2dd6102">ActuatorManager</a> (const <a class="el" href="classGrowController_1_1ActuatorManager.html">ActuatorManager</a> &amp;)=delete</td></tr>
 <tr class="separator:aabc8b62f32e4d31445edf946a2dd6102"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9d077ca0c2ed5e338832902917d47960"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGrowController_1_1ActuatorManager.html">ActuatorManager</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1ActuatorManager.html#a9d077ca0c2ed5e338832902917d47960">operator=</a> (const <a class="el" href="classGrowController_1_1ActuatorManager.html">ActuatorManager</a> &amp;)=delete</td></tr>
-<tr class="separator:a9d077ca0c2ed5e338832902917d47960"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a59f476641b6ecec10f4ea053e5b462e5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1ActuatorManager.html#a59f476641b6ecec10f4ea053e5b462e5">initialize</a> ()</td></tr>
-<tr class="memdesc:a59f476641b6ecec10f4ea053e5b462e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the <a class="el" href="classGrowController_1_1ActuatorManager.html" title="Manages the control of actuators like lights and humidifiers.">ActuatorManager</a>. Sets up GPIO pins for actuators.  <a href="classGrowController_1_1ActuatorManager.html#a59f476641b6ecec10f4ea053e5b462e5">Mais...</a><br /></td></tr>
+<tr class="memitem:a7683f82b682597136e0d309f9e53adc9" id="r_a7683f82b682597136e0d309f9e53adc9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGrowController_1_1ActuatorManager.html">ActuatorManager</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1ActuatorManager.html#a7683f82b682597136e0d309f9e53adc9">operator=</a> (const <a class="el" href="classGrowController_1_1ActuatorManager.html">ActuatorManager</a> &amp;)=delete</td></tr>
+<tr class="separator:a7683f82b682597136e0d309f9e53adc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59f476641b6ecec10f4ea053e5b462e5" id="r_a59f476641b6ecec10f4ea053e5b462e5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1ActuatorManager.html#a59f476641b6ecec10f4ea053e5b462e5">initialize</a> ()</td></tr>
+<tr class="memdesc:a59f476641b6ecec10f4ea053e5b462e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the <a class="el" href="classGrowController_1_1ActuatorManager.html" title="Manages the control of actuators like lights and humidifiers.">ActuatorManager</a>. Sets up GPIO pins for actuators.  <br /></td></tr>
 <tr class="separator:a59f476641b6ecec10f4ea053e5b462e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a305fd9ac1e2fb151331c78b461c700f3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1ActuatorManager.html#a305fd9ac1e2fb151331c78b461c700f3">startControlTasks</a> (UBaseType_t lightTaskPriority=1, UBaseType_t humidityTaskPriority=1, uint32_t stackSize=2560)</td></tr>
-<tr class="memdesc:a305fd9ac1e2fb151331c78b461c700f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts the FreeRTOS tasks for controlling the light and humidifier.  <a href="classGrowController_1_1ActuatorManager.html#a305fd9ac1e2fb151331c78b461c700f3">Mais...</a><br /></td></tr>
+<tr class="memitem:a305fd9ac1e2fb151331c78b461c700f3" id="r_a305fd9ac1e2fb151331c78b461c700f3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1ActuatorManager.html#a305fd9ac1e2fb151331c78b461c700f3">startControlTasks</a> (UBaseType_t lightTaskPriority=1, UBaseType_t humidityTaskPriority=1, uint32_t stackSize=2560)</td></tr>
+<tr class="memdesc:a305fd9ac1e2fb151331c78b461c700f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starts the FreeRTOS tasks for controlling the light and humidifier.  <br /></td></tr>
 <tr class="separator:a305fd9ac1e2fb151331c78b461c700f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a396e31b98c0facb5a1ff8b5955063714"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1ActuatorManager.html#a396e31b98c0facb5a1ff8b5955063714">isInitialized</a> () const</td></tr>
-<tr class="memdesc:a396e31b98c0facb5a1ff8b5955063714"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the <a class="el" href="classGrowController_1_1ActuatorManager.html" title="Manages the control of actuators like lights and humidifiers.">ActuatorManager</a> has been successfully initialized.  <a href="classGrowController_1_1ActuatorManager.html#a396e31b98c0facb5a1ff8b5955063714">Mais...</a><br /></td></tr>
+<tr class="memitem:a396e31b98c0facb5a1ff8b5955063714" id="r_a396e31b98c0facb5a1ff8b5955063714"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1ActuatorManager.html#a396e31b98c0facb5a1ff8b5955063714">isInitialized</a> () const</td></tr>
+<tr class="memdesc:a396e31b98c0facb5a1ff8b5955063714"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the <a class="el" href="classGrowController_1_1ActuatorManager.html" title="Manages the control of actuators like lights and humidifiers.">ActuatorManager</a> has been successfully initialized.  <br /></td></tr>
 <tr class="separator:a396e31b98c0facb5a1ff8b5955063714"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2e3168c70f7f741420eb39bbfd5cfcbf"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1ActuatorManager.html#a2e3168c70f7f741420eb39bbfd5cfcbf">isLightRelayOn</a> () const</td></tr>
-<tr class="memdesc:a2e3168c70f7f741420eb39bbfd5cfcbf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the light relay is currently considered ON. This reflects the last commanded state, not necessarily a direct hardware read.  <a href="classGrowController_1_1ActuatorManager.html#a2e3168c70f7f741420eb39bbfd5cfcbf">Mais...</a><br /></td></tr>
+<tr class="memitem:a2e3168c70f7f741420eb39bbfd5cfcbf" id="r_a2e3168c70f7f741420eb39bbfd5cfcbf"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1ActuatorManager.html#a2e3168c70f7f741420eb39bbfd5cfcbf">isLightRelayOn</a> () const</td></tr>
+<tr class="memdesc:a2e3168c70f7f741420eb39bbfd5cfcbf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the light relay is currently considered ON. This reflects the last commanded state, not necessarily a direct hardware read.  <br /></td></tr>
 <tr class="separator:a2e3168c70f7f741420eb39bbfd5cfcbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2f8bf36352e3d6fd9f950cf5885170bf"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1ActuatorManager.html#a2f8bf36352e3d6fd9f950cf5885170bf">isHumidifierRelayOn</a> () const</td></tr>
-<tr class="memdesc:a2f8bf36352e3d6fd9f950cf5885170bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the humidifier relay is currently considered ON. This reflects the last commanded state, not necessarily a direct hardware read.  <a href="classGrowController_1_1ActuatorManager.html#a2f8bf36352e3d6fd9f950cf5885170bf">Mais...</a><br /></td></tr>
+<tr class="memitem:a2f8bf36352e3d6fd9f950cf5885170bf" id="r_a2f8bf36352e3d6fd9f950cf5885170bf"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1ActuatorManager.html#a2f8bf36352e3d6fd9f950cf5885170bf">isHumidifierRelayOn</a> () const</td></tr>
+<tr class="memdesc:a2f8bf36352e3d6fd9f950cf5885170bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the humidifier relay is currently considered ON. This reflects the last commanded state, not necessarily a direct hardware read.  <br /></td></tr>
 <tr class="separator:a2f8bf36352e3d6fd9f950cf5885170bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Descrição detalhada</h2>
 <div class="textblock"><p>Manages the control of actuators like lights and humidifiers. </p>
 <p>This class is responsible for initializing and controlling actuators based on target values (e.g., from <a class="el" href="classGrowController_1_1TargetDataManager.html">TargetDataManager</a>) and current conditions (e.g., time from <a class="el" href="classGrowController_1_1TimeService.html" title="Classe para gerenciar o serviço de tempo e sincronização NTP. Encapsula a inicialização e obtenção da...">TimeService</a>, sensor readings from <a class="el" href="classGrowController_1_1SensorManager.html" title="Gerencia a leitura de sensores (DHT, Solo), cálculo de VPD, e armazena os resultados em cache....">SensorManager</a>). It uses FreeRTOS tasks for continuous control loops. </p>
 </div><h2 class="groupheader">Construtores e Destrutores</h2>
-<a id="ac6d0f94e0e66cba38f136566afa21d27"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac6d0f94e0e66cba38f136566afa21d27">&#9670;&nbsp;</a></span>ActuatorManager() <span class="overload">[1/2]</span></h2>
+<a id="ac6d0f94e0e66cba38f136566afa21d27" name="ac6d0f94e0e66cba38f136566afa21d27"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac6d0f94e0e66cba38f136566afa21d27">&#9670;&#160;</a></span>ActuatorManager() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -163,8 +169,8 @@ Membros Públicos</h2></td></tr>
 
 </div>
 </div>
-<a id="a316993feb24797065bc93ded8ea1c10f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a316993feb24797065bc93ded8ea1c10f">&#9670;&nbsp;</a></span>~ActuatorManager()</h2>
+<a id="a316993feb24797065bc93ded8ea1c10f" name="a316993feb24797065bc93ded8ea1c10f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a316993feb24797065bc93ded8ea1c10f">&#9670;&#160;</a></span>~ActuatorManager()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -182,8 +188,8 @@ Membros Públicos</h2></td></tr>
 
 </div>
 </div>
-<a id="aabc8b62f32e4d31445edf946a2dd6102"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aabc8b62f32e4d31445edf946a2dd6102">&#9670;&nbsp;</a></span>ActuatorManager() <span class="overload">[2/2]</span></h2>
+<a id="aabc8b62f32e4d31445edf946a2dd6102" name="aabc8b62f32e4d31445edf946a2dd6102"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aabc8b62f32e4d31445edf946a2dd6102">&#9670;&#160;</a></span>ActuatorManager() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -208,9 +214,9 @@ Membros Públicos</h2></td></tr>
 
 </div>
 </div>
-<h2 class="groupheader">Funções membros</h2>
-<a id="a59f476641b6ecec10f4ea053e5b462e5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a59f476641b6ecec10f4ea053e5b462e5">&#9670;&nbsp;</a></span>initialize()</h2>
+<h2 class="groupheader">Documentação das funções</h2>
+<a id="a59f476641b6ecec10f4ea053e5b462e5" name="a59f476641b6ecec10f4ea053e5b462e5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a59f476641b6ecec10f4ea053e5b462e5">&#9670;&#160;</a></span>initialize()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -229,8 +235,8 @@ Membros Públicos</h2></td></tr>
 
 </div>
 </div>
-<a id="a2f8bf36352e3d6fd9f950cf5885170bf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2f8bf36352e3d6fd9f950cf5885170bf">&#9670;&nbsp;</a></span>isHumidifierRelayOn()</h2>
+<a id="a2f8bf36352e3d6fd9f950cf5885170bf" name="a2f8bf36352e3d6fd9f950cf5885170bf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2f8bf36352e3d6fd9f950cf5885170bf">&#9670;&#160;</a></span>isHumidifierRelayOn()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -249,8 +255,8 @@ Membros Públicos</h2></td></tr>
 
 </div>
 </div>
-<a id="a396e31b98c0facb5a1ff8b5955063714"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a396e31b98c0facb5a1ff8b5955063714">&#9670;&nbsp;</a></span>isInitialized()</h2>
+<a id="a396e31b98c0facb5a1ff8b5955063714" name="a396e31b98c0facb5a1ff8b5955063714"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a396e31b98c0facb5a1ff8b5955063714">&#9670;&#160;</a></span>isInitialized()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -269,8 +275,8 @@ Membros Públicos</h2></td></tr>
 
 </div>
 </div>
-<a id="a2e3168c70f7f741420eb39bbfd5cfcbf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2e3168c70f7f741420eb39bbfd5cfcbf">&#9670;&nbsp;</a></span>isLightRelayOn()</h2>
+<a id="a2e3168c70f7f741420eb39bbfd5cfcbf" name="a2e3168c70f7f741420eb39bbfd5cfcbf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2e3168c70f7f741420eb39bbfd5cfcbf">&#9670;&#160;</a></span>isLightRelayOn()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -289,8 +295,8 @@ Membros Públicos</h2></td></tr>
 
 </div>
 </div>
-<a id="a9d077ca0c2ed5e338832902917d47960"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9d077ca0c2ed5e338832902917d47960">&#9670;&nbsp;</a></span>operator=()</h2>
+<a id="a7683f82b682597136e0d309f9e53adc9" name="a7683f82b682597136e0d309f9e53adc9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7683f82b682597136e0d309f9e53adc9">&#9670;&#160;</a></span>operator=()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -299,7 +305,7 @@ Membros Públicos</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classGrowController_1_1ActuatorManager.html">ActuatorManager</a>&amp; GrowController::ActuatorManager::operator= </td>
+          <td class="memname"><a class="el" href="classGrowController_1_1ActuatorManager.html">ActuatorManager</a> &amp; GrowController::ActuatorManager::operator= </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classGrowController_1_1ActuatorManager.html">ActuatorManager</a> &amp;&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -315,8 +321,8 @@ Membros Públicos</h2></td></tr>
 
 </div>
 </div>
-<a id="a305fd9ac1e2fb151331c78b461c700f3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a305fd9ac1e2fb151331c78b461c700f3">&#9670;&nbsp;</a></span>startControlTasks()</h2>
+<a id="a305fd9ac1e2fb151331c78b461c700f3" name="a305fd9ac1e2fb151331c78b461c700f3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a305fd9ac1e2fb151331c78b461c700f3">&#9670;&#160;</a></span>startControlTasks()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -367,9 +373,7 @@ Membros Públicos</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Gerado por &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.17
+Gerado por&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

@@ -1,9 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<meta name="generator" content="Doxygen 1.8.17"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Smart Garden - Sistema de Controle de Ambiente: Referência da Classe GrowController::DisplayManager</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
@@ -19,10 +19,9 @@
 <div id="titlearea">
 <table cellspacing="0" cellpadding="0">
  <tbody>
- <tr style="height: 56px;">
-  <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Smart Garden - Sistema de Controle de Ambiente
-   &#160;<span id="projectnumber">v1.0</span>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Smart Garden - Sistema de Controle de Ambiente<span id="projectnumber">&#160;v1.0</span>
    </div>
    <div id="projectbrief">Sistema embarcado para monitoramento e controle de ambiente para cultivo</div>
   </td>
@@ -31,21 +30,22 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- Gerado por Doxygen 1.8.17 -->
+<!-- Gerado por Doxygen 1.9.8 -->
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
-var searchBox = new SearchBox("searchBox", "search",false,'Busca');
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
 /* @license-end */
 </script>
 <script type="text/javascript" src="menudata.js"></script>
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
   initMenu('',true,false,'search.php','Busca');
   $(document).ready(function() { init_search(); });
 });
-/* @license-end */</script>
+/* @license-end */
+</script>
 <div id="main-nav"></div>
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -56,9 +56,16 @@ $(function() {
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
-<iframe src="javascript:void(0)" frameborder="0" 
-        name="MSearchResults" id="MSearchResults">
-</iframe>
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Carregando...</div>
+<div class="SRStatus" id="Searching">Procurando...</div>
+<div class="SRStatus" id="NoMatches">Nenhuma entrada encontrado</div>
+</div>
+</div>
+</div>
 </div>
 
 <div id="nav-path" class="navpath">
@@ -70,59 +77,58 @@ $(function() {
   <div class="summary">
 <a href="#pub-methods">Membros Públicos</a> &#124;
 <a href="classGrowController_1_1DisplayManager-members.html">Lista de todos os Membros</a>  </div>
-  <div class="headertitle">
-<div class="title">Referência da Classe GrowController::DisplayManager</div>  </div>
+  <div class="headertitle"><div class="title">Referência da Classe GrowController::DisplayManager</div></div>
 </div><!--header-->
 <div class="contents">
 
 <p><code>#include &lt;<a class="el" href="displayManager_8hpp_source.html">displayManager.hpp</a>&gt;</code></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Membros Públicos</h2></td></tr>
-<tr class="memitem:a92716cd4eee6b7204b8d4a9c3affec5b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1DisplayManager.html#a92716cd4eee6b7204b8d4a9c3affec5b">DisplayManager</a> (uint8_t i2c_addr, uint8_t cols, uint8_t rows, <a class="el" href="classGrowController_1_1TimeService.html">TimeService</a> &amp;timeSvc)</td></tr>
-<tr class="memdesc:a92716cd4eee6b7204b8d4a9c3affec5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construtor. Recebe parâmetros de configuração e dependências.  <a href="classGrowController_1_1DisplayManager.html#a92716cd4eee6b7204b8d4a9c3affec5b">Mais...</a><br /></td></tr>
+<tr class="memitem:a92716cd4eee6b7204b8d4a9c3affec5b" id="r_a92716cd4eee6b7204b8d4a9c3affec5b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1DisplayManager.html#a92716cd4eee6b7204b8d4a9c3affec5b">DisplayManager</a> (uint8_t i2c_addr, uint8_t cols, uint8_t rows, <a class="el" href="classGrowController_1_1TimeService.html">TimeService</a> &amp;timeSvc)</td></tr>
+<tr class="memdesc:a92716cd4eee6b7204b8d4a9c3affec5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construtor. Recebe parâmetros de configuração e dependências.  <br /></td></tr>
 <tr class="separator:a92716cd4eee6b7204b8d4a9c3affec5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af691ece4acc0ce67390083a793843642"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1DisplayManager.html#af691ece4acc0ce67390083a793843642">~DisplayManager</a> ()</td></tr>
+<tr class="memitem:af691ece4acc0ce67390083a793843642" id="r_af691ece4acc0ce67390083a793843642"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1DisplayManager.html#af691ece4acc0ce67390083a793843642">~DisplayManager</a> ()</td></tr>
 <tr class="separator:af691ece4acc0ce67390083a793843642"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a01c622e178972a57d448bf0024a00160"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1DisplayManager.html#a01c622e178972a57d448bf0024a00160">DisplayManager</a> (const <a class="el" href="classGrowController_1_1DisplayManager.html">DisplayManager</a> &amp;)=delete</td></tr>
+<tr class="memitem:a01c622e178972a57d448bf0024a00160" id="r_a01c622e178972a57d448bf0024a00160"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1DisplayManager.html#a01c622e178972a57d448bf0024a00160">DisplayManager</a> (const <a class="el" href="classGrowController_1_1DisplayManager.html">DisplayManager</a> &amp;)=delete</td></tr>
 <tr class="separator:a01c622e178972a57d448bf0024a00160"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abe22644234f0c6faa2f01a8ac88c920b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGrowController_1_1DisplayManager.html">DisplayManager</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1DisplayManager.html#abe22644234f0c6faa2f01a8ac88c920b">operator=</a> (const <a class="el" href="classGrowController_1_1DisplayManager.html">DisplayManager</a> &amp;)=delete</td></tr>
-<tr class="separator:abe22644234f0c6faa2f01a8ac88c920b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0b9a9983fd204e965c1b005158220513"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1DisplayManager.html#a0b9a9983fd204e965c1b005158220513">initialize</a> ()</td></tr>
+<tr class="memitem:a4130cc95d4480f9847a1e9c2964add5e" id="r_a4130cc95d4480f9847a1e9c2964add5e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGrowController_1_1DisplayManager.html">DisplayManager</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1DisplayManager.html#a4130cc95d4480f9847a1e9c2964add5e">operator=</a> (const <a class="el" href="classGrowController_1_1DisplayManager.html">DisplayManager</a> &amp;)=delete</td></tr>
+<tr class="separator:a4130cc95d4480f9847a1e9c2964add5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b9a9983fd204e965c1b005158220513" id="r_a0b9a9983fd204e965c1b005158220513"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1DisplayManager.html#a0b9a9983fd204e965c1b005158220513">initialize</a> ()</td></tr>
 <tr class="separator:a0b9a9983fd204e965c1b005158220513"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a26a0dd37ae00fb5d3e7bcff7b145cffa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1DisplayManager.html#a26a0dd37ae00fb5d3e7bcff7b145cffa">clear</a> ()</td></tr>
+<tr class="memitem:a26a0dd37ae00fb5d3e7bcff7b145cffa" id="r_a26a0dd37ae00fb5d3e7bcff7b145cffa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1DisplayManager.html#a26a0dd37ae00fb5d3e7bcff7b145cffa">clear</a> ()</td></tr>
 <tr class="separator:a26a0dd37ae00fb5d3e7bcff7b145cffa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a358e99dcb42390daaad16ea61e57a25b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1DisplayManager.html#a358e99dcb42390daaad16ea61e57a25b">setBacklight</a> (bool enable)</td></tr>
+<tr class="memitem:a358e99dcb42390daaad16ea61e57a25b" id="r_a358e99dcb42390daaad16ea61e57a25b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1DisplayManager.html#a358e99dcb42390daaad16ea61e57a25b">setBacklight</a> (bool enable)</td></tr>
 <tr class="separator:a358e99dcb42390daaad16ea61e57a25b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac232fb6ac1eacfdb121d6ff6f7244780"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1DisplayManager.html#ac232fb6ac1eacfdb121d6ff6f7244780">printLine</a> (uint8_t line, const char *format,...)</td></tr>
+<tr class="memitem:ac232fb6ac1eacfdb121d6ff6f7244780" id="r_ac232fb6ac1eacfdb121d6ff6f7244780"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1DisplayManager.html#ac232fb6ac1eacfdb121d6ff6f7244780">printLine</a> (uint8_t line, const char *format,...)</td></tr>
 <tr class="separator:ac232fb6ac1eacfdb121d6ff6f7244780"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1f3eccfdabd2bf6deb21364b4448a47c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1DisplayManager.html#a1f3eccfdabd2bf6deb21364b4448a47c">showError</a> (const char *message)</td></tr>
+<tr class="memitem:a1f3eccfdabd2bf6deb21364b4448a47c" id="r_a1f3eccfdabd2bf6deb21364b4448a47c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1DisplayManager.html#a1f3eccfdabd2bf6deb21364b4448a47c">showError</a> (const char *message)</td></tr>
 <tr class="separator:a1f3eccfdabd2bf6deb21364b4448a47c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ada5805ecd9c1def0a3e91725130f15d8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1DisplayManager.html#ada5805ecd9c1def0a3e91725130f15d8">showBooting</a> ()</td></tr>
+<tr class="memitem:ada5805ecd9c1def0a3e91725130f15d8" id="r_ada5805ecd9c1def0a3e91725130f15d8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1DisplayManager.html#ada5805ecd9c1def0a3e91725130f15d8">showBooting</a> ()</td></tr>
 <tr class="separator:ada5805ecd9c1def0a3e91725130f15d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab4d8662025b59c07e7a3119ffe84690b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1DisplayManager.html#ab4d8662025b59c07e7a3119ffe84690b">showConnectingWiFi</a> ()</td></tr>
+<tr class="memitem:ab4d8662025b59c07e7a3119ffe84690b" id="r_ab4d8662025b59c07e7a3119ffe84690b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1DisplayManager.html#ab4d8662025b59c07e7a3119ffe84690b">showConnectingWiFi</a> ()</td></tr>
 <tr class="separator:ab4d8662025b59c07e7a3119ffe84690b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a19f1621ebaa0a8c3f7ca900dadb22c44"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1DisplayManager.html#a19f1621ebaa0a8c3f7ca900dadb22c44">showWiFiConnected</a> (const char *ip)</td></tr>
+<tr class="memitem:a19f1621ebaa0a8c3f7ca900dadb22c44" id="r_a19f1621ebaa0a8c3f7ca900dadb22c44"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1DisplayManager.html#a19f1621ebaa0a8c3f7ca900dadb22c44">showWiFiConnected</a> (const char *ip)</td></tr>
 <tr class="separator:a19f1621ebaa0a8c3f7ca900dadb22c44"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a09c7b5216f3599f8e933a40d9e7f73d3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1DisplayManager.html#a09c7b5216f3599f8e933a40d9e7f73d3">showNtpSyncing</a> ()</td></tr>
+<tr class="memitem:a09c7b5216f3599f8e933a40d9e7f73d3" id="r_a09c7b5216f3599f8e933a40d9e7f73d3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1DisplayManager.html#a09c7b5216f3599f8e933a40d9e7f73d3">showNtpSyncing</a> ()</td></tr>
 <tr class="separator:a09c7b5216f3599f8e933a40d9e7f73d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a71d688c36a8f2b566641cd1f57bd9eda"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1DisplayManager.html#a71d688c36a8f2b566641cd1f57bd9eda">showNtpSynced</a> ()</td></tr>
+<tr class="memitem:a71d688c36a8f2b566641cd1f57bd9eda" id="r_a71d688c36a8f2b566641cd1f57bd9eda"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1DisplayManager.html#a71d688c36a8f2b566641cd1f57bd9eda">showNtpSynced</a> ()</td></tr>
 <tr class="separator:a71d688c36a8f2b566641cd1f57bd9eda"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5892179e9cc7c7b7ab73119764ffcb1e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1DisplayManager.html#a5892179e9cc7c7b7ab73119764ffcb1e">showMqttConnecting</a> ()</td></tr>
+<tr class="memitem:a5892179e9cc7c7b7ab73119764ffcb1e" id="r_a5892179e9cc7c7b7ab73119764ffcb1e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1DisplayManager.html#a5892179e9cc7c7b7ab73119764ffcb1e">showMqttConnecting</a> ()</td></tr>
 <tr class="separator:a5892179e9cc7c7b7ab73119764ffcb1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a27c3b9c4ff05602045c88fb3d089cd8a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1DisplayManager.html#a27c3b9c4ff05602045c88fb3d089cd8a">showMqttConnected</a> ()</td></tr>
+<tr class="memitem:a27c3b9c4ff05602045c88fb3d089cd8a" id="r_a27c3b9c4ff05602045c88fb3d089cd8a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1DisplayManager.html#a27c3b9c4ff05602045c88fb3d089cd8a">showMqttConnected</a> ()</td></tr>
 <tr class="separator:a27c3b9c4ff05602045c88fb3d089cd8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a838315916bd338bf4d30a228519fdb12"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1DisplayManager.html#a838315916bd338bf4d30a228519fdb12">showSensorData</a> (float temp, float airHum, float soilHum)</td></tr>
-<tr class="memdesc:a838315916bd338bf4d30a228519fdb12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atualiza a exibição principal com dados de sensores e hora. Thread-safe.  <a href="classGrowController_1_1DisplayManager.html#a838315916bd338bf4d30a228519fdb12">Mais...</a><br /></td></tr>
+<tr class="memitem:a838315916bd338bf4d30a228519fdb12" id="r_a838315916bd338bf4d30a228519fdb12"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1DisplayManager.html#a838315916bd338bf4d30a228519fdb12">showSensorData</a> (float temp, float airHum, float soilHum)</td></tr>
+<tr class="memdesc:a838315916bd338bf4d30a228519fdb12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atualiza a exibição principal com dados de sensores e hora. Thread-safe.  <br /></td></tr>
 <tr class="separator:a838315916bd338bf4d30a228519fdb12"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9a2ee0b4593b822dfcc878cb73576857"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1DisplayManager.html#a9a2ee0b4593b822dfcc878cb73576857">updateSpinner</a> ()</td></tr>
+<tr class="memitem:a9a2ee0b4593b822dfcc878cb73576857" id="r_a9a2ee0b4593b822dfcc878cb73576857"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1DisplayManager.html#a9a2ee0b4593b822dfcc878cb73576857">updateSpinner</a> ()</td></tr>
 <tr class="separator:a9a2ee0b4593b822dfcc878cb73576857"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a67abe4570eba5d743504ddd0679d1d6f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1DisplayManager.html#a67abe4570eba5d743504ddd0679d1d6f">isInitialized</a> () const</td></tr>
+<tr class="memitem:a67abe4570eba5d743504ddd0679d1d6f" id="r_a67abe4570eba5d743504ddd0679d1d6f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1DisplayManager.html#a67abe4570eba5d743504ddd0679d1d6f">isInitialized</a> () const</td></tr>
 <tr class="separator:a67abe4570eba5d743504ddd0679d1d6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Construtores e Destrutores</h2>
-<a id="a92716cd4eee6b7204b8d4a9c3affec5b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a92716cd4eee6b7204b8d4a9c3affec5b">&#9670;&nbsp;</a></span>DisplayManager() <span class="overload">[1/2]</span></h2>
+<a id="a92716cd4eee6b7204b8d4a9c3affec5b" name="a92716cd4eee6b7204b8d4a9c3affec5b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a92716cd4eee6b7204b8d4a9c3affec5b">&#9670;&#160;</a></span>DisplayManager() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -172,8 +178,8 @@ Membros Públicos</h2></td></tr>
 
 </div>
 </div>
-<a id="af691ece4acc0ce67390083a793843642"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af691ece4acc0ce67390083a793843642">&#9670;&nbsp;</a></span>~DisplayManager()</h2>
+<a id="af691ece4acc0ce67390083a793843642" name="af691ece4acc0ce67390083a793843642"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af691ece4acc0ce67390083a793843642">&#9670;&#160;</a></span>~DisplayManager()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -189,8 +195,8 @@ Membros Públicos</h2></td></tr>
 
 </div>
 </div>
-<a id="a01c622e178972a57d448bf0024a00160"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a01c622e178972a57d448bf0024a00160">&#9670;&nbsp;</a></span>DisplayManager() <span class="overload">[2/2]</span></h2>
+<a id="a01c622e178972a57d448bf0024a00160" name="a01c622e178972a57d448bf0024a00160"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a01c622e178972a57d448bf0024a00160">&#9670;&#160;</a></span>DisplayManager() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -215,9 +221,9 @@ Membros Públicos</h2></td></tr>
 
 </div>
 </div>
-<h2 class="groupheader">Funções membros</h2>
-<a id="a26a0dd37ae00fb5d3e7bcff7b145cffa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a26a0dd37ae00fb5d3e7bcff7b145cffa">&#9670;&nbsp;</a></span>clear()</h2>
+<h2 class="groupheader">Documentação das funções</h2>
+<a id="a26a0dd37ae00fb5d3e7bcff7b145cffa" name="a26a0dd37ae00fb5d3e7bcff7b145cffa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a26a0dd37ae00fb5d3e7bcff7b145cffa">&#9670;&#160;</a></span>clear()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -233,8 +239,8 @@ Membros Públicos</h2></td></tr>
 
 </div>
 </div>
-<a id="a0b9a9983fd204e965c1b005158220513"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0b9a9983fd204e965c1b005158220513">&#9670;&nbsp;</a></span>initialize()</h2>
+<a id="a0b9a9983fd204e965c1b005158220513" name="a0b9a9983fd204e965c1b005158220513"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0b9a9983fd204e965c1b005158220513">&#9670;&#160;</a></span>initialize()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -250,8 +256,8 @@ Membros Públicos</h2></td></tr>
 
 </div>
 </div>
-<a id="a67abe4570eba5d743504ddd0679d1d6f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a67abe4570eba5d743504ddd0679d1d6f">&#9670;&nbsp;</a></span>isInitialized()</h2>
+<a id="a67abe4570eba5d743504ddd0679d1d6f" name="a67abe4570eba5d743504ddd0679d1d6f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a67abe4570eba5d743504ddd0679d1d6f">&#9670;&#160;</a></span>isInitialized()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -267,8 +273,8 @@ Membros Públicos</h2></td></tr>
 
 </div>
 </div>
-<a id="abe22644234f0c6faa2f01a8ac88c920b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abe22644234f0c6faa2f01a8ac88c920b">&#9670;&nbsp;</a></span>operator=()</h2>
+<a id="a4130cc95d4480f9847a1e9c2964add5e" name="a4130cc95d4480f9847a1e9c2964add5e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4130cc95d4480f9847a1e9c2964add5e">&#9670;&#160;</a></span>operator=()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -277,7 +283,7 @@ Membros Públicos</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classGrowController_1_1DisplayManager.html">DisplayManager</a>&amp; GrowController::DisplayManager::operator= </td>
+          <td class="memname"><a class="el" href="classGrowController_1_1DisplayManager.html">DisplayManager</a> &amp; GrowController::DisplayManager::operator= </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="classGrowController_1_1DisplayManager.html">DisplayManager</a> &amp;&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -293,8 +299,8 @@ Membros Públicos</h2></td></tr>
 
 </div>
 </div>
-<a id="ac232fb6ac1eacfdb121d6ff6f7244780"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac232fb6ac1eacfdb121d6ff6f7244780">&#9670;&nbsp;</a></span>printLine()</h2>
+<a id="ac232fb6ac1eacfdb121d6ff6f7244780" name="ac232fb6ac1eacfdb121d6ff6f7244780"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac232fb6ac1eacfdb121d6ff6f7244780">&#9670;&#160;</a></span>printLine()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -327,8 +333,8 @@ Membros Públicos</h2></td></tr>
 
 </div>
 </div>
-<a id="a358e99dcb42390daaad16ea61e57a25b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a358e99dcb42390daaad16ea61e57a25b">&#9670;&nbsp;</a></span>setBacklight()</h2>
+<a id="a358e99dcb42390daaad16ea61e57a25b" name="a358e99dcb42390daaad16ea61e57a25b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a358e99dcb42390daaad16ea61e57a25b">&#9670;&#160;</a></span>setBacklight()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -345,8 +351,8 @@ Membros Públicos</h2></td></tr>
 
 </div>
 </div>
-<a id="ada5805ecd9c1def0a3e91725130f15d8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ada5805ecd9c1def0a3e91725130f15d8">&#9670;&nbsp;</a></span>showBooting()</h2>
+<a id="ada5805ecd9c1def0a3e91725130f15d8" name="ada5805ecd9c1def0a3e91725130f15d8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada5805ecd9c1def0a3e91725130f15d8">&#9670;&#160;</a></span>showBooting()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -362,8 +368,8 @@ Membros Públicos</h2></td></tr>
 
 </div>
 </div>
-<a id="ab4d8662025b59c07e7a3119ffe84690b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab4d8662025b59c07e7a3119ffe84690b">&#9670;&nbsp;</a></span>showConnectingWiFi()</h2>
+<a id="ab4d8662025b59c07e7a3119ffe84690b" name="ab4d8662025b59c07e7a3119ffe84690b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab4d8662025b59c07e7a3119ffe84690b">&#9670;&#160;</a></span>showConnectingWiFi()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -379,8 +385,8 @@ Membros Públicos</h2></td></tr>
 
 </div>
 </div>
-<a id="a1f3eccfdabd2bf6deb21364b4448a47c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1f3eccfdabd2bf6deb21364b4448a47c">&#9670;&nbsp;</a></span>showError()</h2>
+<a id="a1f3eccfdabd2bf6deb21364b4448a47c" name="a1f3eccfdabd2bf6deb21364b4448a47c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1f3eccfdabd2bf6deb21364b4448a47c">&#9670;&#160;</a></span>showError()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -397,8 +403,8 @@ Membros Públicos</h2></td></tr>
 
 </div>
 </div>
-<a id="a27c3b9c4ff05602045c88fb3d089cd8a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a27c3b9c4ff05602045c88fb3d089cd8a">&#9670;&nbsp;</a></span>showMqttConnected()</h2>
+<a id="a27c3b9c4ff05602045c88fb3d089cd8a" name="a27c3b9c4ff05602045c88fb3d089cd8a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a27c3b9c4ff05602045c88fb3d089cd8a">&#9670;&#160;</a></span>showMqttConnected()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -414,8 +420,8 @@ Membros Públicos</h2></td></tr>
 
 </div>
 </div>
-<a id="a5892179e9cc7c7b7ab73119764ffcb1e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5892179e9cc7c7b7ab73119764ffcb1e">&#9670;&nbsp;</a></span>showMqttConnecting()</h2>
+<a id="a5892179e9cc7c7b7ab73119764ffcb1e" name="a5892179e9cc7c7b7ab73119764ffcb1e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5892179e9cc7c7b7ab73119764ffcb1e">&#9670;&#160;</a></span>showMqttConnecting()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -431,8 +437,8 @@ Membros Públicos</h2></td></tr>
 
 </div>
 </div>
-<a id="a71d688c36a8f2b566641cd1f57bd9eda"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a71d688c36a8f2b566641cd1f57bd9eda">&#9670;&nbsp;</a></span>showNtpSynced()</h2>
+<a id="a71d688c36a8f2b566641cd1f57bd9eda" name="a71d688c36a8f2b566641cd1f57bd9eda"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a71d688c36a8f2b566641cd1f57bd9eda">&#9670;&#160;</a></span>showNtpSynced()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -448,8 +454,8 @@ Membros Públicos</h2></td></tr>
 
 </div>
 </div>
-<a id="a09c7b5216f3599f8e933a40d9e7f73d3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a09c7b5216f3599f8e933a40d9e7f73d3">&#9670;&nbsp;</a></span>showNtpSyncing()</h2>
+<a id="a09c7b5216f3599f8e933a40d9e7f73d3" name="a09c7b5216f3599f8e933a40d9e7f73d3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a09c7b5216f3599f8e933a40d9e7f73d3">&#9670;&#160;</a></span>showNtpSyncing()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -465,8 +471,8 @@ Membros Públicos</h2></td></tr>
 
 </div>
 </div>
-<a id="a838315916bd338bf4d30a228519fdb12"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a838315916bd338bf4d30a228519fdb12">&#9670;&nbsp;</a></span>showSensorData()</h2>
+<a id="a838315916bd338bf4d30a228519fdb12" name="a838315916bd338bf4d30a228519fdb12"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a838315916bd338bf4d30a228519fdb12">&#9670;&#160;</a></span>showSensorData()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -509,8 +515,8 @@ Membros Públicos</h2></td></tr>
 
 </div>
 </div>
-<a id="a19f1621ebaa0a8c3f7ca900dadb22c44"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a19f1621ebaa0a8c3f7ca900dadb22c44">&#9670;&nbsp;</a></span>showWiFiConnected()</h2>
+<a id="a19f1621ebaa0a8c3f7ca900dadb22c44" name="a19f1621ebaa0a8c3f7ca900dadb22c44"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a19f1621ebaa0a8c3f7ca900dadb22c44">&#9670;&#160;</a></span>showWiFiConnected()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -527,8 +533,8 @@ Membros Públicos</h2></td></tr>
 
 </div>
 </div>
-<a id="a9a2ee0b4593b822dfcc878cb73576857"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9a2ee0b4593b822dfcc878cb73576857">&#9670;&nbsp;</a></span>updateSpinner()</h2>
+<a id="a9a2ee0b4593b822dfcc878cb73576857" name="a9a2ee0b4593b822dfcc878cb73576857"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9a2ee0b4593b822dfcc878cb73576857">&#9670;&#160;</a></span>updateSpinner()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -551,9 +557,7 @@ Membros Públicos</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Gerado por &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.17
+Gerado por&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

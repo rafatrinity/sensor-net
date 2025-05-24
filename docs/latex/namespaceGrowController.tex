@@ -1,6 +1,6 @@
-\hypertarget{namespaceGrowController}{}\doxysection{Refência do Namespace Grow\+Controller}
-\label{namespaceGrowController}\index{GrowController@{GrowController}}
-\doxysubsection*{Componentes}
+\doxysection{Refência do Namespace Grow\+Controller}
+\hypertarget{namespaceGrowController}{}\label{namespaceGrowController}\index{GrowController@{GrowController}}
+\doxysubsubsection*{Componentes}
 \begin{DoxyCompactItemize}
 \item 
 class \mbox{\hyperlink{classGrowController_1_1ActuatorManager}{Actuator\+Manager}}
@@ -9,8 +9,8 @@ class \mbox{\hyperlink{classGrowController_1_1DataHistoryManager}{Data\+History\
 \item 
 class \mbox{\hyperlink{classGrowController_1_1DisplayManager}{Display\+Manager}}
 \item 
-class \mbox{\hyperlink{classGrowController_1_1FreeRTOSMutex}{Free\+R\+T\+O\+S\+Mutex}}
-\begin{DoxyCompactList}\small\item\em Classe wrapper R\+A\+II para um Mutex Free\+R\+T\+OS (Semaphore\+Handle\+\_\+t). Garante que v\+Semaphore\+Delete seja chamado quando o objeto sair de escopo. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classGrowController_1_1FreeRTOSMutex}{Free\+RTOSMutex}}
+\begin{DoxyCompactList}\small\item\em Classe wrapper RAII para um Mutex Free\+RTOS (Semaphore\+Handle\+\_\+t). Garante que v\+Semaphore\+Delete seja chamado quando o objeto sair de escopo. \end{DoxyCompactList}\item 
 struct \mbox{\hyperlink{structGrowController_1_1HistoricDataPoint}{Historic\+Data\+Point}}
 \item 
 class \mbox{\hyperlink{classGrowController_1_1Logger}{Logger}}
@@ -18,55 +18,55 @@ class \mbox{\hyperlink{classGrowController_1_1Logger}{Logger}}
 class \mbox{\hyperlink{classGrowController_1_1MqttManager}{Mqtt\+Manager}}
 \item 
 class \mbox{\hyperlink{classGrowController_1_1SensorManager}{Sensor\+Manager}}
-\begin{DoxyCompactList}\small\item\em Gerencia a leitura de sensores (D\+HT, Solo), cálculo de V\+PD, e armazena os resultados em cache. Atualiza um cache interno thread-\/safe e executa uma tarefa dedicada para leituras periódicas. Utiliza R\+A\+II para recursos. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Gerencia a leitura de sensores (DHT, Solo), cálculo de VPD, e armazena os resultados em cache. Atualiza um cache interno thread-\/safe e executa uma tarefa dedicada para leituras periódicas. Utiliza RAII para recursos. \end{DoxyCompactList}\item 
 class \mbox{\hyperlink{classGrowController_1_1TargetDataManager}{Target\+Data\+Manager}}
 \item 
 struct \mbox{\hyperlink{structGrowController_1_1TargetValues}{Target\+Values}}
 \item 
 class \mbox{\hyperlink{classGrowController_1_1TimeService}{Time\+Service}}
-\begin{DoxyCompactList}\small\item\em Classe para gerenciar o serviço de tempo e sincronização N\+TP. Encapsula a inicialização e obtenção da hora local. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Classe para gerenciar o serviço de tempo e sincronização NTP. Encapsula a inicialização e obtenção da hora local. \end{DoxyCompactList}\item 
 class \mbox{\hyperlink{classGrowController_1_1WebServerManager}{Web\+Server\+Manager}}
-\begin{DoxyCompactList}\small\item\em Manages the E\+S\+P\+Async\+Web\+Server, handling H\+T\+TP requests and Server-\/\+Sent Events (S\+SE). \end{DoxyCompactList}\end{DoxyCompactItemize}
-\doxysubsection*{Enumerações}
+\begin{DoxyCompactList}\small\item\em Manages the ESPAsync\+Web\+Server, handling HTTP requests and Server-\/\+Sent Events (SSE). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerações}
 \begin{DoxyCompactItemize}
 \item 
-enum \mbox{\hyperlink{namespaceGrowController_ab214a15da82c771b20ed62b225b1a28c}{Log\+Level}} \{ \newline
-\mbox{\hyperlink{namespaceGrowController_ab214a15da82c771b20ed62b225b1a28cadc30ec20708ef7b0f641ef78b7880a15}{Log\+Level\+::\+D\+E\+B\+UG}}, 
-\mbox{\hyperlink{namespaceGrowController_ab214a15da82c771b20ed62b225b1a28ca551b723eafd6a31d444fcb2f5920fbd3}{Log\+Level\+::\+I\+N\+FO}}, 
-\mbox{\hyperlink{namespaceGrowController_ab214a15da82c771b20ed62b225b1a28ca32bd8a1db2275458673903bdb84cb277}{Log\+Level\+::\+W\+A\+RN}}, 
-\mbox{\hyperlink{namespaceGrowController_ab214a15da82c771b20ed62b225b1a28cabb1ca97ec761fc37101737ba0aa2e7c5}{Log\+Level\+::\+E\+R\+R\+OR}}, 
-\newline
-\mbox{\hyperlink{namespaceGrowController_ab214a15da82c771b20ed62b225b1a28cab50339a10e1de285ac99d4c3990b8693}{Log\+Level\+::\+N\+O\+NE}}
+enum class \mbox{\hyperlink{namespaceGrowController_ab214a15da82c771b20ed62b225b1a28c}{Log\+Level}} \{ \newline
+\mbox{\hyperlink{namespaceGrowController_ab214a15da82c771b20ed62b225b1a28cadc30ec20708ef7b0f641ef78b7880a15}{DEBUG}}
+, \mbox{\hyperlink{namespaceGrowController_ab214a15da82c771b20ed62b225b1a28ca551b723eafd6a31d444fcb2f5920fbd3}{INFO}}
+, \mbox{\hyperlink{namespaceGrowController_ab214a15da82c771b20ed62b225b1a28ca32bd8a1db2275458673903bdb84cb277}{WARN}}
+, \mbox{\hyperlink{namespaceGrowController_ab214a15da82c771b20ed62b225b1a28cabb1ca97ec761fc37101737ba0aa2e7c5}{ERROR}}
+, \newline
+\mbox{\hyperlink{namespaceGrowController_ab214a15da82c771b20ed62b225b1a28cab50339a10e1de285ac99d4c3990b8693}{NONE}}
  \}
 \end{DoxyCompactItemize}
 
 
 \doxysubsection{Enumerações}
-\mbox{\Hypertarget{namespaceGrowController_ab214a15da82c771b20ed62b225b1a28c}\label{namespaceGrowController_ab214a15da82c771b20ed62b225b1a28c}} 
+\Hypertarget{namespaceGrowController_ab214a15da82c771b20ed62b225b1a28c}\label{namespaceGrowController_ab214a15da82c771b20ed62b225b1a28c} 
 \index{GrowController@{GrowController}!LogLevel@{LogLevel}}
 \index{LogLevel@{LogLevel}!GrowController@{GrowController}}
 \doxysubsubsection{\texorpdfstring{LogLevel}{LogLevel}}
-{\footnotesize\ttfamily enum \mbox{\hyperlink{namespaceGrowController_ab214a15da82c771b20ed62b225b1a28c}{Grow\+Controller\+::\+Log\+Level}}\hspace{0.3cm}{\ttfamily [strong]}}
+{\footnotesize\ttfamily enum class \mbox{\hyperlink{namespaceGrowController_ab214a15da82c771b20ed62b225b1a28c}{Grow\+Controller\+::\+Log\+Level}}\hspace{0.3cm}{\ttfamily [strong]}}
 
 \begin{DoxyEnumFields}{Enumeradores}
-\raisebox{\heightof{T}}[0pt][0pt]{\index{DEBUG@{DEBUG}!GrowController@{GrowController}}\index{GrowController@{GrowController}!DEBUG@{DEBUG}}}\mbox{\Hypertarget{namespaceGrowController_ab214a15da82c771b20ed62b225b1a28cadc30ec20708ef7b0f641ef78b7880a15}\label{namespaceGrowController_ab214a15da82c771b20ed62b225b1a28cadc30ec20708ef7b0f641ef78b7880a15}} 
-D\+E\+B\+UG&\\
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DEBUG@{DEBUG}!GrowController@{GrowController}}\index{GrowController@{GrowController}!DEBUG@{DEBUG}}}\Hypertarget{namespaceGrowController_ab214a15da82c771b20ed62b225b1a28cadc30ec20708ef7b0f641ef78b7880a15}\label{namespaceGrowController_ab214a15da82c771b20ed62b225b1a28cadc30ec20708ef7b0f641ef78b7880a15} 
+DEBUG&\\
 \hline
 
-\raisebox{\heightof{T}}[0pt][0pt]{\index{INFO@{INFO}!GrowController@{GrowController}}\index{GrowController@{GrowController}!INFO@{INFO}}}\mbox{\Hypertarget{namespaceGrowController_ab214a15da82c771b20ed62b225b1a28ca551b723eafd6a31d444fcb2f5920fbd3}\label{namespaceGrowController_ab214a15da82c771b20ed62b225b1a28ca551b723eafd6a31d444fcb2f5920fbd3}} 
-I\+N\+FO&\\
+\raisebox{\heightof{T}}[0pt][0pt]{\index{INFO@{INFO}!GrowController@{GrowController}}\index{GrowController@{GrowController}!INFO@{INFO}}}\Hypertarget{namespaceGrowController_ab214a15da82c771b20ed62b225b1a28ca551b723eafd6a31d444fcb2f5920fbd3}\label{namespaceGrowController_ab214a15da82c771b20ed62b225b1a28ca551b723eafd6a31d444fcb2f5920fbd3} 
+INFO&\\
 \hline
 
-\raisebox{\heightof{T}}[0pt][0pt]{\index{WARN@{WARN}!GrowController@{GrowController}}\index{GrowController@{GrowController}!WARN@{WARN}}}\mbox{\Hypertarget{namespaceGrowController_ab214a15da82c771b20ed62b225b1a28ca32bd8a1db2275458673903bdb84cb277}\label{namespaceGrowController_ab214a15da82c771b20ed62b225b1a28ca32bd8a1db2275458673903bdb84cb277}} 
-W\+A\+RN&\\
+\raisebox{\heightof{T}}[0pt][0pt]{\index{WARN@{WARN}!GrowController@{GrowController}}\index{GrowController@{GrowController}!WARN@{WARN}}}\Hypertarget{namespaceGrowController_ab214a15da82c771b20ed62b225b1a28ca32bd8a1db2275458673903bdb84cb277}\label{namespaceGrowController_ab214a15da82c771b20ed62b225b1a28ca32bd8a1db2275458673903bdb84cb277} 
+WARN&\\
 \hline
 
-\raisebox{\heightof{T}}[0pt][0pt]{\index{ERROR@{ERROR}!GrowController@{GrowController}}\index{GrowController@{GrowController}!ERROR@{ERROR}}}\mbox{\Hypertarget{namespaceGrowController_ab214a15da82c771b20ed62b225b1a28cabb1ca97ec761fc37101737ba0aa2e7c5}\label{namespaceGrowController_ab214a15da82c771b20ed62b225b1a28cabb1ca97ec761fc37101737ba0aa2e7c5}} 
-E\+R\+R\+OR&\\
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ERROR@{ERROR}!GrowController@{GrowController}}\index{GrowController@{GrowController}!ERROR@{ERROR}}}\Hypertarget{namespaceGrowController_ab214a15da82c771b20ed62b225b1a28cabb1ca97ec761fc37101737ba0aa2e7c5}\label{namespaceGrowController_ab214a15da82c771b20ed62b225b1a28cabb1ca97ec761fc37101737ba0aa2e7c5} 
+ERROR&\\
 \hline
 
-\raisebox{\heightof{T}}[0pt][0pt]{\index{NONE@{NONE}!GrowController@{GrowController}}\index{GrowController@{GrowController}!NONE@{NONE}}}\mbox{\Hypertarget{namespaceGrowController_ab214a15da82c771b20ed62b225b1a28cab50339a10e1de285ac99d4c3990b8693}\label{namespaceGrowController_ab214a15da82c771b20ed62b225b1a28cab50339a10e1de285ac99d4c3990b8693}} 
-N\+O\+NE&\\
+\raisebox{\heightof{T}}[0pt][0pt]{\index{NONE@{NONE}!GrowController@{GrowController}}\index{GrowController@{GrowController}!NONE@{NONE}}}\Hypertarget{namespaceGrowController_ab214a15da82c771b20ed62b225b1a28cab50339a10e1de285ac99d4c3990b8693}\label{namespaceGrowController_ab214a15da82c771b20ed62b225b1a28cab50339a10e1de285ac99d4c3990b8693} 
+NONE&\\
 \hline
 
 \end{DoxyEnumFields}

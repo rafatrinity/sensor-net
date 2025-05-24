@@ -1,9 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<meta name="generator" content="Doxygen 1.8.17"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Smart Garden - Sistema de Controle de Ambiente: Refência do Namespace GrowController</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
@@ -19,10 +19,9 @@
 <div id="titlearea">
 <table cellspacing="0" cellpadding="0">
  <tbody>
- <tr style="height: 56px;">
-  <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Smart Garden - Sistema de Controle de Ambiente
-   &#160;<span id="projectnumber">v1.0</span>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Smart Garden - Sistema de Controle de Ambiente<span id="projectnumber">&#160;v1.0</span>
    </div>
    <div id="projectbrief">Sistema embarcado para monitoramento e controle de ambiente para cultivo</div>
   </td>
@@ -31,21 +30,22 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- Gerado por Doxygen 1.8.17 -->
+<!-- Gerado por Doxygen 1.9.8 -->
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
-var searchBox = new SearchBox("searchBox", "search",false,'Busca');
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
 /* @license-end */
 </script>
 <script type="text/javascript" src="menudata.js"></script>
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
   initMenu('',true,false,'search.php','Busca');
   $(document).ready(function() { init_search(); });
 });
-/* @license-end */</script>
+/* @license-end */
+</script>
 <div id="main-nav"></div>
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -56,9 +56,16 @@ $(function() {
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
-<iframe src="javascript:void(0)" frameborder="0" 
-        name="MSearchResults" id="MSearchResults">
-</iframe>
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Carregando...</div>
+<div class="SRStatus" id="Searching">Procurando...</div>
+<div class="SRStatus" id="NoMatches">Nenhuma entrada encontrado</div>
+</div>
+</div>
+</div>
 </div>
 
 </div><!-- top -->
@@ -66,12 +73,11 @@ $(function() {
   <div class="summary">
 <a href="#nested-classes">Componentes</a> &#124;
 <a href="#enum-members">Enumerações</a>  </div>
-  <div class="headertitle">
-<div class="title">Refência do Namespace GrowController</div>  </div>
+  <div class="headertitle"><div class="title">Refência do Namespace GrowController</div></div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Componentes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1ActuatorManager.html">ActuatorManager</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Manages the control of actuators like lights and humidifiers.  <a href="classGrowController_1_1ActuatorManager.html#details">Mais...</a><br /></td></tr>
@@ -103,22 +109,22 @@ Componentes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Manages the ESPAsyncWebServer, handling HTTP requests and Server-Sent Events (SSE).  <a href="classGrowController_1_1WebServerManager.html#details">Mais...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerações</h2></td></tr>
-<tr class="memitem:ab214a15da82c771b20ed62b225b1a28c"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGrowController.html#ab214a15da82c771b20ed62b225b1a28c">LogLevel</a> { <br />
-&#160;&#160;<a class="el" href="namespaceGrowController.html#ab214a15da82c771b20ed62b225b1a28cadc30ec20708ef7b0f641ef78b7880a15">LogLevel::DEBUG</a>, 
-<a class="el" href="namespaceGrowController.html#ab214a15da82c771b20ed62b225b1a28ca551b723eafd6a31d444fcb2f5920fbd3">LogLevel::INFO</a>, 
-<a class="el" href="namespaceGrowController.html#ab214a15da82c771b20ed62b225b1a28ca32bd8a1db2275458673903bdb84cb277">LogLevel::WARN</a>, 
-<a class="el" href="namespaceGrowController.html#ab214a15da82c771b20ed62b225b1a28cabb1ca97ec761fc37101737ba0aa2e7c5">LogLevel::ERROR</a>, 
-<br />
-&#160;&#160;<a class="el" href="namespaceGrowController.html#ab214a15da82c771b20ed62b225b1a28cab50339a10e1de285ac99d4c3990b8693">LogLevel::NONE</a>
+<tr class="memitem:ab214a15da82c771b20ed62b225b1a28c" id="r_ab214a15da82c771b20ed62b225b1a28c"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGrowController.html#ab214a15da82c771b20ed62b225b1a28c">LogLevel</a> { <br />
+&#160;&#160;<a class="el" href="namespaceGrowController.html#ab214a15da82c771b20ed62b225b1a28cadc30ec20708ef7b0f641ef78b7880a15">DEBUG</a>
+, <a class="el" href="namespaceGrowController.html#ab214a15da82c771b20ed62b225b1a28ca551b723eafd6a31d444fcb2f5920fbd3">INFO</a>
+, <a class="el" href="namespaceGrowController.html#ab214a15da82c771b20ed62b225b1a28ca32bd8a1db2275458673903bdb84cb277">WARN</a>
+, <a class="el" href="namespaceGrowController.html#ab214a15da82c771b20ed62b225b1a28cabb1ca97ec761fc37101737ba0aa2e7c5">ERROR</a>
+, <br />
+&#160;&#160;<a class="el" href="namespaceGrowController.html#ab214a15da82c771b20ed62b225b1a28cab50339a10e1de285ac99d4c3990b8693">NONE</a>
 <br />
  }</td></tr>
 <tr class="separator:ab214a15da82c771b20ed62b225b1a28c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Enumerações</h2>
-<a id="ab214a15da82c771b20ed62b225b1a28c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab214a15da82c771b20ed62b225b1a28c">&#9670;&nbsp;</a></span>LogLevel</h2>
+<a id="ab214a15da82c771b20ed62b225b1a28c" name="ab214a15da82c771b20ed62b225b1a28c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab214a15da82c771b20ed62b225b1a28c">&#9670;&#160;</a></span>LogLevel</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -127,7 +133,7 @@ Enumerações</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="namespaceGrowController.html#ab214a15da82c771b20ed62b225b1a28c">GrowController::LogLevel</a></td>
+          <td class="memname">enum class <a class="el" href="namespaceGrowController.html#ab214a15da82c771b20ed62b225b1a28c">GrowController::LogLevel</a></td>
         </tr>
       </table>
   </td>
@@ -137,11 +143,11 @@ Enumerações</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <table class="fieldtable">
-<tr><th colspan="2">Enumeradores</th></tr><tr><td class="fieldname"><a id="ab214a15da82c771b20ed62b225b1a28cadc30ec20708ef7b0f641ef78b7880a15"></a>DEBUG&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="ab214a15da82c771b20ed62b225b1a28ca551b723eafd6a31d444fcb2f5920fbd3"></a>INFO&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="ab214a15da82c771b20ed62b225b1a28ca32bd8a1db2275458673903bdb84cb277"></a>WARN&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="ab214a15da82c771b20ed62b225b1a28cabb1ca97ec761fc37101737ba0aa2e7c5"></a>ERROR&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="ab214a15da82c771b20ed62b225b1a28cab50339a10e1de285ac99d4c3990b8693"></a>NONE&#160;</td><td class="fielddoc"></td></tr>
+<tr><th colspan="2">Enumeradores</th></tr><tr><td class="fieldname"><a id="ab214a15da82c771b20ed62b225b1a28cadc30ec20708ef7b0f641ef78b7880a15" name="ab214a15da82c771b20ed62b225b1a28cadc30ec20708ef7b0f641ef78b7880a15"></a>DEBUG&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ab214a15da82c771b20ed62b225b1a28ca551b723eafd6a31d444fcb2f5920fbd3" name="ab214a15da82c771b20ed62b225b1a28ca551b723eafd6a31d444fcb2f5920fbd3"></a>INFO&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ab214a15da82c771b20ed62b225b1a28ca32bd8a1db2275458673903bdb84cb277" name="ab214a15da82c771b20ed62b225b1a28ca32bd8a1db2275458673903bdb84cb277"></a>WARN&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ab214a15da82c771b20ed62b225b1a28cabb1ca97ec761fc37101737ba0aa2e7c5" name="ab214a15da82c771b20ed62b225b1a28cabb1ca97ec761fc37101737ba0aa2e7c5"></a>ERROR&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ab214a15da82c771b20ed62b225b1a28cab50339a10e1de285ac99d4c3990b8693" name="ab214a15da82c771b20ed62b225b1a28cab50339a10e1de285ac99d4c3990b8693"></a>NONE&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
 </div>
@@ -149,9 +155,7 @@ Enumerações</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Gerado por &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.17
+Gerado por&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

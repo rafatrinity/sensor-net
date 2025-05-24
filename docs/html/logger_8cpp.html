@@ -1,9 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<meta name="generator" content="Doxygen 1.8.17"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Smart Garden - Sistema de Controle de Ambiente: Referência do Arquivo src/utils/logger.cpp</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
@@ -19,10 +19,9 @@
 <div id="titlearea">
 <table cellspacing="0" cellpadding="0">
  <tbody>
- <tr style="height: 56px;">
-  <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Smart Garden - Sistema de Controle de Ambiente
-   &#160;<span id="projectnumber">v1.0</span>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Smart Garden - Sistema de Controle de Ambiente<span id="projectnumber">&#160;v1.0</span>
    </div>
    <div id="projectbrief">Sistema embarcado para monitoramento e controle de ambiente para cultivo</div>
   </td>
@@ -31,21 +30,22 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- Gerado por Doxygen 1.8.17 -->
+<!-- Gerado por Doxygen 1.9.8 -->
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
-var searchBox = new SearchBox("searchBox", "search",false,'Busca');
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
 /* @license-end */
 </script>
 <script type="text/javascript" src="menudata.js"></script>
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
   initMenu('',true,false,'search.php','Busca');
   $(document).ready(function() { init_search(); });
 });
-/* @license-end */</script>
+/* @license-end */
+</script>
 <div id="main-nav"></div>
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -56,9 +56,16 @@ $(function() {
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
-<iframe src="javascript:void(0)" frameborder="0" 
-        name="MSearchResults" id="MSearchResults">
-</iframe>
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Carregando...</div>
+<div class="SRStatus" id="Searching">Procurando...</div>
+<div class="SRStatus" id="NoMatches">Nenhuma entrada encontrado</div>
+</div>
+</div>
+</div>
 </div>
 
 <div id="nav-path" class="navpath">
@@ -68,9 +75,8 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#namespaces"><em>Namespaces</em></a>  </div>
-  <div class="headertitle">
-<div class="title">Referência do Arquivo logger.cpp</div>  </div>
+<a href="#namespaces">Namespaces</a>  </div>
+  <div class="headertitle"><div class="title">Referência do Arquivo logger.cpp</div></div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="logger_8hpp_source.html">logger.hpp</a>&quot;</code><br />
@@ -80,31 +86,37 @@ $(function() {
 </div><div class="textblock"><div class="dynheader">
 Gráfico de dependência de inclusões para logger.cpp:</div>
 <div class="dyncontent">
-<div class="center"><img src="logger_8cpp__incl.png" border="0" usemap="#src_2utils_2logger_8cpp" alt=""/></div>
-<map name="src_2utils_2logger_8cpp" id="src_2utils_2logger_8cpp">
-<area shape="rect" title=" " alt="" coords="294,5,438,32"/>
-<area shape="rect" href="logger_8hpp.html" title=" " alt="" coords="174,80,265,107"/>
-<area shape="rect" title=" " alt="" coords="289,80,355,107"/>
-<area shape="rect" title=" " alt="" coords="379,80,443,107"/>
-<area shape="rect" title=" " alt="" coords="467,80,558,107"/>
-<area shape="rect" title=" " alt="" coords="5,155,89,181"/>
-<area shape="rect" title=" " alt="" coords="114,155,189,181"/>
-<area shape="rect" title=" " alt="" coords="213,155,364,181"/>
-<area shape="rect" title=" " alt="" coords="388,155,525,181"/>
+<div class="center"><img src="logger_8cpp__incl.png" border="0" usemap="#asrc_2utils_2logger_8cpp" alt=""/></div>
+<map name="asrc_2utils_2logger_8cpp" id="asrc_2utils_2logger_8cpp">
+<area shape="rect" title=" " alt="" coords="294,5,438,31"/>
+<area shape="rect" href="logger_8hpp.html" title=" " alt="" coords="174,79,265,104"/>
+<area shape="poly" title=" " alt="" coords="344,33,257,75,254,70,341,28"/>
+<area shape="rect" title=" " alt="" coords="289,79,355,104"/>
+<area shape="poly" title=" " alt="" coords="361,32,339,68,334,66,356,30"/>
+<area shape="rect" title=" " alt="" coords="379,79,443,104"/>
+<area shape="poly" title=" " alt="" coords="376,30,399,66,394,69,371,32"/>
+<area shape="rect" title=" " alt="" coords="467,79,558,104"/>
+<area shape="poly" title=" " alt="" coords="391,28,478,70,475,75,388,33"/>
+<area shape="rect" title=" " alt="" coords="5,152,89,177"/>
+<area shape="poly" title=" " alt="" coords="193,106,89,149,87,144,191,102"/>
+<area shape="rect" title=" " alt="" coords="114,152,189,177"/>
+<area shape="poly" title=" " alt="" coords="210,106,174,144,170,140,206,102"/>
+<area shape="rect" title=" " alt="" coords="213,152,364,177"/>
+<area shape="poly" title=" " alt="" coords="233,102,270,140,266,144,229,106"/>
+<area shape="rect" title=" " alt="" coords="388,152,525,177"/>
+<area shape="poly" title=" " alt="" coords="258,101,406,145,404,151,257,107"/>
 </map>
 </div>
 </div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
-&lt;em&gt;Namespaces&lt;/em&gt;</h2></td></tr>
-<tr class="memitem:namespaceGrowController"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGrowController.html">GrowController</a></td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
+Namespaces</h2></td></tr>
+<tr class="memitem:namespaceGrowController" id="r_namespaceGrowController"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGrowController.html">GrowController</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Gerado por &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.17
+Gerado por&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

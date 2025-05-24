@@ -1,9 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<meta name="generator" content="Doxygen 1.8.17"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Smart Garden - Sistema de Controle de Ambiente: Referência do Arquivo src/main.cpp</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
@@ -19,10 +19,9 @@
 <div id="titlearea">
 <table cellspacing="0" cellpadding="0">
  <tbody>
- <tr style="height: 56px;">
-  <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Smart Garden - Sistema de Controle de Ambiente
-   &#160;<span id="projectnumber">v1.0</span>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Smart Garden - Sistema de Controle de Ambiente<span id="projectnumber">&#160;v1.0</span>
    </div>
    <div id="projectbrief">Sistema embarcado para monitoramento e controle de ambiente para cultivo</div>
   </td>
@@ -31,21 +30,22 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- Gerado por Doxygen 1.8.17 -->
+<!-- Gerado por Doxygen 1.9.8 -->
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
-var searchBox = new SearchBox("searchBox", "search",false,'Busca');
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
 /* @license-end */
 </script>
 <script type="text/javascript" src="menudata.js"></script>
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
   initMenu('',true,false,'search.php','Busca');
   $(document).ready(function() { init_search(); });
 });
-/* @license-end */</script>
+/* @license-end */
+</script>
 <div id="main-nav"></div>
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -56,9 +56,16 @@ $(function() {
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
-<iframe src="javascript:void(0)" frameborder="0" 
-        name="MSearchResults" id="MSearchResults">
-</iframe>
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Carregando...</div>
+<div class="SRStatus" id="Searching">Procurando...</div>
+<div class="SRStatus" id="NoMatches">Nenhuma entrada encontrado</div>
+</div>
+</div>
+</div>
 </div>
 
 <div id="nav-path" class="navpath">
@@ -72,8 +79,7 @@ $(function() {
 <a href="#define-members">Definições e Macros</a> &#124;
 <a href="#func-members">Funções</a> &#124;
 <a href="#var-members">Variáveis</a>  </div>
-  <div class="headertitle">
-<div class="title">Referência do Arquivo main.cpp</div>  </div>
+  <div class="headertitle"><div class="title">Referência do Arquivo main.cpp</div></div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="config_8hpp_source.html">config.hpp</a>&quot;</code><br />
@@ -98,130 +104,214 @@ $(function() {
 </div><div class="textblock"><div class="dynheader">
 Gráfico de dependência de inclusões para main.cpp:</div>
 <div class="dyncontent">
-<div class="center"><img src="main_8cpp__incl.png" border="0" usemap="#src_2main_8cpp" alt=""/></div>
-<map name="src_2main_8cpp" id="src_2main_8cpp">
-<area shape="rect" title=" " alt="" coords="2059,5,2165,32"/>
-<area shape="rect" href="config_8hpp.html" title=" " alt="" coords="486,379,575,405"/>
-<area shape="rect" href="wifi_8hpp.html" title=" " alt="" coords="1028,155,1159,181"/>
-<area shape="rect" href="mqttManager_8hpp.html" title=" " alt="" coords="380,155,575,181"/>
-<area shape="rect" href="targetDataManager_8hpp.html" title=" " alt="" coords="1722,229,1931,256"/>
-<area shape="rect" title=" " alt="" coords="1962,304,2073,331"/>
-<area shape="rect" href="sensorManager_8hpp.html" title=" " alt="" coords="759,229,961,256"/>
-<area shape="rect" href="timeService_8hpp.html" title=" " alt="" coords="811,304,971,331"/>
-<area shape="rect" href="actuatorManager_8hpp.html" title=" " alt="" coords="1283,155,1509,181"/>
-<area shape="rect" href="displayManager_8hpp.html" title=" " alt="" coords="1037,229,1206,256"/>
-<area shape="rect" href="webServerManager_8hpp.html" title=" " alt="" coords="1596,80,1828,107"/>
-<area shape="rect" href="dataHistoryManager_8hpp.html" title=" " alt="" coords="2005,155,2219,181"/>
-<area shape="rect" title=" " alt="" coords="2441,229,2524,256"/>
-<area shape="rect" href="logger_8hpp.html" title=" " alt="" coords="2295,229,2417,256"/>
-<area shape="rect" title=" " alt="" coords="2397,80,2459,107"/>
-<area shape="rect" title=" " alt="" coords="2484,80,2548,107"/>
-<area shape="rect" title=" " alt="" coords="2573,80,2675,107"/>
-<area shape="rect" title=" " alt="" coords="2700,80,2788,107"/>
-<area shape="rect" title=" " alt="" coords="2812,80,2911,107"/>
-<area shape="rect" title=" " alt="" coords="2935,80,3033,107"/>
-<area shape="rect" title=" " alt="" coords="593,453,655,480"/>
-<area shape="rect" title=" " alt="" coords="1205,453,1355,480"/>
-<area shape="rect" title=" " alt="" coords="1557,453,1694,480"/>
-<area shape="rect" title=" " alt="" coords="471,453,569,480"/>
-<area shape="rect" title=" " alt="" coords="1434,229,1545,256"/>
-<area shape="rect" title=" " alt="" coords="43,229,143,256"/>
-<area shape="rect" title=" " alt="" coords="219,229,339,256"/>
-<area shape="rect" title=" " alt="" coords="419,304,536,331"/>
-<area shape="rect" title=" " alt="" coords="1740,379,1804,405"/>
-<area shape="rect" title=" " alt="" coords="2189,304,2273,331"/>
-<area shape="rect" title=" " alt="" coords="995,304,1072,331"/>
-<area shape="rect" title=" " alt="" coords="1525,304,1587,331"/>
-<area shape="rect" title=" " alt="" coords="712,304,787,331"/>
-<area shape="rect" href="freeRTOSMutex_8hpp.html" title=" " alt="" coords="1318,304,1501,331"/>
-<area shape="rect" title=" " alt="" coords="1663,304,1734,331"/>
-<area shape="rect" title=" " alt="" coords="1096,304,1243,331"/>
-<area shape="rect" title=" " alt="" coords="1612,155,1777,181"/>
-<area shape="rect" href="historicDataPoint_8hpp.html" title=" " alt="" coords="2007,229,2169,256"/>
-<area shape="rect" title=" " alt="" coords="2097,304,2165,331"/>
-<area shape="rect" title=" " alt="" coords="2399,304,2473,331"/>
+<div class="center"><img src="main_8cpp__incl.png" border="0" usemap="#asrc_2main_8cpp" alt=""/></div>
+<map name="asrc_2main_8cpp" id="asrc_2main_8cpp">
+<area shape="rect" title=" " alt="" coords="2059,5,2165,31"/>
+<area shape="rect" href="config_8hpp.html" title=" " alt="" coords="486,372,575,397"/>
+<area shape="poly" title=" " alt="" coords="2059,23,1600,32,1265,42,910,56,569,75,280,100,167,114,81,129,26,147,12,155,8,164,8,239,12,256,22,271,38,285,60,298,118,321,188,339,265,354,342,364,473,377,472,382,341,370,264,359,187,344,116,326,58,303,35,289,18,274,7,258,3,240,3,163,8,152,24,142,80,124,166,108,280,94,569,70,909,51,1265,37,1600,27,2059,17"/>
+<area shape="rect" href="wifi_8hpp.html" title=" " alt="" coords="1028,152,1159,177"/>
+<area shape="poly" title=" " alt="" coords="2059,22,1881,25,1640,33,1401,51,1302,64,1229,81,1197,94,1167,111,1118,146,1115,141,1164,106,1195,89,1227,76,1301,59,1400,46,1640,28,1881,19,2059,17"/>
+<area shape="rect" href="mqttManager_8hpp.html" title=" " alt="" coords="380,152,575,177"/>
+<area shape="poly" title=" " alt="" coords="2059,23,1315,41,896,58,742,69,653,81,612,94,573,111,508,147,505,142,570,107,610,89,651,76,742,64,896,53,1315,35,2059,18"/>
+<area shape="rect" href="targetDataManager_8hpp.html" title=" " alt="" coords="1722,225,1931,251"/>
+<area shape="poly" title=" " alt="" coords="2099,33,1854,219,1851,215,2095,29"/>
+<area shape="rect" title=" " alt="" coords="1962,299,2073,324"/>
+<area shape="poly" title=" " alt="" coords="2134,28,2169,52,2206,87,2222,107,2233,130,2238,153,2235,178,2216,221,2183,253,2136,280,2087,298,2085,293,2134,275,2180,249,2212,218,2229,177,2232,154,2228,131,2217,110,2202,91,2165,57,2130,33"/>
+<area shape="rect" href="sensorManager_8hpp.html" title=" " alt="" coords="759,225,961,251"/>
+<area shape="poly" title=" " alt="" coords="2059,23,1872,27,1614,37,1357,54,1251,66,1171,81,1087,110,1008,148,940,187,889,219,886,215,937,182,1006,143,1085,105,1170,76,1250,61,1357,49,1614,31,1871,22,2059,17"/>
+<area shape="rect" href="timeService_8hpp.html" title=" " alt="" coords="811,299,971,324"/>
+<area shape="poly" title=" " alt="" coords="2059,23,1857,27,1578,37,1297,54,1181,66,1094,81,984,101,894,117,855,130,818,151,783,182,749,227,744,238,744,248,749,258,758,266,785,281,818,293,817,298,783,286,755,270,745,261,739,250,739,237,744,224,779,179,815,147,853,125,893,111,983,95,1093,76,1180,61,1297,49,1578,31,1857,22,2059,17"/>
+<area shape="rect" href="actuatorManager_8hpp.html" title=" " alt="" coords="1283,152,1509,177"/>
+<area shape="poly" title=" " alt="" coords="2059,23,1968,26,1849,35,1717,53,1585,81,1499,113,1429,148,1427,143,1497,108,1583,76,1716,48,1849,30,1968,21,2059,17"/>
+<area shape="rect" href="displayManager_8hpp.html" title=" " alt="" coords="1037,225,1206,251"/>
+<area shape="poly" title=" " alt="" coords="2059,21,1918,26,1824,32,1719,43,1608,60,1494,83,1381,114,1273,154,1207,187,1152,220,1149,216,1204,183,1271,150,1379,109,1493,78,1607,55,1718,38,1823,27,1917,20,2059,16"/>
+<area shape="rect" href="webServerManager_8hpp.html" title=" " alt="" coords="1596,79,1828,104"/>
+<area shape="poly" title=" " alt="" coords="2060,31,1790,79,1789,74,2059,26"/>
+<area shape="rect" href="dataHistoryManager_8hpp.html" title=" " alt="" coords="2005,152,2219,177"/>
+<area shape="poly" title=" " alt="" coords="2115,31,2115,138,2109,138,2109,31"/>
+<area shape="rect" title=" " alt="" coords="2441,225,2524,251"/>
+<area shape="poly" title=" " alt="" coords="2166,27,2234,45,2271,59,2307,76,2355,109,2400,146,2466,213,2462,217,2397,150,2352,113,2304,81,2269,64,2233,50,2164,32"/>
+<area shape="rect" href="logger_8hpp.html" title=" " alt="" coords="2295,225,2417,251"/>
+<area shape="poly" title=" " alt="" coords="2166,25,2223,44,2252,58,2278,77,2306,108,2327,145,2352,211,2347,213,2322,147,2301,112,2274,81,2249,63,2221,48,2164,31"/>
+<area shape="rect" title=" " alt="" coords="2397,79,2459,104"/>
+<area shape="poly" title=" " alt="" coords="2163,28,2384,77,2383,83,2162,33"/>
+<area shape="rect" title=" " alt="" coords="2484,79,2548,104"/>
+<area shape="poly" title=" " alt="" coords="2165,24,2300,44,2471,76,2470,81,2299,50,2164,29"/>
+<area shape="rect" title=" " alt="" coords="2573,79,2675,104"/>
+<area shape="poly" title=" " alt="" coords="2165,23,2336,44,2560,76,2559,81,2336,50,2165,28"/>
+<area shape="rect" title=" " alt="" coords="2700,79,2788,104"/>
+<area shape="poly" title=" " alt="" coords="2165,20,2388,40,2534,56,2686,76,2685,81,2534,61,2388,45,2165,26"/>
+<area shape="rect" title=" " alt="" coords="2812,79,2911,104"/>
+<area shape="poly" title=" " alt="" coords="2165,19,2433,38,2613,54,2799,76,2798,81,2612,60,2432,43,2165,25"/>
+<area shape="rect" title=" " alt="" coords="2935,79,3033,104"/>
+<area shape="poly" title=" " alt="" coords="2165,19,2481,35,2697,52,2921,76,2921,81,2697,57,2481,41,2165,24"/>
+<area shape="rect" title=" " alt="" coords="593,445,655,471"/>
+<area shape="poly" title=" " alt="" coords="547,395,600,435,596,439,544,399"/>
+<area shape="rect" title=" " alt="" coords="1205,445,1355,471"/>
+<area shape="poly" title=" " alt="" coords="576,388,1191,446,1190,451,576,393"/>
+<area shape="rect" title=" " alt="" coords="1557,445,1694,471"/>
+<area shape="poly" title=" " alt="" coords="576,386,1543,449,1543,454,575,392"/>
+<area shape="rect" title=" " alt="" coords="471,445,569,471"/>
+<area shape="poly" title=" " alt="" coords="532,398,526,432,521,431,526,397"/>
+<area shape="poly" title=" " alt="" coords="1028,169,864,175,763,182,660,194,561,210,474,233,437,247,406,263,382,281,365,300,359,315,362,328,371,339,386,349,427,364,473,374,472,379,426,369,383,354,367,343,357,330,354,315,360,297,378,277,403,258,435,242,472,228,559,205,659,188,763,177,864,169,1028,164"/>
+<area shape="rect" title=" " alt="" coords="1434,225,1545,251"/>
+<area shape="poly" title=" " alt="" coords="1157,175,1421,222,1420,227,1156,180"/>
+<area shape="poly" title=" " alt="" coords="380,177,276,196,234,210,209,227,205,238,209,249,231,282,260,308,293,329,329,346,405,368,472,378,471,383,404,373,327,351,290,334,256,312,227,285,204,252,199,238,205,224,232,205,275,190,379,172"/>
+<area shape="poly" title=" " alt="" coords="462,180,436,199,405,227,376,261,355,300,351,325,360,345,378,362,401,375,450,390,474,395,535,409,616,421,813,438,1021,448,1191,453,1190,458,1020,453,813,443,615,426,534,414,473,400,448,395,399,379,375,366,355,348,346,326,349,298,372,258,402,223,432,195,459,175"/>
+<area shape="poly" title=" " alt="" coords="575,166,732,172,918,183,1093,199,1165,210,1220,223,1242,235,1264,248,1296,255,1338,258,1438,261,1535,270,1574,280,1602,297,1623,328,1632,365,1634,401,1632,432,1627,431,1629,401,1627,365,1618,330,1598,301,1572,285,1534,275,1438,267,1338,264,1295,260,1262,253,1239,240,1218,228,1164,215,1092,204,917,188,732,177,575,171"/>
+<area shape="rect" title=" " alt="" coords="43,225,143,251"/>
+<area shape="poly" title=" " alt="" coords="416,180,158,228,157,222,415,175"/>
+<area shape="rect" title=" " alt="" coords="219,225,339,251"/>
+<area shape="poly" title=" " alt="" coords="446,180,325,223,323,218,445,175"/>
+<area shape="poly" title=" " alt="" coords="575,168,1709,228,1708,233,575,174"/>
+<area shape="poly" title=" " alt="" coords="575,168,882,188,1072,203,1263,223,1343,235,1423,248,1715,281,1949,302,1948,307,1715,286,1422,253,1342,240,1262,228,1072,208,882,193,575,173"/>
+<area shape="rect" title=" " alt="" coords="419,299,536,324"/>
+<area shape="poly" title=" " alt="" coords="480,178,480,285,475,285,475,178"/>
+<area shape="poly" title=" " alt="" coords="1833,250,1840,280,1843,320,1838,362,1830,382,1818,399,1795,411,1754,421,1636,437,1496,448,1369,456,1369,450,1496,443,1635,432,1753,416,1793,406,1814,395,1826,379,1833,361,1838,320,1834,281,1828,251"/>
+<area shape="poly" title=" " alt="" coords="1849,249,1874,269,1894,297,1906,325,1912,350,1909,374,1894,399,1882,410,1864,419,1818,434,1708,452,1708,447,1817,428,1862,414,1879,405,1890,396,1904,372,1906,350,1901,327,1890,300,1870,273,1845,253"/>
+<area shape="poly" title=" " alt="" coords="1858,248,1974,291,1972,296,1856,253"/>
+<area shape="rect" title=" " alt="" coords="1740,372,1804,397"/>
+<area shape="poly" title=" " alt="" coords="1825,252,1784,360,1779,358,1820,250"/>
+<area shape="rect" title=" " alt="" coords="2189,299,2273,324"/>
+<area shape="poly" title=" " alt="" coords="1899,248,2175,296,2175,301,1899,253"/>
+<area shape="poly" title=" " alt="" coords="759,251,682,269,643,283,607,301,572,330,547,362,543,359,569,326,604,296,641,278,680,264,758,246"/>
+<area shape="poly" title=" " alt="" coords="759,250,704,268,679,282,658,300,639,331,628,366,624,402,624,432,619,432,619,401,623,365,634,329,654,297,676,278,702,263,757,245"/>
+<area shape="poly" title=" " alt="" coords="791,253,750,264,714,280,703,289,696,299,695,310,702,322,734,348,782,371,844,391,913,407,1061,432,1191,447,1191,452,1060,437,912,413,842,396,781,376,731,353,698,326,690,311,691,297,699,285,712,275,748,259,790,248"/>
+<area shape="poly" title=" " alt="" coords="799,253,550,299,549,294,798,248"/>
+<area shape="rect" title=" " alt="" coords="995,299,1072,324"/>
+<area shape="poly" title=" " alt="" coords="889,248,993,291,991,296,887,253"/>
+<area shape="rect" title=" " alt="" coords="1525,299,1587,324"/>
+<area shape="poly" title=" " alt="" coords="962,244,1247,267,1395,281,1511,296,1511,301,1394,286,1247,272,961,249"/>
+<area shape="rect" title=" " alt="" coords="712,299,787,324"/>
+<area shape="poly" title=" " alt="" coords="844,253,781,293,778,289,841,248"/>
+<area shape="rect" href="freeRTOSMutex_8hpp.html" title=" " alt="" coords="1318,299,1501,324"/>
+<area shape="poly" title=" " alt="" coords="949,248,1308,294,1307,300,948,253"/>
+<area shape="poly" title=" " alt="" coords="868,250,883,285,878,287,863,252"/>
+<area shape="poly" title=" " alt="" coords="1401,326,1301,437,1298,433,1397,323"/>
+<area shape="poly" title=" " alt="" coords="1428,322,1598,435,1595,440,1425,326"/>
+<area shape="poly" title=" " alt="" coords="833,327,590,374,589,369,832,321"/>
+<area shape="poly" title=" " alt="" coords="971,320,983,321,1415,357,1727,378,1727,383,1415,363,982,327,971,325"/>
+<area shape="poly" title=" " alt="" coords="1283,175,941,196,769,211,644,228,518,252,451,272,426,285,409,300,404,311,404,320,417,338,442,353,474,366,472,371,440,358,413,342,399,322,398,310,405,297,423,281,449,267,517,247,644,223,769,206,941,191,1283,169"/>
+<area shape="poly" title=" " alt="" coords="1388,179,1349,229,1327,263,1309,300,1298,334,1291,370,1284,432,1278,431,1285,369,1293,333,1304,298,1322,261,1344,226,1384,176"/>
+<area shape="poly" title=" " alt="" coords="1466,175,1744,220,1743,226,1465,180"/>
+<area shape="poly" title=" " alt="" coords="1487,175,1552,190,1622,213,1690,248,1721,271,1749,297,1766,327,1773,358,1768,359,1761,328,1745,300,1718,275,1687,253,1620,218,1550,195,1486,180"/>
+<area shape="poly" title=" " alt="" coords="1283,176,993,199,850,213,747,228,622,261,520,296,518,291,621,256,746,223,850,208,992,193,1283,171"/>
+<area shape="poly" title=" " alt="" coords="1310,180,960,226,959,221,1310,175"/>
+<area shape="poly" title=" " alt="" coords="1400,178,1410,285,1404,285,1394,178"/>
+<area shape="poly" title=" " alt="" coords="1283,175,1157,192,1090,207,1025,228,976,255,920,293,917,288,974,250,1023,223,1088,202,1156,187,1283,169"/>
+<area shape="poly" title=" " alt="" coords="1109,253,1060,292,1057,288,1106,249"/>
+<area shape="poly" title=" " alt="" coords="1168,248,1350,293,1349,298,1167,253"/>
+<area shape="poly" title=" " alt="" coords="1085,253,942,297,940,292,1083,248"/>
+<area shape="rect" title=" " alt="" coords="1663,299,1734,324"/>
+<area shape="poly" title=" " alt="" coords="1207,247,1650,301,1649,307,1206,252"/>
+<area shape="rect" title=" " alt="" coords="1096,299,1243,324"/>
+<area shape="poly" title=" " alt="" coords="1131,250,1156,286,1152,289,1127,253"/>
+<area shape="poly" title=" " alt="" coords="1734,102,1763,122,1791,150,1810,181,1822,212,1817,214,1805,184,1787,154,1759,126,1731,106"/>
+<area shape="poly" title=" " alt="" coords="1739,102,1834,149,1891,184,1946,223,1978,255,2003,286,1999,289,1974,258,1942,227,1888,188,1831,154,1737,106"/>
+<area shape="poly" title=" " alt="" coords="1603,107,1446,126,1273,155,1171,180,940,225,939,220,1170,175,1271,149,1445,121,1602,101"/>
+<area shape="poly" title=" " alt="" coords="1662,107,1461,152,1460,146,1661,101"/>
+<area shape="rect" title=" " alt="" coords="1612,152,1777,177"/>
+<area shape="poly" title=" " alt="" coords="1712,105,1703,140,1698,138,1707,104"/>
+<area shape="poly" title=" " alt="" coords="1777,101,2034,147,2033,152,1776,107"/>
+<area shape="rect" href="historicDataPoint_8hpp.html" title=" " alt="" coords="2007,225,2169,251"/>
+<area shape="poly" title=" " alt="" coords="1771,101,1850,121,1936,150,2004,183,2061,216,2058,220,2002,187,1934,154,1848,126,1769,107"/>
+<area shape="poly" title=" " alt="" coords="2004,179,1800,200,1564,228,1558,229,1558,223,1564,223,1800,195,2004,174"/>
+<area shape="poly" title=" " alt="" coords="2130,175,2156,196,2183,224,2205,255,2222,285,2217,287,2201,258,2179,227,2153,200,2127,179"/>
+<area shape="poly" title=" " alt="" coords="2005,174,1863,191,1786,207,1712,228,1642,259,1585,293,1582,289,1639,254,1710,223,1785,202,1862,186,2004,169"/>
+<area shape="poly" title=" " alt="" coords="2005,176,1836,194,1741,209,1647,228,1539,261,1449,296,1447,291,1537,256,1646,223,1740,203,1835,189,2004,170"/>
+<area shape="poly" title=" " alt="" coords="2111,179,2099,213,2094,211,2106,177"/>
+<area shape="poly" title=" " alt="" coords="2176,175,2428,222,2427,228,2175,180"/>
+<area shape="poly" title=" " alt="" coords="2152,175,2304,219,2303,224,2150,180"/>
+<area shape="poly" title=" " alt="" coords="2026,253,1748,304,1747,299,2025,248"/>
+<area shape="rect" title=" " alt="" coords="2097,299,2165,324"/>
+<area shape="poly" title=" " alt="" coords="2097,250,2119,286,2115,288,2093,252"/>
+<area shape="poly" title=" " alt="" coords="2352,252,2327,289,2309,310,2287,326,2253,342,2211,357,2108,383,1985,404,1850,421,1582,445,1370,456,1369,451,1582,439,1850,416,1984,399,2106,378,2209,352,2251,338,2284,322,2305,306,2323,286,2348,249"/>
+<area shape="poly" title=" " alt="" coords="2361,251,2364,281,2364,321,2355,363,2345,383,2331,399,2298,414,2239,426,2068,443,1873,453,1708,458,1708,453,1873,448,2068,438,2238,421,2296,409,2328,395,2341,380,2350,361,2359,321,2359,281,2356,251"/>
+<area shape="poly" title=" " alt="" coords="2337,253,2264,294,2262,289,2335,248"/>
+<area shape="rect" title=" " alt="" coords="2399,299,2473,324"/>
+<area shape="poly" title=" " alt="" coords="2371,249,2415,288,2411,292,2367,253"/>
 </map>
 </div>
 </div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Componentes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classCharacteristicCallbacks.html">CharacteristicCallbacks</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Definições e Macros</h2></td></tr>
-<tr class="memitem:a445125ee8c34695376c85f10b38844d6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a445125ee8c34695376c85f10b38844d6">SERVICE_UUID</a>&#160;&#160;&#160;&quot;12345678-1234-1234-1234-123456789abc&quot;</td></tr>
+<tr class="memitem:a445125ee8c34695376c85f10b38844d6" id="r_a445125ee8c34695376c85f10b38844d6"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a445125ee8c34695376c85f10b38844d6">SERVICE_UUID</a>&#160;&#160;&#160;&quot;12345678-1234-1234-1234-123456789abc&quot;</td></tr>
 <tr class="separator:a445125ee8c34695376c85f10b38844d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a94aefdd5f54049079364e832dc15b336"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a94aefdd5f54049079364e832dc15b336">CHARACTERISTIC_UUID</a>&#160;&#160;&#160;&quot;abcd1234-5678-1234-5678-123456789abc&quot;</td></tr>
+<tr class="memitem:a94aefdd5f54049079364e832dc15b336" id="r_a94aefdd5f54049079364e832dc15b336"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a94aefdd5f54049079364e832dc15b336">CHARACTERISTIC_UUID</a>&#160;&#160;&#160;&quot;abcd1234-5678-1234-5678-123456789abc&quot;</td></tr>
 <tr class="separator:a94aefdd5f54049079364e832dc15b336"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Funções</h2></td></tr>
-<tr class="memitem:ab1c8cf8a043a91e16ad57c858efc3bdc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGrowController_1_1MqttManager.html">GrowController::MqttManager</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#ab1c8cf8a043a91e16ad57c858efc3bdc">mqttMgr</a> (appConfig.mqtt, <a class="el" href="main_8cpp.html#a37cea87c0cdcea6e88e1042480d38fca">targetManager</a>)</td></tr>
+<tr class="memitem:ab1c8cf8a043a91e16ad57c858efc3bdc" id="r_ab1c8cf8a043a91e16ad57c858efc3bdc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGrowController_1_1MqttManager.html">GrowController::MqttManager</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#ab1c8cf8a043a91e16ad57c858efc3bdc">mqttMgr</a> (appConfig.mqtt, <a class="el" href="main_8cpp.html#a37cea87c0cdcea6e88e1042480d38fca">targetManager</a>)</td></tr>
 <tr class="separator:ab1c8cf8a043a91e16ad57c858efc3bdc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa0842d72fac8fae67e8c146789ca6a52"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGrowController_1_1SensorManager.html">GrowController::SensorManager</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#aa0842d72fac8fae67e8c146789ca6a52">sensorMgr</a> (appConfig.sensor, <a class="el" href="main_8cpp.html#ab7d6d4c245477f932421f8244e69f208">timeService</a>, &amp;<a class="el" href="main_8cpp.html#a98eda483434b49876bd92863225ef84e">dataHistoryMgr</a>, &amp;<a class="el" href="main_8cpp.html#ad24f69a894bc0b331de070f0219b2abc">displayMgr</a>, &amp;<a class="el" href="main_8cpp.html#ab1c8cf8a043a91e16ad57c858efc3bdc">mqttMgr</a>)</td></tr>
+<tr class="memitem:aa0842d72fac8fae67e8c146789ca6a52" id="r_aa0842d72fac8fae67e8c146789ca6a52"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGrowController_1_1SensorManager.html">GrowController::SensorManager</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#aa0842d72fac8fae67e8c146789ca6a52">sensorMgr</a> (appConfig.sensor, <a class="el" href="main_8cpp.html#ab7d6d4c245477f932421f8244e69f208">timeService</a>, &amp;<a class="el" href="main_8cpp.html#a98eda483434b49876bd92863225ef84e">dataHistoryMgr</a>, &amp;<a class="el" href="main_8cpp.html#ad24f69a894bc0b331de070f0219b2abc">displayMgr</a>, &amp;<a class="el" href="main_8cpp.html#ab1c8cf8a043a91e16ad57c858efc3bdc">mqttMgr</a>)</td></tr>
 <tr class="separator:aa0842d72fac8fae67e8c146789ca6a52"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0727fe3b048e428a2fbcb2a88a8a635a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGrowController_1_1ActuatorManager.html">GrowController::ActuatorManager</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a0727fe3b048e428a2fbcb2a88a8a635a">actuatorMgr</a> (appConfig.gpioControl, <a class="el" href="main_8cpp.html#a37cea87c0cdcea6e88e1042480d38fca">targetManager</a>, <a class="el" href="main_8cpp.html#aa0842d72fac8fae67e8c146789ca6a52">sensorMgr</a>, <a class="el" href="main_8cpp.html#ab7d6d4c245477f932421f8244e69f208">timeService</a>)</td></tr>
+<tr class="memitem:a0727fe3b048e428a2fbcb2a88a8a635a" id="r_a0727fe3b048e428a2fbcb2a88a8a635a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGrowController_1_1ActuatorManager.html">GrowController::ActuatorManager</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a0727fe3b048e428a2fbcb2a88a8a635a">actuatorMgr</a> (appConfig.gpioControl, <a class="el" href="main_8cpp.html#a37cea87c0cdcea6e88e1042480d38fca">targetManager</a>, <a class="el" href="main_8cpp.html#aa0842d72fac8fae67e8c146789ca6a52">sensorMgr</a>, <a class="el" href="main_8cpp.html#ab7d6d4c245477f932421f8244e69f208">timeService</a>)</td></tr>
 <tr class="separator:a0727fe3b048e428a2fbcb2a88a8a635a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aea688647c52934655dc26d0d805c5e3f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGrowController_1_1WebServerManager.html">GrowController::WebServerManager</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#aea688647c52934655dc26d0d805c5e3f">webServerManager</a> (<a class="el" href="config_8hpp.html#a0906dae4a42c1fef9ec0cd0a5212ed4a">HTTP_PORT</a>, &amp;<a class="el" href="main_8cpp.html#aa0842d72fac8fae67e8c146789ca6a52">sensorMgr</a>, &amp;<a class="el" href="main_8cpp.html#a37cea87c0cdcea6e88e1042480d38fca">targetManager</a>, &amp;<a class="el" href="main_8cpp.html#a0727fe3b048e428a2fbcb2a88a8a635a">actuatorMgr</a>, &amp;<a class="el" href="main_8cpp.html#a98eda483434b49876bd92863225ef84e">dataHistoryMgr</a>)</td></tr>
+<tr class="memitem:aea688647c52934655dc26d0d805c5e3f" id="r_aea688647c52934655dc26d0d805c5e3f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGrowController_1_1WebServerManager.html">GrowController::WebServerManager</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#aea688647c52934655dc26d0d805c5e3f">webServerManager</a> (<a class="el" href="config_8hpp.html#a0906dae4a42c1fef9ec0cd0a5212ed4a">HTTP_PORT</a>, &amp;<a class="el" href="main_8cpp.html#aa0842d72fac8fae67e8c146789ca6a52">sensorMgr</a>, &amp;<a class="el" href="main_8cpp.html#a37cea87c0cdcea6e88e1042480d38fca">targetManager</a>, &amp;<a class="el" href="main_8cpp.html#a0727fe3b048e428a2fbcb2a88a8a635a">actuatorMgr</a>, &amp;<a class="el" href="main_8cpp.html#a98eda483434b49876bd92863225ef84e">dataHistoryMgr</a>)</td></tr>
 <tr class="separator:aea688647c52934655dc26d0d805c5e3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaa4fb9434ca07cbc5da12697498c264d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#aaa4fb9434ca07cbc5da12697498c264d">activatePairingMode</a> ()</td></tr>
+<tr class="memitem:aaa4fb9434ca07cbc5da12697498c264d" id="r_aaa4fb9434ca07cbc5da12697498c264d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#aaa4fb9434ca07cbc5da12697498c264d">activatePairingMode</a> ()</td></tr>
 <tr class="separator:aaa4fb9434ca07cbc5da12697498c264d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4fc01d736fe50cf5b977f755b675f11d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a4fc01d736fe50cf5b977f755b675f11d">setup</a> ()</td></tr>
+<tr class="memitem:a4fc01d736fe50cf5b977f755b675f11d" id="r_a4fc01d736fe50cf5b977f755b675f11d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a4fc01d736fe50cf5b977f755b675f11d">setup</a> ()</td></tr>
 <tr class="separator:a4fc01d736fe50cf5b977f755b675f11d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afe461d27b9c48d5921c00d521181f12f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#afe461d27b9c48d5921c00d521181f12f">loop</a> ()</td></tr>
+<tr class="memitem:afe461d27b9c48d5921c00d521181f12f" id="r_afe461d27b9c48d5921c00d521181f12f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#afe461d27b9c48d5921c00d521181f12f">loop</a> ()</td></tr>
 <tr class="separator:afe461d27b9c48d5921c00d521181f12f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variáveis</h2></td></tr>
-<tr class="memitem:a895ef072aaa3dd70f3b3a5ccfca0f91b"><td class="memItemLeft" align="right" valign="top">volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a895ef072aaa3dd70f3b3a5ccfca0f91b">g_bleCredentialsReceived</a> = false</td></tr>
+<tr class="memitem:a895ef072aaa3dd70f3b3a5ccfca0f91b" id="r_a895ef072aaa3dd70f3b3a5ccfca0f91b"><td class="memItemLeft" align="right" valign="top">volatile bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a895ef072aaa3dd70f3b3a5ccfca0f91b">g_bleCredentialsReceived</a> = false</td></tr>
 <tr class="separator:a895ef072aaa3dd70f3b3a5ccfca0f91b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7f4d0ac17aed124f0158d92b6a8478ae"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a7f4d0ac17aed124f0158d92b6a8478ae">g_receivedSsid</a> [32]</td></tr>
+<tr class="memitem:a7f4d0ac17aed124f0158d92b6a8478ae" id="r_a7f4d0ac17aed124f0158d92b6a8478ae"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a7f4d0ac17aed124f0158d92b6a8478ae">g_receivedSsid</a> [32]</td></tr>
 <tr class="separator:a7f4d0ac17aed124f0158d92b6a8478ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a95d308dd4b563c790badaf5e0b48f9d3"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a95d308dd4b563c790badaf5e0b48f9d3">g_receivedPassword</a> [64]</td></tr>
+<tr class="memitem:a95d308dd4b563c790badaf5e0b48f9d3" id="r_a95d308dd4b563c790badaf5e0b48f9d3"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a95d308dd4b563c790badaf5e0b48f9d3">g_receivedPassword</a> [64]</td></tr>
 <tr class="separator:a95d308dd4b563c790badaf5e0b48f9d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a469af310bb72a10118a9fd721676f560"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structAppConfig.html">AppConfig</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a469af310bb72a10118a9fd721676f560">appConfig</a></td></tr>
+<tr class="memitem:a469af310bb72a10118a9fd721676f560" id="r_a469af310bb72a10118a9fd721676f560"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structAppConfig.html">AppConfig</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a469af310bb72a10118a9fd721676f560">appConfig</a></td></tr>
 <tr class="separator:a469af310bb72a10118a9fd721676f560"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a37cea87c0cdcea6e88e1042480d38fca"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGrowController_1_1TargetDataManager.html">GrowController::TargetDataManager</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a37cea87c0cdcea6e88e1042480d38fca">targetManager</a></td></tr>
+<tr class="memitem:a37cea87c0cdcea6e88e1042480d38fca" id="r_a37cea87c0cdcea6e88e1042480d38fca"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGrowController_1_1TargetDataManager.html">GrowController::TargetDataManager</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a37cea87c0cdcea6e88e1042480d38fca">targetManager</a></td></tr>
 <tr class="separator:a37cea87c0cdcea6e88e1042480d38fca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab7d6d4c245477f932421f8244e69f208"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGrowController_1_1TimeService.html">GrowController::TimeService</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#ab7d6d4c245477f932421f8244e69f208">timeService</a></td></tr>
+<tr class="memitem:ab7d6d4c245477f932421f8244e69f208" id="r_ab7d6d4c245477f932421f8244e69f208"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGrowController_1_1TimeService.html">GrowController::TimeService</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#ab7d6d4c245477f932421f8244e69f208">timeService</a></td></tr>
 <tr class="separator:ab7d6d4c245477f932421f8244e69f208"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a98eda483434b49876bd92863225ef84e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGrowController_1_1DataHistoryManager.html">GrowController::DataHistoryManager</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a98eda483434b49876bd92863225ef84e">dataHistoryMgr</a></td></tr>
+<tr class="memitem:a98eda483434b49876bd92863225ef84e" id="r_a98eda483434b49876bd92863225ef84e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGrowController_1_1DataHistoryManager.html">GrowController::DataHistoryManager</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a98eda483434b49876bd92863225ef84e">dataHistoryMgr</a></td></tr>
 <tr class="separator:a98eda483434b49876bd92863225ef84e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad24f69a894bc0b331de070f0219b2abc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGrowController_1_1DisplayManager.html">GrowController::DisplayManager</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#ad24f69a894bc0b331de070f0219b2abc">displayMgr</a> (<a class="el" href="board__xiao__c3_8hpp.html#af679cf68e64fdb5d310a0d9944142c76">LCD_I2C_ADDR</a>, <a class="el" href="board__xiao__c3_8hpp.html#a0afb537ac0813a7acc2f797a4d3baa0b">LCD_COLS</a>, <a class="el" href="board__xiao__c3_8hpp.html#a9a59fc4d524d3519a6bd0cb451850a65">LCD_ROWS</a>, <a class="el" href="main_8cpp.html#ab7d6d4c245477f932421f8244e69f208">timeService</a>)</td></tr>
+<tr class="memitem:ad24f69a894bc0b331de070f0219b2abc" id="r_ad24f69a894bc0b331de070f0219b2abc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGrowController_1_1DisplayManager.html">GrowController::DisplayManager</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#ad24f69a894bc0b331de070f0219b2abc">displayMgr</a> (<a class="el" href="board__esp32__dev_8hpp.html#af679cf68e64fdb5d310a0d9944142c76">LCD_I2C_ADDR</a>, <a class="el" href="board__esp32__dev_8hpp.html#a0afb537ac0813a7acc2f797a4d3baa0b">LCD_COLS</a>, <a class="el" href="board__esp32__dev_8hpp.html#a9a59fc4d524d3519a6bd0cb451850a65">LCD_ROWS</a>, <a class="el" href="main_8cpp.html#ab7d6d4c245477f932421f8244e69f208">timeService</a>)</td></tr>
 <tr class="separator:ad24f69a894bc0b331de070f0219b2abc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac871c365764e0411a3c3806439b2b19d"><td class="memItemLeft" align="right" valign="top">BLEServer *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#ac871c365764e0411a3c3806439b2b19d">pServer</a> = nullptr</td></tr>
+<tr class="memitem:ac871c365764e0411a3c3806439b2b19d" id="r_ac871c365764e0411a3c3806439b2b19d"><td class="memItemLeft" align="right" valign="top">BLEServer *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#ac871c365764e0411a3c3806439b2b19d">pServer</a> = nullptr</td></tr>
 <tr class="separator:ac871c365764e0411a3c3806439b2b19d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a83949d215e88efee5fc4f312ea2692e7"><td class="memItemLeft" align="right" valign="top">BLECharacteristic *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a83949d215e88efee5fc4f312ea2692e7">pCharacteristic</a> = nullptr</td></tr>
+<tr class="memitem:a83949d215e88efee5fc4f312ea2692e7" id="r_a83949d215e88efee5fc4f312ea2692e7"><td class="memItemLeft" align="right" valign="top">BLECharacteristic *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a83949d215e88efee5fc4f312ea2692e7">pCharacteristic</a> = nullptr</td></tr>
 <tr class="separator:a83949d215e88efee5fc4f312ea2692e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ada514f1620c2957453865607d778d2c9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#ada514f1620c2957453865607d778d2c9">bleAdvertising</a> = false</td></tr>
+<tr class="memitem:ada514f1620c2957453865607d778d2c9" id="r_ada514f1620c2957453865607d778d2c9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#ada514f1620c2957453865607d778d2c9">bleAdvertising</a> = false</td></tr>
 <tr class="separator:ada514f1620c2957453865607d778d2c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abd844c94d106beaf78109862902528e5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#abd844c94d106beaf78109862902528e5">displayOk</a> = false</td></tr>
+<tr class="memitem:abd844c94d106beaf78109862902528e5" id="r_abd844c94d106beaf78109862902528e5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#abd844c94d106beaf78109862902528e5">displayOk</a> = false</td></tr>
 <tr class="separator:abd844c94d106beaf78109862902528e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3b630fbd37ff6a0f950de3b549e39609"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a3b630fbd37ff6a0f950de3b549e39609">sensorsOk</a> = false</td></tr>
+<tr class="memitem:a3b630fbd37ff6a0f950de3b549e39609" id="r_a3b630fbd37ff6a0f950de3b549e39609"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a3b630fbd37ff6a0f950de3b549e39609">sensorsOk</a> = false</td></tr>
 <tr class="separator:a3b630fbd37ff6a0f950de3b549e39609"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0f53f786695ed831edfbcff8ebe1606d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a0f53f786695ed831edfbcff8ebe1606d">actuatorsOk</a> = false</td></tr>
+<tr class="memitem:a0f53f786695ed831edfbcff8ebe1606d" id="r_a0f53f786695ed831edfbcff8ebe1606d"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a0f53f786695ed831edfbcff8ebe1606d">actuatorsOk</a> = false</td></tr>
 <tr class="separator:a0f53f786695ed831edfbcff8ebe1606d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af80c34747656b263fece5b92e5786fab"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#af80c34747656b263fece5b92e5786fab">wifiOk</a> = false</td></tr>
+<tr class="memitem:af80c34747656b263fece5b92e5786fab" id="r_af80c34747656b263fece5b92e5786fab"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#af80c34747656b263fece5b92e5786fab">wifiOk</a> = false</td></tr>
 <tr class="separator:af80c34747656b263fece5b92e5786fab"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acce88861973ab7865ae0c05d30cfe815"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#acce88861973ab7865ae0c05d30cfe815">timeOk</a> = false</td></tr>
+<tr class="memitem:acce88861973ab7865ae0c05d30cfe815" id="r_acce88861973ab7865ae0c05d30cfe815"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#acce88861973ab7865ae0c05d30cfe815">timeOk</a> = false</td></tr>
 <tr class="separator:acce88861973ab7865ae0c05d30cfe815"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af3130f9b664940960d3138cd4ed7fcc4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#af3130f9b664940960d3138cd4ed7fcc4">mqttSetupOk</a> = false</td></tr>
+<tr class="memitem:af3130f9b664940960d3138cd4ed7fcc4" id="r_af3130f9b664940960d3138cd4ed7fcc4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#af3130f9b664940960d3138cd4ed7fcc4">mqttSetupOk</a> = false</td></tr>
 <tr class="separator:af3130f9b664940960d3138cd4ed7fcc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aef52feaaa2ad0ac2a5a50240b12d3bbe"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#aef52feaaa2ad0ac2a5a50240b12d3bbe">mqttTaskOk</a> = false</td></tr>
+<tr class="memitem:aef52feaaa2ad0ac2a5a50240b12d3bbe" id="r_aef52feaaa2ad0ac2a5a50240b12d3bbe"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#aef52feaaa2ad0ac2a5a50240b12d3bbe">mqttTaskOk</a> = false</td></tr>
 <tr class="separator:aef52feaaa2ad0ac2a5a50240b12d3bbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5cec6e1afe54a898c13da9e950a3dd41"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a5cec6e1afe54a898c13da9e950a3dd41">sensorTaskOk</a> = false</td></tr>
+<tr class="memitem:a5cec6e1afe54a898c13da9e950a3dd41" id="r_a5cec6e1afe54a898c13da9e950a3dd41"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a5cec6e1afe54a898c13da9e950a3dd41">sensorTaskOk</a> = false</td></tr>
 <tr class="separator:a5cec6e1afe54a898c13da9e950a3dd41"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab1e4f023ae987b4d06d559afcea01747"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#ab1e4f023ae987b4d06d559afcea01747">actuatorTasksOk</a> = false</td></tr>
+<tr class="memitem:ab1e4f023ae987b4d06d559afcea01747" id="r_ab1e4f023ae987b4d06d559afcea01747"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#ab1e4f023ae987b4d06d559afcea01747">actuatorTasksOk</a> = false</td></tr>
 <tr class="separator:ab1e4f023ae987b4d06d559afcea01747"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab9e9561bf6d2103bb4bf831352194584"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#ab9e9561bf6d2103bb4bf831352194584">littleFsOk</a> = false</td></tr>
+<tr class="memitem:ab9e9561bf6d2103bb4bf831352194584" id="r_ab9e9561bf6d2103bb4bf831352194584"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#ab9e9561bf6d2103bb4bf831352194584">littleFsOk</a> = false</td></tr>
 <tr class="separator:ab9e9561bf6d2103bb4bf831352194584"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af0872e96064f5144949d0ab6b147417e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#af0872e96064f5144949d0ab6b147417e">dataHistoryOk</a> = false</td></tr>
+<tr class="memitem:af0872e96064f5144949d0ab6b147417e" id="r_af0872e96064f5144949d0ab6b147417e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#af0872e96064f5144949d0ab6b147417e">dataHistoryOk</a> = false</td></tr>
 <tr class="separator:af0872e96064f5144949d0ab6b147417e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Definições e macros</h2>
-<a id="a94aefdd5f54049079364e832dc15b336"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a94aefdd5f54049079364e832dc15b336">&#9670;&nbsp;</a></span>CHARACTERISTIC_UUID</h2>
+<a id="a94aefdd5f54049079364e832dc15b336" name="a94aefdd5f54049079364e832dc15b336"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a94aefdd5f54049079364e832dc15b336">&#9670;&#160;</a></span>CHARACTERISTIC_UUID</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -234,8 +324,8 @@ Variáveis</h2></td></tr>
 
 </div>
 </div>
-<a id="a445125ee8c34695376c85f10b38844d6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a445125ee8c34695376c85f10b38844d6">&#9670;&nbsp;</a></span>SERVICE_UUID</h2>
+<a id="a445125ee8c34695376c85f10b38844d6" name="a445125ee8c34695376c85f10b38844d6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a445125ee8c34695376c85f10b38844d6">&#9670;&#160;</a></span>SERVICE_UUID</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -249,8 +339,8 @@ Variáveis</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Funções</h2>
-<a id="aaa4fb9434ca07cbc5da12697498c264d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aaa4fb9434ca07cbc5da12697498c264d">&#9670;&nbsp;</a></span>activatePairingMode()</h2>
+<a id="aaa4fb9434ca07cbc5da12697498c264d" name="aaa4fb9434ca07cbc5da12697498c264d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaa4fb9434ca07cbc5da12697498c264d">&#9670;&#160;</a></span>activatePairingMode()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -266,8 +356,8 @@ Variáveis</h2></td></tr>
 
 </div>
 </div>
-<a id="a0727fe3b048e428a2fbcb2a88a8a635a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0727fe3b048e428a2fbcb2a88a8a635a">&#9670;&nbsp;</a></span>actuatorMgr()</h2>
+<a id="a0727fe3b048e428a2fbcb2a88a8a635a" name="a0727fe3b048e428a2fbcb2a88a8a635a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0727fe3b048e428a2fbcb2a88a8a635a">&#9670;&#160;</a></span>actuatorMgr()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -306,8 +396,8 @@ Variáveis</h2></td></tr>
 
 </div>
 </div>
-<a id="afe461d27b9c48d5921c00d521181f12f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afe461d27b9c48d5921c00d521181f12f">&#9670;&nbsp;</a></span>loop()</h2>
+<a id="afe461d27b9c48d5921c00d521181f12f" name="afe461d27b9c48d5921c00d521181f12f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afe461d27b9c48d5921c00d521181f12f">&#9670;&#160;</a></span>loop()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -323,8 +413,8 @@ Variáveis</h2></td></tr>
 
 </div>
 </div>
-<a id="ab1c8cf8a043a91e16ad57c858efc3bdc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab1c8cf8a043a91e16ad57c858efc3bdc">&#9670;&nbsp;</a></span>mqttMgr()</h2>
+<a id="ab1c8cf8a043a91e16ad57c858efc3bdc" name="ab1c8cf8a043a91e16ad57c858efc3bdc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab1c8cf8a043a91e16ad57c858efc3bdc">&#9670;&#160;</a></span>mqttMgr()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -351,8 +441,8 @@ Variáveis</h2></td></tr>
 
 </div>
 </div>
-<a id="aa0842d72fac8fae67e8c146789ca6a52"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa0842d72fac8fae67e8c146789ca6a52">&#9670;&nbsp;</a></span>sensorMgr()</h2>
+<a id="aa0842d72fac8fae67e8c146789ca6a52" name="aa0842d72fac8fae67e8c146789ca6a52"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa0842d72fac8fae67e8c146789ca6a52">&#9670;&#160;</a></span>sensorMgr()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -397,8 +487,8 @@ Variáveis</h2></td></tr>
 
 </div>
 </div>
-<a id="a4fc01d736fe50cf5b977f755b675f11d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4fc01d736fe50cf5b977f755b675f11d">&#9670;&nbsp;</a></span>setup()</h2>
+<a id="a4fc01d736fe50cf5b977f755b675f11d" name="a4fc01d736fe50cf5b977f755b675f11d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4fc01d736fe50cf5b977f755b675f11d">&#9670;&#160;</a></span>setup()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -414,8 +504,8 @@ Variáveis</h2></td></tr>
 
 </div>
 </div>
-<a id="aea688647c52934655dc26d0d805c5e3f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aea688647c52934655dc26d0d805c5e3f">&#9670;&nbsp;</a></span>webServerManager()</h2>
+<a id="aea688647c52934655dc26d0d805c5e3f" name="aea688647c52934655dc26d0d805c5e3f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aea688647c52934655dc26d0d805c5e3f">&#9670;&#160;</a></span>webServerManager()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -461,8 +551,8 @@ Variáveis</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Variáveis</h2>
-<a id="a0f53f786695ed831edfbcff8ebe1606d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0f53f786695ed831edfbcff8ebe1606d">&#9670;&nbsp;</a></span>actuatorsOk</h2>
+<a id="a0f53f786695ed831edfbcff8ebe1606d" name="a0f53f786695ed831edfbcff8ebe1606d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0f53f786695ed831edfbcff8ebe1606d">&#9670;&#160;</a></span>actuatorsOk</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -475,8 +565,8 @@ Variáveis</h2></td></tr>
 
 </div>
 </div>
-<a id="ab1e4f023ae987b4d06d559afcea01747"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab1e4f023ae987b4d06d559afcea01747">&#9670;&nbsp;</a></span>actuatorTasksOk</h2>
+<a id="ab1e4f023ae987b4d06d559afcea01747" name="ab1e4f023ae987b4d06d559afcea01747"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab1e4f023ae987b4d06d559afcea01747">&#9670;&#160;</a></span>actuatorTasksOk</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -489,8 +579,8 @@ Variáveis</h2></td></tr>
 
 </div>
 </div>
-<a id="a469af310bb72a10118a9fd721676f560"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a469af310bb72a10118a9fd721676f560">&#9670;&nbsp;</a></span>appConfig</h2>
+<a id="a469af310bb72a10118a9fd721676f560" name="a469af310bb72a10118a9fd721676f560"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a469af310bb72a10118a9fd721676f560">&#9670;&#160;</a></span>appConfig</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -503,8 +593,8 @@ Variáveis</h2></td></tr>
 
 </div>
 </div>
-<a id="ada514f1620c2957453865607d778d2c9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ada514f1620c2957453865607d778d2c9">&#9670;&nbsp;</a></span>bleAdvertising</h2>
+<a id="ada514f1620c2957453865607d778d2c9" name="ada514f1620c2957453865607d778d2c9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada514f1620c2957453865607d778d2c9">&#9670;&#160;</a></span>bleAdvertising</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -517,8 +607,8 @@ Variáveis</h2></td></tr>
 
 </div>
 </div>
-<a id="a98eda483434b49876bd92863225ef84e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a98eda483434b49876bd92863225ef84e">&#9670;&nbsp;</a></span>dataHistoryMgr</h2>
+<a id="a98eda483434b49876bd92863225ef84e" name="a98eda483434b49876bd92863225ef84e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a98eda483434b49876bd92863225ef84e">&#9670;&#160;</a></span>dataHistoryMgr</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -531,8 +621,8 @@ Variáveis</h2></td></tr>
 
 </div>
 </div>
-<a id="af0872e96064f5144949d0ab6b147417e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af0872e96064f5144949d0ab6b147417e">&#9670;&nbsp;</a></span>dataHistoryOk</h2>
+<a id="af0872e96064f5144949d0ab6b147417e" name="af0872e96064f5144949d0ab6b147417e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af0872e96064f5144949d0ab6b147417e">&#9670;&#160;</a></span>dataHistoryOk</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -545,22 +635,48 @@ Variáveis</h2></td></tr>
 
 </div>
 </div>
-<a id="ad24f69a894bc0b331de070f0219b2abc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad24f69a894bc0b331de070f0219b2abc">&#9670;&nbsp;</a></span>displayMgr</h2>
+<a id="ad24f69a894bc0b331de070f0219b2abc" name="ad24f69a894bc0b331de070f0219b2abc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad24f69a894bc0b331de070f0219b2abc">&#9670;&#160;</a></span>displayMgr</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classGrowController_1_1DisplayManager.html">GrowController::DisplayManager</a> displayMgr(<a class="el" href="board__xiao__c3_8hpp.html#af679cf68e64fdb5d310a0d9944142c76">LCD_I2C_ADDR</a>, <a class="el" href="board__xiao__c3_8hpp.html#a0afb537ac0813a7acc2f797a4d3baa0b">LCD_COLS</a>, <a class="el" href="board__xiao__c3_8hpp.html#a9a59fc4d524d3519a6bd0cb451850a65">LCD_ROWS</a>, <a class="el" href="main_8cpp.html#ab7d6d4c245477f932421f8244e69f208">timeService</a>)</td>
+          <td class="memname"><a class="el" href="classGrowController_1_1DisplayManager.html">GrowController::DisplayManager</a> displayMgr(<a class="el" href="board__esp32__dev_8hpp.html#af679cf68e64fdb5d310a0d9944142c76">LCD_I2C_ADDR</a>, <a class="el" href="board__esp32__dev_8hpp.html#a0afb537ac0813a7acc2f797a4d3baa0b">LCD_COLS</a>, <a class="el" href="board__esp32__dev_8hpp.html#a9a59fc4d524d3519a6bd0cb451850a65">LCD_ROWS</a>, <a class="el" href="main_8cpp.html#ab7d6d4c245477f932421f8244e69f208">timeService</a>) </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="board__esp32__dev_8hpp.html#af679cf68e64fdb5d310a0d9944142c76">LCD_I2C_ADDR</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="board__esp32__dev_8hpp.html#a0afb537ac0813a7acc2f797a4d3baa0b">LCD_COLS</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="board__esp32__dev_8hpp.html#a9a59fc4d524d3519a6bd0cb451850a65">LCD_ROWS</a>&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="main_8cpp.html#ab7d6d4c245477f932421f8244e69f208">timeService</a>&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="abd844c94d106beaf78109862902528e5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abd844c94d106beaf78109862902528e5">&#9670;&nbsp;</a></span>displayOk</h2>
+<a id="abd844c94d106beaf78109862902528e5" name="abd844c94d106beaf78109862902528e5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abd844c94d106beaf78109862902528e5">&#9670;&#160;</a></span>displayOk</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -573,8 +689,8 @@ Variáveis</h2></td></tr>
 
 </div>
 </div>
-<a id="a895ef072aaa3dd70f3b3a5ccfca0f91b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a895ef072aaa3dd70f3b3a5ccfca0f91b">&#9670;&nbsp;</a></span>g_bleCredentialsReceived</h2>
+<a id="a895ef072aaa3dd70f3b3a5ccfca0f91b" name="a895ef072aaa3dd70f3b3a5ccfca0f91b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a895ef072aaa3dd70f3b3a5ccfca0f91b">&#9670;&#160;</a></span>g_bleCredentialsReceived</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -587,8 +703,8 @@ Variáveis</h2></td></tr>
 
 </div>
 </div>
-<a id="a95d308dd4b563c790badaf5e0b48f9d3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a95d308dd4b563c790badaf5e0b48f9d3">&#9670;&nbsp;</a></span>g_receivedPassword</h2>
+<a id="a95d308dd4b563c790badaf5e0b48f9d3" name="a95d308dd4b563c790badaf5e0b48f9d3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a95d308dd4b563c790badaf5e0b48f9d3">&#9670;&#160;</a></span>g_receivedPassword</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -601,8 +717,8 @@ Variáveis</h2></td></tr>
 
 </div>
 </div>
-<a id="a7f4d0ac17aed124f0158d92b6a8478ae"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7f4d0ac17aed124f0158d92b6a8478ae">&#9670;&nbsp;</a></span>g_receivedSsid</h2>
+<a id="a7f4d0ac17aed124f0158d92b6a8478ae" name="a7f4d0ac17aed124f0158d92b6a8478ae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f4d0ac17aed124f0158d92b6a8478ae">&#9670;&#160;</a></span>g_receivedSsid</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -615,8 +731,8 @@ Variáveis</h2></td></tr>
 
 </div>
 </div>
-<a id="ab9e9561bf6d2103bb4bf831352194584"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab9e9561bf6d2103bb4bf831352194584">&#9670;&nbsp;</a></span>littleFsOk</h2>
+<a id="ab9e9561bf6d2103bb4bf831352194584" name="ab9e9561bf6d2103bb4bf831352194584"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab9e9561bf6d2103bb4bf831352194584">&#9670;&#160;</a></span>littleFsOk</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -629,8 +745,8 @@ Variáveis</h2></td></tr>
 
 </div>
 </div>
-<a id="af3130f9b664940960d3138cd4ed7fcc4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af3130f9b664940960d3138cd4ed7fcc4">&#9670;&nbsp;</a></span>mqttSetupOk</h2>
+<a id="af3130f9b664940960d3138cd4ed7fcc4" name="af3130f9b664940960d3138cd4ed7fcc4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af3130f9b664940960d3138cd4ed7fcc4">&#9670;&#160;</a></span>mqttSetupOk</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -643,8 +759,8 @@ Variáveis</h2></td></tr>
 
 </div>
 </div>
-<a id="aef52feaaa2ad0ac2a5a50240b12d3bbe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aef52feaaa2ad0ac2a5a50240b12d3bbe">&#9670;&nbsp;</a></span>mqttTaskOk</h2>
+<a id="aef52feaaa2ad0ac2a5a50240b12d3bbe" name="aef52feaaa2ad0ac2a5a50240b12d3bbe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aef52feaaa2ad0ac2a5a50240b12d3bbe">&#9670;&#160;</a></span>mqttTaskOk</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -657,8 +773,8 @@ Variáveis</h2></td></tr>
 
 </div>
 </div>
-<a id="a83949d215e88efee5fc4f312ea2692e7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a83949d215e88efee5fc4f312ea2692e7">&#9670;&nbsp;</a></span>pCharacteristic</h2>
+<a id="a83949d215e88efee5fc4f312ea2692e7" name="a83949d215e88efee5fc4f312ea2692e7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a83949d215e88efee5fc4f312ea2692e7">&#9670;&#160;</a></span>pCharacteristic</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -671,8 +787,8 @@ Variáveis</h2></td></tr>
 
 </div>
 </div>
-<a id="ac871c365764e0411a3c3806439b2b19d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac871c365764e0411a3c3806439b2b19d">&#9670;&nbsp;</a></span>pServer</h2>
+<a id="ac871c365764e0411a3c3806439b2b19d" name="ac871c365764e0411a3c3806439b2b19d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac871c365764e0411a3c3806439b2b19d">&#9670;&#160;</a></span>pServer</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -685,8 +801,8 @@ Variáveis</h2></td></tr>
 
 </div>
 </div>
-<a id="a3b630fbd37ff6a0f950de3b549e39609"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3b630fbd37ff6a0f950de3b549e39609">&#9670;&nbsp;</a></span>sensorsOk</h2>
+<a id="a3b630fbd37ff6a0f950de3b549e39609" name="a3b630fbd37ff6a0f950de3b549e39609"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3b630fbd37ff6a0f950de3b549e39609">&#9670;&#160;</a></span>sensorsOk</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -699,8 +815,8 @@ Variáveis</h2></td></tr>
 
 </div>
 </div>
-<a id="a5cec6e1afe54a898c13da9e950a3dd41"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5cec6e1afe54a898c13da9e950a3dd41">&#9670;&nbsp;</a></span>sensorTaskOk</h2>
+<a id="a5cec6e1afe54a898c13da9e950a3dd41" name="a5cec6e1afe54a898c13da9e950a3dd41"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5cec6e1afe54a898c13da9e950a3dd41">&#9670;&#160;</a></span>sensorTaskOk</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -713,8 +829,8 @@ Variáveis</h2></td></tr>
 
 </div>
 </div>
-<a id="a37cea87c0cdcea6e88e1042480d38fca"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a37cea87c0cdcea6e88e1042480d38fca">&#9670;&nbsp;</a></span>targetManager</h2>
+<a id="a37cea87c0cdcea6e88e1042480d38fca" name="a37cea87c0cdcea6e88e1042480d38fca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a37cea87c0cdcea6e88e1042480d38fca">&#9670;&#160;</a></span>targetManager</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -727,8 +843,8 @@ Variáveis</h2></td></tr>
 
 </div>
 </div>
-<a id="acce88861973ab7865ae0c05d30cfe815"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acce88861973ab7865ae0c05d30cfe815">&#9670;&nbsp;</a></span>timeOk</h2>
+<a id="acce88861973ab7865ae0c05d30cfe815" name="acce88861973ab7865ae0c05d30cfe815"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acce88861973ab7865ae0c05d30cfe815">&#9670;&#160;</a></span>timeOk</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -741,8 +857,8 @@ Variáveis</h2></td></tr>
 
 </div>
 </div>
-<a id="ab7d6d4c245477f932421f8244e69f208"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab7d6d4c245477f932421f8244e69f208">&#9670;&nbsp;</a></span>timeService</h2>
+<a id="ab7d6d4c245477f932421f8244e69f208" name="ab7d6d4c245477f932421f8244e69f208"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab7d6d4c245477f932421f8244e69f208">&#9670;&#160;</a></span>timeService</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -755,8 +871,8 @@ Variáveis</h2></td></tr>
 
 </div>
 </div>
-<a id="af80c34747656b263fece5b92e5786fab"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af80c34747656b263fece5b92e5786fab">&#9670;&nbsp;</a></span>wifiOk</h2>
+<a id="af80c34747656b263fece5b92e5786fab" name="af80c34747656b263fece5b92e5786fab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af80c34747656b263fece5b92e5786fab">&#9670;&#160;</a></span>wifiOk</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -772,9 +888,7 @@ Variáveis</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Gerado por &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.17
+Gerado por&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

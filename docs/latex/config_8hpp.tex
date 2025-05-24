@@ -1,9 +1,9 @@
-\hypertarget{config_8hpp}{}\doxysection{Referência do Arquivo src/config.hpp}
-\label{config_8hpp}\index{src/config.hpp@{src/config.hpp}}
-{\ttfamily \#include $<$D\+H\+T.\+h$>$}\newline
-{\ttfamily \#include $<$freertos/\+Free\+R\+T\+O\+S.\+h$>$}\newline
+\doxysection{Referência do Arquivo src/config.hpp}
+\hypertarget{config_8hpp}{}\label{config_8hpp}\index{src/config.hpp@{src/config.hpp}}
+{\ttfamily \#include $<$DHT.\+h$>$}\newline
+{\ttfamily \#include $<$freertos/\+Free\+RTOS.\+h$>$}\newline
 {\ttfamily \#include $<$freertos/semphr.\+h$>$}\newline
-{\ttfamily \#include $<$I\+P\+Address.\+h$>$}\newline
+{\ttfamily \#include $<$IPAddress.\+h$>$}\newline
 Gráfico de dependência de inclusões para config.\+hpp\+:
 \nopagebreak
 \begin{figure}[H]
@@ -20,14 +20,14 @@ Este grafo mostra quais arquivos estão direta ou indiretamente relacionados com
 \includegraphics[width=350pt]{config_8hpp__dep__incl}
 \end{center}
 \end{figure}
-\doxysubsection*{Componentes}
+\doxysubsubsection*{Componentes}
 \begin{DoxyCompactItemize}
 \item 
 struct \mbox{\hyperlink{structWiFiConfig}{Wi\+Fi\+Config}}
 \item 
-struct \mbox{\hyperlink{structMQTTConfig}{M\+Q\+T\+T\+Config}}
+struct \mbox{\hyperlink{structMQTTConfig}{MQTTConfig}}
 \item 
-struct \mbox{\hyperlink{structGPIOControlConfig}{G\+P\+I\+O\+Control\+Config}}
+struct \mbox{\hyperlink{structGPIOControlConfig}{GPIOControl\+Config}}
 \item 
 struct \mbox{\hyperlink{structTimeConfig}{Time\+Config}}
 \item 
@@ -35,41 +35,41 @@ struct \mbox{\hyperlink{structSensorConfig}{Sensor\+Config}}
 \item 
 struct \mbox{\hyperlink{structAppConfig}{App\+Config}}
 \end{DoxyCompactItemize}
-\doxysubsection*{Definições e Macros}
+\doxysubsubsection*{Definições e Macros}
 \begin{DoxyCompactItemize}
 \item 
-\#define \mbox{\hyperlink{config_8hpp_a586542b79d00e4db7e1d5a667ae83a2b}{W\+I\+F\+I\+\_\+\+S\+S\+ID}}~\char`\"{}Casa\char`\"{}
+\#define \mbox{\hyperlink{config_8hpp_a586542b79d00e4db7e1d5a667ae83a2b}{WIFI\+\_\+\+SSID}}~"{}Casa"{}
 \item 
-\#define \mbox{\hyperlink{config_8hpp_a8685d8aff7e570048090a3a51afceb07}{W\+I\+F\+I\+\_\+\+P\+A\+S\+S\+W\+O\+RD}}~\char`\"{}12345678\char`\"{}
+\#define \mbox{\hyperlink{config_8hpp_a8685d8aff7e570048090a3a51afceb07}{WIFI\+\_\+\+PASSWORD}}~"{}12345678"{}
 \item 
-\#define \mbox{\hyperlink{config_8hpp_a4c7e3b245b7ec8354c3e6b4b461cab62}{S\+T\+A\+T\+I\+C\+\_\+\+I\+P\+\_\+\+E\+N\+A\+B\+L\+ED}}~1
+\#define \mbox{\hyperlink{config_8hpp_a4c7e3b245b7ec8354c3e6b4b461cab62}{STATIC\+\_\+\+IP\+\_\+\+ENABLED}}~1
 \item 
-\#define \mbox{\hyperlink{config_8hpp_a0906dae4a42c1fef9ec0cd0a5212ed4a}{H\+T\+T\+P\+\_\+\+P\+O\+RT}}~80
+\#define \mbox{\hyperlink{config_8hpp_a0906dae4a42c1fef9ec0cd0a5212ed4a}{HTTP\+\_\+\+PORT}}~80
 \item 
-\#define \mbox{\hyperlink{config_8hpp_a2a1e1448a1e301f5540820b34df496d2}{M\+D\+N\+S\+\_\+\+H\+O\+S\+T\+N\+A\+ME}}~\char`\"{}greenhouse\char`\"{}
+\#define \mbox{\hyperlink{config_8hpp_a2a1e1448a1e301f5540820b34df496d2}{MDNS\+\_\+\+HOSTNAME}}~"{}greenhouse"{}
 \item 
-\#define \mbox{\hyperlink{config_8hpp_a2597be4e15dcb4d93d323730f9ac2838}{M\+D\+N\+S\+\_\+\+S\+E\+R\+V\+I\+C\+E\+\_\+\+N\+A\+ME}}~\char`\"{}webserver\char`\"{}
+\#define \mbox{\hyperlink{config_8hpp_a2597be4e15dcb4d93d323730f9ac2838}{MDNS\+\_\+\+SERVICE\+\_\+\+NAME}}~"{}webserver"{}
 \item 
-\#define \mbox{\hyperlink{config_8hpp_a62634036639f88eece6fbf226b45f84b}{B\+A\+UD}}~115200
+\#define \mbox{\hyperlink{config_8hpp_a62634036639f88eece6fbf226b45f84b}{BAUD}}~115200
 \item 
-\#define \mbox{\hyperlink{config_8hpp_a24b2e4103f2dd7ee3566cc2aba51eb0e}{I\+N\+I\+T\+\_\+\+R\+E\+T\+R\+Y\+\_\+\+C\+O\+U\+NT}}~3
+\#define \mbox{\hyperlink{config_8hpp_a24b2e4103f2dd7ee3566cc2aba51eb0e}{INIT\+\_\+\+RETRY\+\_\+\+COUNT}}~3
 \item 
-\#define \mbox{\hyperlink{config_8hpp_a8eb2327d7562d5f65b7e9e83fd767366}{I\+N\+I\+T\+\_\+\+R\+E\+T\+R\+Y\+\_\+\+D\+E\+L\+A\+Y\+\_\+\+MS}}~1000
+\#define \mbox{\hyperlink{config_8hpp_a8eb2327d7562d5f65b7e9e83fd767366}{INIT\+\_\+\+RETRY\+\_\+\+DELAY\+\_\+\+MS}}~1000
 \end{DoxyCompactItemize}
-\doxysubsection*{Funções}
+\doxysubsubsection*{Funções}
 \begin{DoxyCompactItemize}
 \item 
-const I\+P\+Address \mbox{\hyperlink{config_8hpp_a97ea6ef2465d334109ae540c600e2ee3}{L\+O\+C\+A\+L\+\_\+\+IP}} (192, 168, 1, 180)
+const IPAddress \mbox{\hyperlink{config_8hpp_a97ea6ef2465d334109ae540c600e2ee3}{LOCAL\+\_\+\+IP}} (192, 168, 1, 180)
 \item 
-const I\+P\+Address \mbox{\hyperlink{config_8hpp_a61b244664a635d7ccf4e5921d60bf285}{G\+A\+T\+E\+W\+A\+Y\+\_\+\+IP}} (192, 168, 1, 1)
+const IPAddress \mbox{\hyperlink{config_8hpp_a61b244664a635d7ccf4e5921d60bf285}{GATEWAY\+\_\+\+IP}} (192, 168, 1, 1)
 \item 
-const I\+P\+Address \mbox{\hyperlink{config_8hpp_a4ba44d6873a24be2319b40db2b0e9d25}{S\+U\+B\+N\+E\+T\+\_\+\+M\+A\+SK}} (255, 255, 255, 0)
+const IPAddress \mbox{\hyperlink{config_8hpp_a4ba44d6873a24be2319b40db2b0e9d25}{SUBNET\+\_\+\+MASK}} (255, 255, 255, 0)
 \item 
-const I\+P\+Address \mbox{\hyperlink{config_8hpp_ab5a8a53eef523dd34899f616c71f3ca6}{P\+R\+I\+M\+A\+R\+Y\+\_\+\+D\+N\+S\+\_\+\+IP}} (8, 8, 8, 8)
+const IPAddress \mbox{\hyperlink{config_8hpp_ab5a8a53eef523dd34899f616c71f3ca6}{PRIMARY\+\_\+\+DNS\+\_\+\+IP}} (8, 8, 8, 8)
 \item 
-const I\+P\+Address \mbox{\hyperlink{config_8hpp_aa52bf3e99f5a6d0ff448bf604cbdbaf6}{S\+E\+C\+O\+N\+D\+A\+R\+Y\+\_\+\+D\+N\+S\+\_\+\+IP}} (8, 8, 4, 4)
+const IPAddress \mbox{\hyperlink{config_8hpp_aa52bf3e99f5a6d0ff448bf604cbdbaf6}{SECONDARY\+\_\+\+DNS\+\_\+\+IP}} (8, 8, 4, 4)
 \end{DoxyCompactItemize}
-\doxysubsection*{Variáveis}
+\doxysubsubsection*{Variáveis}
 \begin{DoxyCompactItemize}
 \item 
 Semaphore\+Handle\+\_\+t \mbox{\hyperlink{config_8hpp_a25620e5c0ad6fb873f83bcc35fe39f8a}{mqtt\+Mutex}}
@@ -77,99 +77,99 @@ Semaphore\+Handle\+\_\+t \mbox{\hyperlink{config_8hpp_a25620e5c0ad6fb873f83bcc35
 
 
 \doxysubsection{Definições e macros}
-\mbox{\Hypertarget{config_8hpp_a62634036639f88eece6fbf226b45f84b}\label{config_8hpp_a62634036639f88eece6fbf226b45f84b}} 
+\Hypertarget{config_8hpp_a62634036639f88eece6fbf226b45f84b}\label{config_8hpp_a62634036639f88eece6fbf226b45f84b} 
 \index{config.hpp@{config.hpp}!BAUD@{BAUD}}
 \index{BAUD@{BAUD}!config.hpp@{config.hpp}}
 \doxysubsubsection{\texorpdfstring{BAUD}{BAUD}}
-{\footnotesize\ttfamily \#define B\+A\+UD~115200}
+{\footnotesize\ttfamily \#define BAUD~115200}
 
-\mbox{\Hypertarget{config_8hpp_a0906dae4a42c1fef9ec0cd0a5212ed4a}\label{config_8hpp_a0906dae4a42c1fef9ec0cd0a5212ed4a}} 
+\Hypertarget{config_8hpp_a0906dae4a42c1fef9ec0cd0a5212ed4a}\label{config_8hpp_a0906dae4a42c1fef9ec0cd0a5212ed4a} 
 \index{config.hpp@{config.hpp}!HTTP\_PORT@{HTTP\_PORT}}
 \index{HTTP\_PORT@{HTTP\_PORT}!config.hpp@{config.hpp}}
 \doxysubsubsection{\texorpdfstring{HTTP\_PORT}{HTTP\_PORT}}
-{\footnotesize\ttfamily \#define H\+T\+T\+P\+\_\+\+P\+O\+RT~80}
+{\footnotesize\ttfamily \#define HTTP\+\_\+\+PORT~80}
 
-\mbox{\Hypertarget{config_8hpp_a24b2e4103f2dd7ee3566cc2aba51eb0e}\label{config_8hpp_a24b2e4103f2dd7ee3566cc2aba51eb0e}} 
+\Hypertarget{config_8hpp_a24b2e4103f2dd7ee3566cc2aba51eb0e}\label{config_8hpp_a24b2e4103f2dd7ee3566cc2aba51eb0e} 
 \index{config.hpp@{config.hpp}!INIT\_RETRY\_COUNT@{INIT\_RETRY\_COUNT}}
 \index{INIT\_RETRY\_COUNT@{INIT\_RETRY\_COUNT}!config.hpp@{config.hpp}}
 \doxysubsubsection{\texorpdfstring{INIT\_RETRY\_COUNT}{INIT\_RETRY\_COUNT}}
-{\footnotesize\ttfamily \#define I\+N\+I\+T\+\_\+\+R\+E\+T\+R\+Y\+\_\+\+C\+O\+U\+NT~3}
+{\footnotesize\ttfamily \#define INIT\+\_\+\+RETRY\+\_\+\+COUNT~3}
 
-\mbox{\Hypertarget{config_8hpp_a8eb2327d7562d5f65b7e9e83fd767366}\label{config_8hpp_a8eb2327d7562d5f65b7e9e83fd767366}} 
+\Hypertarget{config_8hpp_a8eb2327d7562d5f65b7e9e83fd767366}\label{config_8hpp_a8eb2327d7562d5f65b7e9e83fd767366} 
 \index{config.hpp@{config.hpp}!INIT\_RETRY\_DELAY\_MS@{INIT\_RETRY\_DELAY\_MS}}
 \index{INIT\_RETRY\_DELAY\_MS@{INIT\_RETRY\_DELAY\_MS}!config.hpp@{config.hpp}}
 \doxysubsubsection{\texorpdfstring{INIT\_RETRY\_DELAY\_MS}{INIT\_RETRY\_DELAY\_MS}}
-{\footnotesize\ttfamily \#define I\+N\+I\+T\+\_\+\+R\+E\+T\+R\+Y\+\_\+\+D\+E\+L\+A\+Y\+\_\+\+MS~1000}
+{\footnotesize\ttfamily \#define INIT\+\_\+\+RETRY\+\_\+\+DELAY\+\_\+\+MS~1000}
 
-\mbox{\Hypertarget{config_8hpp_a2a1e1448a1e301f5540820b34df496d2}\label{config_8hpp_a2a1e1448a1e301f5540820b34df496d2}} 
+\Hypertarget{config_8hpp_a2a1e1448a1e301f5540820b34df496d2}\label{config_8hpp_a2a1e1448a1e301f5540820b34df496d2} 
 \index{config.hpp@{config.hpp}!MDNS\_HOSTNAME@{MDNS\_HOSTNAME}}
 \index{MDNS\_HOSTNAME@{MDNS\_HOSTNAME}!config.hpp@{config.hpp}}
 \doxysubsubsection{\texorpdfstring{MDNS\_HOSTNAME}{MDNS\_HOSTNAME}}
-{\footnotesize\ttfamily \#define M\+D\+N\+S\+\_\+\+H\+O\+S\+T\+N\+A\+ME~\char`\"{}greenhouse\char`\"{}}
+{\footnotesize\ttfamily \#define MDNS\+\_\+\+HOSTNAME~"{}greenhouse"{}}
 
-\mbox{\Hypertarget{config_8hpp_a2597be4e15dcb4d93d323730f9ac2838}\label{config_8hpp_a2597be4e15dcb4d93d323730f9ac2838}} 
+\Hypertarget{config_8hpp_a2597be4e15dcb4d93d323730f9ac2838}\label{config_8hpp_a2597be4e15dcb4d93d323730f9ac2838} 
 \index{config.hpp@{config.hpp}!MDNS\_SERVICE\_NAME@{MDNS\_SERVICE\_NAME}}
 \index{MDNS\_SERVICE\_NAME@{MDNS\_SERVICE\_NAME}!config.hpp@{config.hpp}}
 \doxysubsubsection{\texorpdfstring{MDNS\_SERVICE\_NAME}{MDNS\_SERVICE\_NAME}}
-{\footnotesize\ttfamily \#define M\+D\+N\+S\+\_\+\+S\+E\+R\+V\+I\+C\+E\+\_\+\+N\+A\+ME~\char`\"{}webserver\char`\"{}}
+{\footnotesize\ttfamily \#define MDNS\+\_\+\+SERVICE\+\_\+\+NAME~"{}webserver"{}}
 
-\mbox{\Hypertarget{config_8hpp_a4c7e3b245b7ec8354c3e6b4b461cab62}\label{config_8hpp_a4c7e3b245b7ec8354c3e6b4b461cab62}} 
+\Hypertarget{config_8hpp_a4c7e3b245b7ec8354c3e6b4b461cab62}\label{config_8hpp_a4c7e3b245b7ec8354c3e6b4b461cab62} 
 \index{config.hpp@{config.hpp}!STATIC\_IP\_ENABLED@{STATIC\_IP\_ENABLED}}
 \index{STATIC\_IP\_ENABLED@{STATIC\_IP\_ENABLED}!config.hpp@{config.hpp}}
 \doxysubsubsection{\texorpdfstring{STATIC\_IP\_ENABLED}{STATIC\_IP\_ENABLED}}
-{\footnotesize\ttfamily \#define S\+T\+A\+T\+I\+C\+\_\+\+I\+P\+\_\+\+E\+N\+A\+B\+L\+ED~1}
+{\footnotesize\ttfamily \#define STATIC\+\_\+\+IP\+\_\+\+ENABLED~1}
 
-\mbox{\Hypertarget{config_8hpp_a8685d8aff7e570048090a3a51afceb07}\label{config_8hpp_a8685d8aff7e570048090a3a51afceb07}} 
+\Hypertarget{config_8hpp_a8685d8aff7e570048090a3a51afceb07}\label{config_8hpp_a8685d8aff7e570048090a3a51afceb07} 
 \index{config.hpp@{config.hpp}!WIFI\_PASSWORD@{WIFI\_PASSWORD}}
 \index{WIFI\_PASSWORD@{WIFI\_PASSWORD}!config.hpp@{config.hpp}}
 \doxysubsubsection{\texorpdfstring{WIFI\_PASSWORD}{WIFI\_PASSWORD}}
-{\footnotesize\ttfamily \#define W\+I\+F\+I\+\_\+\+P\+A\+S\+S\+W\+O\+RD~\char`\"{}12345678\char`\"{}}
+{\footnotesize\ttfamily \#define WIFI\+\_\+\+PASSWORD~"{}12345678"{}}
 
-\mbox{\Hypertarget{config_8hpp_a586542b79d00e4db7e1d5a667ae83a2b}\label{config_8hpp_a586542b79d00e4db7e1d5a667ae83a2b}} 
+\Hypertarget{config_8hpp_a586542b79d00e4db7e1d5a667ae83a2b}\label{config_8hpp_a586542b79d00e4db7e1d5a667ae83a2b} 
 \index{config.hpp@{config.hpp}!WIFI\_SSID@{WIFI\_SSID}}
 \index{WIFI\_SSID@{WIFI\_SSID}!config.hpp@{config.hpp}}
 \doxysubsubsection{\texorpdfstring{WIFI\_SSID}{WIFI\_SSID}}
-{\footnotesize\ttfamily \#define W\+I\+F\+I\+\_\+\+S\+S\+ID~\char`\"{}Casa\char`\"{}}
+{\footnotesize\ttfamily \#define WIFI\+\_\+\+SSID~"{}Casa"{}}
 
 
 
 \doxysubsection{Funções}
-\mbox{\Hypertarget{config_8hpp_a61b244664a635d7ccf4e5921d60bf285}\label{config_8hpp_a61b244664a635d7ccf4e5921d60bf285}} 
+\Hypertarget{config_8hpp_a61b244664a635d7ccf4e5921d60bf285}\label{config_8hpp_a61b244664a635d7ccf4e5921d60bf285} 
 \index{config.hpp@{config.hpp}!GATEWAY\_IP@{GATEWAY\_IP}}
 \index{GATEWAY\_IP@{GATEWAY\_IP}!config.hpp@{config.hpp}}
 \doxysubsubsection{\texorpdfstring{GATEWAY\_IP()}{GATEWAY\_IP()}}
-{\footnotesize\ttfamily const I\+P\+Address G\+A\+T\+E\+W\+A\+Y\+\_\+\+IP (\begin{DoxyParamCaption}\item[{192}]{,  }\item[{168}]{,  }\item[{1}]{,  }\item[{1}]{ }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily const IPAddress GATEWAY\+\_\+\+IP (\begin{DoxyParamCaption}\item[{192}]{,  }\item[{168}]{,  }\item[{1}]{,  }\item[{1}]{ }\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{config_8hpp_a97ea6ef2465d334109ae540c600e2ee3}\label{config_8hpp_a97ea6ef2465d334109ae540c600e2ee3}} 
+\Hypertarget{config_8hpp_a97ea6ef2465d334109ae540c600e2ee3}\label{config_8hpp_a97ea6ef2465d334109ae540c600e2ee3} 
 \index{config.hpp@{config.hpp}!LOCAL\_IP@{LOCAL\_IP}}
 \index{LOCAL\_IP@{LOCAL\_IP}!config.hpp@{config.hpp}}
 \doxysubsubsection{\texorpdfstring{LOCAL\_IP()}{LOCAL\_IP()}}
-{\footnotesize\ttfamily const I\+P\+Address L\+O\+C\+A\+L\+\_\+\+IP (\begin{DoxyParamCaption}\item[{192}]{,  }\item[{168}]{,  }\item[{1}]{,  }\item[{180}]{ }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily const IPAddress LOCAL\+\_\+\+IP (\begin{DoxyParamCaption}\item[{192}]{,  }\item[{168}]{,  }\item[{1}]{,  }\item[{180}]{ }\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{config_8hpp_ab5a8a53eef523dd34899f616c71f3ca6}\label{config_8hpp_ab5a8a53eef523dd34899f616c71f3ca6}} 
+\Hypertarget{config_8hpp_ab5a8a53eef523dd34899f616c71f3ca6}\label{config_8hpp_ab5a8a53eef523dd34899f616c71f3ca6} 
 \index{config.hpp@{config.hpp}!PRIMARY\_DNS\_IP@{PRIMARY\_DNS\_IP}}
 \index{PRIMARY\_DNS\_IP@{PRIMARY\_DNS\_IP}!config.hpp@{config.hpp}}
 \doxysubsubsection{\texorpdfstring{PRIMARY\_DNS\_IP()}{PRIMARY\_DNS\_IP()}}
-{\footnotesize\ttfamily const I\+P\+Address P\+R\+I\+M\+A\+R\+Y\+\_\+\+D\+N\+S\+\_\+\+IP (\begin{DoxyParamCaption}\item[{8}]{,  }\item[{8}]{,  }\item[{8}]{,  }\item[{8}]{ }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily const IPAddress PRIMARY\+\_\+\+DNS\+\_\+\+IP (\begin{DoxyParamCaption}\item[{8}]{,  }\item[{8}]{,  }\item[{8}]{,  }\item[{8}]{ }\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{config_8hpp_aa52bf3e99f5a6d0ff448bf604cbdbaf6}\label{config_8hpp_aa52bf3e99f5a6d0ff448bf604cbdbaf6}} 
+\Hypertarget{config_8hpp_aa52bf3e99f5a6d0ff448bf604cbdbaf6}\label{config_8hpp_aa52bf3e99f5a6d0ff448bf604cbdbaf6} 
 \index{config.hpp@{config.hpp}!SECONDARY\_DNS\_IP@{SECONDARY\_DNS\_IP}}
 \index{SECONDARY\_DNS\_IP@{SECONDARY\_DNS\_IP}!config.hpp@{config.hpp}}
 \doxysubsubsection{\texorpdfstring{SECONDARY\_DNS\_IP()}{SECONDARY\_DNS\_IP()}}
-{\footnotesize\ttfamily const I\+P\+Address S\+E\+C\+O\+N\+D\+A\+R\+Y\+\_\+\+D\+N\+S\+\_\+\+IP (\begin{DoxyParamCaption}\item[{8}]{,  }\item[{8}]{,  }\item[{4}]{,  }\item[{4}]{ }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily const IPAddress SECONDARY\+\_\+\+DNS\+\_\+\+IP (\begin{DoxyParamCaption}\item[{8}]{,  }\item[{8}]{,  }\item[{4}]{,  }\item[{4}]{ }\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{config_8hpp_a4ba44d6873a24be2319b40db2b0e9d25}\label{config_8hpp_a4ba44d6873a24be2319b40db2b0e9d25}} 
+\Hypertarget{config_8hpp_a4ba44d6873a24be2319b40db2b0e9d25}\label{config_8hpp_a4ba44d6873a24be2319b40db2b0e9d25} 
 \index{config.hpp@{config.hpp}!SUBNET\_MASK@{SUBNET\_MASK}}
 \index{SUBNET\_MASK@{SUBNET\_MASK}!config.hpp@{config.hpp}}
 \doxysubsubsection{\texorpdfstring{SUBNET\_MASK()}{SUBNET\_MASK()}}
-{\footnotesize\ttfamily const I\+P\+Address S\+U\+B\+N\+E\+T\+\_\+\+M\+A\+SK (\begin{DoxyParamCaption}\item[{255}]{,  }\item[{255}]{,  }\item[{255}]{,  }\item[{0}]{ }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily const IPAddress SUBNET\+\_\+\+MASK (\begin{DoxyParamCaption}\item[{255}]{,  }\item[{255}]{,  }\item[{255}]{,  }\item[{0}]{ }\end{DoxyParamCaption})}
 
 
 
 \doxysubsection{Variáveis}
-\mbox{\Hypertarget{config_8hpp_a25620e5c0ad6fb873f83bcc35fe39f8a}\label{config_8hpp_a25620e5c0ad6fb873f83bcc35fe39f8a}} 
+\Hypertarget{config_8hpp_a25620e5c0ad6fb873f83bcc35fe39f8a}\label{config_8hpp_a25620e5c0ad6fb873f83bcc35fe39f8a} 
 \index{config.hpp@{config.hpp}!mqttMutex@{mqttMutex}}
 \index{mqttMutex@{mqttMutex}!config.hpp@{config.hpp}}
 \doxysubsubsection{\texorpdfstring{mqttMutex}{mqttMutex}}
-{\footnotesize\ttfamily Semaphore\+Handle\+\_\+t mqtt\+Mutex}
+{\footnotesize\ttfamily Semaphore\+Handle\+\_\+t mqtt\+Mutex\hspace{0.3cm}{\ttfamily [extern]}}
 

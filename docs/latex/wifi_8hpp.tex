@@ -1,6 +1,6 @@
-\hypertarget{wifi_8hpp}{}\doxysection{Referência do Arquivo src/network/wifi.hpp}
-\label{wifi_8hpp}\index{src/network/wifi.hpp@{src/network/wifi.hpp}}
-{\ttfamily \#include \char`\"{}config.\+hpp\char`\"{}}\newline
+\doxysection{Referência do Arquivo src/network/wifi.hpp}
+\hypertarget{wifi_8hpp}{}\label{wifi_8hpp}\index{src/network/wifi.hpp@{src/network/wifi.hpp}}
+{\ttfamily \#include "{}config.\+hpp"{}}\newline
 {\ttfamily \#include $<$Preferences.\+h$>$}\newline
 Gráfico de dependência de inclusões para wifi.\+hpp\+:
 \nopagebreak
@@ -18,60 +18,60 @@ Este grafo mostra quais arquivos estão direta ou indiretamente relacionados com
 \includegraphics[width=292pt]{wifi_8hpp__dep__incl}
 \end{center}
 \end{figure}
-\doxysubsection*{Componentes}
+\doxysubsubsection*{Componentes}
 \begin{DoxyCompactItemize}
 \item 
 struct \mbox{\hyperlink{structWiFiTaskParams}{Wi\+Fi\+Task\+Params}}
 \end{DoxyCompactItemize}
-\doxysubsection*{$<$em$>$Namespaces$<$/em$>$}
+\doxysubsubsection*{Namespaces}
 \begin{DoxyCompactItemize}
 \item 
- \mbox{\hyperlink{namespaceGrowController}{Grow\+Controller}}
+namespace \mbox{\hyperlink{namespaceGrowController}{Grow\+Controller}}
 \end{DoxyCompactItemize}
-\doxysubsection*{Funções}
+\doxysubsubsection*{Funções}
 \begin{DoxyCompactItemize}
 \item 
-void \mbox{\hyperlink{wifi_8hpp_a701d562d061db5b2102d035c723ffc75}{connect\+To\+Wi\+Fi}} (void $\ast$parameter)
-\begin{DoxyCompactList}\small\item\em Função da tarefa Free\+R\+T\+OS para conectar ao Wi\+Fi. Mostra o status no Display\+Manager. \end{DoxyCompactList}\item 
-void \mbox{\hyperlink{wifi_8hpp_ab7767b6547127ef9297fcec2a158e3fa}{save\+Wi\+Fi\+Credentials}} (const char $\ast$ssid, const char $\ast$password)
+void \mbox{\hyperlink{wifi_8hpp_a701d562d061db5b2102d035c723ffc75}{connect\+To\+Wi\+Fi}} (void \texorpdfstring{$\ast$}{*}parameter)
+\begin{DoxyCompactList}\small\item\em Função da tarefa Free\+RTOS para conectar ao Wi\+Fi. Mostra o status no Display\+Manager. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{wifi_8hpp_ab7767b6547127ef9297fcec2a158e3fa}{save\+Wi\+Fi\+Credentials}} (const char \texorpdfstring{$\ast$}{*}ssid, const char \texorpdfstring{$\ast$}{*}password)
 \item 
-bool \mbox{\hyperlink{wifi_8hpp_aab344c67c370dd095e6fb431093e3d26}{load\+Wi\+Fi\+Credentials}} (char $\ast$ssid, char $\ast$password, size\+\_\+t max\+Length)
+bool \mbox{\hyperlink{wifi_8hpp_aab344c67c370dd095e6fb431093e3d26}{load\+Wi\+Fi\+Credentials}} (char \texorpdfstring{$\ast$}{*}ssid, char \texorpdfstring{$\ast$}{*}password, size\+\_\+t max\+Length)
 \item 
 void \mbox{\hyperlink{wifi_8hpp_aaa4fb9434ca07cbc5da12697498c264d}{activate\+Pairing\+Mode}} ()
 \end{DoxyCompactItemize}
 
 
 \doxysubsection{Funções}
-\mbox{\Hypertarget{wifi_8hpp_aaa4fb9434ca07cbc5da12697498c264d}\label{wifi_8hpp_aaa4fb9434ca07cbc5da12697498c264d}} 
+\Hypertarget{wifi_8hpp_aaa4fb9434ca07cbc5da12697498c264d}\label{wifi_8hpp_aaa4fb9434ca07cbc5da12697498c264d} 
 \index{wifi.hpp@{wifi.hpp}!activatePairingMode@{activatePairingMode}}
 \index{activatePairingMode@{activatePairingMode}!wifi.hpp@{wifi.hpp}}
 \doxysubsubsection{\texorpdfstring{activatePairingMode()}{activatePairingMode()}}
-{\footnotesize\ttfamily void activate\+Pairing\+Mode (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily void activate\+Pairing\+Mode (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [extern]}}
 
-\mbox{\Hypertarget{wifi_8hpp_a701d562d061db5b2102d035c723ffc75}\label{wifi_8hpp_a701d562d061db5b2102d035c723ffc75}} 
+\Hypertarget{wifi_8hpp_a701d562d061db5b2102d035c723ffc75}\label{wifi_8hpp_a701d562d061db5b2102d035c723ffc75} 
 \index{wifi.hpp@{wifi.hpp}!connectToWiFi@{connectToWiFi}}
 \index{connectToWiFi@{connectToWiFi}!wifi.hpp@{wifi.hpp}}
 \doxysubsubsection{\texorpdfstring{connectToWiFi()}{connectToWiFi()}}
-{\footnotesize\ttfamily void connect\+To\+Wi\+Fi (\begin{DoxyParamCaption}\item[{void $\ast$}]{parameter }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily void connect\+To\+Wi\+Fi (\begin{DoxyParamCaption}\item[{void \texorpdfstring{$\ast$}{*}}]{parameter }\end{DoxyParamCaption})}
 
 
 
-Função da tarefa Free\+R\+T\+OS para conectar ao Wi\+Fi. Mostra o status no Display\+Manager. 
+Função da tarefa Free\+RTOS para conectar ao Wi\+Fi. Mostra o status no Display\+Manager. 
 
 
 \begin{DoxyParams}{Parâmetros}
-{\em parameter} & Ponteiro para uma estrutura \mbox{\hyperlink{structWiFiTaskParams}{Wi\+Fi\+Task\+Params}}. \\
+{\em parameter} & Ponteiro para uma estrutura \doxylink{structWiFiTaskParams}{Wi\+Fi\+Task\+Params}. \\
 \hline
 \end{DoxyParams}
-\mbox{\Hypertarget{wifi_8hpp_aab344c67c370dd095e6fb431093e3d26}\label{wifi_8hpp_aab344c67c370dd095e6fb431093e3d26}} 
+\Hypertarget{wifi_8hpp_aab344c67c370dd095e6fb431093e3d26}\label{wifi_8hpp_aab344c67c370dd095e6fb431093e3d26} 
 \index{wifi.hpp@{wifi.hpp}!loadWiFiCredentials@{loadWiFiCredentials}}
 \index{loadWiFiCredentials@{loadWiFiCredentials}!wifi.hpp@{wifi.hpp}}
 \doxysubsubsection{\texorpdfstring{loadWiFiCredentials()}{loadWiFiCredentials()}}
-{\footnotesize\ttfamily bool load\+Wi\+Fi\+Credentials (\begin{DoxyParamCaption}\item[{char $\ast$}]{ssid,  }\item[{char $\ast$}]{password,  }\item[{size\+\_\+t}]{max\+Length }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily bool load\+Wi\+Fi\+Credentials (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{ssid,  }\item[{char \texorpdfstring{$\ast$}{*}}]{password,  }\item[{size\+\_\+t}]{max\+Length }\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{wifi_8hpp_ab7767b6547127ef9297fcec2a158e3fa}\label{wifi_8hpp_ab7767b6547127ef9297fcec2a158e3fa}} 
+\Hypertarget{wifi_8hpp_ab7767b6547127ef9297fcec2a158e3fa}\label{wifi_8hpp_ab7767b6547127ef9297fcec2a158e3fa} 
 \index{wifi.hpp@{wifi.hpp}!saveWiFiCredentials@{saveWiFiCredentials}}
 \index{saveWiFiCredentials@{saveWiFiCredentials}!wifi.hpp@{wifi.hpp}}
 \doxysubsubsection{\texorpdfstring{saveWiFiCredentials()}{saveWiFiCredentials()}}
-{\footnotesize\ttfamily void save\+Wi\+Fi\+Credentials (\begin{DoxyParamCaption}\item[{const char $\ast$}]{ssid,  }\item[{const char $\ast$}]{password }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily void save\+Wi\+Fi\+Credentials (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{ssid,  }\item[{const char \texorpdfstring{$\ast$}{*}}]{password }\end{DoxyParamCaption})}
 

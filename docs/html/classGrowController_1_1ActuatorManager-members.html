@@ -1,9 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<meta name="generator" content="Doxygen 1.8.17"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Smart Garden - Sistema de Controle de Ambiente: Lista dos Membros</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
@@ -19,10 +19,9 @@
 <div id="titlearea">
 <table cellspacing="0" cellpadding="0">
  <tbody>
- <tr style="height: 56px;">
-  <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Smart Garden - Sistema de Controle de Ambiente
-   &#160;<span id="projectnumber">v1.0</span>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Smart Garden - Sistema de Controle de Ambiente<span id="projectnumber">&#160;v1.0</span>
    </div>
    <div id="projectbrief">Sistema embarcado para monitoramento e controle de ambiente para cultivo</div>
   </td>
@@ -31,21 +30,22 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- Gerado por Doxygen 1.8.17 -->
+<!-- Gerado por Doxygen 1.9.8 -->
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
-var searchBox = new SearchBox("searchBox", "search",false,'Busca');
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
 /* @license-end */
 </script>
 <script type="text/javascript" src="menudata.js"></script>
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
   initMenu('',true,false,'search.php','Busca');
   $(document).ready(function() { init_search(); });
 });
-/* @license-end */</script>
+/* @license-end */
+</script>
 <div id="main-nav"></div>
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -56,9 +56,16 @@ $(function() {
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
-<iframe src="javascript:void(0)" frameborder="0" 
-        name="MSearchResults" id="MSearchResults">
-</iframe>
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Carregando...</div>
+<div class="SRStatus" id="Searching">Procurando...</div>
+<div class="SRStatus" id="NoMatches">Nenhuma entrada encontrado</div>
+</div>
+</div>
+</div>
 </div>
 
 <div id="nav-path" class="navpath">
@@ -67,28 +74,25 @@ $(function() {
 </div>
 </div><!-- top -->
 <div class="header">
-  <div class="headertitle">
-<div class="title">GrowController::ActuatorManager Lista dos Membros</div>  </div>
+  <div class="headertitle"><div class="title">GrowController::ActuatorManager Lista dos Membros</div></div>
 </div><!--header-->
 <div class="contents">
 
 <p>Esta é a lista de todos os membros de <a class="el" href="classGrowController_1_1ActuatorManager.html">GrowController::ActuatorManager</a>, incluindo os membros herdados.</p>
 <table class="directory">
   <tr class="even"><td class="entry"><a class="el" href="classGrowController_1_1ActuatorManager.html#ac6d0f94e0e66cba38f136566afa21d27">ActuatorManager</a>(const GPIOControlConfig &amp;config, TargetDataManager &amp;targetMgr, SensorManager &amp;sensorMgr, TimeService &amp;timeSvc)</td><td class="entry"><a class="el" href="classGrowController_1_1ActuatorManager.html">GrowController::ActuatorManager</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="classGrowController_1_1ActuatorManager.html#aabc8b62f32e4d31445edf946a2dd6102">ActuatorManager</a>(const ActuatorManager &amp;)=delete</td><td class="entry"><a class="el" href="classGrowController_1_1ActuatorManager.html">GrowController::ActuatorManager</a></td><td class="entry"></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classGrowController_1_1ActuatorManager.html#aabc8b62f32e4d31445edf946a2dd6102">ActuatorManager</a>(const ActuatorManager &amp;)=delete</td><td class="entry"><a class="el" href="classGrowController_1_1ActuatorManager.html">GrowController::ActuatorManager</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classGrowController_1_1ActuatorManager.html#a59f476641b6ecec10f4ea053e5b462e5">initialize</a>()</td><td class="entry"><a class="el" href="classGrowController_1_1ActuatorManager.html">GrowController::ActuatorManager</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="classGrowController_1_1ActuatorManager.html#a2f8bf36352e3d6fd9f950cf5885170bf">isHumidifierRelayOn</a>() const</td><td class="entry"><a class="el" href="classGrowController_1_1ActuatorManager.html">GrowController::ActuatorManager</a></td><td class="entry"></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classGrowController_1_1ActuatorManager.html#a2f8bf36352e3d6fd9f950cf5885170bf">isHumidifierRelayOn</a>() const</td><td class="entry"><a class="el" href="classGrowController_1_1ActuatorManager.html">GrowController::ActuatorManager</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classGrowController_1_1ActuatorManager.html#a396e31b98c0facb5a1ff8b5955063714">isInitialized</a>() const</td><td class="entry"><a class="el" href="classGrowController_1_1ActuatorManager.html">GrowController::ActuatorManager</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="classGrowController_1_1ActuatorManager.html#a2e3168c70f7f741420eb39bbfd5cfcbf">isLightRelayOn</a>() const</td><td class="entry"><a class="el" href="classGrowController_1_1ActuatorManager.html">GrowController::ActuatorManager</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classGrowController_1_1ActuatorManager.html#a9d077ca0c2ed5e338832902917d47960">operator=</a>(const ActuatorManager &amp;)=delete</td><td class="entry"><a class="el" href="classGrowController_1_1ActuatorManager.html">GrowController::ActuatorManager</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="classGrowController_1_1ActuatorManager.html#a305fd9ac1e2fb151331c78b461c700f3">startControlTasks</a>(UBaseType_t lightTaskPriority=1, UBaseType_t humidityTaskPriority=1, uint32_t stackSize=2560)</td><td class="entry"><a class="el" href="classGrowController_1_1ActuatorManager.html">GrowController::ActuatorManager</a></td><td class="entry"></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classGrowController_1_1ActuatorManager.html#a2e3168c70f7f741420eb39bbfd5cfcbf">isLightRelayOn</a>() const</td><td class="entry"><a class="el" href="classGrowController_1_1ActuatorManager.html">GrowController::ActuatorManager</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classGrowController_1_1ActuatorManager.html#a7683f82b682597136e0d309f9e53adc9">operator=</a>(const ActuatorManager &amp;)=delete</td><td class="entry"><a class="el" href="classGrowController_1_1ActuatorManager.html">GrowController::ActuatorManager</a></td><td class="entry"></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classGrowController_1_1ActuatorManager.html#a305fd9ac1e2fb151331c78b461c700f3">startControlTasks</a>(UBaseType_t lightTaskPriority=1, UBaseType_t humidityTaskPriority=1, uint32_t stackSize=2560)</td><td class="entry"><a class="el" href="classGrowController_1_1ActuatorManager.html">GrowController::ActuatorManager</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classGrowController_1_1ActuatorManager.html#a316993feb24797065bc93ded8ea1c10f">~ActuatorManager</a>()</td><td class="entry"><a class="el" href="classGrowController_1_1ActuatorManager.html">GrowController::ActuatorManager</a></td><td class="entry"></td></tr>
 </table></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Gerado por &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.17
+Gerado por&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

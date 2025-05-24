@@ -1,9 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<meta name="generator" content="Doxygen 1.8.17"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Smart Garden - Sistema de Controle de Ambiente: Código-Fonte de src/data/targetDataManager.hpp</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
@@ -19,10 +19,9 @@
 <div id="titlearea">
 <table cellspacing="0" cellpadding="0">
  <tbody>
- <tr style="height: 56px;">
-  <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Smart Garden - Sistema de Controle de Ambiente
-   &#160;<span id="projectnumber">v1.0</span>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Smart Garden - Sistema de Controle de Ambiente<span id="projectnumber">&#160;v1.0</span>
    </div>
    <div id="projectbrief">Sistema embarcado para monitoramento e controle de ambiente para cultivo</div>
   </td>
@@ -31,22 +30,28 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- Gerado por Doxygen 1.8.17 -->
+<!-- Gerado por Doxygen 1.9.8 -->
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
-var searchBox = new SearchBox("searchBox", "search",false,'Busca');
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
 /* @license-end */
 </script>
 <script type="text/javascript" src="menudata.js"></script>
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
   initMenu('',true,false,'search.php','Busca');
   $(document).ready(function() { init_search(); });
 });
-/* @license-end */</script>
+/* @license-end */
+</script>
 <div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function() { init_codefold(0); });
+/* @license-end */
+</script>
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -56,9 +61,16 @@ $(function() {
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
-<iframe src="javascript:void(0)" frameborder="0" 
-        name="MSearchResults" id="MSearchResults">
-</iframe>
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Carregando...</div>
+<div class="SRStatus" id="Searching">Procurando...</div>
+<div class="SRStatus" id="NoMatches">Nenhuma entrada encontrado</div>
+</div>
+</div>
+</div>
 </div>
 
 <div id="nav-path" class="navpath">
@@ -67,92 +79,94 @@ $(function() {
 </div>
 </div><!-- top -->
 <div class="header">
-  <div class="headertitle">
-<div class="title">targetDataManager.hpp</div>  </div>
+  <div class="headertitle"><div class="title">targetDataManager.hpp</div></div>
 </div><!--header-->
 <div class="contents">
-<a href="targetDataManager_8hpp.html">Vá para a documentação desse arquivo.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef TARGET_DATA_MANAGER_HPP</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define TARGET_DATA_MANAGER_HPP</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;ArduinoJson.h&gt;</span> <span class="comment">// Para desserialização</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;time.h&gt;</span>        <span class="comment">// Para struct tm</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;freertos/FreeRTOS.h&quot;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &quot;freertos/semphr.h&quot;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;Arduino.h&gt;</span> <span class="comment">// Para Serial (logs de erro) e memset</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceGrowController.html">GrowController</a></div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;{</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
-<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="structGrowController_1_1TargetValues.html">   13</a></span>&#160;  <span class="keyword">struct </span><a class="code" href="structGrowController_1_1TargetValues.html">TargetValues</a></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;  {</div>
-<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="structGrowController_1_1TargetValues.html#afd46f53c081d3100aed1542663955c68">   15</a></span>&#160;    <span class="keywordtype">float</span> <a class="code" href="structGrowController_1_1TargetValues.html#afd46f53c081d3100aed1542663955c68">airHumidity</a> = 73;</div>
-<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="structGrowController_1_1TargetValues.html#ad58630e94ebe4c6f2b83d314a93e87a1">   16</a></span>&#160;    <span class="keywordtype">float</span> <a class="code" href="structGrowController_1_1TargetValues.html#ad58630e94ebe4c6f2b83d314a93e87a1">vpd</a> = NAN;</div>
-<div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="structGrowController_1_1TargetValues.html#aa09b7c371858ea627b756dd6b3f5ed29">   17</a></span>&#160;    <span class="keywordtype">float</span> <a class="code" href="structGrowController_1_1TargetValues.html#aa09b7c371858ea627b756dd6b3f5ed29">soilHumidity</a> = NAN;</div>
-<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="structGrowController_1_1TargetValues.html#af4983bf2d5f125a6a76174319aa672d6">   18</a></span>&#160;    <span class="keywordtype">float</span> <a class="code" href="structGrowController_1_1TargetValues.html#af4983bf2d5f125a6a76174319aa672d6">temperature</a> = 25;</div>
-<div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="structGrowController_1_1TargetValues.html#ab7f1fb98029eda83392bfc0316ba172a">   19</a></span>&#160;    <span class="keyword">struct </span>tm <a class="code" href="structGrowController_1_1TargetValues.html#ab7f1fb98029eda83392bfc0316ba172a">lightOnTime</a>;</div>
-<div class="line"><a name="l00020"></a><span class="lineno"><a class="line" href="structGrowController_1_1TargetValues.html#afec3529a93624b6bfc56e13658c0a6a6">   20</a></span>&#160;    <span class="keyword">struct </span>tm <a class="code" href="structGrowController_1_1TargetValues.html#afec3529a93624b6bfc56e13658c0a6a6">lightOffTime</a>;</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;  };</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
-<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="classGrowController_1_1TargetDataManager.html">   23</a></span>&#160;  <span class="keyword">class </span><a class="code" href="classGrowController_1_1TargetDataManager.html">TargetDataManager</a></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  {</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;  <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <a class="code" href="classGrowController_1_1TargetDataManager.html#ab63a3e210a0b21c7672405634a6ad109">TargetDataManager</a>();</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <a class="code" href="classGrowController_1_1TargetDataManager.html#a2e99ce03388aa74dca9bfd1ce66f3f69">~TargetDataManager</a>();</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="comment">// Desabilita cópia e atribuição para evitar problemas com o mutex</span></div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <a class="code" href="classGrowController_1_1TargetDataManager.html#ab63a3e210a0b21c7672405634a6ad109">TargetDataManager</a>(<span class="keyword">const</span> <a class="code" href="classGrowController_1_1TargetDataManager.html">TargetDataManager</a> &amp;) = <span class="keyword">delete</span>;</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <a class="code" href="classGrowController_1_1TargetDataManager.html">TargetDataManager</a> &amp;<a class="code" href="classGrowController_1_1TargetDataManager.html#a44386fbecb76d97cb9cc4bdd47f8e748">operator=</a>(<span class="keyword">const</span> <a class="code" href="classGrowController_1_1TargetDataManager.html">TargetDataManager</a> &amp;) = <span class="keyword">delete</span>;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classGrowController_1_1TargetDataManager.html#a6776cc2cfe039220a9b3dddca41219be">updateTargetsFromJson</a>(<span class="keyword">const</span> JsonDocument &amp;doc);</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <a class="code" href="structGrowController_1_1TargetValues.html">TargetValues</a> <a class="code" href="classGrowController_1_1TargetDataManager.html#a690b5f35e5ab2c214da4ea9368ebdfb8">getTargets</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="comment">// --- Getters individuais (thread-safe) ---</span></div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keywordtype">float</span> <a class="code" href="classGrowController_1_1TargetDataManager.html#ad09efb2b12159f768ee554868ede3f15">getTargetAirHumidity</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keyword">struct </span>tm <a class="code" href="classGrowController_1_1TargetDataManager.html#a87a42717689494bc58103f9225c8e831">getLightOnTime</a>() const;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    <span class="keyword">struct </span>tm <a class="code" href="classGrowController_1_1TargetDataManager.html#a0c56c2040f87c572d839c85b5cd0ab2d">getLightOffTime</a>() const;</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <span class="comment">// Adicione getters para vpd, soilHumidity, temperature se forem necessários individualmente</span></div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160; </div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;  <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    <span class="keywordtype">bool</span> _updateFloatValue(<span class="keyword">const</span> <span class="keywordtype">char</span> *key, <span class="keyword">const</span> JsonDocument &amp;doc, <span class="keywordtype">float</span> &amp;outValue);</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160; </div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    <span class="keywordtype">bool</span> _updateTimeValue(<span class="keyword">const</span> <span class="keywordtype">char</span> *key, <span class="keyword">const</span> JsonDocument &amp;doc, <span class="keyword">struct</span> tm &amp;outValue);</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160; </div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    <a class="code" href="structGrowController_1_1TargetValues.html">TargetValues</a> currentTargets;                              <span class="comment">// Armazena os valores</span></div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    <span class="keyword">mutable</span> SemaphoreHandle_t dataMutex;                      <span class="comment">// Mutex para proteger currentTargets (mutable para getters const)</span></div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> TickType_t mutexTimeout = pdMS_TO_TICKS(200); <span class="comment">// Timeout para leituras</span></div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;  };</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160; </div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;} <span class="comment">// namespace GrowController</span></div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;<span class="preprocessor">#endif // TARGET_DATA_MANAGER_HPP</span></div>
+<a href="targetDataManager_8hpp.html">Ir para a documentação desse arquivo.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef TARGET_DATA_MANAGER_HPP</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define TARGET_DATA_MANAGER_HPP</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;ArduinoJson.h&gt;</span> <span class="comment">// Para desserialização</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;time.h&gt;</span>        <span class="comment">// Para struct tm</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &quot;freertos/FreeRTOS.h&quot;</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &quot;freertos/semphr.h&quot;</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;Arduino.h&gt;</span> <span class="comment">// Para Serial (logs de erro) e memset</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceGrowController.html">GrowController</a></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>{</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
+<div class="foldopen" id="foldopen00013" data-start="{" data-end="};">
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno"><a class="line" href="structGrowController_1_1TargetValues.html">   13</a></span>  <span class="keyword">struct </span><a class="code hl_struct" href="structGrowController_1_1TargetValues.html">TargetValues</a></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>  {</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno"><a class="line" href="structGrowController_1_1TargetValues.html#afd46f53c081d3100aed1542663955c68">   15</a></span>    <span class="keywordtype">float</span> <a class="code hl_variable" href="structGrowController_1_1TargetValues.html#afd46f53c081d3100aed1542663955c68">airHumidity</a> = 73;</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="structGrowController_1_1TargetValues.html#ad58630e94ebe4c6f2b83d314a93e87a1">   16</a></span>    <span class="keywordtype">float</span> <a class="code hl_variable" href="structGrowController_1_1TargetValues.html#ad58630e94ebe4c6f2b83d314a93e87a1">vpd</a> = NAN;</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno"><a class="line" href="structGrowController_1_1TargetValues.html#aa09b7c371858ea627b756dd6b3f5ed29">   17</a></span>    <span class="keywordtype">float</span> <a class="code hl_variable" href="structGrowController_1_1TargetValues.html#aa09b7c371858ea627b756dd6b3f5ed29">soilHumidity</a> = NAN;</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno"><a class="line" href="structGrowController_1_1TargetValues.html#af4983bf2d5f125a6a76174319aa672d6">   18</a></span>    <span class="keywordtype">float</span> <a class="code hl_variable" href="structGrowController_1_1TargetValues.html#af4983bf2d5f125a6a76174319aa672d6">temperature</a> = 25;</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno"><a class="line" href="structGrowController_1_1TargetValues.html#ab7f1fb98029eda83392bfc0316ba172a">   19</a></span>    <span class="keyword">struct </span>tm <a class="code hl_variable" href="structGrowController_1_1TargetValues.html#ab7f1fb98029eda83392bfc0316ba172a">lightOnTime</a>;</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="structGrowController_1_1TargetValues.html#afec3529a93624b6bfc56e13658c0a6a6">   20</a></span>    <span class="keyword">struct </span>tm <a class="code hl_variable" href="structGrowController_1_1TargetValues.html#afec3529a93624b6bfc56e13658c0a6a6">lightOffTime</a>;</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>  };</div>
+</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
+<div class="foldopen" id="foldopen00023" data-start="{" data-end="};">
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="classGrowController_1_1TargetDataManager.html">   23</a></span>  <span class="keyword">class </span><a class="code hl_class" href="classGrowController_1_1TargetDataManager.html">TargetDataManager</a></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>  {</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>  <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    <a class="code hl_function" href="classGrowController_1_1TargetDataManager.html#ab63a3e210a0b21c7672405634a6ad109">TargetDataManager</a>();</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    <a class="code hl_function" href="classGrowController_1_1TargetDataManager.html#a2e99ce03388aa74dca9bfd1ce66f3f69">~TargetDataManager</a>();</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    <span class="comment">// Desabilita cópia e atribuição para evitar problemas com o mutex</span></div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="classGrowController_1_1TargetDataManager.html#a4039e0e598ae0340926fb36011645f10">   37</a></span>    <a class="code hl_function" href="classGrowController_1_1TargetDataManager.html#a4039e0e598ae0340926fb36011645f10">TargetDataManager</a>(<span class="keyword">const</span> <a class="code hl_class" href="classGrowController_1_1TargetDataManager.html">TargetDataManager</a> &amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="classGrowController_1_1TargetDataManager.html#a0791e359b5f7017894bf022cfc220b41">   38</a></span>    <a class="code hl_class" href="classGrowController_1_1TargetDataManager.html">TargetDataManager</a> &amp;<a class="code hl_function" href="classGrowController_1_1TargetDataManager.html#a0791e359b5f7017894bf022cfc220b41">operator=</a>(<span class="keyword">const</span> <a class="code hl_class" href="classGrowController_1_1TargetDataManager.html">TargetDataManager</a> &amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classGrowController_1_1TargetDataManager.html#a6776cc2cfe039220a9b3dddca41219be">updateTargetsFromJson</a>(<span class="keyword">const</span> JsonDocument &amp;doc);</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    <a class="code hl_struct" href="structGrowController_1_1TargetValues.html">TargetValues</a> <a class="code hl_function" href="classGrowController_1_1TargetDataManager.html#a690b5f35e5ab2c214da4ea9368ebdfb8">getTargets</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    <span class="comment">// --- Getters individuais (thread-safe) ---</span></div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    <span class="keywordtype">float</span> <a class="code hl_function" href="classGrowController_1_1TargetDataManager.html#ad09efb2b12159f768ee554868ede3f15">getTargetAirHumidity</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span> </div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    <span class="keyword">struct </span>tm <a class="code hl_function" href="classGrowController_1_1TargetDataManager.html#a87a42717689494bc58103f9225c8e831">getLightOnTime</a>() const;</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    <span class="keyword">struct </span>tm <a class="code hl_function" href="classGrowController_1_1TargetDataManager.html#a0c56c2040f87c572d839c85b5cd0ab2d">getLightOffTime</a>() const;</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    <span class="comment">// Adicione getters para vpd, soilHumidity, temperature se forem necessários individualmente</span></div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> </div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>  <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>    <span class="keywordtype">bool</span> _updateFloatValue(<span class="keyword">const</span> <span class="keywordtype">char</span> *key, <span class="keyword">const</span> JsonDocument &amp;doc, <span class="keywordtype">float</span> &amp;outValue);</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span> </div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>    <span class="keywordtype">bool</span> _updateTimeValue(<span class="keyword">const</span> <span class="keywordtype">char</span> *key, <span class="keyword">const</span> JsonDocument &amp;doc, <span class="keyword">struct</span> tm &amp;outValue);</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span> </div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>    <a class="code hl_struct" href="structGrowController_1_1TargetValues.html">TargetValues</a> currentTargets;                              <span class="comment">// Armazena os valores</span></div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>    <span class="keyword">mutable</span> SemaphoreHandle_t dataMutex;                      <span class="comment">// Mutex para proteger currentTargets (mutable para getters const)</span></div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>    <span class="keyword">static</span> <span class="keyword">const</span> TickType_t mutexTimeout = pdMS_TO_TICKS(200); <span class="comment">// Timeout para leituras</span></div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>  };</div>
+</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span> </div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>} <span class="comment">// namespace GrowController</span></div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span><span class="preprocessor">#endif </span><span class="comment">// TARGET_DATA_MANAGER_HPP</span></div>
+<div class="ttc" id="aclassGrowController_1_1TargetDataManager_html"><div class="ttname"><a href="classGrowController_1_1TargetDataManager.html">GrowController::TargetDataManager</a></div><div class="ttdef"><b>Definição</b> targetDataManager.hpp:24</div></div>
+<div class="ttc" id="aclassGrowController_1_1TargetDataManager_html_a0791e359b5f7017894bf022cfc220b41"><div class="ttname"><a href="classGrowController_1_1TargetDataManager.html#a0791e359b5f7017894bf022cfc220b41">GrowController::TargetDataManager::operator=</a></div><div class="ttdeci">TargetDataManager &amp; operator=(const TargetDataManager &amp;)=delete</div></div>
+<div class="ttc" id="aclassGrowController_1_1TargetDataManager_html_a0c56c2040f87c572d839c85b5cd0ab2d"><div class="ttname"><a href="classGrowController_1_1TargetDataManager.html#a0c56c2040f87c572d839c85b5cd0ab2d">GrowController::TargetDataManager::getLightOffTime</a></div><div class="ttdeci">struct tm getLightOffTime() const</div><div class="ttdoc">Obtém o horário alvo para desligar a luz. Thread-safe.</div><div class="ttdef"><b>Definição</b> targetDataManager.cpp:171</div></div>
+<div class="ttc" id="aclassGrowController_1_1TargetDataManager_html_a2e99ce03388aa74dca9bfd1ce66f3f69"><div class="ttname"><a href="classGrowController_1_1TargetDataManager.html#a2e99ce03388aa74dca9bfd1ce66f3f69">GrowController::TargetDataManager::~TargetDataManager</a></div><div class="ttdeci">~TargetDataManager()</div><div class="ttdoc">Destrutor. Libera o mutex.</div><div class="ttdef"><b>Definição</b> targetDataManager.cpp:51</div></div>
+<div class="ttc" id="aclassGrowController_1_1TargetDataManager_html_a4039e0e598ae0340926fb36011645f10"><div class="ttname"><a href="classGrowController_1_1TargetDataManager.html#a4039e0e598ae0340926fb36011645f10">GrowController::TargetDataManager::TargetDataManager</a></div><div class="ttdeci">TargetDataManager(const TargetDataManager &amp;)=delete</div></div>
+<div class="ttc" id="aclassGrowController_1_1TargetDataManager_html_a6776cc2cfe039220a9b3dddca41219be"><div class="ttname"><a href="classGrowController_1_1TargetDataManager.html#a6776cc2cfe039220a9b3dddca41219be">GrowController::TargetDataManager::updateTargetsFromJson</a></div><div class="ttdeci">bool updateTargetsFromJson(const JsonDocument &amp;doc)</div><div class="ttdoc">Atualiza os valores alvo a partir de um JsonDocument. Thread-safe. Analisa campos conhecidos e atuali...</div><div class="ttdef"><b>Definição</b> targetDataManager.cpp:60</div></div>
+<div class="ttc" id="aclassGrowController_1_1TargetDataManager_html_a690b5f35e5ab2c214da4ea9368ebdfb8"><div class="ttname"><a href="classGrowController_1_1TargetDataManager.html#a690b5f35e5ab2c214da4ea9368ebdfb8">GrowController::TargetDataManager::getTargets</a></div><div class="ttdeci">TargetValues getTargets() const</div><div class="ttdoc">Obtém uma cópia segura de todos os valores alvo atuais. Thread-safe.</div><div class="ttdef"><b>Definição</b> targetDataManager.cpp:100</div></div>
+<div class="ttc" id="aclassGrowController_1_1TargetDataManager_html_a87a42717689494bc58103f9225c8e831"><div class="ttname"><a href="classGrowController_1_1TargetDataManager.html#a87a42717689494bc58103f9225c8e831">GrowController::TargetDataManager::getLightOnTime</a></div><div class="ttdeci">struct tm getLightOnTime() const</div><div class="ttdoc">Obtém o horário alvo para ligar a luz. Thread-safe.</div><div class="ttdef"><b>Definição</b> targetDataManager.cpp:149</div></div>
+<div class="ttc" id="aclassGrowController_1_1TargetDataManager_html_ab63a3e210a0b21c7672405634a6ad109"><div class="ttname"><a href="classGrowController_1_1TargetDataManager.html#ab63a3e210a0b21c7672405634a6ad109">GrowController::TargetDataManager::TargetDataManager</a></div><div class="ttdeci">TargetDataManager()</div><div class="ttdoc">Construtor. Inicializa os valores padrão e o mutex.</div><div class="ttdef"><b>Definição</b> targetDataManager.cpp:35</div></div>
+<div class="ttc" id="aclassGrowController_1_1TargetDataManager_html_ad09efb2b12159f768ee554868ede3f15"><div class="ttname"><a href="classGrowController_1_1TargetDataManager.html#ad09efb2b12159f768ee554868ede3f15">GrowController::TargetDataManager::getTargetAirHumidity</a></div><div class="ttdeci">float getTargetAirHumidity() const</div><div class="ttdoc">Obtém o valor alvo para a umidade do ar. Thread-safe.</div><div class="ttdef"><b>Definição</b> targetDataManager.cpp:127</div></div>
+<div class="ttc" id="anamespaceGrowController_html"><div class="ttname"><a href="namespaceGrowController.html">GrowController</a></div><div class="ttdef"><b>Definição</b> actuatorManager.cpp:7</div></div>
+<div class="ttc" id="astructGrowController_1_1TargetValues_html"><div class="ttname"><a href="structGrowController_1_1TargetValues.html">GrowController::TargetValues</a></div><div class="ttdef"><b>Definição</b> targetDataManager.hpp:14</div></div>
+<div class="ttc" id="astructGrowController_1_1TargetValues_html_aa09b7c371858ea627b756dd6b3f5ed29"><div class="ttname"><a href="structGrowController_1_1TargetValues.html#aa09b7c371858ea627b756dd6b3f5ed29">GrowController::TargetValues::soilHumidity</a></div><div class="ttdeci">float soilHumidity</div><div class="ttdef"><b>Definição</b> targetDataManager.hpp:17</div></div>
+<div class="ttc" id="astructGrowController_1_1TargetValues_html_ab7f1fb98029eda83392bfc0316ba172a"><div class="ttname"><a href="structGrowController_1_1TargetValues.html#ab7f1fb98029eda83392bfc0316ba172a">GrowController::TargetValues::lightOnTime</a></div><div class="ttdeci">struct tm lightOnTime</div><div class="ttdef"><b>Definição</b> targetDataManager.hpp:19</div></div>
+<div class="ttc" id="astructGrowController_1_1TargetValues_html_ad58630e94ebe4c6f2b83d314a93e87a1"><div class="ttname"><a href="structGrowController_1_1TargetValues.html#ad58630e94ebe4c6f2b83d314a93e87a1">GrowController::TargetValues::vpd</a></div><div class="ttdeci">float vpd</div><div class="ttdef"><b>Definição</b> targetDataManager.hpp:16</div></div>
+<div class="ttc" id="astructGrowController_1_1TargetValues_html_af4983bf2d5f125a6a76174319aa672d6"><div class="ttname"><a href="structGrowController_1_1TargetValues.html#af4983bf2d5f125a6a76174319aa672d6">GrowController::TargetValues::temperature</a></div><div class="ttdeci">float temperature</div><div class="ttdef"><b>Definição</b> targetDataManager.hpp:18</div></div>
+<div class="ttc" id="astructGrowController_1_1TargetValues_html_afd46f53c081d3100aed1542663955c68"><div class="ttname"><a href="structGrowController_1_1TargetValues.html#afd46f53c081d3100aed1542663955c68">GrowController::TargetValues::airHumidity</a></div><div class="ttdeci">float airHumidity</div><div class="ttdef"><b>Definição</b> targetDataManager.hpp:15</div></div>
+<div class="ttc" id="astructGrowController_1_1TargetValues_html_afec3529a93624b6bfc56e13658c0a6a6"><div class="ttname"><a href="structGrowController_1_1TargetValues.html#afec3529a93624b6bfc56e13658c0a6a6">GrowController::TargetValues::lightOffTime</a></div><div class="ttdeci">struct tm lightOffTime</div><div class="ttdef"><b>Definição</b> targetDataManager.hpp:20</div></div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="astructGrowController_1_1TargetValues_html_aa09b7c371858ea627b756dd6b3f5ed29"><div class="ttname"><a href="structGrowController_1_1TargetValues.html#aa09b7c371858ea627b756dd6b3f5ed29">GrowController::TargetValues::soilHumidity</a></div><div class="ttdeci">float soilHumidity</div><div class="ttdef"><b>Definition:</b> targetDataManager.hpp:17</div></div>
-<div class="ttc" id="astructGrowController_1_1TargetValues_html_afd46f53c081d3100aed1542663955c68"><div class="ttname"><a href="structGrowController_1_1TargetValues.html#afd46f53c081d3100aed1542663955c68">GrowController::TargetValues::airHumidity</a></div><div class="ttdeci">float airHumidity</div><div class="ttdef"><b>Definition:</b> targetDataManager.hpp:15</div></div>
-<div class="ttc" id="astructGrowController_1_1TargetValues_html_ad58630e94ebe4c6f2b83d314a93e87a1"><div class="ttname"><a href="structGrowController_1_1TargetValues.html#ad58630e94ebe4c6f2b83d314a93e87a1">GrowController::TargetValues::vpd</a></div><div class="ttdeci">float vpd</div><div class="ttdef"><b>Definition:</b> targetDataManager.hpp:16</div></div>
-<div class="ttc" id="astructGrowController_1_1TargetValues_html"><div class="ttname"><a href="structGrowController_1_1TargetValues.html">GrowController::TargetValues</a></div><div class="ttdef"><b>Definition:</b> targetDataManager.hpp:13</div></div>
-<div class="ttc" id="aclassGrowController_1_1TargetDataManager_html_ad09efb2b12159f768ee554868ede3f15"><div class="ttname"><a href="classGrowController_1_1TargetDataManager.html#ad09efb2b12159f768ee554868ede3f15">GrowController::TargetDataManager::getTargetAirHumidity</a></div><div class="ttdeci">float getTargetAirHumidity() const</div><div class="ttdoc">Obtém o valor alvo para a umidade do ar. Thread-safe.</div><div class="ttdef"><b>Definition:</b> targetDataManager.cpp:127</div></div>
-<div class="ttc" id="aclassGrowController_1_1TargetDataManager_html_a44386fbecb76d97cb9cc4bdd47f8e748"><div class="ttname"><a href="classGrowController_1_1TargetDataManager.html#a44386fbecb76d97cb9cc4bdd47f8e748">GrowController::TargetDataManager::operator=</a></div><div class="ttdeci">TargetDataManager &amp; operator=(const TargetDataManager &amp;)=delete</div></div>
-<div class="ttc" id="aclassGrowController_1_1TargetDataManager_html_a87a42717689494bc58103f9225c8e831"><div class="ttname"><a href="classGrowController_1_1TargetDataManager.html#a87a42717689494bc58103f9225c8e831">GrowController::TargetDataManager::getLightOnTime</a></div><div class="ttdeci">struct tm getLightOnTime() const</div><div class="ttdoc">Obtém o horário alvo para ligar a luz. Thread-safe.</div><div class="ttdef"><b>Definition:</b> targetDataManager.cpp:149</div></div>
-<div class="ttc" id="astructGrowController_1_1TargetValues_html_ab7f1fb98029eda83392bfc0316ba172a"><div class="ttname"><a href="structGrowController_1_1TargetValues.html#ab7f1fb98029eda83392bfc0316ba172a">GrowController::TargetValues::lightOnTime</a></div><div class="ttdeci">struct tm lightOnTime</div><div class="ttdef"><b>Definition:</b> targetDataManager.hpp:19</div></div>
-<div class="ttc" id="astructGrowController_1_1TargetValues_html_afec3529a93624b6bfc56e13658c0a6a6"><div class="ttname"><a href="structGrowController_1_1TargetValues.html#afec3529a93624b6bfc56e13658c0a6a6">GrowController::TargetValues::lightOffTime</a></div><div class="ttdeci">struct tm lightOffTime</div><div class="ttdef"><b>Definition:</b> targetDataManager.hpp:20</div></div>
-<div class="ttc" id="aclassGrowController_1_1TargetDataManager_html_a6776cc2cfe039220a9b3dddca41219be"><div class="ttname"><a href="classGrowController_1_1TargetDataManager.html#a6776cc2cfe039220a9b3dddca41219be">GrowController::TargetDataManager::updateTargetsFromJson</a></div><div class="ttdeci">bool updateTargetsFromJson(const JsonDocument &amp;doc)</div><div class="ttdoc">Atualiza os valores alvo a partir de um JsonDocument. Thread-safe. Analisa campos conhecidos e atuali...</div><div class="ttdef"><b>Definition:</b> targetDataManager.cpp:60</div></div>
-<div class="ttc" id="anamespaceGrowController_html"><div class="ttname"><a href="namespaceGrowController.html">GrowController</a></div><div class="ttdef"><b>Definition:</b> actuatorManager.cpp:7</div></div>
-<div class="ttc" id="aclassGrowController_1_1TargetDataManager_html_a2e99ce03388aa74dca9bfd1ce66f3f69"><div class="ttname"><a href="classGrowController_1_1TargetDataManager.html#a2e99ce03388aa74dca9bfd1ce66f3f69">GrowController::TargetDataManager::~TargetDataManager</a></div><div class="ttdeci">~TargetDataManager()</div><div class="ttdoc">Destrutor. Libera o mutex.</div><div class="ttdef"><b>Definition:</b> targetDataManager.cpp:51</div></div>
-<div class="ttc" id="astructGrowController_1_1TargetValues_html_af4983bf2d5f125a6a76174319aa672d6"><div class="ttname"><a href="structGrowController_1_1TargetValues.html#af4983bf2d5f125a6a76174319aa672d6">GrowController::TargetValues::temperature</a></div><div class="ttdeci">float temperature</div><div class="ttdef"><b>Definition:</b> targetDataManager.hpp:18</div></div>
-<div class="ttc" id="aclassGrowController_1_1TargetDataManager_html"><div class="ttname"><a href="classGrowController_1_1TargetDataManager.html">GrowController::TargetDataManager</a></div><div class="ttdef"><b>Definition:</b> targetDataManager.hpp:23</div></div>
-<div class="ttc" id="aclassGrowController_1_1TargetDataManager_html_a0c56c2040f87c572d839c85b5cd0ab2d"><div class="ttname"><a href="classGrowController_1_1TargetDataManager.html#a0c56c2040f87c572d839c85b5cd0ab2d">GrowController::TargetDataManager::getLightOffTime</a></div><div class="ttdeci">struct tm getLightOffTime() const</div><div class="ttdoc">Obtém o horário alvo para desligar a luz. Thread-safe.</div><div class="ttdef"><b>Definition:</b> targetDataManager.cpp:171</div></div>
-<div class="ttc" id="aclassGrowController_1_1TargetDataManager_html_a690b5f35e5ab2c214da4ea9368ebdfb8"><div class="ttname"><a href="classGrowController_1_1TargetDataManager.html#a690b5f35e5ab2c214da4ea9368ebdfb8">GrowController::TargetDataManager::getTargets</a></div><div class="ttdeci">TargetValues getTargets() const</div><div class="ttdoc">Obtém uma cópia segura de todos os valores alvo atuais. Thread-safe.</div><div class="ttdef"><b>Definition:</b> targetDataManager.cpp:100</div></div>
-<div class="ttc" id="aclassGrowController_1_1TargetDataManager_html_ab63a3e210a0b21c7672405634a6ad109"><div class="ttname"><a href="classGrowController_1_1TargetDataManager.html#ab63a3e210a0b21c7672405634a6ad109">GrowController::TargetDataManager::TargetDataManager</a></div><div class="ttdeci">TargetDataManager()</div><div class="ttdoc">Construtor. Inicializa os valores padrão e o mutex.</div><div class="ttdef"><b>Definition:</b> targetDataManager.cpp:35</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Gerado por &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.17
+Gerado por&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

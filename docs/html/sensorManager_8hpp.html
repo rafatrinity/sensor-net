@@ -1,9 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<meta name="generator" content="Doxygen 1.8.17"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Smart Garden - Sistema de Controle de Ambiente: Referência do Arquivo src/sensors/sensorManager.hpp</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
@@ -19,10 +19,9 @@
 <div id="titlearea">
 <table cellspacing="0" cellpadding="0">
  <tbody>
- <tr style="height: 56px;">
-  <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Smart Garden - Sistema de Controle de Ambiente
-   &#160;<span id="projectnumber">v1.0</span>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Smart Garden - Sistema de Controle de Ambiente<span id="projectnumber">&#160;v1.0</span>
    </div>
    <div id="projectbrief">Sistema embarcado para monitoramento e controle de ambiente para cultivo</div>
   </td>
@@ -31,21 +30,22 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- Gerado por Doxygen 1.8.17 -->
+<!-- Gerado por Doxygen 1.9.8 -->
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
-var searchBox = new SearchBox("searchBox", "search",false,'Busca');
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
 /* @license-end */
 </script>
 <script type="text/javascript" src="menudata.js"></script>
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
   initMenu('',true,false,'search.php','Busca');
   $(document).ready(function() { init_search(); });
 });
-/* @license-end */</script>
+/* @license-end */
+</script>
 <div id="main-nav"></div>
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -56,9 +56,16 @@ $(function() {
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
-<iframe src="javascript:void(0)" frameborder="0" 
-        name="MSearchResults" id="MSearchResults">
-</iframe>
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Carregando...</div>
+<div class="SRStatus" id="Searching">Procurando...</div>
+<div class="SRStatus" id="NoMatches">Nenhuma entrada encontrado</div>
+</div>
+</div>
+</div>
 </div>
 
 <div id="nav-path" class="navpath">
@@ -69,9 +76,8 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Componentes</a> &#124;
-<a href="#namespaces"><em>Namespaces</em></a>  </div>
-  <div class="headertitle">
-<div class="title">Referência do Arquivo sensorManager.hpp</div>  </div>
+<a href="#namespaces">Namespaces</a>  </div>
+  <div class="headertitle"><div class="title">Referência do Arquivo sensorManager.hpp</div></div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="config_8hpp_source.html">config.hpp</a>&quot;</code><br />
@@ -86,58 +92,83 @@ $(function() {
 </div><div class="textblock"><div class="dynheader">
 Gráfico de dependência de inclusões para sensorManager.hpp:</div>
 <div class="dyncontent">
-<div class="center"><img src="sensorManager_8hpp__incl.png" border="0" usemap="#src_2sensors_2sensorManager_8hpp" alt=""/></div>
-<map name="src_2sensors_2sensorManager_8hpp" id="src_2sensors_2sensorManager_8hpp">
-<area shape="rect" title=" " alt="" coords="380,5,607,32"/>
-<area shape="rect" href="config_8hpp.html" title=" " alt="" coords="90,155,179,181"/>
-<area shape="rect" title=" " alt="" coords="5,229,67,256"/>
-<area shape="rect" title=" " alt="" coords="374,229,525,256"/>
-<area shape="rect" title=" " alt="" coords="531,80,608,107"/>
-<area shape="rect" title=" " alt="" coords="633,80,695,107"/>
-<area shape="rect" title=" " alt="" coords="720,80,795,107"/>
-<area shape="rect" href="freeRTOSMutex_8hpp.html" title=" " alt="" coords="293,155,475,181"/>
-<area shape="rect" title=" " alt="" coords="819,80,936,107"/>
-<area shape="rect" href="timeService_8hpp.html" title=" " alt="" coords="172,80,332,107"/>
-<area shape="rect" title=" " alt="" coords="213,229,350,256"/>
-<area shape="rect" title=" " alt="" coords="91,229,189,256"/>
-<area shape="rect" title=" " alt="" coords="204,155,268,181"/>
+<div class="center"><img src="sensorManager_8hpp__incl.png" border="0" usemap="#asrc_2sensors_2sensorManager_8hpp" alt=""/></div>
+<map name="asrc_2sensors_2sensorManager_8hpp" id="asrc_2sensors_2sensorManager_8hpp">
+<area shape="rect" title=" " alt="" coords="380,5,607,31"/>
+<area shape="rect" href="config_8hpp.html" title=" " alt="" coords="90,152,179,177"/>
+<area shape="poly" title=" " alt="" coords="380,30,315,37,251,48,197,62,162,81,152,93,145,108,138,138,133,137,140,106,147,90,158,77,195,57,250,42,314,32,379,24"/>
+<area shape="rect" title=" " alt="" coords="5,225,67,251"/>
+<area shape="poly" title=" " alt="" coords="380,33,243,52,183,65,141,81,107,109,80,144,60,182,46,214,41,211,55,179,75,142,103,105,139,76,181,60,242,47,379,27"/>
+<area shape="rect" title=" " alt="" coords="374,225,525,251"/>
+<area shape="poly" title=" " alt="" coords="498,31,502,94,499,136,491,178,470,216,466,213,485,176,494,136,496,94,492,31"/>
+<area shape="rect" title=" " alt="" coords="531,79,608,104"/>
+<area shape="poly" title=" " alt="" coords="507,29,549,67,545,71,504,33"/>
+<area shape="rect" title=" " alt="" coords="633,79,695,104"/>
+<area shape="poly" title=" " alt="" coords="522,28,625,71,623,76,520,33"/>
+<area shape="rect" title=" " alt="" coords="720,79,795,104"/>
+<area shape="poly" title=" " alt="" coords="536,28,707,74,706,79,535,33"/>
+<area shape="rect" href="freeRTOSMutex_8hpp.html" title=" " alt="" coords="293,152,475,177"/>
+<area shape="poly" title=" " alt="" coords="487,33,403,142,399,139,482,30"/>
+<area shape="rect" title=" " alt="" coords="819,79,936,104"/>
+<area shape="poly" title=" " alt="" coords="556,28,805,74,804,79,555,33"/>
+<area shape="rect" href="timeService_8hpp.html" title=" " alt="" coords="172,79,332,104"/>
+<area shape="poly" title=" " alt="" coords="455,33,305,77,304,72,454,28"/>
+<area shape="poly" title=" " alt="" coords="120,180,65,219,62,215,117,175"/>
+<area shape="poly" title=" " alt="" coords="180,173,386,220,385,225,179,179"/>
+<area shape="rect" title=" " alt="" coords="213,225,350,251"/>
+<area shape="poly" title=" " alt="" coords="159,175,246,217,244,222,157,180"/>
+<area shape="rect" title=" " alt="" coords="91,225,189,251"/>
+<area shape="poly" title=" " alt="" coords="138,177,141,212,135,212,133,178"/>
+<area shape="poly" title=" " alt="" coords="397,176,431,213,428,217,393,179"/>
+<area shape="poly" title=" " alt="" coords="369,180,311,219,308,215,366,175"/>
+<area shape="poly" title=" " alt="" coords="235,106,167,147,164,142,232,102"/>
+<area shape="rect" title=" " alt="" coords="204,152,268,177"/>
+<area shape="poly" title=" " alt="" coords="252,105,244,139,239,138,247,104"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
 Este grafo mostra quais arquivos estão direta ou indiretamente relacionados com esse arquivo:</div>
 <div class="dyncontent">
-<div class="center"><img src="sensorManager_8hpp__dep__incl.png" border="0" usemap="#src_2sensors_2sensorManager_8hppdep" alt=""/></div>
-<map name="src_2sensors_2sensorManager_8hppdep" id="src_2sensors_2sensorManager_8hppdep">
-<area shape="rect" title=" " alt="" coords="355,5,581,32"/>
-<area shape="rect" href="actuatorManager_8hpp.html" title=" " alt="" coords="183,80,431,107"/>
-<area shape="rect" href="main_8cpp.html" title=" " alt="" coords="234,229,339,256"/>
-<area shape="rect" href="webServerManager_8hpp.html" title=" " alt="" coords="345,155,599,181"/>
-<area shape="rect" href="sensorManager_8cpp.html" title=" " alt="" coords="505,80,730,107"/>
-<area shape="rect" href="test__main_8cpp.html" title=" " alt="" coords="754,80,926,107"/>
-<area shape="rect" href="actuatorManager_8cpp.html" title=" " alt="" coords="23,155,270,181"/>
-<area shape="rect" href="webServerManager_8cpp.html" title=" " alt="" coords="363,229,618,256"/>
+<div class="center"><img src="sensorManager_8hpp__dep__incl.png" border="0" usemap="#asrc_2sensors_2sensorManager_8hppdep" alt=""/></div>
+<map name="asrc_2sensors_2sensorManager_8hppdep" id="asrc_2sensors_2sensorManager_8hppdep">
+<area shape="rect" title=" " alt="" coords="354,5,581,31"/>
+<area shape="rect" href="actuatorManager_8hpp.html" title=" " alt="" coords="182,79,430,104"/>
+<area shape="poly" title=" " alt="" coords="430,39,334,81,332,76,428,34"/>
+<area shape="rect" href="main_8cpp.html" title=" " alt="" coords="234,225,339,251"/>
+<area shape="poly" title=" " alt="" coords="370,35,268,54,159,79,110,95,67,113,34,132,13,153,8,165,13,176,26,187,48,197,106,213,172,224,234,230,233,236,172,229,105,218,46,202,23,191,8,179,3,165,8,151,30,128,65,108,108,90,158,74,267,48,369,30"/>
+<area shape="rect" href="webServerManager_8hpp.html" title=" " alt="" coords="344,152,599,177"/>
+<area shape="poly" title=" " alt="" coords="471,45,474,152,469,152,466,45"/>
+<area shape="rect" href="sensorManager_8cpp.html" title=" " alt="" coords="504,79,730,104"/>
+<area shape="poly" title=" " alt="" coords="505,34,594,76,591,81,503,39"/>
+<area shape="rect" href="test__main_8cpp.html" title=" " alt="" coords="754,79,926,104"/>
+<area shape="poly" title=" " alt="" coords="541,31,780,76,779,81,540,36"/>
+<area shape="rect" href="actuatorManager_8cpp.html" title=" " alt="" coords="23,152,270,177"/>
+<area shape="poly" title=" " alt="" coords="269,112,174,154,171,149,267,107"/>
+<area shape="poly" title=" " alt="" coords="306,118,291,225,285,225,300,118"/>
+<area shape="poly" title=" " alt="" coords="346,107,446,149,444,154,344,112"/>
+<area shape="poly" title=" " alt="" coords="430,185,318,228,316,223,429,180"/>
+<area shape="rect" href="webServerManager_8cpp.html" title=" " alt="" coords="363,225,618,251"/>
+<area shape="poly" title=" " alt="" coords="481,190,490,225,485,226,476,191"/>
 </map>
 </div>
 </div>
-<p><a href="sensorManager_8hpp_source.html">Vá para o código-fonte desse arquivo.</a></p>
+<p><a href="sensorManager_8hpp_source.html">Ir para o código-fonte desse arquivo.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Componentes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1SensorManager.html">GrowController::SensorManager</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gerencia a leitura de sensores (DHT, Solo), cálculo de VPD, e armazena os resultados em cache. Atualiza um cache interno thread-safe e executa uma tarefa dedicada para leituras periódicas. Utiliza RAII para recursos.  <a href="classGrowController_1_1SensorManager.html#details">Mais...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
-&lt;em&gt;Namespaces&lt;/em&gt;</h2></td></tr>
-<tr class="memitem:namespaceGrowController"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGrowController.html">GrowController</a></td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
+Namespaces</h2></td></tr>
+<tr class="memitem:namespaceGrowController" id="r_namespaceGrowController"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGrowController.html">GrowController</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Gerado por &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.17
+Gerado por&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

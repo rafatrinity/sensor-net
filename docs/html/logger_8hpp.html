@@ -1,9 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<meta name="generator" content="Doxygen 1.8.17"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Smart Garden - Sistema de Controle de Ambiente: Referência do Arquivo src/utils/logger.hpp</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
@@ -19,10 +19,9 @@
 <div id="titlearea">
 <table cellspacing="0" cellpadding="0">
  <tbody>
- <tr style="height: 56px;">
-  <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Smart Garden - Sistema de Controle de Ambiente
-   &#160;<span id="projectnumber">v1.0</span>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Smart Garden - Sistema de Controle de Ambiente<span id="projectnumber">&#160;v1.0</span>
    </div>
    <div id="projectbrief">Sistema embarcado para monitoramento e controle de ambiente para cultivo</div>
   </td>
@@ -31,21 +30,22 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- Gerado por Doxygen 1.8.17 -->
+<!-- Gerado por Doxygen 1.9.8 -->
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
-var searchBox = new SearchBox("searchBox", "search",false,'Busca');
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
 /* @license-end */
 </script>
 <script type="text/javascript" src="menudata.js"></script>
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
   initMenu('',true,false,'search.php','Busca');
   $(document).ready(function() { init_search(); });
 });
-/* @license-end */</script>
+/* @license-end */
+</script>
 <div id="main-nav"></div>
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -56,9 +56,16 @@ $(function() {
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
-<iframe src="javascript:void(0)" frameborder="0" 
-        name="MSearchResults" id="MSearchResults">
-</iframe>
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Carregando...</div>
+<div class="SRStatus" id="Searching">Procurando...</div>
+<div class="SRStatus" id="NoMatches">Nenhuma entrada encontrado</div>
+</div>
+</div>
+</div>
 </div>
 
 <div id="nav-path" class="navpath">
@@ -69,10 +76,9 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Componentes</a> &#124;
-<a href="#namespaces"><em>Namespaces</em></a> &#124;
+<a href="#namespaces">Namespaces</a> &#124;
 <a href="#enum-members">Enumerações</a>  </div>
-  <div class="headertitle">
-<div class="title">Referência do Arquivo logger.hpp</div>  </div>
+  <div class="headertitle"><div class="title">Referência do Arquivo logger.hpp</div></div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;Arduino.h&gt;</code><br />
@@ -82,52 +88,67 @@ $(function() {
 </div><div class="textblock"><div class="dynheader">
 Gráfico de dependência de inclusões para logger.hpp:</div>
 <div class="dyncontent">
-<div class="center"><img src="logger_8hpp__incl.png" border="0" usemap="#src_2utils_2logger_8hpp" alt=""/></div>
-<map name="src_2utils_2logger_8hpp" id="src_2utils_2logger_8hpp">
-<area shape="rect" title=" " alt="" coords="147,5,292,32"/>
-<area shape="rect" title=" " alt="" coords="5,80,89,107"/>
-<area shape="rect" title=" " alt="" coords="114,80,189,107"/>
-<area shape="rect" title=" " alt="" coords="213,80,364,107"/>
-<area shape="rect" title=" " alt="" coords="388,80,525,107"/>
+<div class="center"><img src="logger_8hpp__incl.png" border="0" usemap="#asrc_2utils_2logger_8hpp" alt=""/></div>
+<map name="asrc_2utils_2logger_8hpp" id="asrc_2utils_2logger_8hpp">
+<area shape="rect" title=" " alt="" coords="147,5,292,31"/>
+<area shape="rect" title=" " alt="" coords="5,79,89,104"/>
+<area shape="poly" title=" " alt="" coords="193,33,89,76,87,71,191,28"/>
+<area shape="rect" title=" " alt="" coords="114,79,189,104"/>
+<area shape="poly" title=" " alt="" coords="210,33,174,70,170,67,206,29"/>
+<area shape="rect" title=" " alt="" coords="213,79,364,104"/>
+<area shape="poly" title=" " alt="" coords="233,29,270,67,266,71,229,33"/>
+<area shape="rect" title=" " alt="" coords="388,79,525,104"/>
+<area shape="poly" title=" " alt="" coords="258,28,406,72,404,77,257,33"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
 Este grafo mostra quais arquivos estão direta ou indiretamente relacionados com esse arquivo:</div>
 <div class="dyncontent">
-<div class="center"><img src="logger_8hpp__dep__incl.png" border="0" usemap="#src_2utils_2logger_8hppdep" alt=""/></div>
-<map name="src_2utils_2logger_8hppdep" id="src_2utils_2logger_8hppdep">
-<area shape="rect" title=" " alt="" coords="661,5,806,32"/>
-<area shape="rect" href="dataHistoryManager_8hpp.html" title=" " alt="" coords="350,80,589,107"/>
-<area shape="rect" href="main_8cpp.html" title=" " alt="" coords="252,229,357,256"/>
-<area shape="rect" href="webServerManager_8cpp.html" title=" " alt="" coords="568,229,822,256"/>
-<area shape="rect" href="sensorManager_8cpp.html" title=" " alt="" coords="621,155,846,181"/>
-<area shape="rect" href="logger_8cpp.html" title=" " alt="" coords="920,80,1064,107"/>
-<area shape="rect" href="dataHistoryManager_8cpp.html" title=" " alt="" coords="30,155,267,181"/>
-<area shape="rect" href="webServerManager_8hpp.html" title=" " alt="" coords="342,155,597,181"/>
+<div class="center"><img src="logger_8hpp__dep__incl.png" border="0" usemap="#asrc_2utils_2logger_8hppdep" alt=""/></div>
+<map name="asrc_2utils_2logger_8hppdep" id="asrc_2utils_2logger_8hppdep">
+<area shape="rect" title=" " alt="" coords="654,5,799,31"/>
+<area shape="rect" href="dataHistoryManager_8hpp.html" title=" " alt="" coords="343,79,582,104"/>
+<area shape="poly" title=" " alt="" coords="672,37,506,81,505,76,670,32"/>
+<area shape="rect" href="main_8cpp.html" title=" " alt="" coords="245,225,350,251"/>
+<area shape="poly" title=" " alt="" coords="640,24,480,34,290,56,199,73,118,94,54,121,30,137,13,154,8,165,13,176,27,187,50,198,111,214,181,225,244,231,244,236,180,230,110,219,48,203,24,192,9,179,3,165,8,150,27,133,52,116,116,89,198,67,289,51,480,29,640,19"/>
+<area shape="rect" href="webServerManager_8cpp.html" title=" " alt="" coords="561,225,815,251"/>
+<area shape="poly" title=" " alt="" coords="761,36,801,62,839,97,853,117,861,137,862,158,853,179,837,196,818,210,776,228,774,223,816,205,834,192,848,176,857,157,856,138,848,119,835,101,798,66,758,40"/>
+<area shape="rect" href="sensorManager_8cpp.html" title=" " alt="" coords="614,152,839,177"/>
+<area shape="poly" title=" " alt="" coords="729,45,729,152,724,152,724,45"/>
+<area shape="rect" href="logger_8cpp.html" title=" " alt="" coords="913,79,1057,104"/>
+<area shape="poly" title=" " alt="" coords="782,32,944,76,943,81,781,37"/>
+<area shape="rect" href="dataHistoryManager_8cpp.html" title=" " alt="" coords="23,152,260,177"/>
+<area shape="poly" title=" " alt="" coords="398,110,194,154,193,149,397,104"/>
+<area shape="poly" title=" " alt="" coords="396,111,357,128,325,154,313,171,306,191,300,226,295,225,301,189,309,169,321,150,355,123,394,106"/>
+<area shape="rect" href="webServerManager_8hpp.html" title=" " alt="" coords="335,152,590,177"/>
+<area shape="poly" title=" " alt="" coords="465,118,465,152,460,152,460,118"/>
+<area shape="poly" title=" " alt="" coords="519,105,685,149,683,154,518,110"/>
+<area shape="poly" title=" " alt="" coords="425,185,325,228,323,223,423,180"/>
+<area shape="poly" title=" " alt="" coords="513,179,652,223,651,228,511,184"/>
 </map>
 </div>
 </div>
-<p><a href="logger_8hpp_source.html">Vá para o código-fonte desse arquivo.</a></p>
+<p><a href="logger_8hpp_source.html">Ir para o código-fonte desse arquivo.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Componentes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1Logger.html">GrowController::Logger</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
-&lt;em&gt;Namespaces&lt;/em&gt;</h2></td></tr>
-<tr class="memitem:namespaceGrowController"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGrowController.html">GrowController</a></td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
+Namespaces</h2></td></tr>
+<tr class="memitem:namespaceGrowController" id="r_namespaceGrowController"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGrowController.html">GrowController</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerações</h2></td></tr>
-<tr class="memitem:ab214a15da82c771b20ed62b225b1a28c"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGrowController.html#ab214a15da82c771b20ed62b225b1a28c">GrowController::LogLevel</a> { <br />
-&#160;&#160;<a class="el" href="namespaceGrowController.html#ab214a15da82c771b20ed62b225b1a28cadc30ec20708ef7b0f641ef78b7880a15">GrowController::LogLevel::DEBUG</a>, 
-<a class="el" href="namespaceGrowController.html#ab214a15da82c771b20ed62b225b1a28ca551b723eafd6a31d444fcb2f5920fbd3">GrowController::LogLevel::INFO</a>, 
-<a class="el" href="namespaceGrowController.html#ab214a15da82c771b20ed62b225b1a28ca32bd8a1db2275458673903bdb84cb277">GrowController::LogLevel::WARN</a>, 
-<a class="el" href="namespaceGrowController.html#ab214a15da82c771b20ed62b225b1a28cabb1ca97ec761fc37101737ba0aa2e7c5">GrowController::LogLevel::ERROR</a>, 
-<br />
-&#160;&#160;<a class="el" href="namespaceGrowController.html#ab214a15da82c771b20ed62b225b1a28cab50339a10e1de285ac99d4c3990b8693">GrowController::LogLevel::NONE</a>
+<tr class="memitem:ab214a15da82c771b20ed62b225b1a28c" id="r_ab214a15da82c771b20ed62b225b1a28c"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGrowController.html#ab214a15da82c771b20ed62b225b1a28c">GrowController::LogLevel</a> { <br />
+&#160;&#160;<a class="el" href="namespaceGrowController.html#ab214a15da82c771b20ed62b225b1a28cadc30ec20708ef7b0f641ef78b7880a15">GrowController::DEBUG</a>
+, <a class="el" href="namespaceGrowController.html#ab214a15da82c771b20ed62b225b1a28ca551b723eafd6a31d444fcb2f5920fbd3">GrowController::INFO</a>
+, <a class="el" href="namespaceGrowController.html#ab214a15da82c771b20ed62b225b1a28ca32bd8a1db2275458673903bdb84cb277">GrowController::WARN</a>
+, <a class="el" href="namespaceGrowController.html#ab214a15da82c771b20ed62b225b1a28cabb1ca97ec761fc37101737ba0aa2e7c5">GrowController::ERROR</a>
+, <br />
+&#160;&#160;<a class="el" href="namespaceGrowController.html#ab214a15da82c771b20ed62b225b1a28cab50339a10e1de285ac99d4c3990b8693">GrowController::NONE</a>
 <br />
  }</td></tr>
 <tr class="separator:ab214a15da82c771b20ed62b225b1a28c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -135,9 +156,7 @@ Enumerações</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Gerado por &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.17
+Gerado por&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

@@ -1,9 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<meta name="generator" content="Doxygen 1.8.17"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Smart Garden - Sistema de Controle de Ambiente: Código-Fonte de src/data/historicDataPoint.hpp</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
@@ -19,10 +19,9 @@
 <div id="titlearea">
 <table cellspacing="0" cellpadding="0">
  <tbody>
- <tr style="height: 56px;">
-  <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Smart Garden - Sistema de Controle de Ambiente
-   &#160;<span id="projectnumber">v1.0</span>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Smart Garden - Sistema de Controle de Ambiente<span id="projectnumber">&#160;v1.0</span>
    </div>
    <div id="projectbrief">Sistema embarcado para monitoramento e controle de ambiente para cultivo</div>
   </td>
@@ -31,22 +30,28 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- Gerado por Doxygen 1.8.17 -->
+<!-- Gerado por Doxygen 1.9.8 -->
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
-var searchBox = new SearchBox("searchBox", "search",false,'Busca');
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
 /* @license-end */
 </script>
 <script type="text/javascript" src="menudata.js"></script>
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
   initMenu('',true,false,'search.php','Busca');
   $(document).ready(function() { init_search(); });
 });
-/* @license-end */</script>
+/* @license-end */
+</script>
 <div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function() { init_codefold(0); });
+/* @license-end */
+</script>
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -56,9 +61,16 @@ $(function() {
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
-<iframe src="javascript:void(0)" frameborder="0" 
-        name="MSearchResults" id="MSearchResults">
-</iframe>
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Carregando...</div>
+<div class="SRStatus" id="Searching">Procurando...</div>
+<div class="SRStatus" id="NoMatches">Nenhuma entrada encontrado</div>
+</div>
+</div>
+</div>
 </div>
 
 <div id="nav-path" class="navpath">
@@ -67,44 +79,43 @@ $(function() {
 </div>
 </div><!-- top -->
 <div class="header">
-  <div class="headertitle">
-<div class="title">historicDataPoint.hpp</div>  </div>
+  <div class="headertitle"><div class="title">historicDataPoint.hpp</div></div>
 </div><!--header-->
 <div class="contents">
-<a href="historicDataPoint_8hpp.html">Vá para a documentação desse arquivo.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">// src/data/historicDataPoint.hpp</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#ifndef HISTORIC_DATA_POINT_HPP</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#define HISTORIC_DATA_POINT_HPP</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span> <span class="comment">// Para uint32_t</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;math.h&gt;</span>   <span class="comment">// Para NAN, se usado diretamente aqui (geralmente não)</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceGrowController.html">GrowController</a> {</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
-<div class="line"><a name="l00010"></a><span class="lineno"><a class="line" href="structGrowController_1_1HistoricDataPoint.html">   10</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structGrowController_1_1HistoricDataPoint.html">HistoricDataPoint</a> {</div>
-<div class="line"><a name="l00011"></a><span class="lineno"><a class="line" href="structGrowController_1_1HistoricDataPoint.html#a171dae746494a9942c33eeeca7f6d905">   11</a></span>&#160;    uint32_t <a class="code" href="structGrowController_1_1HistoricDataPoint.html#a171dae746494a9942c33eeeca7f6d905">timestamp</a>;       <span class="comment">// Unix timestamp UTC</span></div>
-<div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="structGrowController_1_1HistoricDataPoint.html#a4417c85446073f2d8fc2bbba657c9308">   12</a></span>&#160;    <span class="keywordtype">float</span> <a class="code" href="structGrowController_1_1HistoricDataPoint.html#a4417c85446073f2d8fc2bbba657c9308">avgTemperature</a>;</div>
-<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="structGrowController_1_1HistoricDataPoint.html#af0f5469cc8dc0b2a0b1637d520daaa7e">   13</a></span>&#160;    <span class="keywordtype">float</span> <a class="code" href="structGrowController_1_1HistoricDataPoint.html#af0f5469cc8dc0b2a0b1637d520daaa7e">avgAirHumidity</a>;</div>
-<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="structGrowController_1_1HistoricDataPoint.html#af1a85cd3d91f957e23b11ec7c28874e2">   14</a></span>&#160;    <span class="keywordtype">float</span> <a class="code" href="structGrowController_1_1HistoricDataPoint.html#af1a85cd3d91f957e23b11ec7c28874e2">avgSoilHumidity</a>;</div>
-<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="structGrowController_1_1HistoricDataPoint.html#a063713a7cd2e57eec697f9e3d3afa11e">   15</a></span>&#160;    <span class="keywordtype">float</span> <a class="code" href="structGrowController_1_1HistoricDataPoint.html#a063713a7cd2e57eec697f9e3d3afa11e">avgVpd</a>;</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <span class="comment">// bool timeIsValid; // Opcional: para indicar se o timestamp é de NTP ou relativo</span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;};</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;} <span class="comment">// namespace GrowController</span></div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#endif // HISTORIC_DATA_POINT_HPP</span></div>
+<a href="historicDataPoint_8hpp.html">Ir para a documentação desse arquivo.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">// src/data/historicDataPoint.hpp</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#ifndef HISTORIC_DATA_POINT_HPP</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#define HISTORIC_DATA_POINT_HPP</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;stdint.h&gt;</span> <span class="comment">// Para uint32_t</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;math.h&gt;</span>   <span class="comment">// Para NAN, se usado diretamente aqui (geralmente não)</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceGrowController.html">GrowController</a> {</div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
+<div class="foldopen" id="foldopen00010" data-start="{" data-end="};">
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno"><a class="line" href="structGrowController_1_1HistoricDataPoint.html">   10</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structGrowController_1_1HistoricDataPoint.html">HistoricDataPoint</a> {</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno"><a class="line" href="structGrowController_1_1HistoricDataPoint.html#a171dae746494a9942c33eeeca7f6d905">   11</a></span>    uint32_t <a class="code hl_variable" href="structGrowController_1_1HistoricDataPoint.html#a171dae746494a9942c33eeeca7f6d905">timestamp</a>;       <span class="comment">// Unix timestamp UTC</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno"><a class="line" href="structGrowController_1_1HistoricDataPoint.html#a4417c85446073f2d8fc2bbba657c9308">   12</a></span>    <span class="keywordtype">float</span> <a class="code hl_variable" href="structGrowController_1_1HistoricDataPoint.html#a4417c85446073f2d8fc2bbba657c9308">avgTemperature</a>;</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno"><a class="line" href="structGrowController_1_1HistoricDataPoint.html#af0f5469cc8dc0b2a0b1637d520daaa7e">   13</a></span>    <span class="keywordtype">float</span> <a class="code hl_variable" href="structGrowController_1_1HistoricDataPoint.html#af0f5469cc8dc0b2a0b1637d520daaa7e">avgAirHumidity</a>;</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="structGrowController_1_1HistoricDataPoint.html#af1a85cd3d91f957e23b11ec7c28874e2">   14</a></span>    <span class="keywordtype">float</span> <a class="code hl_variable" href="structGrowController_1_1HistoricDataPoint.html#af1a85cd3d91f957e23b11ec7c28874e2">avgSoilHumidity</a>;</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno"><a class="line" href="structGrowController_1_1HistoricDataPoint.html#a063713a7cd2e57eec697f9e3d3afa11e">   15</a></span>    <span class="keywordtype">float</span> <a class="code hl_variable" href="structGrowController_1_1HistoricDataPoint.html#a063713a7cd2e57eec697f9e3d3afa11e">avgVpd</a>;</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    <span class="comment">// bool timeIsValid; // Opcional: para indicar se o timestamp é de NTP ou relativo</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>};</div>
+</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>} <span class="comment">// namespace GrowController</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="preprocessor">#endif </span><span class="comment">// HISTORIC_DATA_POINT_HPP</span></div>
+<div class="ttc" id="anamespaceGrowController_html"><div class="ttname"><a href="namespaceGrowController.html">GrowController</a></div><div class="ttdef"><b>Definição</b> actuatorManager.cpp:7</div></div>
+<div class="ttc" id="astructGrowController_1_1HistoricDataPoint_html"><div class="ttname"><a href="structGrowController_1_1HistoricDataPoint.html">GrowController::HistoricDataPoint</a></div><div class="ttdef"><b>Definição</b> historicDataPoint.hpp:10</div></div>
+<div class="ttc" id="astructGrowController_1_1HistoricDataPoint_html_a063713a7cd2e57eec697f9e3d3afa11e"><div class="ttname"><a href="structGrowController_1_1HistoricDataPoint.html#a063713a7cd2e57eec697f9e3d3afa11e">GrowController::HistoricDataPoint::avgVpd</a></div><div class="ttdeci">float avgVpd</div><div class="ttdef"><b>Definição</b> historicDataPoint.hpp:15</div></div>
+<div class="ttc" id="astructGrowController_1_1HistoricDataPoint_html_a171dae746494a9942c33eeeca7f6d905"><div class="ttname"><a href="structGrowController_1_1HistoricDataPoint.html#a171dae746494a9942c33eeeca7f6d905">GrowController::HistoricDataPoint::timestamp</a></div><div class="ttdeci">uint32_t timestamp</div><div class="ttdef"><b>Definição</b> historicDataPoint.hpp:11</div></div>
+<div class="ttc" id="astructGrowController_1_1HistoricDataPoint_html_a4417c85446073f2d8fc2bbba657c9308"><div class="ttname"><a href="structGrowController_1_1HistoricDataPoint.html#a4417c85446073f2d8fc2bbba657c9308">GrowController::HistoricDataPoint::avgTemperature</a></div><div class="ttdeci">float avgTemperature</div><div class="ttdef"><b>Definição</b> historicDataPoint.hpp:12</div></div>
+<div class="ttc" id="astructGrowController_1_1HistoricDataPoint_html_af0f5469cc8dc0b2a0b1637d520daaa7e"><div class="ttname"><a href="structGrowController_1_1HistoricDataPoint.html#af0f5469cc8dc0b2a0b1637d520daaa7e">GrowController::HistoricDataPoint::avgAirHumidity</a></div><div class="ttdeci">float avgAirHumidity</div><div class="ttdef"><b>Definição</b> historicDataPoint.hpp:13</div></div>
+<div class="ttc" id="astructGrowController_1_1HistoricDataPoint_html_af1a85cd3d91f957e23b11ec7c28874e2"><div class="ttname"><a href="structGrowController_1_1HistoricDataPoint.html#af1a85cd3d91f957e23b11ec7c28874e2">GrowController::HistoricDataPoint::avgSoilHumidity</a></div><div class="ttdeci">float avgSoilHumidity</div><div class="ttdef"><b>Definição</b> historicDataPoint.hpp:14</div></div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="astructGrowController_1_1HistoricDataPoint_html_a063713a7cd2e57eec697f9e3d3afa11e"><div class="ttname"><a href="structGrowController_1_1HistoricDataPoint.html#a063713a7cd2e57eec697f9e3d3afa11e">GrowController::HistoricDataPoint::avgVpd</a></div><div class="ttdeci">float avgVpd</div><div class="ttdef"><b>Definition:</b> historicDataPoint.hpp:15</div></div>
-<div class="ttc" id="astructGrowController_1_1HistoricDataPoint_html_a171dae746494a9942c33eeeca7f6d905"><div class="ttname"><a href="structGrowController_1_1HistoricDataPoint.html#a171dae746494a9942c33eeeca7f6d905">GrowController::HistoricDataPoint::timestamp</a></div><div class="ttdeci">uint32_t timestamp</div><div class="ttdef"><b>Definition:</b> historicDataPoint.hpp:11</div></div>
-<div class="ttc" id="anamespaceGrowController_html"><div class="ttname"><a href="namespaceGrowController.html">GrowController</a></div><div class="ttdef"><b>Definition:</b> actuatorManager.cpp:7</div></div>
-<div class="ttc" id="astructGrowController_1_1HistoricDataPoint_html_af0f5469cc8dc0b2a0b1637d520daaa7e"><div class="ttname"><a href="structGrowController_1_1HistoricDataPoint.html#af0f5469cc8dc0b2a0b1637d520daaa7e">GrowController::HistoricDataPoint::avgAirHumidity</a></div><div class="ttdeci">float avgAirHumidity</div><div class="ttdef"><b>Definition:</b> historicDataPoint.hpp:13</div></div>
-<div class="ttc" id="astructGrowController_1_1HistoricDataPoint_html_a4417c85446073f2d8fc2bbba657c9308"><div class="ttname"><a href="structGrowController_1_1HistoricDataPoint.html#a4417c85446073f2d8fc2bbba657c9308">GrowController::HistoricDataPoint::avgTemperature</a></div><div class="ttdeci">float avgTemperature</div><div class="ttdef"><b>Definition:</b> historicDataPoint.hpp:12</div></div>
-<div class="ttc" id="astructGrowController_1_1HistoricDataPoint_html"><div class="ttname"><a href="structGrowController_1_1HistoricDataPoint.html">GrowController::HistoricDataPoint</a></div><div class="ttdef"><b>Definition:</b> historicDataPoint.hpp:10</div></div>
-<div class="ttc" id="astructGrowController_1_1HistoricDataPoint_html_af1a85cd3d91f957e23b11ec7c28874e2"><div class="ttname"><a href="structGrowController_1_1HistoricDataPoint.html#af1a85cd3d91f957e23b11ec7c28874e2">GrowController::HistoricDataPoint::avgSoilHumidity</a></div><div class="ttdeci">float avgSoilHumidity</div><div class="ttdef"><b>Definition:</b> historicDataPoint.hpp:14</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Gerado por &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.17
+Gerado por&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

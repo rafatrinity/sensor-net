@@ -1,9 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<meta name="generator" content="Doxygen 1.8.17"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Smart Garden - Sistema de Controle de Ambiente: Código-Fonte de src/ui/displayManager.hpp</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
@@ -19,10 +19,9 @@
 <div id="titlearea">
 <table cellspacing="0" cellpadding="0">
  <tbody>
- <tr style="height: 56px;">
-  <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Smart Garden - Sistema de Controle de Ambiente
-   &#160;<span id="projectnumber">v1.0</span>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Smart Garden - Sistema de Controle de Ambiente<span id="projectnumber">&#160;v1.0</span>
    </div>
    <div id="projectbrief">Sistema embarcado para monitoramento e controle de ambiente para cultivo</div>
   </td>
@@ -31,22 +30,28 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- Gerado por Doxygen 1.8.17 -->
+<!-- Gerado por Doxygen 1.9.8 -->
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
-var searchBox = new SearchBox("searchBox", "search",false,'Busca');
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
 /* @license-end */
 </script>
 <script type="text/javascript" src="menudata.js"></script>
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
   initMenu('',true,false,'search.php','Busca');
   $(document).ready(function() { init_search(); });
 });
-/* @license-end */</script>
+/* @license-end */
+</script>
 <div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function() { init_codefold(0); });
+/* @license-end */
+</script>
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -56,9 +61,16 @@ $(function() {
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
-<iframe src="javascript:void(0)" frameborder="0" 
-        name="MSearchResults" id="MSearchResults">
-</iframe>
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Carregando...</div>
+<div class="SRStatus" id="Searching">Procurando...</div>
+<div class="SRStatus" id="NoMatches">Nenhuma entrada encontrado</div>
+</div>
+</div>
+</div>
 </div>
 
 <div id="nav-path" class="navpath">
@@ -67,107 +79,106 @@ $(function() {
 </div>
 </div><!-- top -->
 <div class="header">
-  <div class="headertitle">
-<div class="title">displayManager.hpp</div>  </div>
+  <div class="headertitle"><div class="title">displayManager.hpp</div></div>
 </div><!--header-->
 <div class="contents">
-<a href="displayManager_8hpp.html">Vá para a documentação desse arquivo.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">// src/ui/displayManager.hpp</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#ifndef DISPLAY_MANAGER_HPP</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#define DISPLAY_MANAGER_HPP</span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;memory&gt;</span></div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;LiquidCrystal_I2C.h&gt;</span></div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="freeRTOSMutex_8hpp.html">utils/freeRTOSMutex.hpp</a>&quot;</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="timeService_8hpp.html">utils/timeService.hpp</a>&quot;</span> <span class="comment">// &lt;&lt;&lt; ADICIONADO INCLUDE (VERIFIQUE CAMINHO)</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceGrowController.html">GrowController</a> {</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment">// Forward declare TimeService se não incluir o header diretamente</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment">// class TimeService;</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
-<div class="line"><a name="l00016"></a><span class="lineno"><a class="line" href="classGrowController_1_1DisplayManager.html">   16</a></span>&#160;<span class="keyword">class </span><a class="code" href="classGrowController_1_1DisplayManager.html">DisplayManager</a> {</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <a class="code" href="classGrowController_1_1DisplayManager.html#a92716cd4eee6b7204b8d4a9c3affec5b">DisplayManager</a>(uint8_t i2c_addr, uint8_t cols, uint8_t rows, <a class="code" href="classGrowController_1_1TimeService.html">TimeService</a>&amp; timeSvc); <span class="comment">// &lt;&lt;&lt; ADICIONADO timeSvc</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <a class="code" href="classGrowController_1_1DisplayManager.html#af691ece4acc0ce67390083a793843642">~DisplayManager</a>();</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <a class="code" href="classGrowController_1_1DisplayManager.html#a92716cd4eee6b7204b8d4a9c3affec5b">DisplayManager</a>(<span class="keyword">const</span> <a class="code" href="classGrowController_1_1DisplayManager.html">DisplayManager</a>&amp;) = <span class="keyword">delete</span>;</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <a class="code" href="classGrowController_1_1DisplayManager.html">DisplayManager</a>&amp; <a class="code" href="classGrowController_1_1DisplayManager.html#abe22644234f0c6faa2f01a8ac88c920b">operator=</a>(<span class="keyword">const</span> <a class="code" href="classGrowController_1_1DisplayManager.html">DisplayManager</a>&amp;) = <span class="keyword">delete</span>;</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160; </div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classGrowController_1_1DisplayManager.html#a0b9a9983fd204e965c1b005158220513">initialize</a>();</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classGrowController_1_1DisplayManager.html#a26a0dd37ae00fb5d3e7bcff7b145cffa">clear</a>();</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classGrowController_1_1DisplayManager.html#a358e99dcb42390daaad16ea61e57a25b">setBacklight</a>(<span class="keywordtype">bool</span> enable);</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classGrowController_1_1DisplayManager.html#ac232fb6ac1eacfdb121d6ff6f7244780">printLine</a>(uint8_t line, <span class="keyword">const</span> <span class="keywordtype">char</span>* format, ...);</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classGrowController_1_1DisplayManager.html#a1f3eccfdabd2bf6deb21364b4448a47c">showError</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* message);</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="comment">// Funções de Status Específico</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classGrowController_1_1DisplayManager.html#ada5805ecd9c1def0a3e91725130f15d8">showBooting</a>();</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classGrowController_1_1DisplayManager.html#ab4d8662025b59c07e7a3119ffe84690b">showConnectingWiFi</a>();</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classGrowController_1_1DisplayManager.html#a19f1621ebaa0a8c3f7ca900dadb22c44">showWiFiConnected</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* ip);</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classGrowController_1_1DisplayManager.html#a09c7b5216f3599f8e933a40d9e7f73d3">showNtpSyncing</a>();</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classGrowController_1_1DisplayManager.html#a71d688c36a8f2b566641cd1f57bd9eda">showNtpSynced</a>(); <span class="comment">// &lt;&lt;&lt; USARÁ timeService</span></div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classGrowController_1_1DisplayManager.html#a5892179e9cc7c7b7ab73119764ffcb1e">showMqttConnecting</a>();</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classGrowController_1_1DisplayManager.html#a27c3b9c4ff05602045c88fb3d089cd8a">showMqttConnected</a>();</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classGrowController_1_1DisplayManager.html#a838315916bd338bf4d30a228519fdb12">showSensorData</a>(<span class="keywordtype">float</span> temp, <span class="keywordtype">float</span> airHum, <span class="keywordtype">float</span> soilHum); <span class="comment">// &lt;&lt;&lt; USARÁ timeService</span></div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classGrowController_1_1DisplayManager.html#a9a2ee0b4593b822dfcc878cb73576857">updateSpinner</a>();</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classGrowController_1_1DisplayManager.html#a67abe4570eba5d743504ddd0679d1d6f">isInitialized</a>() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160; </div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keyword">const</span> uint8_t i2cAddr;</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keyword">const</span> uint8_t lcdCols;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="keyword">const</span> uint8_t lcdRows;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <a class="code" href="classGrowController_1_1TimeService.html">TimeService</a>&amp; timeService;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    std::unique_ptr&lt;LiquidCrystal_I2C&gt; lcd = <span class="keyword">nullptr</span>;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <a class="code" href="classGrowController_1_1FreeRTOSMutex.html">FreeRTOSMutex</a> lcdMutex;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    <span class="keywordtype">bool</span> initialized = <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <span class="comment">// Estado interno</span></div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    int8_t spinnerCounter = 0;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keywordtype">float</span> lastTemp = NAN;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <span class="keywordtype">float</span> lastAirHum = NAN;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    <span class="keywordtype">float</span> lastSoilHum = NAN;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keywordtype">int</span> lastMinute = -1;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span>* SPINNER_GLYPHS;</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> TickType_t MUTEX_TIMEOUT;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;};</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160; </div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;} <span class="comment">// namespace GrowController</span></div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="preprocessor">#endif // DISPLAY_MANAGER_HPP</span></div>
-</div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="atimeService_8hpp_html"><div class="ttname"><a href="timeService_8hpp.html">timeService.hpp</a></div></div>
-<div class="ttc" id="aclassGrowController_1_1DisplayManager_html_a67abe4570eba5d743504ddd0679d1d6f"><div class="ttname"><a href="classGrowController_1_1DisplayManager.html#a67abe4570eba5d743504ddd0679d1d6f">GrowController::DisplayManager::isInitialized</a></div><div class="ttdeci">bool isInitialized() const</div><div class="ttdef"><b>Definition:</b> displayManager.cpp:71</div></div>
-<div class="ttc" id="aclassGrowController_1_1FreeRTOSMutex_html"><div class="ttname"><a href="classGrowController_1_1FreeRTOSMutex.html">GrowController::FreeRTOSMutex</a></div><div class="ttdoc">Classe wrapper RAII para um Mutex FreeRTOS (SemaphoreHandle_t). Garante que vSemaphoreDelete seja cha...</div><div class="ttdef"><b>Definition:</b> freeRTOSMutex.hpp:14</div></div>
-<div class="ttc" id="aclassGrowController_1_1DisplayManager_html_a71d688c36a8f2b566641cd1f57bd9eda"><div class="ttname"><a href="classGrowController_1_1DisplayManager.html#a71d688c36a8f2b566641cd1f57bd9eda">GrowController::DisplayManager::showNtpSynced</a></div><div class="ttdeci">void showNtpSynced()</div><div class="ttdef"><b>Definition:</b> displayManager.cpp:145</div></div>
-<div class="ttc" id="aclassGrowController_1_1DisplayManager_html_af691ece4acc0ce67390083a793843642"><div class="ttname"><a href="classGrowController_1_1DisplayManager.html#af691ece4acc0ce67390083a793843642">GrowController::DisplayManager::~DisplayManager</a></div><div class="ttdeci">~DisplayManager()</div><div class="ttdef"><b>Definition:</b> displayManager.cpp:33</div></div>
-<div class="ttc" id="aclassGrowController_1_1DisplayManager_html_ada5805ecd9c1def0a3e91725130f15d8"><div class="ttname"><a href="classGrowController_1_1DisplayManager.html#ada5805ecd9c1def0a3e91725130f15d8">GrowController::DisplayManager::showBooting</a></div><div class="ttdeci">void showBooting()</div><div class="ttdef"><b>Definition:</b> displayManager.cpp:125</div></div>
-<div class="ttc" id="aclassGrowController_1_1DisplayManager_html_a09c7b5216f3599f8e933a40d9e7f73d3"><div class="ttname"><a href="classGrowController_1_1DisplayManager.html#a09c7b5216f3599f8e933a40d9e7f73d3">GrowController::DisplayManager::showNtpSyncing</a></div><div class="ttdeci">void showNtpSyncing()</div><div class="ttdef"><b>Definition:</b> displayManager.cpp:140</div></div>
-<div class="ttc" id="aclassGrowController_1_1DisplayManager_html_a92716cd4eee6b7204b8d4a9c3affec5b"><div class="ttname"><a href="classGrowController_1_1DisplayManager.html#a92716cd4eee6b7204b8d4a9c3affec5b">GrowController::DisplayManager::DisplayManager</a></div><div class="ttdeci">DisplayManager(uint8_t i2c_addr, uint8_t cols, uint8_t rows, TimeService &amp;timeSvc)</div><div class="ttdoc">Construtor. Recebe parâmetros de configuração e dependências.</div><div class="ttdef"><b>Definition:</b> displayManager.cpp:19</div></div>
-<div class="ttc" id="aclassGrowController_1_1DisplayManager_html_a19f1621ebaa0a8c3f7ca900dadb22c44"><div class="ttname"><a href="classGrowController_1_1DisplayManager.html#a19f1621ebaa0a8c3f7ca900dadb22c44">GrowController::DisplayManager::showWiFiConnected</a></div><div class="ttdeci">void showWiFiConnected(const char *ip)</div><div class="ttdef"><b>Definition:</b> displayManager.cpp:135</div></div>
-<div class="ttc" id="aclassGrowController_1_1DisplayManager_html_ac232fb6ac1eacfdb121d6ff6f7244780"><div class="ttname"><a href="classGrowController_1_1DisplayManager.html#ac232fb6ac1eacfdb121d6ff6f7244780">GrowController::DisplayManager::printLine</a></div><div class="ttdeci">void printLine(uint8_t line, const char *format,...)</div><div class="ttdef"><b>Definition:</b> displayManager.cpp:97</div></div>
-<div class="ttc" id="aclassGrowController_1_1DisplayManager_html_a1f3eccfdabd2bf6deb21364b4448a47c"><div class="ttname"><a href="classGrowController_1_1DisplayManager.html#a1f3eccfdabd2bf6deb21364b4448a47c">GrowController::DisplayManager::showError</a></div><div class="ttdeci">void showError(const char *message)</div><div class="ttdef"><b>Definition:</b> displayManager.cpp:118</div></div>
-<div class="ttc" id="aclassGrowController_1_1DisplayManager_html_abe22644234f0c6faa2f01a8ac88c920b"><div class="ttname"><a href="classGrowController_1_1DisplayManager.html#abe22644234f0c6faa2f01a8ac88c920b">GrowController::DisplayManager::operator=</a></div><div class="ttdeci">DisplayManager &amp; operator=(const DisplayManager &amp;)=delete</div></div>
-<div class="ttc" id="aclassGrowController_1_1DisplayManager_html_a5892179e9cc7c7b7ab73119764ffcb1e"><div class="ttname"><a href="classGrowController_1_1DisplayManager.html#a5892179e9cc7c7b7ab73119764ffcb1e">GrowController::DisplayManager::showMqttConnecting</a></div><div class="ttdeci">void showMqttConnecting()</div><div class="ttdef"><b>Definition:</b> displayManager.cpp:158</div></div>
-<div class="ttc" id="anamespaceGrowController_html"><div class="ttname"><a href="namespaceGrowController.html">GrowController</a></div><div class="ttdef"><b>Definition:</b> actuatorManager.cpp:7</div></div>
-<div class="ttc" id="aclassGrowController_1_1DisplayManager_html_a27c3b9c4ff05602045c88fb3d089cd8a"><div class="ttname"><a href="classGrowController_1_1DisplayManager.html#a27c3b9c4ff05602045c88fb3d089cd8a">GrowController::DisplayManager::showMqttConnected</a></div><div class="ttdeci">void showMqttConnected()</div><div class="ttdef"><b>Definition:</b> displayManager.cpp:163</div></div>
-<div class="ttc" id="aclassGrowController_1_1DisplayManager_html_a838315916bd338bf4d30a228519fdb12"><div class="ttname"><a href="classGrowController_1_1DisplayManager.html#a838315916bd338bf4d30a228519fdb12">GrowController::DisplayManager::showSensorData</a></div><div class="ttdeci">void showSensorData(float temp, float airHum, float soilHum)</div><div class="ttdoc">Atualiza a exibição principal com dados de sensores e hora. Thread-safe.</div><div class="ttdef"><b>Definition:</b> displayManager.cpp:170</div></div>
-<div class="ttc" id="aclassGrowController_1_1DisplayManager_html_a26a0dd37ae00fb5d3e7bcff7b145cffa"><div class="ttname"><a href="classGrowController_1_1DisplayManager.html#a26a0dd37ae00fb5d3e7bcff7b145cffa">GrowController::DisplayManager::clear</a></div><div class="ttdeci">void clear()</div><div class="ttdef"><b>Definition:</b> displayManager.cpp:76</div></div>
-<div class="ttc" id="aclassGrowController_1_1DisplayManager_html_ab4d8662025b59c07e7a3119ffe84690b"><div class="ttname"><a href="classGrowController_1_1DisplayManager.html#ab4d8662025b59c07e7a3119ffe84690b">GrowController::DisplayManager::showConnectingWiFi</a></div><div class="ttdeci">void showConnectingWiFi()</div><div class="ttdef"><b>Definition:</b> displayManager.cpp:130</div></div>
-<div class="ttc" id="aclassGrowController_1_1TimeService_html"><div class="ttname"><a href="classGrowController_1_1TimeService.html">GrowController::TimeService</a></div><div class="ttdoc">Classe para gerenciar o serviço de tempo e sincronização NTP. Encapsula a inicialização e obtenção da...</div><div class="ttdef"><b>Definition:</b> timeService.hpp:13</div></div>
-<div class="ttc" id="aclassGrowController_1_1DisplayManager_html_a0b9a9983fd204e965c1b005158220513"><div class="ttname"><a href="classGrowController_1_1DisplayManager.html#a0b9a9983fd204e965c1b005158220513">GrowController::DisplayManager::initialize</a></div><div class="ttdeci">bool initialize()</div><div class="ttdef"><b>Definition:</b> displayManager.cpp:39</div></div>
-<div class="ttc" id="aclassGrowController_1_1DisplayManager_html_a358e99dcb42390daaad16ea61e57a25b"><div class="ttname"><a href="classGrowController_1_1DisplayManager.html#a358e99dcb42390daaad16ea61e57a25b">GrowController::DisplayManager::setBacklight</a></div><div class="ttdeci">void setBacklight(bool enable)</div><div class="ttdef"><b>Definition:</b> displayManager.cpp:86</div></div>
-<div class="ttc" id="aclassGrowController_1_1DisplayManager_html_a9a2ee0b4593b822dfcc878cb73576857"><div class="ttname"><a href="classGrowController_1_1DisplayManager.html#a9a2ee0b4593b822dfcc878cb73576857">GrowController::DisplayManager::updateSpinner</a></div><div class="ttdeci">void updateSpinner()</div><div class="ttdef"><b>Definition:</b> displayManager.cpp:231</div></div>
+<a href="displayManager_8hpp.html">Ir para a documentação desse arquivo.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">// src/ui/displayManager.hpp</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#ifndef DISPLAY_MANAGER_HPP</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#define DISPLAY_MANAGER_HPP</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;memory&gt;</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &lt;LiquidCrystal_I2C.h&gt;</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &quot;<a class="code" href="freeRTOSMutex_8hpp.html">utils/freeRTOSMutex.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &quot;<a class="code" href="timeService_8hpp.html">utils/timeService.hpp</a>&quot;</span> <span class="comment">// &lt;&lt;&lt; ADICIONADO INCLUDE (VERIFIQUE CAMINHO)</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceGrowController.html">GrowController</a> {</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="comment">// Forward declare TimeService se não incluir o header diretamente</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="comment">// class TimeService;</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
+<div class="foldopen" id="foldopen00016" data-start="{" data-end="};">
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="classGrowController_1_1DisplayManager.html">   16</a></span><span class="keyword">class </span><a class="code hl_class" href="classGrowController_1_1DisplayManager.html">DisplayManager</a> {</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    <a class="code hl_class" href="classGrowController_1_1DisplayManager.html">DisplayManager</a>(uint8_t i2c_addr, uint8_t cols, uint8_t rows, <a class="code hl_class" href="classGrowController_1_1TimeService.html">TimeService</a>&amp; timeSvc); <span class="comment">// &lt;&lt;&lt; ADICIONADO timeSvc</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    <a class="code hl_function" href="classGrowController_1_1DisplayManager.html#af691ece4acc0ce67390083a793843642">~DisplayManager</a>();</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="classGrowController_1_1DisplayManager.html#a01c622e178972a57d448bf0024a00160">   29</a></span>    <a class="code hl_function" href="classGrowController_1_1DisplayManager.html#a01c622e178972a57d448bf0024a00160">DisplayManager</a>(<span class="keyword">const</span> <a class="code hl_class" href="classGrowController_1_1DisplayManager.html">DisplayManager</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="classGrowController_1_1DisplayManager.html#a4130cc95d4480f9847a1e9c2964add5e">   30</a></span>    <a class="code hl_class" href="classGrowController_1_1DisplayManager.html">DisplayManager</a>&amp; <a class="code hl_function" href="classGrowController_1_1DisplayManager.html#a4130cc95d4480f9847a1e9c2964add5e">operator=</a>(<span class="keyword">const</span> <a class="code hl_class" href="classGrowController_1_1DisplayManager.html">DisplayManager</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classGrowController_1_1DisplayManager.html#a0b9a9983fd204e965c1b005158220513">initialize</a>();</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classGrowController_1_1DisplayManager.html#a26a0dd37ae00fb5d3e7bcff7b145cffa">clear</a>();</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classGrowController_1_1DisplayManager.html#a358e99dcb42390daaad16ea61e57a25b">setBacklight</a>(<span class="keywordtype">bool</span> enable);</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classGrowController_1_1DisplayManager.html#ac232fb6ac1eacfdb121d6ff6f7244780">printLine</a>(uint8_t line, <span class="keyword">const</span> <span class="keywordtype">char</span>* format, ...);</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classGrowController_1_1DisplayManager.html#a1f3eccfdabd2bf6deb21364b4448a47c">showError</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* message);</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    <span class="comment">// Funções de Status Específico</span></div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classGrowController_1_1DisplayManager.html#ada5805ecd9c1def0a3e91725130f15d8">showBooting</a>();</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classGrowController_1_1DisplayManager.html#ab4d8662025b59c07e7a3119ffe84690b">showConnectingWiFi</a>();</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classGrowController_1_1DisplayManager.html#a19f1621ebaa0a8c3f7ca900dadb22c44">showWiFiConnected</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* ip);</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classGrowController_1_1DisplayManager.html#a09c7b5216f3599f8e933a40d9e7f73d3">showNtpSyncing</a>();</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classGrowController_1_1DisplayManager.html#a71d688c36a8f2b566641cd1f57bd9eda">showNtpSynced</a>(); <span class="comment">// &lt;&lt;&lt; USARÁ timeService</span></div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classGrowController_1_1DisplayManager.html#a5892179e9cc7c7b7ab73119764ffcb1e">showMqttConnecting</a>();</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classGrowController_1_1DisplayManager.html#a27c3b9c4ff05602045c88fb3d089cd8a">showMqttConnected</a>();</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classGrowController_1_1DisplayManager.html#a838315916bd338bf4d30a228519fdb12">showSensorData</a>(<span class="keywordtype">float</span> temp, <span class="keywordtype">float</span> airHum, <span class="keywordtype">float</span> soilHum); <span class="comment">// &lt;&lt;&lt; USARÁ timeService</span></div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classGrowController_1_1DisplayManager.html#a9a2ee0b4593b822dfcc878cb73576857">updateSpinner</a>();</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classGrowController_1_1DisplayManager.html#a67abe4570eba5d743504ddd0679d1d6f">isInitialized</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    <span class="keyword">const</span> uint8_t i2cAddr;</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    <span class="keyword">const</span> uint8_t lcdCols;</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    <span class="keyword">const</span> uint8_t lcdRows;</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    <a class="code hl_class" href="classGrowController_1_1TimeService.html">TimeService</a>&amp; timeService;</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    std::unique_ptr&lt;LiquidCrystal_I2C&gt; lcd = <span class="keyword">nullptr</span>;</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    <a class="code hl_class" href="classGrowController_1_1FreeRTOSMutex.html">FreeRTOSMutex</a> lcdMutex;</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    <span class="keywordtype">bool</span> initialized = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span> </div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    <span class="comment">// Estado interno</span></div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    int8_t spinnerCounter = 0;</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    <span class="keywordtype">float</span> lastTemp = NAN;</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    <span class="keywordtype">float</span> lastAirHum = NAN;</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    <span class="keywordtype">float</span> lastSoilHum = NAN;</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    <span class="keywordtype">int</span> lastMinute = -1;</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span>* SPINNER_GLYPHS;</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    <span class="keyword">static</span> <span class="keyword">const</span> TickType_t MUTEX_TIMEOUT;</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>};</div>
+</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>} <span class="comment">// namespace GrowController</span></div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span> </div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span><span class="preprocessor">#endif </span><span class="comment">// DISPLAY_MANAGER_HPP</span></div>
+<div class="ttc" id="aclassGrowController_1_1DisplayManager_html"><div class="ttname"><a href="classGrowController_1_1DisplayManager.html">GrowController::DisplayManager</a></div><div class="ttdef"><b>Definição</b> displayManager.hpp:16</div></div>
+<div class="ttc" id="aclassGrowController_1_1DisplayManager_html_a01c622e178972a57d448bf0024a00160"><div class="ttname"><a href="classGrowController_1_1DisplayManager.html#a01c622e178972a57d448bf0024a00160">GrowController::DisplayManager::DisplayManager</a></div><div class="ttdeci">DisplayManager(const DisplayManager &amp;)=delete</div></div>
+<div class="ttc" id="aclassGrowController_1_1DisplayManager_html_a09c7b5216f3599f8e933a40d9e7f73d3"><div class="ttname"><a href="classGrowController_1_1DisplayManager.html#a09c7b5216f3599f8e933a40d9e7f73d3">GrowController::DisplayManager::showNtpSyncing</a></div><div class="ttdeci">void showNtpSyncing()</div><div class="ttdef"><b>Definição</b> displayManager.cpp:140</div></div>
+<div class="ttc" id="aclassGrowController_1_1DisplayManager_html_a0b9a9983fd204e965c1b005158220513"><div class="ttname"><a href="classGrowController_1_1DisplayManager.html#a0b9a9983fd204e965c1b005158220513">GrowController::DisplayManager::initialize</a></div><div class="ttdeci">bool initialize()</div><div class="ttdef"><b>Definição</b> displayManager.cpp:39</div></div>
+<div class="ttc" id="aclassGrowController_1_1DisplayManager_html_a19f1621ebaa0a8c3f7ca900dadb22c44"><div class="ttname"><a href="classGrowController_1_1DisplayManager.html#a19f1621ebaa0a8c3f7ca900dadb22c44">GrowController::DisplayManager::showWiFiConnected</a></div><div class="ttdeci">void showWiFiConnected(const char *ip)</div><div class="ttdef"><b>Definição</b> displayManager.cpp:135</div></div>
+<div class="ttc" id="aclassGrowController_1_1DisplayManager_html_a1f3eccfdabd2bf6deb21364b4448a47c"><div class="ttname"><a href="classGrowController_1_1DisplayManager.html#a1f3eccfdabd2bf6deb21364b4448a47c">GrowController::DisplayManager::showError</a></div><div class="ttdeci">void showError(const char *message)</div><div class="ttdef"><b>Definição</b> displayManager.cpp:118</div></div>
+<div class="ttc" id="aclassGrowController_1_1DisplayManager_html_a26a0dd37ae00fb5d3e7bcff7b145cffa"><div class="ttname"><a href="classGrowController_1_1DisplayManager.html#a26a0dd37ae00fb5d3e7bcff7b145cffa">GrowController::DisplayManager::clear</a></div><div class="ttdeci">void clear()</div><div class="ttdef"><b>Definição</b> displayManager.cpp:76</div></div>
+<div class="ttc" id="aclassGrowController_1_1DisplayManager_html_a27c3b9c4ff05602045c88fb3d089cd8a"><div class="ttname"><a href="classGrowController_1_1DisplayManager.html#a27c3b9c4ff05602045c88fb3d089cd8a">GrowController::DisplayManager::showMqttConnected</a></div><div class="ttdeci">void showMqttConnected()</div><div class="ttdef"><b>Definição</b> displayManager.cpp:163</div></div>
+<div class="ttc" id="aclassGrowController_1_1DisplayManager_html_a358e99dcb42390daaad16ea61e57a25b"><div class="ttname"><a href="classGrowController_1_1DisplayManager.html#a358e99dcb42390daaad16ea61e57a25b">GrowController::DisplayManager::setBacklight</a></div><div class="ttdeci">void setBacklight(bool enable)</div><div class="ttdef"><b>Definição</b> displayManager.cpp:86</div></div>
+<div class="ttc" id="aclassGrowController_1_1DisplayManager_html_a4130cc95d4480f9847a1e9c2964add5e"><div class="ttname"><a href="classGrowController_1_1DisplayManager.html#a4130cc95d4480f9847a1e9c2964add5e">GrowController::DisplayManager::operator=</a></div><div class="ttdeci">DisplayManager &amp; operator=(const DisplayManager &amp;)=delete</div></div>
+<div class="ttc" id="aclassGrowController_1_1DisplayManager_html_a5892179e9cc7c7b7ab73119764ffcb1e"><div class="ttname"><a href="classGrowController_1_1DisplayManager.html#a5892179e9cc7c7b7ab73119764ffcb1e">GrowController::DisplayManager::showMqttConnecting</a></div><div class="ttdeci">void showMqttConnecting()</div><div class="ttdef"><b>Definição</b> displayManager.cpp:158</div></div>
+<div class="ttc" id="aclassGrowController_1_1DisplayManager_html_a67abe4570eba5d743504ddd0679d1d6f"><div class="ttname"><a href="classGrowController_1_1DisplayManager.html#a67abe4570eba5d743504ddd0679d1d6f">GrowController::DisplayManager::isInitialized</a></div><div class="ttdeci">bool isInitialized() const</div><div class="ttdef"><b>Definição</b> displayManager.cpp:71</div></div>
+<div class="ttc" id="aclassGrowController_1_1DisplayManager_html_a71d688c36a8f2b566641cd1f57bd9eda"><div class="ttname"><a href="classGrowController_1_1DisplayManager.html#a71d688c36a8f2b566641cd1f57bd9eda">GrowController::DisplayManager::showNtpSynced</a></div><div class="ttdeci">void showNtpSynced()</div><div class="ttdef"><b>Definição</b> displayManager.cpp:145</div></div>
+<div class="ttc" id="aclassGrowController_1_1DisplayManager_html_a838315916bd338bf4d30a228519fdb12"><div class="ttname"><a href="classGrowController_1_1DisplayManager.html#a838315916bd338bf4d30a228519fdb12">GrowController::DisplayManager::showSensorData</a></div><div class="ttdeci">void showSensorData(float temp, float airHum, float soilHum)</div><div class="ttdoc">Atualiza a exibição principal com dados de sensores e hora. Thread-safe.</div><div class="ttdef"><b>Definição</b> displayManager.cpp:170</div></div>
+<div class="ttc" id="aclassGrowController_1_1DisplayManager_html_a9a2ee0b4593b822dfcc878cb73576857"><div class="ttname"><a href="classGrowController_1_1DisplayManager.html#a9a2ee0b4593b822dfcc878cb73576857">GrowController::DisplayManager::updateSpinner</a></div><div class="ttdeci">void updateSpinner()</div><div class="ttdef"><b>Definição</b> displayManager.cpp:231</div></div>
+<div class="ttc" id="aclassGrowController_1_1DisplayManager_html_ab4d8662025b59c07e7a3119ffe84690b"><div class="ttname"><a href="classGrowController_1_1DisplayManager.html#ab4d8662025b59c07e7a3119ffe84690b">GrowController::DisplayManager::showConnectingWiFi</a></div><div class="ttdeci">void showConnectingWiFi()</div><div class="ttdef"><b>Definição</b> displayManager.cpp:130</div></div>
+<div class="ttc" id="aclassGrowController_1_1DisplayManager_html_ac232fb6ac1eacfdb121d6ff6f7244780"><div class="ttname"><a href="classGrowController_1_1DisplayManager.html#ac232fb6ac1eacfdb121d6ff6f7244780">GrowController::DisplayManager::printLine</a></div><div class="ttdeci">void printLine(uint8_t line, const char *format,...)</div><div class="ttdef"><b>Definição</b> displayManager.cpp:97</div></div>
+<div class="ttc" id="aclassGrowController_1_1DisplayManager_html_ada5805ecd9c1def0a3e91725130f15d8"><div class="ttname"><a href="classGrowController_1_1DisplayManager.html#ada5805ecd9c1def0a3e91725130f15d8">GrowController::DisplayManager::showBooting</a></div><div class="ttdeci">void showBooting()</div><div class="ttdef"><b>Definição</b> displayManager.cpp:125</div></div>
+<div class="ttc" id="aclassGrowController_1_1DisplayManager_html_af691ece4acc0ce67390083a793843642"><div class="ttname"><a href="classGrowController_1_1DisplayManager.html#af691ece4acc0ce67390083a793843642">GrowController::DisplayManager::~DisplayManager</a></div><div class="ttdeci">~DisplayManager()</div><div class="ttdef"><b>Definição</b> displayManager.cpp:33</div></div>
+<div class="ttc" id="aclassGrowController_1_1FreeRTOSMutex_html"><div class="ttname"><a href="classGrowController_1_1FreeRTOSMutex.html">GrowController::FreeRTOSMutex</a></div><div class="ttdoc">Classe wrapper RAII para um Mutex FreeRTOS (SemaphoreHandle_t). Garante que vSemaphoreDelete seja cha...</div><div class="ttdef"><b>Definição</b> freeRTOSMutex.hpp:14</div></div>
+<div class="ttc" id="aclassGrowController_1_1TimeService_html"><div class="ttname"><a href="classGrowController_1_1TimeService.html">GrowController::TimeService</a></div><div class="ttdoc">Classe para gerenciar o serviço de tempo e sincronização NTP. Encapsula a inicialização e obtenção da...</div><div class="ttdef"><b>Definição</b> timeService.hpp:13</div></div>
 <div class="ttc" id="afreeRTOSMutex_8hpp_html"><div class="ttname"><a href="freeRTOSMutex_8hpp.html">freeRTOSMutex.hpp</a></div></div>
-<div class="ttc" id="aclassGrowController_1_1DisplayManager_html"><div class="ttname"><a href="classGrowController_1_1DisplayManager.html">GrowController::DisplayManager</a></div><div class="ttdef"><b>Definition:</b> displayManager.hpp:16</div></div>
+<div class="ttc" id="anamespaceGrowController_html"><div class="ttname"><a href="namespaceGrowController.html">GrowController</a></div><div class="ttdef"><b>Definição</b> actuatorManager.cpp:7</div></div>
+<div class="ttc" id="atimeService_8hpp_html"><div class="ttname"><a href="timeService_8hpp.html">timeService.hpp</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Gerado por &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.17
+Gerado por&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

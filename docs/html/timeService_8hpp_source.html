@@ -1,9 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<meta name="generator" content="Doxygen 1.8.17"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Smart Garden - Sistema de Controle de Ambiente: Código-Fonte de src/utils/timeService.hpp</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
@@ -19,10 +19,9 @@
 <div id="titlearea">
 <table cellspacing="0" cellpadding="0">
  <tbody>
- <tr style="height: 56px;">
-  <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Smart Garden - Sistema de Controle de Ambiente
-   &#160;<span id="projectnumber">v1.0</span>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Smart Garden - Sistema de Controle de Ambiente<span id="projectnumber">&#160;v1.0</span>
    </div>
    <div id="projectbrief">Sistema embarcado para monitoramento e controle de ambiente para cultivo</div>
   </td>
@@ -31,22 +30,28 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- Gerado por Doxygen 1.8.17 -->
+<!-- Gerado por Doxygen 1.9.8 -->
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
-var searchBox = new SearchBox("searchBox", "search",false,'Busca');
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
 /* @license-end */
 </script>
 <script type="text/javascript" src="menudata.js"></script>
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
   initMenu('',true,false,'search.php','Busca');
   $(document).ready(function() { init_search(); });
 });
-/* @license-end */</script>
+/* @license-end */
+</script>
 <div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function() { init_codefold(0); });
+/* @license-end */
+</script>
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -56,9 +61,16 @@ $(function() {
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
-<iframe src="javascript:void(0)" frameborder="0" 
-        name="MSearchResults" id="MSearchResults">
-</iframe>
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Carregando...</div>
+<div class="SRStatus" id="Searching">Procurando...</div>
+<div class="SRStatus" id="NoMatches">Nenhuma entrada encontrado</div>
+</div>
+</div>
+</div>
 </div>
 
 <div id="nav-path" class="navpath">
@@ -67,59 +79,59 @@ $(function() {
 </div>
 </div><!-- top -->
 <div class="header">
-  <div class="headertitle">
-<div class="title">timeService.hpp</div>  </div>
+  <div class="headertitle"><div class="title">timeService.hpp</div></div>
 </div><!--header-->
 <div class="contents">
-<a href="timeService_8hpp.html">Vá para a documentação desse arquivo.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef TIME_SERVICE_HPP</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define TIME_SERVICE_HPP</span></div>
-<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="config_8hpp.html">config.hpp</a>&quot;</span> <span class="comment">// Para a struct TimeConfig</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;time.h&gt;</span>     <span class="comment">// Para a struct tm</span></div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160; </div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceGrowController.html">GrowController</a> {</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160; </div>
-<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="classGrowController_1_1TimeService.html">   13</a></span>&#160;<span class="keyword">class </span><a class="code" href="classGrowController_1_1TimeService.html">TimeService</a> {</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <a class="code" href="classGrowController_1_1TimeService.html#a080e59ea4ced77c0d36fcf1d6258a13a">TimeService</a>();</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <a class="code" href="classGrowController_1_1TimeService.html#a1dfc0ca1ba23b50c47c30c6f41572988">~TimeService</a>();</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160; </div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    <span class="comment">// Desabilitar cópia e atribuição para evitar problemas de estado</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <a class="code" href="classGrowController_1_1TimeService.html#a080e59ea4ced77c0d36fcf1d6258a13a">TimeService</a>(<span class="keyword">const</span> <a class="code" href="classGrowController_1_1TimeService.html">TimeService</a>&amp;) = <span class="keyword">delete</span>;</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <a class="code" href="classGrowController_1_1TimeService.html">TimeService</a>&amp; <a class="code" href="classGrowController_1_1TimeService.html#a9e34a7906084e59d10c1cf6c49fd35c0">operator=</a>(<span class="keyword">const</span> <a class="code" href="classGrowController_1_1TimeService.html">TimeService</a>&amp;) = <span class="keyword">delete</span>;</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classGrowController_1_1TimeService.html#ab49b080e5df9c6b46fd4d8bb5174e51a">initialize</a>(<span class="keyword">const</span> <a class="code" href="structTimeConfig.html">TimeConfig</a>&amp; config);</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classGrowController_1_1TimeService.html#a3a23e126e64383a36b9ce837e256d407">getCurrentTime</a>(<span class="keyword">struct</span> tm&amp; timeinfo) <span class="keyword">const</span>; <span class="comment">// Marcado como const</span></div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classGrowController_1_1TimeService.html#ac809d1d71c509b006a8c9cd354e9c6f4">isInitialized</a>() <span class="keyword">const</span>; <span class="comment">// Marcado como const</span></div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keywordtype">bool</span> serviceInitializedState = <span class="keyword">false</span>; <span class="comment">// Estado interno da classe</span></div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="comment">// Poderia armazenar a config aqui se necessário para re-inicialização, mas não é o caso agora.</span></div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="comment">// const TimeConfig* timeConfigPtr = nullptr;</span></div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;};</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;} <span class="comment">// namespace GrowController</span></div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160; </div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="preprocessor">#endif // TIME_SERVICE_HPP</span></div>
-</div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aclassGrowController_1_1TimeService_html_a080e59ea4ced77c0d36fcf1d6258a13a"><div class="ttname"><a href="classGrowController_1_1TimeService.html#a080e59ea4ced77c0d36fcf1d6258a13a">GrowController::TimeService::TimeService</a></div><div class="ttdeci">TimeService()</div><div class="ttdoc">Construtor padrão.</div><div class="ttdef"><b>Definition:</b> timeService.cpp:9</div></div>
+<a href="timeService_8hpp.html">Ir para a documentação desse arquivo.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef TIME_SERVICE_HPP</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define TIME_SERVICE_HPP</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;<a class="code" href="config_8hpp.html">config.hpp</a>&quot;</span> <span class="comment">// Para a struct TimeConfig</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;time.h&gt;</span>     <span class="comment">// Para a struct tm</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceGrowController.html">GrowController</a> {</div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
+<div class="foldopen" id="foldopen00013" data-start="{" data-end="};">
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno"><a class="line" href="classGrowController_1_1TimeService.html">   13</a></span><span class="keyword">class </span><a class="code hl_class" href="classGrowController_1_1TimeService.html">TimeService</a> {</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <a class="code hl_function" href="classGrowController_1_1TimeService.html#a080e59ea4ced77c0d36fcf1d6258a13a">TimeService</a>();</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    <a class="code hl_function" href="classGrowController_1_1TimeService.html#a1dfc0ca1ba23b50c47c30c6f41572988">~TimeService</a>();</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    <span class="comment">// Desabilitar cópia e atribuição para evitar problemas de estado</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="classGrowController_1_1TimeService.html#a08f97fce030c912a5fea00e26a7684db">   26</a></span>    <a class="code hl_function" href="classGrowController_1_1TimeService.html#a08f97fce030c912a5fea00e26a7684db">TimeService</a>(<span class="keyword">const</span> <a class="code hl_class" href="classGrowController_1_1TimeService.html">TimeService</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="classGrowController_1_1TimeService.html#abc8f670839d1908b9c176eca5a6eca4a">   27</a></span>    <a class="code hl_class" href="classGrowController_1_1TimeService.html">TimeService</a>&amp; <a class="code hl_function" href="classGrowController_1_1TimeService.html#abc8f670839d1908b9c176eca5a6eca4a">operator=</a>(<span class="keyword">const</span> <a class="code hl_class" href="classGrowController_1_1TimeService.html">TimeService</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classGrowController_1_1TimeService.html#ab49b080e5df9c6b46fd4d8bb5174e51a">initialize</a>(<span class="keyword">const</span> <a class="code hl_struct" href="structTimeConfig.html">TimeConfig</a>&amp; config);</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classGrowController_1_1TimeService.html#a3a23e126e64383a36b9ce837e256d407">getCurrentTime</a>(<span class="keyword">struct</span> tm&amp; timeinfo) <span class="keyword">const</span>; <span class="comment">// Marcado como const</span></div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classGrowController_1_1TimeService.html#ac809d1d71c509b006a8c9cd354e9c6f4">isInitialized</a>() <span class="keyword">const</span>; <span class="comment">// Marcado como const</span></div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    <span class="keywordtype">bool</span> serviceInitializedState = <span class="keyword">false</span>; <span class="comment">// Estado interno da classe</span></div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    <span class="comment">// Poderia armazenar a config aqui se necessário para re-inicialização, mas não é o caso agora.</span></div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    <span class="comment">// const TimeConfig* timeConfigPtr = nullptr;</span></div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>};</div>
+</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>} <span class="comment">// namespace GrowController</span></div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span> </div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span><span class="preprocessor">#endif </span><span class="comment">// TIME_SERVICE_HPP</span></div>
+<div class="ttc" id="aclassGrowController_1_1TimeService_html"><div class="ttname"><a href="classGrowController_1_1TimeService.html">GrowController::TimeService</a></div><div class="ttdoc">Classe para gerenciar o serviço de tempo e sincronização NTP. Encapsula a inicialização e obtenção da...</div><div class="ttdef"><b>Definição</b> timeService.hpp:13</div></div>
+<div class="ttc" id="aclassGrowController_1_1TimeService_html_a080e59ea4ced77c0d36fcf1d6258a13a"><div class="ttname"><a href="classGrowController_1_1TimeService.html#a080e59ea4ced77c0d36fcf1d6258a13a">GrowController::TimeService::TimeService</a></div><div class="ttdeci">TimeService()</div><div class="ttdoc">Construtor padrão.</div><div class="ttdef"><b>Definição</b> timeService.cpp:9</div></div>
+<div class="ttc" id="aclassGrowController_1_1TimeService_html_a08f97fce030c912a5fea00e26a7684db"><div class="ttname"><a href="classGrowController_1_1TimeService.html#a08f97fce030c912a5fea00e26a7684db">GrowController::TimeService::TimeService</a></div><div class="ttdeci">TimeService(const TimeService &amp;)=delete</div></div>
+<div class="ttc" id="aclassGrowController_1_1TimeService_html_a1dfc0ca1ba23b50c47c30c6f41572988"><div class="ttname"><a href="classGrowController_1_1TimeService.html#a1dfc0ca1ba23b50c47c30c6f41572988">GrowController::TimeService::~TimeService</a></div><div class="ttdeci">~TimeService()</div><div class="ttdoc">Destrutor padrão.</div><div class="ttdef"><b>Definição</b> timeService.cpp:14</div></div>
+<div class="ttc" id="aclassGrowController_1_1TimeService_html_a3a23e126e64383a36b9ce837e256d407"><div class="ttname"><a href="classGrowController_1_1TimeService.html#a3a23e126e64383a36b9ce837e256d407">GrowController::TimeService::getCurrentTime</a></div><div class="ttdeci">bool getCurrentTime(struct tm &amp;timeinfo) const</div><div class="ttdoc">Obtém a hora local atual sincronizada via NTP. Tenta obter a hora atual do sistema,...</div><div class="ttdef"><b>Definição</b> timeService.cpp:80</div></div>
+<div class="ttc" id="aclassGrowController_1_1TimeService_html_ab49b080e5df9c6b46fd4d8bb5174e51a"><div class="ttname"><a href="classGrowController_1_1TimeService.html#ab49b080e5df9c6b46fd4d8bb5174e51a">GrowController::TimeService::initialize</a></div><div class="ttdeci">bool initialize(const TimeConfig &amp;config)</div><div class="ttdoc">Inicializa o serviço de tempo, configurando o NTP. Deve ser chamado após a conexão WiFi ser estabelec...</div><div class="ttdef"><b>Definição</b> timeService.cpp:22</div></div>
+<div class="ttc" id="aclassGrowController_1_1TimeService_html_abc8f670839d1908b9c176eca5a6eca4a"><div class="ttname"><a href="classGrowController_1_1TimeService.html#abc8f670839d1908b9c176eca5a6eca4a">GrowController::TimeService::operator=</a></div><div class="ttdeci">TimeService &amp; operator=(const TimeService &amp;)=delete</div></div>
+<div class="ttc" id="aclassGrowController_1_1TimeService_html_ac809d1d71c509b006a8c9cd354e9c6f4"><div class="ttname"><a href="classGrowController_1_1TimeService.html#ac809d1d71c509b006a8c9cd354e9c6f4">GrowController::TimeService::isInitialized</a></div><div class="ttdeci">bool isInitialized() const</div><div class="ttdoc">Verifica se o serviço de tempo foi inicializado (tentativa de configuração NTP ocorreu)....</div><div class="ttdef"><b>Definição</b> timeService.cpp:100</div></div>
 <div class="ttc" id="aconfig_8hpp_html"><div class="ttname"><a href="config_8hpp.html">config.hpp</a></div></div>
-<div class="ttc" id="aclassGrowController_1_1TimeService_html_ac809d1d71c509b006a8c9cd354e9c6f4"><div class="ttname"><a href="classGrowController_1_1TimeService.html#ac809d1d71c509b006a8c9cd354e9c6f4">GrowController::TimeService::isInitialized</a></div><div class="ttdeci">bool isInitialized() const</div><div class="ttdoc">Verifica se o serviço de tempo foi inicializado (tentativa de configuração NTP ocorreu)....</div><div class="ttdef"><b>Definition:</b> timeService.cpp:100</div></div>
-<div class="ttc" id="aclassGrowController_1_1TimeService_html_a1dfc0ca1ba23b50c47c30c6f41572988"><div class="ttname"><a href="classGrowController_1_1TimeService.html#a1dfc0ca1ba23b50c47c30c6f41572988">GrowController::TimeService::~TimeService</a></div><div class="ttdeci">~TimeService()</div><div class="ttdoc">Destrutor padrão.</div><div class="ttdef"><b>Definition:</b> timeService.cpp:14</div></div>
-<div class="ttc" id="anamespaceGrowController_html"><div class="ttname"><a href="namespaceGrowController.html">GrowController</a></div><div class="ttdef"><b>Definition:</b> actuatorManager.cpp:7</div></div>
-<div class="ttc" id="astructTimeConfig_html"><div class="ttname"><a href="structTimeConfig.html">TimeConfig</a></div><div class="ttdef"><b>Definition:</b> config.hpp:76</div></div>
-<div class="ttc" id="aclassGrowController_1_1TimeService_html_a9e34a7906084e59d10c1cf6c49fd35c0"><div class="ttname"><a href="classGrowController_1_1TimeService.html#a9e34a7906084e59d10c1cf6c49fd35c0">GrowController::TimeService::operator=</a></div><div class="ttdeci">TimeService &amp; operator=(const TimeService &amp;)=delete</div></div>
-<div class="ttc" id="aclassGrowController_1_1TimeService_html"><div class="ttname"><a href="classGrowController_1_1TimeService.html">GrowController::TimeService</a></div><div class="ttdoc">Classe para gerenciar o serviço de tempo e sincronização NTP. Encapsula a inicialização e obtenção da...</div><div class="ttdef"><b>Definition:</b> timeService.hpp:13</div></div>
-<div class="ttc" id="aclassGrowController_1_1TimeService_html_ab49b080e5df9c6b46fd4d8bb5174e51a"><div class="ttname"><a href="classGrowController_1_1TimeService.html#ab49b080e5df9c6b46fd4d8bb5174e51a">GrowController::TimeService::initialize</a></div><div class="ttdeci">bool initialize(const TimeConfig &amp;config)</div><div class="ttdoc">Inicializa o serviço de tempo, configurando o NTP. Deve ser chamado após a conexão WiFi ser estabelec...</div><div class="ttdef"><b>Definition:</b> timeService.cpp:22</div></div>
-<div class="ttc" id="aclassGrowController_1_1TimeService_html_a3a23e126e64383a36b9ce837e256d407"><div class="ttname"><a href="classGrowController_1_1TimeService.html#a3a23e126e64383a36b9ce837e256d407">GrowController::TimeService::getCurrentTime</a></div><div class="ttdeci">bool getCurrentTime(struct tm &amp;timeinfo) const</div><div class="ttdoc">Obtém a hora local atual sincronizada via NTP. Tenta obter a hora atual do sistema,...</div><div class="ttdef"><b>Definition:</b> timeService.cpp:80</div></div>
+<div class="ttc" id="anamespaceGrowController_html"><div class="ttname"><a href="namespaceGrowController.html">GrowController</a></div><div class="ttdef"><b>Definição</b> actuatorManager.cpp:7</div></div>
+<div class="ttc" id="astructTimeConfig_html"><div class="ttname"><a href="structTimeConfig.html">TimeConfig</a></div><div class="ttdef"><b>Definição</b> config.hpp:76</div></div>
+</div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Gerado por &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.17
+Gerado por&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

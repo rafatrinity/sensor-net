@@ -1,5 +1,5 @@
-\hypertarget{classGrowController_1_1ActuatorManager}{}\doxysection{Referência da Classe Grow\+Controller\+::Actuator\+Manager}
-\label{classGrowController_1_1ActuatorManager}\index{GrowController::ActuatorManager@{GrowController::ActuatorManager}}
+\doxysection{Referência da Classe Grow\+Controller\+::Actuator\+Manager}
+\hypertarget{classGrowController_1_1ActuatorManager}{}\label{classGrowController_1_1ActuatorManager}\index{GrowController::ActuatorManager@{GrowController::ActuatorManager}}
 
 
 Manages the control of actuators like lights and humidifiers.  
@@ -9,23 +9,23 @@ Manages the control of actuators like lights and humidifiers.
 
 {\ttfamily \#include $<$actuator\+Manager.\+hpp$>$}
 
-\doxysubsection*{Membros Públicos}
+\doxysubsubsection*{Membros Públicos}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{classGrowController_1_1ActuatorManager_ac6d0f94e0e66cba38f136566afa21d27}{Actuator\+Manager}} (const \mbox{\hyperlink{structGPIOControlConfig}{G\+P\+I\+O\+Control\+Config}} \&config, \mbox{\hyperlink{classGrowController_1_1TargetDataManager}{Target\+Data\+Manager}} \&target\+Mgr, \mbox{\hyperlink{classGrowController_1_1SensorManager}{Sensor\+Manager}} \&\mbox{\hyperlink{main_8cpp_aa0842d72fac8fae67e8c146789ca6a52}{sensor\+Mgr}}, \mbox{\hyperlink{classGrowController_1_1TimeService}{Time\+Service}} \&time\+Svc)
-\begin{DoxyCompactList}\small\item\em Constructs a new \mbox{\hyperlink{classGrowController_1_1ActuatorManager}{Actuator\+Manager}} instance. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classGrowController_1_1ActuatorManager_a316993feb24797065bc93ded8ea1c10f}{$\sim$\+Actuator\+Manager}} ()
-\begin{DoxyCompactList}\small\item\em Destroys the \mbox{\hyperlink{classGrowController_1_1ActuatorManager}{Actuator\+Manager}} instance. Ensures that control tasks are stopped and resources are cleaned up. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classGrowController_1_1ActuatorManager_ac6d0f94e0e66cba38f136566afa21d27}{Actuator\+Manager}} (const \mbox{\hyperlink{structGPIOControlConfig}{GPIOControl\+Config}} \&config, \mbox{\hyperlink{classGrowController_1_1TargetDataManager}{Target\+Data\+Manager}} \&target\+Mgr, \mbox{\hyperlink{classGrowController_1_1SensorManager}{Sensor\+Manager}} \&\mbox{\hyperlink{main_8cpp_aa0842d72fac8fae67e8c146789ca6a52}{sensor\+Mgr}}, \mbox{\hyperlink{classGrowController_1_1TimeService}{Time\+Service}} \&time\+Svc)
+\begin{DoxyCompactList}\small\item\em Constructs a new \doxylink{classGrowController_1_1ActuatorManager}{Actuator\+Manager} instance. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classGrowController_1_1ActuatorManager_a316993feb24797065bc93ded8ea1c10f}{\texorpdfstring{$\sim$}{\string~}\+Actuator\+Manager}} ()
+\begin{DoxyCompactList}\small\item\em Destroys the \doxylink{classGrowController_1_1ActuatorManager}{Actuator\+Manager} instance. Ensures that control tasks are stopped and resources are cleaned up. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classGrowController_1_1ActuatorManager_aabc8b62f32e4d31445edf946a2dd6102}{Actuator\+Manager}} (const \mbox{\hyperlink{classGrowController_1_1ActuatorManager}{Actuator\+Manager}} \&)=delete
 \item 
-\mbox{\hyperlink{classGrowController_1_1ActuatorManager}{Actuator\+Manager}} \& \mbox{\hyperlink{classGrowController_1_1ActuatorManager_a9d077ca0c2ed5e338832902917d47960}{operator=}} (const \mbox{\hyperlink{classGrowController_1_1ActuatorManager}{Actuator\+Manager}} \&)=delete
+\mbox{\hyperlink{classGrowController_1_1ActuatorManager}{Actuator\+Manager}} \& \mbox{\hyperlink{classGrowController_1_1ActuatorManager_a7683f82b682597136e0d309f9e53adc9}{operator=}} (const \mbox{\hyperlink{classGrowController_1_1ActuatorManager}{Actuator\+Manager}} \&)=delete
 \item 
 bool \mbox{\hyperlink{classGrowController_1_1ActuatorManager_a59f476641b6ecec10f4ea053e5b462e5}{initialize}} ()
-\begin{DoxyCompactList}\small\item\em Initializes the \mbox{\hyperlink{classGrowController_1_1ActuatorManager}{Actuator\+Manager}}. Sets up G\+P\+IO pins for actuators. \end{DoxyCompactList}\item 
-bool \mbox{\hyperlink{classGrowController_1_1ActuatorManager_a305fd9ac1e2fb151331c78b461c700f3}{start\+Control\+Tasks}} (U\+Base\+Type\+\_\+t light\+Task\+Priority=1, U\+Base\+Type\+\_\+t humidity\+Task\+Priority=1, uint32\+\_\+t stack\+Size=2560)
-\begin{DoxyCompactList}\small\item\em Starts the Free\+R\+T\+OS tasks for controlling the light and humidifier. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Initializes the \doxylink{classGrowController_1_1ActuatorManager}{Actuator\+Manager}. Sets up GPIO pins for actuators. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classGrowController_1_1ActuatorManager_a305fd9ac1e2fb151331c78b461c700f3}{start\+Control\+Tasks}} (UBase\+Type\+\_\+t light\+Task\+Priority=1, UBase\+Type\+\_\+t humidity\+Task\+Priority=1, uint32\+\_\+t stack\+Size=2560)
+\begin{DoxyCompactList}\small\item\em Starts the Free\+RTOS tasks for controlling the light and humidifier. \end{DoxyCompactList}\item 
 bool \mbox{\hyperlink{classGrowController_1_1ActuatorManager_a396e31b98c0facb5a1ff8b5955063714}{is\+Initialized}} () const
-\begin{DoxyCompactList}\small\item\em Checks if the \mbox{\hyperlink{classGrowController_1_1ActuatorManager}{Actuator\+Manager}} has been successfully initialized. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Checks if the \doxylink{classGrowController_1_1ActuatorManager}{Actuator\+Manager} has been successfully initialized. \end{DoxyCompactList}\item 
 bool \mbox{\hyperlink{classGrowController_1_1ActuatorManager_a2e3168c70f7f741420eb39bbfd5cfcbf}{is\+Light\+Relay\+On}} () const
 \begin{DoxyCompactList}\small\item\em Checks if the light relay is currently considered ON. This reflects the last commanded state, not necessarily a direct hardware read. \end{DoxyCompactList}\item 
 bool \mbox{\hyperlink{classGrowController_1_1ActuatorManager_a2f8bf36352e3d6fd9f950cf5885170bf}{is\+Humidifier\+Relay\+On}} () const
@@ -35,41 +35,41 @@ bool \mbox{\hyperlink{classGrowController_1_1ActuatorManager_a2f8bf36352e3d6fd9f
 \doxysubsection{Descrição detalhada}
 Manages the control of actuators like lights and humidifiers. 
 
-This class is responsible for initializing and controlling actuators based on target values (e.\+g., from \mbox{\hyperlink{classGrowController_1_1TargetDataManager}{Target\+Data\+Manager}}) and current conditions (e.\+g., time from \mbox{\hyperlink{classGrowController_1_1TimeService}{Time\+Service}}, sensor readings from \mbox{\hyperlink{classGrowController_1_1SensorManager}{Sensor\+Manager}}). It uses Free\+R\+T\+OS tasks for continuous control loops. 
+This class is responsible for initializing and controlling actuators based on target values (e.\+g., from \doxylink{classGrowController_1_1TargetDataManager}{Target\+Data\+Manager}) and current conditions (e.\+g., time from \doxylink{classGrowController_1_1TimeService}{Time\+Service}, sensor readings from \doxylink{classGrowController_1_1SensorManager}{Sensor\+Manager}). It uses Free\+RTOS tasks for continuous control loops. 
 
 \doxysubsection{Construtores e Destrutores}
-\mbox{\Hypertarget{classGrowController_1_1ActuatorManager_ac6d0f94e0e66cba38f136566afa21d27}\label{classGrowController_1_1ActuatorManager_ac6d0f94e0e66cba38f136566afa21d27}} 
+\Hypertarget{classGrowController_1_1ActuatorManager_ac6d0f94e0e66cba38f136566afa21d27}\label{classGrowController_1_1ActuatorManager_ac6d0f94e0e66cba38f136566afa21d27} 
 \index{GrowController::ActuatorManager@{GrowController::ActuatorManager}!ActuatorManager@{ActuatorManager}}
 \index{ActuatorManager@{ActuatorManager}!GrowController::ActuatorManager@{GrowController::ActuatorManager}}
 \doxysubsubsection{\texorpdfstring{ActuatorManager()}{ActuatorManager()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
-{\footnotesize\ttfamily Grow\+Controller\+::\+Actuator\+Manager\+::\+Actuator\+Manager (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structGPIOControlConfig}{G\+P\+I\+O\+Control\+Config}} \&}]{config,  }\item[{\mbox{\hyperlink{classGrowController_1_1TargetDataManager}{Target\+Data\+Manager}} \&}]{target\+Mgr,  }\item[{\mbox{\hyperlink{classGrowController_1_1SensorManager}{Sensor\+Manager}} \&}]{sensor\+Mgr,  }\item[{\mbox{\hyperlink{classGrowController_1_1TimeService}{Time\+Service}} \&}]{time\+Svc }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily Grow\+Controller\+::\+Actuator\+Manager\+::\+Actuator\+Manager (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structGPIOControlConfig}{GPIOControl\+Config}} \&}]{config,  }\item[{\mbox{\hyperlink{classGrowController_1_1TargetDataManager}{Target\+Data\+Manager}} \&}]{target\+Mgr,  }\item[{\mbox{\hyperlink{classGrowController_1_1SensorManager}{Sensor\+Manager}} \&}]{sensor\+Mgr,  }\item[{\mbox{\hyperlink{classGrowController_1_1TimeService}{Time\+Service}} \&}]{time\+Svc }\end{DoxyParamCaption})}
 
 
 
-Constructs a new \mbox{\hyperlink{classGrowController_1_1ActuatorManager}{Actuator\+Manager}} instance. 
+Constructs a new \doxylink{classGrowController_1_1ActuatorManager}{Actuator\+Manager} instance. 
 
 
 \begin{DoxyParams}{Parâmetros}
-{\em config} & Reference to the \mbox{\hyperlink{structGPIOControlConfig}{G\+P\+I\+O\+Control\+Config}} containing pin definitions for actuators. \\
+{\em config} & Reference to the \doxylink{structGPIOControlConfig}{GPIOControl\+Config} containing pin definitions for actuators. \\
 \hline
-{\em target\+Mgr} & Reference to the \mbox{\hyperlink{classGrowController_1_1TargetDataManager}{Target\+Data\+Manager}} to get target settings (e.\+g., light on/off times, target humidity). \\
+{\em target\+Mgr} & Reference to the \doxylink{classGrowController_1_1TargetDataManager}{Target\+Data\+Manager} to get target settings (e.\+g., light on/off times, target humidity). \\
 \hline
-{\em sensor\+Mgr} & Reference to the \mbox{\hyperlink{classGrowController_1_1SensorManager}{Sensor\+Manager}} to get current sensor readings (e.\+g., humidity). \\
+{\em sensor\+Mgr} & Reference to the \doxylink{classGrowController_1_1SensorManager}{Sensor\+Manager} to get current sensor readings (e.\+g., humidity). \\
 \hline
-{\em time\+Svc} & Reference to the \mbox{\hyperlink{classGrowController_1_1TimeService}{Time\+Service}} to get the current time for time-\/based control (e.\+g., lights). \\
+{\em time\+Svc} & Reference to the \doxylink{classGrowController_1_1TimeService}{Time\+Service} to get the current time for time-\/based control (e.\+g., lights). \\
 \hline
 \end{DoxyParams}
-\mbox{\Hypertarget{classGrowController_1_1ActuatorManager_a316993feb24797065bc93ded8ea1c10f}\label{classGrowController_1_1ActuatorManager_a316993feb24797065bc93ded8ea1c10f}} 
-\index{GrowController::ActuatorManager@{GrowController::ActuatorManager}!````~ActuatorManager@{$\sim$ActuatorManager}}
-\index{````~ActuatorManager@{$\sim$ActuatorManager}!GrowController::ActuatorManager@{GrowController::ActuatorManager}}
-\doxysubsubsection{\texorpdfstring{$\sim$ActuatorManager()}{~ActuatorManager()}}
-{\footnotesize\ttfamily Grow\+Controller\+::\+Actuator\+Manager\+::$\sim$\+Actuator\+Manager (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+\Hypertarget{classGrowController_1_1ActuatorManager_a316993feb24797065bc93ded8ea1c10f}\label{classGrowController_1_1ActuatorManager_a316993feb24797065bc93ded8ea1c10f} 
+\index{GrowController::ActuatorManager@{GrowController::ActuatorManager}!````~ActuatorManager@{\texorpdfstring{$\sim$}{\string~}ActuatorManager}}
+\index{````~ActuatorManager@{\texorpdfstring{$\sim$}{\string~}ActuatorManager}!GrowController::ActuatorManager@{GrowController::ActuatorManager}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}ActuatorManager()}{\string~ActuatorManager()}}
+{\footnotesize\ttfamily Grow\+Controller\+::\+Actuator\+Manager\+::\texorpdfstring{$\sim$}{\string~}\+Actuator\+Manager (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
 
 
-Destroys the \mbox{\hyperlink{classGrowController_1_1ActuatorManager}{Actuator\+Manager}} instance. Ensures that control tasks are stopped and resources are cleaned up. 
+Destroys the \doxylink{classGrowController_1_1ActuatorManager}{Actuator\+Manager} instance. Ensures that control tasks are stopped and resources are cleaned up. 
 
-\mbox{\Hypertarget{classGrowController_1_1ActuatorManager_aabc8b62f32e4d31445edf946a2dd6102}\label{classGrowController_1_1ActuatorManager_aabc8b62f32e4d31445edf946a2dd6102}} 
+\Hypertarget{classGrowController_1_1ActuatorManager_aabc8b62f32e4d31445edf946a2dd6102}\label{classGrowController_1_1ActuatorManager_aabc8b62f32e4d31445edf946a2dd6102} 
 \index{GrowController::ActuatorManager@{GrowController::ActuatorManager}!ActuatorManager@{ActuatorManager}}
 \index{ActuatorManager@{ActuatorManager}!GrowController::ActuatorManager@{GrowController::ActuatorManager}}
 \doxysubsubsection{\texorpdfstring{ActuatorManager()}{ActuatorManager()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
@@ -77,8 +77,8 @@ Destroys the \mbox{\hyperlink{classGrowController_1_1ActuatorManager}{Actuator\+
 
 
 
-\doxysubsection{Funções membros}
-\mbox{\Hypertarget{classGrowController_1_1ActuatorManager_a59f476641b6ecec10f4ea053e5b462e5}\label{classGrowController_1_1ActuatorManager_a59f476641b6ecec10f4ea053e5b462e5}} 
+\doxysubsection{Documentação das funções}
+\Hypertarget{classGrowController_1_1ActuatorManager_a59f476641b6ecec10f4ea053e5b462e5}\label{classGrowController_1_1ActuatorManager_a59f476641b6ecec10f4ea053e5b462e5} 
 \index{GrowController::ActuatorManager@{GrowController::ActuatorManager}!initialize@{initialize}}
 \index{initialize@{initialize}!GrowController::ActuatorManager@{GrowController::ActuatorManager}}
 \doxysubsubsection{\texorpdfstring{initialize()}{initialize()}}
@@ -86,12 +86,12 @@ Destroys the \mbox{\hyperlink{classGrowController_1_1ActuatorManager}{Actuator\+
 
 
 
-Initializes the \mbox{\hyperlink{classGrowController_1_1ActuatorManager}{Actuator\+Manager}}. Sets up G\+P\+IO pins for actuators. 
+Initializes the \doxylink{classGrowController_1_1ActuatorManager}{Actuator\+Manager}. Sets up GPIO pins for actuators. 
 
 \begin{DoxyReturn}{Retorna}
 true if initialization was successful, false otherwise. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classGrowController_1_1ActuatorManager_a2f8bf36352e3d6fd9f950cf5885170bf}\label{classGrowController_1_1ActuatorManager_a2f8bf36352e3d6fd9f950cf5885170bf}} 
+\Hypertarget{classGrowController_1_1ActuatorManager_a2f8bf36352e3d6fd9f950cf5885170bf}\label{classGrowController_1_1ActuatorManager_a2f8bf36352e3d6fd9f950cf5885170bf} 
 \index{GrowController::ActuatorManager@{GrowController::ActuatorManager}!isHumidifierRelayOn@{isHumidifierRelayOn}}
 \index{isHumidifierRelayOn@{isHumidifierRelayOn}!GrowController::ActuatorManager@{GrowController::ActuatorManager}}
 \doxysubsubsection{\texorpdfstring{isHumidifierRelayOn()}{isHumidifierRelayOn()}}
@@ -104,7 +104,7 @@ Checks if the humidifier relay is currently considered ON. This reflects the las
 \begin{DoxyReturn}{Retorna}
 true if the humidifier relay is ON, false otherwise. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classGrowController_1_1ActuatorManager_a396e31b98c0facb5a1ff8b5955063714}\label{classGrowController_1_1ActuatorManager_a396e31b98c0facb5a1ff8b5955063714}} 
+\Hypertarget{classGrowController_1_1ActuatorManager_a396e31b98c0facb5a1ff8b5955063714}\label{classGrowController_1_1ActuatorManager_a396e31b98c0facb5a1ff8b5955063714} 
 \index{GrowController::ActuatorManager@{GrowController::ActuatorManager}!isInitialized@{isInitialized}}
 \index{isInitialized@{isInitialized}!GrowController::ActuatorManager@{GrowController::ActuatorManager}}
 \doxysubsubsection{\texorpdfstring{isInitialized()}{isInitialized()}}
@@ -112,12 +112,12 @@ true if the humidifier relay is ON, false otherwise.
 
 
 
-Checks if the \mbox{\hyperlink{classGrowController_1_1ActuatorManager}{Actuator\+Manager}} has been successfully initialized. 
+Checks if the \doxylink{classGrowController_1_1ActuatorManager}{Actuator\+Manager} has been successfully initialized. 
 
 \begin{DoxyReturn}{Retorna}
 true if initialized, false otherwise. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classGrowController_1_1ActuatorManager_a2e3168c70f7f741420eb39bbfd5cfcbf}\label{classGrowController_1_1ActuatorManager_a2e3168c70f7f741420eb39bbfd5cfcbf}} 
+\Hypertarget{classGrowController_1_1ActuatorManager_a2e3168c70f7f741420eb39bbfd5cfcbf}\label{classGrowController_1_1ActuatorManager_a2e3168c70f7f741420eb39bbfd5cfcbf} 
 \index{GrowController::ActuatorManager@{GrowController::ActuatorManager}!isLightRelayOn@{isLightRelayOn}}
 \index{isLightRelayOn@{isLightRelayOn}!GrowController::ActuatorManager@{GrowController::ActuatorManager}}
 \doxysubsubsection{\texorpdfstring{isLightRelayOn()}{isLightRelayOn()}}
@@ -130,21 +130,21 @@ Checks if the light relay is currently considered ON. This reflects the last com
 \begin{DoxyReturn}{Retorna}
 true if the light relay is ON, false otherwise. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classGrowController_1_1ActuatorManager_a9d077ca0c2ed5e338832902917d47960}\label{classGrowController_1_1ActuatorManager_a9d077ca0c2ed5e338832902917d47960}} 
+\Hypertarget{classGrowController_1_1ActuatorManager_a7683f82b682597136e0d309f9e53adc9}\label{classGrowController_1_1ActuatorManager_a7683f82b682597136e0d309f9e53adc9} 
 \index{GrowController::ActuatorManager@{GrowController::ActuatorManager}!operator=@{operator=}}
 \index{operator=@{operator=}!GrowController::ActuatorManager@{GrowController::ActuatorManager}}
 \doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
-{\footnotesize\ttfamily \mbox{\hyperlink{classGrowController_1_1ActuatorManager}{Actuator\+Manager}}\& Grow\+Controller\+::\+Actuator\+Manager\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classGrowController_1_1ActuatorManager}{Actuator\+Manager}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classGrowController_1_1ActuatorManager}{Actuator\+Manager}} \& Grow\+Controller\+::\+Actuator\+Manager\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classGrowController_1_1ActuatorManager}{Actuator\+Manager}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
 
-\mbox{\Hypertarget{classGrowController_1_1ActuatorManager_a305fd9ac1e2fb151331c78b461c700f3}\label{classGrowController_1_1ActuatorManager_a305fd9ac1e2fb151331c78b461c700f3}} 
+\Hypertarget{classGrowController_1_1ActuatorManager_a305fd9ac1e2fb151331c78b461c700f3}\label{classGrowController_1_1ActuatorManager_a305fd9ac1e2fb151331c78b461c700f3} 
 \index{GrowController::ActuatorManager@{GrowController::ActuatorManager}!startControlTasks@{startControlTasks}}
 \index{startControlTasks@{startControlTasks}!GrowController::ActuatorManager@{GrowController::ActuatorManager}}
 \doxysubsubsection{\texorpdfstring{startControlTasks()}{startControlTasks()}}
-{\footnotesize\ttfamily bool Grow\+Controller\+::\+Actuator\+Manager\+::start\+Control\+Tasks (\begin{DoxyParamCaption}\item[{U\+Base\+Type\+\_\+t}]{light\+Task\+Priority = {\ttfamily 1},  }\item[{U\+Base\+Type\+\_\+t}]{humidity\+Task\+Priority = {\ttfamily 1},  }\item[{uint32\+\_\+t}]{stack\+Size = {\ttfamily 2560} }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily bool Grow\+Controller\+::\+Actuator\+Manager\+::start\+Control\+Tasks (\begin{DoxyParamCaption}\item[{UBase\+Type\+\_\+t}]{light\+Task\+Priority = {\ttfamily 1},  }\item[{UBase\+Type\+\_\+t}]{humidity\+Task\+Priority = {\ttfamily 1},  }\item[{uint32\+\_\+t}]{stack\+Size = {\ttfamily 2560} }\end{DoxyParamCaption})}
 
 
 
-Starts the Free\+R\+T\+OS tasks for controlling the light and humidifier. 
+Starts the Free\+RTOS tasks for controlling the light and humidifier. 
 
 
 \begin{DoxyParams}{Parâmetros}

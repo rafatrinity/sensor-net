@@ -1,9 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<meta name="generator" content="Doxygen 1.8.17"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Smart Garden - Sistema de Controle de Ambiente: Referência do Arquivo src/network/wifi.cpp</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
@@ -19,10 +19,9 @@
 <div id="titlearea">
 <table cellspacing="0" cellpadding="0">
  <tbody>
- <tr style="height: 56px;">
-  <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Smart Garden - Sistema de Controle de Ambiente
-   &#160;<span id="projectnumber">v1.0</span>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Smart Garden - Sistema de Controle de Ambiente<span id="projectnumber">&#160;v1.0</span>
    </div>
    <div id="projectbrief">Sistema embarcado para monitoramento e controle de ambiente para cultivo</div>
   </td>
@@ -31,21 +30,22 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- Gerado por Doxygen 1.8.17 -->
+<!-- Gerado por Doxygen 1.9.8 -->
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
-var searchBox = new SearchBox("searchBox", "search",false,'Busca');
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
 /* @license-end */
 </script>
 <script type="text/javascript" src="menudata.js"></script>
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
   initMenu('',true,false,'search.php','Busca');
   $(document).ready(function() { init_search(); });
 });
-/* @license-end */</script>
+/* @license-end */
+</script>
 <div id="main-nav"></div>
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -56,9 +56,16 @@ $(function() {
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
-<iframe src="javascript:void(0)" frameborder="0" 
-        name="MSearchResults" id="MSearchResults">
-</iframe>
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Carregando...</div>
+<div class="SRStatus" id="Searching">Procurando...</div>
+<div class="SRStatus" id="NoMatches">Nenhuma entrada encontrado</div>
+</div>
+</div>
+</div>
 </div>
 
 <div id="nav-path" class="navpath">
@@ -70,8 +77,7 @@ $(function() {
   <div class="summary">
 <a href="#func-members">Funções</a> &#124;
 <a href="#var-members">Variáveis</a>  </div>
-  <div class="headertitle">
-<div class="title">Referência do Arquivo wifi.cpp</div>  </div>
+  <div class="headertitle"><div class="title">Referência do Arquivo wifi.cpp</div></div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="wifi_8hpp_source.html">wifi.hpp</a>&quot;</code><br />
@@ -83,46 +89,67 @@ $(function() {
 </div><div class="textblock"><div class="dynheader">
 Gráfico de dependência de inclusões para wifi.cpp:</div>
 <div class="dyncontent">
-<div class="center"><img src="wifi_8cpp__incl.png" border="0" usemap="#src_2network_2wifi_8cpp" alt=""/></div>
-<map name="src_2network_2wifi_8cpp" id="src_2network_2wifi_8cpp">
-<area shape="rect" title=" " alt="" coords="186,5,338,32"/>
-<area shape="rect" href="wifi_8hpp.html" title=" " alt="" coords="61,80,135,107"/>
-<area shape="rect" href="config_8hpp.html" title=" " alt="" coords="287,229,376,256"/>
-<area shape="rect" title=" " alt="" coords="43,155,153,181"/>
-<area shape="rect" href="displayManager_8hpp.html" title=" " alt="" coords="253,80,423,107"/>
-<area shape="rect" title=" " alt="" coords="447,80,531,107"/>
-<area shape="rect" title=" " alt="" coords="555,80,617,107"/>
-<area shape="rect" title=" " alt="" coords="197,304,258,331"/>
-<area shape="rect" title=" " alt="" coords="404,304,555,331"/>
-<area shape="rect" title=" " alt="" coords="579,304,716,331"/>
-<area shape="rect" title=" " alt="" coords="283,304,380,331"/>
-<area shape="rect" title=" " alt="" coords="685,155,756,181"/>
-<area shape="rect" title=" " alt="" coords="178,155,255,181"/>
-<area shape="rect" title=" " alt="" coords="279,155,426,181"/>
-<area shape="rect" href="freeRTOSMutex_8hpp.html" title=" " alt="" coords="556,229,739,256"/>
-<area shape="rect" href="timeService_8hpp.html" title=" " alt="" coords="450,155,610,181"/>
-<area shape="rect" title=" " alt="" coords="467,229,531,256"/>
+<div class="center"><img src="wifi_8cpp__incl.png" border="0" usemap="#asrc_2network_2wifi_8cpp" alt=""/></div>
+<map name="asrc_2network_2wifi_8cpp" id="asrc_2network_2wifi_8cpp">
+<area shape="rect" title=" " alt="" coords="186,5,338,31"/>
+<area shape="rect" href="wifi_8hpp.html" title=" " alt="" coords="61,79,134,104"/>
+<area shape="poly" title=" " alt="" coords="236,33,138,76,136,71,234,28"/>
+<area shape="rect" href="config_8hpp.html" title=" " alt="" coords="286,225,376,251"/>
+<area shape="poly" title=" " alt="" coords="186,27,151,34,116,44,82,60,51,81,28,104,13,127,9,151,13,163,21,176,37,188,61,199,128,216,203,226,273,232,272,237,203,231,127,221,60,204,34,193,17,179,8,165,4,151,8,125,24,100,48,77,79,55,114,39,150,28,185,22"/>
+<area shape="rect" title=" " alt="" coords="42,152,153,177"/>
+<area shape="poly" title=" " alt="" coords="250,33,123,145,119,141,246,29"/>
+<area shape="rect" href="displayManager_8hpp.html" title=" " alt="" coords="253,79,422,104"/>
+<area shape="poly" title=" " alt="" coords="276,29,317,67,313,71,272,33"/>
+<area shape="rect" title=" " alt="" coords="446,79,530,104"/>
+<area shape="poly" title=" " alt="" coords="299,28,439,72,438,77,297,33"/>
+<area shape="rect" title=" " alt="" coords="554,79,617,104"/>
+<area shape="poly" title=" " alt="" coords="321,28,541,76,540,81,319,33"/>
+<area shape="poly" title=" " alt="" coords="79,106,58,121,38,139,28,158,28,167,33,176,48,188,71,198,134,215,206,225,273,231,272,236,206,230,133,220,69,203,45,192,29,179,23,168,23,157,34,135,54,117,76,102"/>
+<area shape="poly" title=" " alt="" coords="100,104,100,138,95,138,95,104"/>
+<area shape="rect" title=" " alt="" coords="196,299,258,324"/>
+<area shape="poly" title=" " alt="" coords="316,253,257,293,254,288,313,248"/>
+<area shape="rect" title=" " alt="" coords="404,299,554,324"/>
+<area shape="poly" title=" " alt="" coords="356,248,444,290,441,295,354,253"/>
+<area shape="rect" title=" " alt="" coords="578,299,716,324"/>
+<area shape="poly" title=" " alt="" coords="376,247,583,293,582,298,375,252"/>
+<area shape="rect" title=" " alt="" coords="282,299,380,324"/>
+<area shape="poly" title=" " alt="" coords="334,251,334,285,328,285,328,251"/>
+<area shape="rect" title=" " alt="" coords="685,152,756,177"/>
+<area shape="poly" title=" " alt="" coords="404,101,666,149,671,150,670,156,665,155,403,107"/>
+<area shape="rect" title=" " alt="" coords="178,152,255,177"/>
+<area shape="poly" title=" " alt="" coords="319,106,249,147,246,143,317,102"/>
+<area shape="rect" title=" " alt="" coords="279,152,426,177"/>
+<area shape="poly" title=" " alt="" coords="343,104,350,138,344,139,337,105"/>
+<area shape="rect" href="freeRTOSMutex_8hpp.html" title=" " alt="" coords="556,225,738,251"/>
+<area shape="poly" title=" " alt="" coords="412,101,541,125,594,138,623,150,634,164,642,179,649,211,643,212,637,181,630,166,620,154,592,143,540,130,411,107"/>
+<area shape="rect" href="timeService_8hpp.html" title=" " alt="" coords="450,152,610,177"/>
+<area shape="poly" title=" " alt="" coords="369,102,486,144,484,149,368,107"/>
+<area shape="poly" title=" " alt="" coords="621,253,520,296,518,291,619,248"/>
+<area shape="poly" title=" " alt="" coords="650,251,650,285,644,285,644,251"/>
+<area shape="poly" title=" " alt="" coords="499,180,377,223,375,218,497,175"/>
+<area shape="rect" title=" " alt="" coords="467,225,531,251"/>
+<area shape="poly" title=" " alt="" coords="527,179,512,214,507,212,522,177"/>
 </map>
 </div>
 </div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Funções</h2></td></tr>
-<tr class="memitem:ab7767b6547127ef9297fcec2a158e3fa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="wifi_8cpp.html#ab7767b6547127ef9297fcec2a158e3fa">saveWiFiCredentials</a> (const char *ssid, const char *password)</td></tr>
+<tr class="memitem:ab7767b6547127ef9297fcec2a158e3fa" id="r_ab7767b6547127ef9297fcec2a158e3fa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="wifi_8cpp.html#ab7767b6547127ef9297fcec2a158e3fa">saveWiFiCredentials</a> (const char *ssid, const char *password)</td></tr>
 <tr class="separator:ab7767b6547127ef9297fcec2a158e3fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aab344c67c370dd095e6fb431093e3d26"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="wifi_8cpp.html#aab344c67c370dd095e6fb431093e3d26">loadWiFiCredentials</a> (char *ssid, char *password, size_t maxLength)</td></tr>
+<tr class="memitem:aab344c67c370dd095e6fb431093e3d26" id="r_aab344c67c370dd095e6fb431093e3d26"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="wifi_8cpp.html#aab344c67c370dd095e6fb431093e3d26">loadWiFiCredentials</a> (char *ssid, char *password, size_t maxLength)</td></tr>
 <tr class="separator:aab344c67c370dd095e6fb431093e3d26"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a701d562d061db5b2102d035c723ffc75"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="wifi_8cpp.html#a701d562d061db5b2102d035c723ffc75">connectToWiFi</a> (void *parameter)</td></tr>
-<tr class="memdesc:a701d562d061db5b2102d035c723ffc75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Função da tarefa FreeRTOS para conectar ao WiFi. Mostra o status no DisplayManager.  <a href="wifi_8cpp.html#a701d562d061db5b2102d035c723ffc75">Mais...</a><br /></td></tr>
+<tr class="memitem:a701d562d061db5b2102d035c723ffc75" id="r_a701d562d061db5b2102d035c723ffc75"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="wifi_8cpp.html#a701d562d061db5b2102d035c723ffc75">connectToWiFi</a> (void *parameter)</td></tr>
+<tr class="memdesc:a701d562d061db5b2102d035c723ffc75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Função da tarefa FreeRTOS para conectar ao WiFi. Mostra o status no DisplayManager.  <br /></td></tr>
 <tr class="separator:a701d562d061db5b2102d035c723ffc75"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variáveis</h2></td></tr>
-<tr class="memitem:a6ea06cf7b8092a0adaf07614d7ece59d"><td class="memItemLeft" align="right" valign="top">Preferences&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="wifi_8cpp.html#a6ea06cf7b8092a0adaf07614d7ece59d">preferences</a></td></tr>
+<tr class="memitem:a6ea06cf7b8092a0adaf07614d7ece59d" id="r_a6ea06cf7b8092a0adaf07614d7ece59d"><td class="memItemLeft" align="right" valign="top">Preferences&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="wifi_8cpp.html#a6ea06cf7b8092a0adaf07614d7ece59d">preferences</a></td></tr>
 <tr class="separator:a6ea06cf7b8092a0adaf07614d7ece59d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Funções</h2>
-<a id="a701d562d061db5b2102d035c723ffc75"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a701d562d061db5b2102d035c723ffc75">&#9670;&nbsp;</a></span>connectToWiFi()</h2>
+<a id="a701d562d061db5b2102d035c723ffc75" name="a701d562d061db5b2102d035c723ffc75"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a701d562d061db5b2102d035c723ffc75">&#9670;&#160;</a></span>connectToWiFi()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -147,8 +174,8 @@ Variáveis</h2></td></tr>
 
 </div>
 </div>
-<a id="aab344c67c370dd095e6fb431093e3d26"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aab344c67c370dd095e6fb431093e3d26">&#9670;&nbsp;</a></span>loadWiFiCredentials()</h2>
+<a id="aab344c67c370dd095e6fb431093e3d26" name="aab344c67c370dd095e6fb431093e3d26"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aab344c67c370dd095e6fb431093e3d26">&#9670;&#160;</a></span>loadWiFiCredentials()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -181,8 +208,8 @@ Variáveis</h2></td></tr>
 
 </div>
 </div>
-<a id="ab7767b6547127ef9297fcec2a158e3fa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab7767b6547127ef9297fcec2a158e3fa">&#9670;&nbsp;</a></span>saveWiFiCredentials()</h2>
+<a id="ab7767b6547127ef9297fcec2a158e3fa" name="ab7767b6547127ef9297fcec2a158e3fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab7767b6547127ef9297fcec2a158e3fa">&#9670;&#160;</a></span>saveWiFiCredentials()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -210,8 +237,8 @@ Variáveis</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Variáveis</h2>
-<a id="a6ea06cf7b8092a0adaf07614d7ece59d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6ea06cf7b8092a0adaf07614d7ece59d">&#9670;&nbsp;</a></span>preferences</h2>
+<a id="a6ea06cf7b8092a0adaf07614d7ece59d" name="a6ea06cf7b8092a0adaf07614d7ece59d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ea06cf7b8092a0adaf07614d7ece59d">&#9670;&#160;</a></span>preferences</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -227,9 +254,7 @@ Variáveis</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Gerado por &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.17
+Gerado por&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

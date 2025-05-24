@@ -1,9 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<meta name="generator" content="Doxygen 1.8.17"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Smart Garden - Sistema de Controle de Ambiente: Referência do Arquivo src/config.hpp</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
@@ -19,10 +19,9 @@
 <div id="titlearea">
 <table cellspacing="0" cellpadding="0">
  <tbody>
- <tr style="height: 56px;">
-  <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Smart Garden - Sistema de Controle de Ambiente
-   &#160;<span id="projectnumber">v1.0</span>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Smart Garden - Sistema de Controle de Ambiente<span id="projectnumber">&#160;v1.0</span>
    </div>
    <div id="projectbrief">Sistema embarcado para monitoramento e controle de ambiente para cultivo</div>
   </td>
@@ -31,21 +30,22 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- Gerado por Doxygen 1.8.17 -->
+<!-- Gerado por Doxygen 1.9.8 -->
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
-var searchBox = new SearchBox("searchBox", "search",false,'Busca');
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
 /* @license-end */
 </script>
 <script type="text/javascript" src="menudata.js"></script>
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
   initMenu('',true,false,'search.php','Busca');
   $(document).ready(function() { init_search(); });
 });
-/* @license-end */</script>
+/* @license-end */
+</script>
 <div id="main-nav"></div>
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -56,9 +56,16 @@ $(function() {
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
-<iframe src="javascript:void(0)" frameborder="0" 
-        name="MSearchResults" id="MSearchResults">
-</iframe>
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Carregando...</div>
+<div class="SRStatus" id="Searching">Procurando...</div>
+<div class="SRStatus" id="NoMatches">Nenhuma entrada encontrado</div>
+</div>
+</div>
+</div>
 </div>
 
 <div id="nav-path" class="navpath">
@@ -72,8 +79,7 @@ $(function() {
 <a href="#define-members">Definições e Macros</a> &#124;
 <a href="#func-members">Funções</a> &#124;
 <a href="#var-members">Variáveis</a>  </div>
-  <div class="headertitle">
-<div class="title">Referência do Arquivo config.hpp</div>  </div>
+  <div class="headertitle"><div class="title">Referência do Arquivo config.hpp</div></div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;DHT.h&gt;</code><br />
@@ -83,43 +89,80 @@ $(function() {
 </div><div class="textblock"><div class="dynheader">
 Gráfico de dependência de inclusões para config.hpp:</div>
 <div class="dyncontent">
-<div class="center"><img src="config_8hpp__incl.png" border="0" usemap="#src_2config_8hpp" alt=""/></div>
-<map name="src_2config_8hpp" id="src_2config_8hpp">
-<area shape="rect" title=" " alt="" coords="195,5,307,32"/>
-<area shape="rect" title=" " alt="" coords="5,80,67,107"/>
-<area shape="rect" title=" " alt="" coords="91,80,242,107"/>
-<area shape="rect" title=" " alt="" coords="266,80,403,107"/>
-<area shape="rect" title=" " alt="" coords="427,80,525,107"/>
+<div class="center"><img src="config_8hpp__incl.png" border="0" usemap="#asrc_2config_8hpp" alt=""/></div>
+<map name="asrc_2config_8hpp" id="asrc_2config_8hpp">
+<area shape="rect" title=" " alt="" coords="195,5,307,31"/>
+<area shape="rect" title=" " alt="" coords="5,79,67,104"/>
+<area shape="poly" title=" " alt="" coords="217,33,81,78,79,73,215,28"/>
+<area shape="rect" title=" " alt="" coords="91,79,242,104"/>
+<area shape="poly" title=" " alt="" coords="239,33,193,72,189,67,235,29"/>
+<area shape="rect" title=" " alt="" coords="266,79,403,104"/>
+<area shape="poly" title=" " alt="" coords="266,29,312,67,309,72,262,33"/>
+<area shape="rect" title=" " alt="" coords="427,79,525,104"/>
+<area shape="poly" title=" " alt="" coords="288,28,427,72,426,77,286,33"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
 Este grafo mostra quais arquivos estão direta ou indiretamente relacionados com esse arquivo:</div>
 <div class="dyncontent">
-<div class="center"><img src="config_8hpp__dep__incl.png" border="0" usemap="#src_2config_8hppdep" alt=""/></div>
-<map name="src_2config_8hppdep" id="src_2config_8hppdep">
-<area shape="rect" title=" " alt="" coords="1118,5,1230,32"/>
-<area shape="rect" href="actuatorManager_8hpp.html" title=" " alt="" coords="110,229,358,256"/>
-<area shape="rect" href="main_8cpp.html" title=" " alt="" coords="791,379,896,405"/>
-<area shape="rect" href="wifi_8hpp.html" title=" " alt="" coords="1639,155,1792,181"/>
-<area shape="rect" href="wifi_8cpp.html" title=" " alt="" coords="1587,229,1739,256"/>
-<area shape="rect" href="mqttManager_8hpp.html" title=" " alt="" coords="1247,155,1464,181"/>
-<area shape="rect" href="sensorManager_8cpp.html" title=" " alt="" coords="731,229,956,256"/>
-<area shape="rect" href="sensorManager_8hpp.html" title=" " alt="" coords="419,155,646,181"/>
-<area shape="rect" href="timeService_8hpp.html" title=" " alt="" coords="721,80,904,107"/>
-<area shape="rect" href="actuatorManager_8cpp.html" title=" " alt="" coords="5,304,252,331"/>
-<area shape="rect" href="webServerManager_8hpp.html" title=" " alt="" coords="276,304,531,331"/>
-<area shape="rect" href="webServerManager_8cpp.html" title=" " alt="" coords="276,379,531,405"/>
-<area shape="rect" href="mqttManager_8cpp.html" title=" " alt="" coords="1246,229,1462,256"/>
-<area shape="rect" href="test__main_8cpp.html" title=" " alt="" coords="433,229,605,256"/>
-<area shape="rect" href="displayManager_8hpp.html" title=" " alt="" coords="1030,155,1222,181"/>
-<area shape="rect" href="timeService_8cpp.html" title=" " alt="" coords="721,155,904,181"/>
-<area shape="rect" href="displayManager_8cpp.html" title=" " alt="" coords="1031,229,1221,256"/>
+<div class="center"><img src="config_8hpp__dep__incl.png" border="0" usemap="#asrc_2config_8hppdep" alt=""/></div>
+<map name="asrc_2config_8hppdep" id="asrc_2config_8hppdep">
+<area shape="rect" title=" " alt="" coords="1203,5,1315,31"/>
+<area shape="rect" href="actuatorManager_8hpp.html" title=" " alt="" coords="125,225,373,251"/>
+<area shape="poly" title=" " alt="" coords="1190,26,957,44,813,60,668,81,510,104,443,121,362,154,332,171,304,191,262,227,259,223,301,187,329,167,360,150,442,116,509,99,667,76,812,55,957,39,1189,21"/>
+<area shape="rect" href="main_8cpp.html" title=" " alt="" coords="681,372,787,397"/>
+<area shape="poly" title=" " alt="" coords="1329,21,1463,34,1539,45,1616,59,1685,78,1742,101,1764,114,1781,129,1792,145,1795,163,1795,240,1793,250,1786,260,1759,277,1719,293,1666,307,1531,330,1370,349,1199,363,1035,374,787,384,787,379,1034,368,1199,358,1370,344,1531,325,1665,301,1717,287,1757,272,1782,256,1788,248,1790,239,1790,164,1787,147,1777,132,1761,118,1739,105,1683,83,1614,64,1539,50,1462,39,1329,26"/>
+<area shape="rect" href="mqttManager_8hpp.html" title=" " alt="" coords="1500,152,1717,177"/>
+<area shape="poly" title=" " alt="" coords="1301,34,1582,149,1580,154,1299,38"/>
+<area shape="rect" href="sensorManager_8cpp.html" title=" " alt="" coords="1012,225,1237,251"/>
+<area shape="poly" title=" " alt="" coords="1252,45,1223,107,1181,179,1139,227,1135,223,1177,176,1219,105,1247,42"/>
+<area shape="rect" href="wifi_8cpp.html" title=" " alt="" coords="1262,225,1414,251"/>
+<area shape="poly" title=" " alt="" coords="1269,43,1314,176,1335,224,1330,226,1309,178,1264,45"/>
+<area shape="rect" href="wifi_8hpp.html" title=" " alt="" coords="1323,152,1476,177"/>
+<area shape="poly" title=" " alt="" coords="1282,39,1390,150,1386,154,1278,43"/>
+<area shape="rect" href="sensorManager_8hpp.html" title=" " alt="" coords="445,152,671,177"/>
+<area shape="poly" title=" " alt="" coords="1189,23,1098,27,985,36,861,54,739,81,692,97,648,117,578,154,576,149,645,112,690,92,737,76,860,48,984,31,1098,21,1189,17"/>
+<area shape="rect" href="timeService_8hpp.html" title=" " alt="" coords="751,79,933,104"/>
+<area shape="poly" title=" " alt="" coords="1190,34,910,81,909,76,1189,29"/>
+<area shape="rect" href="actuatorManager_8cpp.html" title=" " alt="" coords="5,299,252,324"/>
+<area shape="poly" title=" " alt="" coords="219,260,150,301,147,296,216,255"/>
+<area shape="poly" title=" " alt="" coords="263,262,284,294,299,309,315,322,370,336,470,351,681,375,681,381,469,356,369,341,313,326,295,313,280,297,258,265"/>
+<area shape="rect" href="webServerManager_8hpp.html" title=" " alt="" coords="327,299,581,324"/>
+<area shape="poly" title=" " alt="" coords="295,253,422,296,420,301,294,258"/>
+<area shape="poly" title=" " alt="" coords="513,325,689,369,688,374,511,330"/>
+<area shape="rect" href="webServerManager_8cpp.html" title=" " alt="" coords="327,372,581,397"/>
+<area shape="poly" title=" " alt="" coords="457,338,457,372,451,372,451,338"/>
+<area shape="poly" title=" " alt="" coords="1584,188,1538,220,1476,258,1403,296,1327,327,1280,338,1218,348,1066,364,787,383,787,378,1066,359,1217,343,1279,333,1325,321,1401,291,1473,254,1535,215,1581,184"/>
+<area shape="rect" href="mqttManager_8cpp.html" title=" " alt="" coords="1539,225,1755,251"/>
+<area shape="poly" title=" " alt="" coords="1624,188,1643,224,1639,226,1619,191"/>
+<area shape="poly" title=" " alt="" coords="1518,182,1203,228,1202,223,1517,177"/>
+<area shape="poly" title=" " alt="" coords="1419,187,1434,219,1435,237,1428,252,1409,270,1382,287,1313,314,1228,336,1132,353,938,375,787,384,787,379,938,370,1131,348,1226,331,1312,309,1380,282,1405,266,1424,249,1430,236,1429,221,1415,190"/>
+<area shape="poly" title=" " alt="" coords="1382,190,1350,227,1346,223,1378,186"/>
+<area shape="poly" title=" " alt="" coords="496,183,299,228,298,223,495,178"/>
+<area shape="poly" title=" " alt="" coords="588,183,633,224,653,250,665,272,692,323,727,370,723,373,688,325,660,274,648,252,629,227,585,187"/>
+<area shape="poly" title=" " alt="" coords="494,185,462,202,438,227,432,244,434,263,449,297,444,299,429,265,427,244,433,224,459,197,491,180"/>
+<area shape="poly" title=" " alt="" coords="663,176,1034,223,1033,228,662,182"/>
+<area shape="rect" href="test__main_8cpp.html" title=" " alt="" coords="448,225,620,251"/>
+<area shape="poly" title=" " alt="" coords="552,191,540,226,535,224,547,189"/>
+<area shape="poly" title=" " alt="" coords="737,102,592,120,512,135,433,155,386,171,340,191,270,228,267,223,338,186,384,166,432,149,510,130,591,115,737,97"/>
+<area shape="poly" title=" " alt="" coords="789,111,759,129,736,153,723,182,716,213,714,276,723,332,733,371,728,372,717,333,709,276,711,212,718,180,732,151,756,124,786,107"/>
+<area shape="poly" title=" " alt="" coords="947,96,1011,102,1074,113,1126,129,1146,139,1160,150,1167,170,1162,191,1151,211,1138,227,1134,223,1146,208,1157,189,1162,170,1156,154,1143,143,1124,133,1072,118,1010,108,947,101"/>
+<area shape="poly" title=" " alt="" coords="784,110,605,154,603,149,783,105"/>
+<area shape="rect" href="displayManager_8hpp.html" title=" " alt="" coords="746,152,938,177"/>
+<area shape="poly" title=" " alt="" coords="845,118,845,152,839,152,839,118"/>
+<area shape="rect" href="timeService_8cpp.html" title=" " alt="" coords="963,152,1145,177"/>
+<area shape="poly" title=" " alt="" coords="890,106,1021,149,1019,154,888,111"/>
+<area shape="poly" title=" " alt="" coords="819,189,802,206,787,227,768,267,753,308,738,372,733,371,748,306,763,264,782,224,798,203,815,185"/>
+<area shape="poly" title=" " alt="" coords="901,178,1080,223,1078,228,900,183"/>
+<area shape="poly" title=" " alt="" coords="936,177,1262,223,1261,228,935,182"/>
+<area shape="rect" href="displayManager_8cpp.html" title=" " alt="" coords="797,225,988,251"/>
+<area shape="poly" title=" " alt="" coords="861,187,887,224,882,227,856,190"/>
 </map>
 </div>
 </div>
-<p><a href="config_8hpp_source.html">Vá para o código-fonte desse arquivo.</a></p>
+<p><a href="config_8hpp_source.html">Ir para o código-fonte desse arquivo.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Componentes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structWiFiConfig.html">WiFiConfig</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -134,48 +177,48 @@ Componentes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structAppConfig.html">AppConfig</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Definições e Macros</h2></td></tr>
-<tr class="memitem:a586542b79d00e4db7e1d5a667ae83a2b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8hpp.html#a586542b79d00e4db7e1d5a667ae83a2b">WIFI_SSID</a>&#160;&#160;&#160;&quot;Casa&quot;</td></tr>
+<tr class="memitem:a586542b79d00e4db7e1d5a667ae83a2b" id="r_a586542b79d00e4db7e1d5a667ae83a2b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8hpp.html#a586542b79d00e4db7e1d5a667ae83a2b">WIFI_SSID</a>&#160;&#160;&#160;&quot;Casa&quot;</td></tr>
 <tr class="separator:a586542b79d00e4db7e1d5a667ae83a2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8685d8aff7e570048090a3a51afceb07"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8hpp.html#a8685d8aff7e570048090a3a51afceb07">WIFI_PASSWORD</a>&#160;&#160;&#160;&quot;12345678&quot;</td></tr>
+<tr class="memitem:a8685d8aff7e570048090a3a51afceb07" id="r_a8685d8aff7e570048090a3a51afceb07"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8hpp.html#a8685d8aff7e570048090a3a51afceb07">WIFI_PASSWORD</a>&#160;&#160;&#160;&quot;12345678&quot;</td></tr>
 <tr class="separator:a8685d8aff7e570048090a3a51afceb07"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4c7e3b245b7ec8354c3e6b4b461cab62"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8hpp.html#a4c7e3b245b7ec8354c3e6b4b461cab62">STATIC_IP_ENABLED</a>&#160;&#160;&#160;1</td></tr>
+<tr class="memitem:a4c7e3b245b7ec8354c3e6b4b461cab62" id="r_a4c7e3b245b7ec8354c3e6b4b461cab62"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8hpp.html#a4c7e3b245b7ec8354c3e6b4b461cab62">STATIC_IP_ENABLED</a>&#160;&#160;&#160;1</td></tr>
 <tr class="separator:a4c7e3b245b7ec8354c3e6b4b461cab62"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0906dae4a42c1fef9ec0cd0a5212ed4a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8hpp.html#a0906dae4a42c1fef9ec0cd0a5212ed4a">HTTP_PORT</a>&#160;&#160;&#160;80</td></tr>
+<tr class="memitem:a0906dae4a42c1fef9ec0cd0a5212ed4a" id="r_a0906dae4a42c1fef9ec0cd0a5212ed4a"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8hpp.html#a0906dae4a42c1fef9ec0cd0a5212ed4a">HTTP_PORT</a>&#160;&#160;&#160;80</td></tr>
 <tr class="separator:a0906dae4a42c1fef9ec0cd0a5212ed4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2a1e1448a1e301f5540820b34df496d2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8hpp.html#a2a1e1448a1e301f5540820b34df496d2">MDNS_HOSTNAME</a>&#160;&#160;&#160;&quot;greenhouse&quot;</td></tr>
+<tr class="memitem:a2a1e1448a1e301f5540820b34df496d2" id="r_a2a1e1448a1e301f5540820b34df496d2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8hpp.html#a2a1e1448a1e301f5540820b34df496d2">MDNS_HOSTNAME</a>&#160;&#160;&#160;&quot;greenhouse&quot;</td></tr>
 <tr class="separator:a2a1e1448a1e301f5540820b34df496d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2597be4e15dcb4d93d323730f9ac2838"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8hpp.html#a2597be4e15dcb4d93d323730f9ac2838">MDNS_SERVICE_NAME</a>&#160;&#160;&#160;&quot;webserver&quot;</td></tr>
+<tr class="memitem:a2597be4e15dcb4d93d323730f9ac2838" id="r_a2597be4e15dcb4d93d323730f9ac2838"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8hpp.html#a2597be4e15dcb4d93d323730f9ac2838">MDNS_SERVICE_NAME</a>&#160;&#160;&#160;&quot;webserver&quot;</td></tr>
 <tr class="separator:a2597be4e15dcb4d93d323730f9ac2838"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a62634036639f88eece6fbf226b45f84b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8hpp.html#a62634036639f88eece6fbf226b45f84b">BAUD</a>&#160;&#160;&#160;115200</td></tr>
+<tr class="memitem:a62634036639f88eece6fbf226b45f84b" id="r_a62634036639f88eece6fbf226b45f84b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8hpp.html#a62634036639f88eece6fbf226b45f84b">BAUD</a>&#160;&#160;&#160;115200</td></tr>
 <tr class="separator:a62634036639f88eece6fbf226b45f84b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a24b2e4103f2dd7ee3566cc2aba51eb0e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8hpp.html#a24b2e4103f2dd7ee3566cc2aba51eb0e">INIT_RETRY_COUNT</a>&#160;&#160;&#160;3</td></tr>
+<tr class="memitem:a24b2e4103f2dd7ee3566cc2aba51eb0e" id="r_a24b2e4103f2dd7ee3566cc2aba51eb0e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8hpp.html#a24b2e4103f2dd7ee3566cc2aba51eb0e">INIT_RETRY_COUNT</a>&#160;&#160;&#160;3</td></tr>
 <tr class="separator:a24b2e4103f2dd7ee3566cc2aba51eb0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8eb2327d7562d5f65b7e9e83fd767366"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8hpp.html#a8eb2327d7562d5f65b7e9e83fd767366">INIT_RETRY_DELAY_MS</a>&#160;&#160;&#160;1000</td></tr>
+<tr class="memitem:a8eb2327d7562d5f65b7e9e83fd767366" id="r_a8eb2327d7562d5f65b7e9e83fd767366"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8hpp.html#a8eb2327d7562d5f65b7e9e83fd767366">INIT_RETRY_DELAY_MS</a>&#160;&#160;&#160;1000</td></tr>
 <tr class="separator:a8eb2327d7562d5f65b7e9e83fd767366"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Funções</h2></td></tr>
-<tr class="memitem:a97ea6ef2465d334109ae540c600e2ee3"><td class="memItemLeft" align="right" valign="top">const IPAddress&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8hpp.html#a97ea6ef2465d334109ae540c600e2ee3">LOCAL_IP</a> (192, 168, 1, 180)</td></tr>
+<tr class="memitem:a97ea6ef2465d334109ae540c600e2ee3" id="r_a97ea6ef2465d334109ae540c600e2ee3"><td class="memItemLeft" align="right" valign="top">const IPAddress&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8hpp.html#a97ea6ef2465d334109ae540c600e2ee3">LOCAL_IP</a> (192, 168, 1, 180)</td></tr>
 <tr class="separator:a97ea6ef2465d334109ae540c600e2ee3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a61b244664a635d7ccf4e5921d60bf285"><td class="memItemLeft" align="right" valign="top">const IPAddress&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8hpp.html#a61b244664a635d7ccf4e5921d60bf285">GATEWAY_IP</a> (192, 168, 1, 1)</td></tr>
+<tr class="memitem:a61b244664a635d7ccf4e5921d60bf285" id="r_a61b244664a635d7ccf4e5921d60bf285"><td class="memItemLeft" align="right" valign="top">const IPAddress&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8hpp.html#a61b244664a635d7ccf4e5921d60bf285">GATEWAY_IP</a> (192, 168, 1, 1)</td></tr>
 <tr class="separator:a61b244664a635d7ccf4e5921d60bf285"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4ba44d6873a24be2319b40db2b0e9d25"><td class="memItemLeft" align="right" valign="top">const IPAddress&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8hpp.html#a4ba44d6873a24be2319b40db2b0e9d25">SUBNET_MASK</a> (255, 255, 255, 0)</td></tr>
+<tr class="memitem:a4ba44d6873a24be2319b40db2b0e9d25" id="r_a4ba44d6873a24be2319b40db2b0e9d25"><td class="memItemLeft" align="right" valign="top">const IPAddress&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8hpp.html#a4ba44d6873a24be2319b40db2b0e9d25">SUBNET_MASK</a> (255, 255, 255, 0)</td></tr>
 <tr class="separator:a4ba44d6873a24be2319b40db2b0e9d25"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab5a8a53eef523dd34899f616c71f3ca6"><td class="memItemLeft" align="right" valign="top">const IPAddress&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8hpp.html#ab5a8a53eef523dd34899f616c71f3ca6">PRIMARY_DNS_IP</a> (8, 8, 8, 8)</td></tr>
+<tr class="memitem:ab5a8a53eef523dd34899f616c71f3ca6" id="r_ab5a8a53eef523dd34899f616c71f3ca6"><td class="memItemLeft" align="right" valign="top">const IPAddress&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8hpp.html#ab5a8a53eef523dd34899f616c71f3ca6">PRIMARY_DNS_IP</a> (8, 8, 8, 8)</td></tr>
 <tr class="separator:ab5a8a53eef523dd34899f616c71f3ca6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa52bf3e99f5a6d0ff448bf604cbdbaf6"><td class="memItemLeft" align="right" valign="top">const IPAddress&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8hpp.html#aa52bf3e99f5a6d0ff448bf604cbdbaf6">SECONDARY_DNS_IP</a> (8, 8, 4, 4)</td></tr>
+<tr class="memitem:aa52bf3e99f5a6d0ff448bf604cbdbaf6" id="r_aa52bf3e99f5a6d0ff448bf604cbdbaf6"><td class="memItemLeft" align="right" valign="top">const IPAddress&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8hpp.html#aa52bf3e99f5a6d0ff448bf604cbdbaf6">SECONDARY_DNS_IP</a> (8, 8, 4, 4)</td></tr>
 <tr class="separator:aa52bf3e99f5a6d0ff448bf604cbdbaf6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variáveis</h2></td></tr>
-<tr class="memitem:a25620e5c0ad6fb873f83bcc35fe39f8a"><td class="memItemLeft" align="right" valign="top">SemaphoreHandle_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8hpp.html#a25620e5c0ad6fb873f83bcc35fe39f8a">mqttMutex</a></td></tr>
+<tr class="memitem:a25620e5c0ad6fb873f83bcc35fe39f8a" id="r_a25620e5c0ad6fb873f83bcc35fe39f8a"><td class="memItemLeft" align="right" valign="top">SemaphoreHandle_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="config_8hpp.html#a25620e5c0ad6fb873f83bcc35fe39f8a">mqttMutex</a></td></tr>
 <tr class="separator:a25620e5c0ad6fb873f83bcc35fe39f8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Definições e macros</h2>
-<a id="a62634036639f88eece6fbf226b45f84b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a62634036639f88eece6fbf226b45f84b">&#9670;&nbsp;</a></span>BAUD</h2>
+<a id="a62634036639f88eece6fbf226b45f84b" name="a62634036639f88eece6fbf226b45f84b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a62634036639f88eece6fbf226b45f84b">&#9670;&#160;</a></span>BAUD</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -188,8 +231,8 @@ Variáveis</h2></td></tr>
 
 </div>
 </div>
-<a id="a0906dae4a42c1fef9ec0cd0a5212ed4a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0906dae4a42c1fef9ec0cd0a5212ed4a">&#9670;&nbsp;</a></span>HTTP_PORT</h2>
+<a id="a0906dae4a42c1fef9ec0cd0a5212ed4a" name="a0906dae4a42c1fef9ec0cd0a5212ed4a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0906dae4a42c1fef9ec0cd0a5212ed4a">&#9670;&#160;</a></span>HTTP_PORT</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -202,8 +245,8 @@ Variáveis</h2></td></tr>
 
 </div>
 </div>
-<a id="a24b2e4103f2dd7ee3566cc2aba51eb0e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a24b2e4103f2dd7ee3566cc2aba51eb0e">&#9670;&nbsp;</a></span>INIT_RETRY_COUNT</h2>
+<a id="a24b2e4103f2dd7ee3566cc2aba51eb0e" name="a24b2e4103f2dd7ee3566cc2aba51eb0e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a24b2e4103f2dd7ee3566cc2aba51eb0e">&#9670;&#160;</a></span>INIT_RETRY_COUNT</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -216,8 +259,8 @@ Variáveis</h2></td></tr>
 
 </div>
 </div>
-<a id="a8eb2327d7562d5f65b7e9e83fd767366"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8eb2327d7562d5f65b7e9e83fd767366">&#9670;&nbsp;</a></span>INIT_RETRY_DELAY_MS</h2>
+<a id="a8eb2327d7562d5f65b7e9e83fd767366" name="a8eb2327d7562d5f65b7e9e83fd767366"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8eb2327d7562d5f65b7e9e83fd767366">&#9670;&#160;</a></span>INIT_RETRY_DELAY_MS</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -230,8 +273,8 @@ Variáveis</h2></td></tr>
 
 </div>
 </div>
-<a id="a2a1e1448a1e301f5540820b34df496d2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2a1e1448a1e301f5540820b34df496d2">&#9670;&nbsp;</a></span>MDNS_HOSTNAME</h2>
+<a id="a2a1e1448a1e301f5540820b34df496d2" name="a2a1e1448a1e301f5540820b34df496d2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2a1e1448a1e301f5540820b34df496d2">&#9670;&#160;</a></span>MDNS_HOSTNAME</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -244,8 +287,8 @@ Variáveis</h2></td></tr>
 
 </div>
 </div>
-<a id="a2597be4e15dcb4d93d323730f9ac2838"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2597be4e15dcb4d93d323730f9ac2838">&#9670;&nbsp;</a></span>MDNS_SERVICE_NAME</h2>
+<a id="a2597be4e15dcb4d93d323730f9ac2838" name="a2597be4e15dcb4d93d323730f9ac2838"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2597be4e15dcb4d93d323730f9ac2838">&#9670;&#160;</a></span>MDNS_SERVICE_NAME</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -258,8 +301,8 @@ Variáveis</h2></td></tr>
 
 </div>
 </div>
-<a id="a4c7e3b245b7ec8354c3e6b4b461cab62"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4c7e3b245b7ec8354c3e6b4b461cab62">&#9670;&nbsp;</a></span>STATIC_IP_ENABLED</h2>
+<a id="a4c7e3b245b7ec8354c3e6b4b461cab62" name="a4c7e3b245b7ec8354c3e6b4b461cab62"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4c7e3b245b7ec8354c3e6b4b461cab62">&#9670;&#160;</a></span>STATIC_IP_ENABLED</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -272,8 +315,8 @@ Variáveis</h2></td></tr>
 
 </div>
 </div>
-<a id="a8685d8aff7e570048090a3a51afceb07"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8685d8aff7e570048090a3a51afceb07">&#9670;&nbsp;</a></span>WIFI_PASSWORD</h2>
+<a id="a8685d8aff7e570048090a3a51afceb07" name="a8685d8aff7e570048090a3a51afceb07"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8685d8aff7e570048090a3a51afceb07">&#9670;&#160;</a></span>WIFI_PASSWORD</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -286,8 +329,8 @@ Variáveis</h2></td></tr>
 
 </div>
 </div>
-<a id="a586542b79d00e4db7e1d5a667ae83a2b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a586542b79d00e4db7e1d5a667ae83a2b">&#9670;&nbsp;</a></span>WIFI_SSID</h2>
+<a id="a586542b79d00e4db7e1d5a667ae83a2b" name="a586542b79d00e4db7e1d5a667ae83a2b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a586542b79d00e4db7e1d5a667ae83a2b">&#9670;&#160;</a></span>WIFI_SSID</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -301,8 +344,8 @@ Variáveis</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Funções</h2>
-<a id="a61b244664a635d7ccf4e5921d60bf285"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a61b244664a635d7ccf4e5921d60bf285">&#9670;&nbsp;</a></span>GATEWAY_IP()</h2>
+<a id="a61b244664a635d7ccf4e5921d60bf285" name="a61b244664a635d7ccf4e5921d60bf285"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a61b244664a635d7ccf4e5921d60bf285">&#9670;&#160;</a></span>GATEWAY_IP()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -341,8 +384,8 @@ Variáveis</h2></td></tr>
 
 </div>
 </div>
-<a id="a97ea6ef2465d334109ae540c600e2ee3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a97ea6ef2465d334109ae540c600e2ee3">&#9670;&nbsp;</a></span>LOCAL_IP()</h2>
+<a id="a97ea6ef2465d334109ae540c600e2ee3" name="a97ea6ef2465d334109ae540c600e2ee3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a97ea6ef2465d334109ae540c600e2ee3">&#9670;&#160;</a></span>LOCAL_IP()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -381,8 +424,8 @@ Variáveis</h2></td></tr>
 
 </div>
 </div>
-<a id="ab5a8a53eef523dd34899f616c71f3ca6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab5a8a53eef523dd34899f616c71f3ca6">&#9670;&nbsp;</a></span>PRIMARY_DNS_IP()</h2>
+<a id="ab5a8a53eef523dd34899f616c71f3ca6" name="ab5a8a53eef523dd34899f616c71f3ca6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab5a8a53eef523dd34899f616c71f3ca6">&#9670;&#160;</a></span>PRIMARY_DNS_IP()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -421,8 +464,8 @@ Variáveis</h2></td></tr>
 
 </div>
 </div>
-<a id="aa52bf3e99f5a6d0ff448bf604cbdbaf6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa52bf3e99f5a6d0ff448bf604cbdbaf6">&#9670;&nbsp;</a></span>SECONDARY_DNS_IP()</h2>
+<a id="aa52bf3e99f5a6d0ff448bf604cbdbaf6" name="aa52bf3e99f5a6d0ff448bf604cbdbaf6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa52bf3e99f5a6d0ff448bf604cbdbaf6">&#9670;&#160;</a></span>SECONDARY_DNS_IP()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -461,8 +504,8 @@ Variáveis</h2></td></tr>
 
 </div>
 </div>
-<a id="a4ba44d6873a24be2319b40db2b0e9d25"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4ba44d6873a24be2319b40db2b0e9d25">&#9670;&nbsp;</a></span>SUBNET_MASK()</h2>
+<a id="a4ba44d6873a24be2319b40db2b0e9d25" name="a4ba44d6873a24be2319b40db2b0e9d25"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4ba44d6873a24be2319b40db2b0e9d25">&#9670;&#160;</a></span>SUBNET_MASK()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -502,16 +545,24 @@ Variáveis</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Variáveis</h2>
-<a id="a25620e5c0ad6fb873f83bcc35fe39f8a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a25620e5c0ad6fb873f83bcc35fe39f8a">&#9670;&nbsp;</a></span>mqttMutex</h2>
+<a id="a25620e5c0ad6fb873f83bcc35fe39f8a" name="a25620e5c0ad6fb873f83bcc35fe39f8a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a25620e5c0ad6fb873f83bcc35fe39f8a">&#9670;&#160;</a></span>mqttMutex</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">SemaphoreHandle_t mqttMutex</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">extern</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 </div>
@@ -519,9 +570,7 @@ Variáveis</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Gerado por &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.17
+Gerado por&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

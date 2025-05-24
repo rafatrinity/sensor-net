@@ -1,9 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=9"/>
-<meta name="generator" content="Doxygen 1.8.17"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Smart Garden - Sistema de Controle de Ambiente: Referência do Arquivo src/ui/displayManager.hpp</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
@@ -19,10 +19,9 @@
 <div id="titlearea">
 <table cellspacing="0" cellpadding="0">
  <tbody>
- <tr style="height: 56px;">
-  <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">Smart Garden - Sistema de Controle de Ambiente
-   &#160;<span id="projectnumber">v1.0</span>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Smart Garden - Sistema de Controle de Ambiente<span id="projectnumber">&#160;v1.0</span>
    </div>
    <div id="projectbrief">Sistema embarcado para monitoramento e controle de ambiente para cultivo</div>
   </td>
@@ -31,21 +30,22 @@
 </table>
 </div>
 <!-- end header part -->
-<!-- Gerado por Doxygen 1.8.17 -->
+<!-- Gerado por Doxygen 1.9.8 -->
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
-var searchBox = new SearchBox("searchBox", "search",false,'Busca');
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
 /* @license-end */
 </script>
 <script type="text/javascript" src="menudata.js"></script>
 <script type="text/javascript" src="menu.js"></script>
 <script type="text/javascript">
-/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
 $(function() {
   initMenu('',true,false,'search.php','Busca');
   $(document).ready(function() { init_search(); });
 });
-/* @license-end */</script>
+/* @license-end */
+</script>
 <div id="main-nav"></div>
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -56,9 +56,16 @@ $(function() {
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
-<iframe src="javascript:void(0)" frameborder="0" 
-        name="MSearchResults" id="MSearchResults">
-</iframe>
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Carregando...</div>
+<div class="SRStatus" id="Searching">Procurando...</div>
+<div class="SRStatus" id="NoMatches">Nenhuma entrada encontrado</div>
+</div>
+</div>
+</div>
 </div>
 
 <div id="nav-path" class="navpath">
@@ -69,9 +76,8 @@ $(function() {
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Componentes</a> &#124;
-<a href="#namespaces"><em>Namespaces</em></a>  </div>
-  <div class="headertitle">
-<div class="title">Referência do Arquivo displayManager.hpp</div>  </div>
+<a href="#namespaces">Namespaces</a>  </div>
+  <div class="headertitle"><div class="title">Referência do Arquivo displayManager.hpp</div></div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;stdint.h&gt;</code><br />
@@ -82,53 +88,68 @@ $(function() {
 </div><div class="textblock"><div class="dynheader">
 Gráfico de dependência de inclusões para displayManager.hpp:</div>
 <div class="dyncontent">
-<div class="center"><img src="displayManager_8hpp__incl.png" border="0" usemap="#src_2ui_2displayManager_8hpp" alt=""/></div>
-<map name="src_2ui_2displayManager_8hpp" id="src_2ui_2displayManager_8hpp">
-<area shape="rect" title=" " alt="" coords="179,5,371,32"/>
-<area shape="rect" title=" " alt="" coords="5,80,76,107"/>
-<area shape="rect" title=" " alt="" coords="101,80,178,107"/>
-<area shape="rect" title=" " alt="" coords="202,80,349,107"/>
-<area shape="rect" href="freeRTOSMutex_8hpp.html" title=" " alt="" coords="279,155,461,181"/>
-<area shape="rect" href="timeService_8hpp.html" title=" " alt="" coords="438,80,598,107"/>
-<area shape="rect" title=" " alt="" coords="273,229,424,256"/>
-<area shape="rect" title=" " alt="" coords="448,229,585,256"/>
-<area shape="rect" href="config_8hpp.html" title=" " alt="" coords="575,155,664,181"/>
-<area shape="rect" title=" " alt="" coords="486,155,550,181"/>
-<area shape="rect" title=" " alt="" coords="610,229,671,256"/>
-<area shape="rect" title=" " alt="" coords="696,229,793,256"/>
+<div class="center"><img src="displayManager_8hpp__incl.png" border="0" usemap="#asrc_2ui_2displayManager_8hpp" alt=""/></div>
+<map name="asrc_2ui_2displayManager_8hpp" id="asrc_2ui_2displayManager_8hpp">
+<area shape="rect" title=" " alt="" coords="179,5,371,31"/>
+<area shape="rect" title=" " alt="" coords="5,79,76,104"/>
+<area shape="poly" title=" " alt="" coords="238,33,90,78,89,73,237,28"/>
+<area shape="rect" title=" " alt="" coords="101,79,178,104"/>
+<area shape="poly" title=" " alt="" coords="255,33,175,75,172,70,252,28"/>
+<area shape="rect" title=" " alt="" coords="202,79,349,104"/>
+<area shape="poly" title=" " alt="" coords="278,31,278,65,273,65,273,31"/>
+<area shape="rect" href="freeRTOSMutex_8hpp.html" title=" " alt="" coords="279,152,461,177"/>
+<area shape="poly" title=" " alt="" coords="304,29,336,48,351,61,363,77,373,108,375,138,370,138,368,109,358,80,347,65,333,52,301,33"/>
+<area shape="rect" href="timeService_8hpp.html" title=" " alt="" coords="438,79,598,104"/>
+<area shape="poly" title=" " alt="" coords="315,28,467,72,465,77,314,33"/>
+<area shape="rect" title=" " alt="" coords="273,225,424,251"/>
+<area shape="poly" title=" " alt="" coords="369,178,359,213,353,211,364,177"/>
+<area shape="rect" title=" " alt="" coords="448,225,585,251"/>
+<area shape="poly" title=" " alt="" coords="395,175,482,217,479,222,392,180"/>
+<area shape="rect" href="config_8hpp.html" title=" " alt="" coords="575,152,664,177"/>
+<area shape="poly" title=" " alt="" coords="536,102,593,142,590,146,533,106"/>
+<area shape="rect" title=" " alt="" coords="486,152,550,177"/>
+<area shape="poly" title=" " alt="" coords="521,104,521,138,515,138,515,104"/>
+<area shape="poly" title=" " alt="" coords="577,180,406,224,405,219,575,175"/>
+<area shape="poly" title=" " alt="" coords="604,180,546,219,543,215,601,175"/>
+<area shape="rect" title=" " alt="" coords="610,225,671,251"/>
+<area shape="poly" title=" " alt="" coords="625,177,636,211,631,213,620,178"/>
+<area shape="rect" title=" " alt="" coords="696,225,793,251"/>
+<area shape="poly" title=" " alt="" coords="641,175,714,216,711,221,638,180"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
 Este grafo mostra quais arquivos estão direta ou indiretamente relacionados com esse arquivo:</div>
 <div class="dyncontent">
-<div class="center"><img src="displayManager_8hpp__dep__incl.png" border="0" usemap="#src_2ui_2displayManager_8hppdep" alt=""/></div>
-<map name="src_2ui_2displayManager_8hppdep" id="src_2ui_2displayManager_8hppdep">
-<area shape="rect" title=" " alt="" coords="222,5,414,32"/>
-<area shape="rect" href="main_8cpp.html" title=" " alt="" coords="5,80,111,107"/>
-<area shape="rect" href="wifi_8cpp.html" title=" " alt="" coords="135,80,287,107"/>
-<area shape="rect" href="sensorManager_8cpp.html" title=" " alt="" coords="312,80,537,107"/>
-<area shape="rect" href="displayManager_8cpp.html" title=" " alt="" coords="561,80,752,107"/>
+<div class="center"><img src="displayManager_8hpp__dep__incl.png" border="0" usemap="#asrc_2ui_2displayManager_8hppdep" alt=""/></div>
+<map name="asrc_2ui_2displayManager_8hppdep" id="asrc_2ui_2displayManager_8hppdep">
+<area shape="rect" title=" " alt="" coords="222,5,414,31"/>
+<area shape="rect" href="main_8cpp.html" title=" " alt="" coords="5,79,111,104"/>
+<area shape="poly" title=" " alt="" coords="264,37,101,81,99,76,262,32"/>
+<area shape="rect" href="wifi_8cpp.html" title=" " alt="" coords="135,79,287,104"/>
+<area shape="poly" title=" " alt="" coords="291,40,230,81,227,76,288,36"/>
+<area shape="rect" href="sensorManager_8cpp.html" title=" " alt="" coords="312,79,537,104"/>
+<area shape="poly" title=" " alt="" coords="348,36,409,76,406,81,345,40"/>
+<area shape="rect" href="displayManager_8cpp.html" title=" " alt="" coords="561,79,752,104"/>
+<area shape="poly" title=" " alt="" coords="386,31,602,76,601,81,385,36"/>
 </map>
 </div>
 </div>
-<p><a href="displayManager_8hpp_source.html">Vá para o código-fonte desse arquivo.</a></p>
+<p><a href="displayManager_8hpp_source.html">Ir para o código-fonte desse arquivo.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Componentes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1DisplayManager.html">GrowController::DisplayManager</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
-&lt;em&gt;Namespaces&lt;/em&gt;</h2></td></tr>
-<tr class="memitem:namespaceGrowController"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGrowController.html">GrowController</a></td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
+Namespaces</h2></td></tr>
+<tr class="memitem:namespaceGrowController" id="r_namespaceGrowController"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceGrowController.html">GrowController</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Gerado por &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.17
+Gerado por&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8
 </small></address>
 </body>
 </html>

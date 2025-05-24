@@ -1,29 +1,29 @@
-\hypertarget{classGrowController_1_1SensorManager}{}\doxysection{Referência da Classe Grow\+Controller\+::Sensor\+Manager}
-\label{classGrowController_1_1SensorManager}\index{GrowController::SensorManager@{GrowController::SensorManager}}
+\doxysection{Referência da Classe Grow\+Controller\+::Sensor\+Manager}
+\hypertarget{classGrowController_1_1SensorManager}{}\label{classGrowController_1_1SensorManager}\index{GrowController::SensorManager@{GrowController::SensorManager}}
 
 
-Gerencia a leitura de sensores (D\+HT, Solo), cálculo de V\+PD, e armazena os resultados em cache. Atualiza um cache interno thread-\/safe e executa uma tarefa dedicada para leituras periódicas. Utiliza R\+A\+II para recursos.  
+Gerencia a leitura de sensores (DHT, Solo), cálculo de VPD, e armazena os resultados em cache. Atualiza um cache interno thread-\/safe e executa uma tarefa dedicada para leituras periódicas. Utiliza RAII para recursos.  
 
 
 
 
 {\ttfamily \#include $<$sensor\+Manager.\+hpp$>$}
 
-\doxysubsection*{Membros Públicos}
+\doxysubsubsection*{Membros Públicos}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{classGrowController_1_1SensorManager_ae9c224c68358344a239a33b3c8a59739}{Sensor\+Manager}} (const \mbox{\hyperlink{structSensorConfig}{Sensor\+Config}} \&config, \mbox{\hyperlink{classGrowController_1_1TimeService}{Time\+Service}} \&time\+Svc, \mbox{\hyperlink{classGrowController_1_1DataHistoryManager}{Data\+History\+Manager}} $\ast$history\+Mgr, \mbox{\hyperlink{classGrowController_1_1DisplayManager}{Display\+Manager}} $\ast$\mbox{\hyperlink{main_8cpp_ad24f69a894bc0b331de070f0219b2abc}{display\+Mgr}}=nullptr, \mbox{\hyperlink{classGrowController_1_1MqttManager}{Mqtt\+Manager}} $\ast$\mbox{\hyperlink{main_8cpp_ab1c8cf8a043a91e16ad57c858efc3bdc}{mqtt\+Mgr}}=nullptr)
+\mbox{\hyperlink{classGrowController_1_1SensorManager_ae9c224c68358344a239a33b3c8a59739}{Sensor\+Manager}} (const \mbox{\hyperlink{structSensorConfig}{Sensor\+Config}} \&config, \mbox{\hyperlink{classGrowController_1_1TimeService}{Time\+Service}} \&time\+Svc, \mbox{\hyperlink{classGrowController_1_1DataHistoryManager}{Data\+History\+Manager}} \texorpdfstring{$\ast$}{*}history\+Mgr, \mbox{\hyperlink{classGrowController_1_1DisplayManager}{Display\+Manager}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{main_8cpp_ad24f69a894bc0b331de070f0219b2abc}{display\+Mgr}}=nullptr, \mbox{\hyperlink{classGrowController_1_1MqttManager}{Mqtt\+Manager}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{main_8cpp_ab1c8cf8a043a91e16ad57c858efc3bdc}{mqtt\+Mgr}}=nullptr)
 \begin{DoxyCompactList}\small\item\em Construtor. Recebe configuração e dependências. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classGrowController_1_1SensorManager_a62b21065ae69be1d75191474c8287138}{$\sim$\+Sensor\+Manager}} ()
-\begin{DoxyCompactList}\small\item\em Destrutor. Para a tarefa e libera recursos (automático via R\+A\+II). \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classGrowController_1_1SensorManager_a62b21065ae69be1d75191474c8287138}{\texorpdfstring{$\sim$}{\string~}\+Sensor\+Manager}} ()
+\begin{DoxyCompactList}\small\item\em Destrutor. Para a tarefa e libera recursos (automático via RAII). \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classGrowController_1_1SensorManager_a74f3547cfef3d350ab44fe8dc82c26bb}{Sensor\+Manager}} (const \mbox{\hyperlink{classGrowController_1_1SensorManager}{Sensor\+Manager}} \&)=delete
 \item 
-\mbox{\hyperlink{classGrowController_1_1SensorManager}{Sensor\+Manager}} \& \mbox{\hyperlink{classGrowController_1_1SensorManager_a5164ff86c72f7d2eb832f4a6cf501bdd}{operator=}} (const \mbox{\hyperlink{classGrowController_1_1SensorManager}{Sensor\+Manager}} \&)=delete
+\mbox{\hyperlink{classGrowController_1_1SensorManager}{Sensor\+Manager}} \& \mbox{\hyperlink{classGrowController_1_1SensorManager_a78118571f6100688a302d8dcc2812a37}{operator=}} (const \mbox{\hyperlink{classGrowController_1_1SensorManager}{Sensor\+Manager}} \&)=delete
 \item 
 bool \mbox{\hyperlink{classGrowController_1_1SensorManager_aab57b0ac132192e6a3fa448322219d8d}{initialize}} ()
-\begin{DoxyCompactList}\small\item\em Inicializa o hardware do sensor D\+HT e o mutex. \end{DoxyCompactList}\item 
-bool \mbox{\hyperlink{classGrowController_1_1SensorManager_a107e760a0669a0e6e66f00b018d752ed}{start\+Sensor\+Task}} (U\+Base\+Type\+\_\+t priority=1, uint32\+\_\+t stack\+Size=4096)
-\begin{DoxyCompactList}\small\item\em Inicia a tarefa Free\+R\+T\+OS para leitura periódica dos sensores. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Inicializa o hardware do sensor DHT e o mutex. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classGrowController_1_1SensorManager_a107e760a0669a0e6e66f00b018d752ed}{start\+Sensor\+Task}} (UBase\+Type\+\_\+t priority=1, uint32\+\_\+t stack\+Size=4096)
+\begin{DoxyCompactList}\small\item\em Inicia a tarefa Free\+RTOS para leitura periódica dos sensores. \end{DoxyCompactList}\item 
 float \mbox{\hyperlink{classGrowController_1_1SensorManager_a3d1a06f2a8650b4c272bdb370dd718ba}{get\+Temperature}} () const
 \begin{DoxyCompactList}\small\item\em Obtém a última leitura de temperatura válida do cache. Thread-\/safe. \end{DoxyCompactList}\item 
 float \mbox{\hyperlink{classGrowController_1_1SensorManager_a2f37335a4aa0539d571918b2e672d9bb}{get\+Humidity}} () const
@@ -31,20 +31,20 @@ float \mbox{\hyperlink{classGrowController_1_1SensorManager_a2f37335a4aa0539d571
 float \mbox{\hyperlink{classGrowController_1_1SensorManager_a3d10e6bd37ba70578c3ac3dccc8f9df9}{get\+Soil\+Humidity}} () const
 \begin{DoxyCompactList}\small\item\em Obtém a última leitura de umidade do solo válida do cache. Thread-\/safe. \end{DoxyCompactList}\item 
 float \mbox{\hyperlink{classGrowController_1_1SensorManager_af71128a23758e48e4dbedcc834c984f0}{get\+Vpd}} () const
-\begin{DoxyCompactList}\small\item\em Obtém o último valor calculado de V\+PD do cache. Thread-\/safe. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Obtém o último valor calculado de VPD do cache. Thread-\/safe. \end{DoxyCompactList}\item 
 bool \mbox{\hyperlink{classGrowController_1_1SensorManager_aa4c75bdafbddfbf20ff3e47d29a90bd6}{is\+Initialized}} () const
 \begin{DoxyCompactList}\small\item\em Verifica se o manager foi inicializado. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Descrição detalhada}
-Gerencia a leitura de sensores (D\+HT, Solo), cálculo de V\+PD, e armazena os resultados em cache. Atualiza um cache interno thread-\/safe e executa uma tarefa dedicada para leituras periódicas. Utiliza R\+A\+II para recursos. 
+Gerencia a leitura de sensores (DHT, Solo), cálculo de VPD, e armazena os resultados em cache. Atualiza um cache interno thread-\/safe e executa uma tarefa dedicada para leituras periódicas. Utiliza RAII para recursos. 
 
 \doxysubsection{Construtores e Destrutores}
-\mbox{\Hypertarget{classGrowController_1_1SensorManager_ae9c224c68358344a239a33b3c8a59739}\label{classGrowController_1_1SensorManager_ae9c224c68358344a239a33b3c8a59739}} 
+\Hypertarget{classGrowController_1_1SensorManager_ae9c224c68358344a239a33b3c8a59739}\label{classGrowController_1_1SensorManager_ae9c224c68358344a239a33b3c8a59739} 
 \index{GrowController::SensorManager@{GrowController::SensorManager}!SensorManager@{SensorManager}}
 \index{SensorManager@{SensorManager}!GrowController::SensorManager@{GrowController::SensorManager}}
 \doxysubsubsection{\texorpdfstring{SensorManager()}{SensorManager()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
-{\footnotesize\ttfamily Grow\+Controller\+::\+Sensor\+Manager\+::\+Sensor\+Manager (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structSensorConfig}{Sensor\+Config}} \&}]{config,  }\item[{\mbox{\hyperlink{classGrowController_1_1TimeService}{Time\+Service}} \&}]{time\+Svc,  }\item[{\mbox{\hyperlink{classGrowController_1_1DataHistoryManager}{Data\+History\+Manager}} $\ast$}]{history\+Mgr,  }\item[{\mbox{\hyperlink{classGrowController_1_1DisplayManager}{Display\+Manager}} $\ast$}]{display\+Mgr = {\ttfamily nullptr},  }\item[{\mbox{\hyperlink{classGrowController_1_1MqttManager}{Mqtt\+Manager}} $\ast$}]{mqtt\+Mgr = {\ttfamily nullptr} }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily Grow\+Controller\+::\+Sensor\+Manager\+::\+Sensor\+Manager (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{structSensorConfig}{Sensor\+Config}} \&}]{config,  }\item[{\mbox{\hyperlink{classGrowController_1_1TimeService}{Time\+Service}} \&}]{time\+Svc,  }\item[{\mbox{\hyperlink{classGrowController_1_1DataHistoryManager}{Data\+History\+Manager}} \texorpdfstring{$\ast$}{*}}]{history\+Mgr,  }\item[{\mbox{\hyperlink{classGrowController_1_1DisplayManager}{Display\+Manager}} \texorpdfstring{$\ast$}{*}}]{display\+Mgr = {\ttfamily nullptr},  }\item[{\mbox{\hyperlink{classGrowController_1_1MqttManager}{Mqtt\+Manager}} \texorpdfstring{$\ast$}{*}}]{mqtt\+Mgr = {\ttfamily nullptr} }\end{DoxyParamCaption})}
 
 
 
@@ -56,24 +56,24 @@ Construtor. Recebe configuração e dependências.
 \hline
 {\em time\+Svc} & Serviço de tempo (para leitura de tempo). \\
 \hline
-{\em history\+Mgr} & Ponteiro para o \mbox{\hyperlink{classGrowController_1_1DataHistoryManager}{Data\+History\+Manager}} (opcional, para armazenamento em cache). \\
+{\em history\+Mgr} & Ponteiro para o \doxylink{classGrowController_1_1DataHistoryManager}{Data\+History\+Manager} (opcional, para armazenamento em cache). \\
 \hline
-{\em display\+Mgr} & Ponteiro para o \mbox{\hyperlink{classGrowController_1_1DisplayManager}{Display\+Manager}} (opcional, para atualização direta). \\
+{\em display\+Mgr} & Ponteiro para o \doxylink{classGrowController_1_1DisplayManager}{Display\+Manager} (opcional, para atualização direta). \\
 \hline
-{\em mqtt\+Mgr} & Ponteiro para o \mbox{\hyperlink{classGrowController_1_1MqttManager}{Mqtt\+Manager}} (opcional, para publicação direta). \\
+{\em mqtt\+Mgr} & Ponteiro para o \doxylink{classGrowController_1_1MqttManager}{Mqtt\+Manager} (opcional, para publicação direta). \\
 \hline
 \end{DoxyParams}
-\mbox{\Hypertarget{classGrowController_1_1SensorManager_a62b21065ae69be1d75191474c8287138}\label{classGrowController_1_1SensorManager_a62b21065ae69be1d75191474c8287138}} 
-\index{GrowController::SensorManager@{GrowController::SensorManager}!````~SensorManager@{$\sim$SensorManager}}
-\index{````~SensorManager@{$\sim$SensorManager}!GrowController::SensorManager@{GrowController::SensorManager}}
-\doxysubsubsection{\texorpdfstring{$\sim$SensorManager()}{~SensorManager()}}
-{\footnotesize\ttfamily Grow\+Controller\+::\+Sensor\+Manager\+::$\sim$\+Sensor\+Manager (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+\Hypertarget{classGrowController_1_1SensorManager_a62b21065ae69be1d75191474c8287138}\label{classGrowController_1_1SensorManager_a62b21065ae69be1d75191474c8287138} 
+\index{GrowController::SensorManager@{GrowController::SensorManager}!````~SensorManager@{\texorpdfstring{$\sim$}{\string~}SensorManager}}
+\index{````~SensorManager@{\texorpdfstring{$\sim$}{\string~}SensorManager}!GrowController::SensorManager@{GrowController::SensorManager}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}SensorManager()}{\string~SensorManager()}}
+{\footnotesize\ttfamily Grow\+Controller\+::\+Sensor\+Manager\+::\texorpdfstring{$\sim$}{\string~}\+Sensor\+Manager (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
 
 
-Destrutor. Para a tarefa e libera recursos (automático via R\+A\+II). 
+Destrutor. Para a tarefa e libera recursos (automático via RAII). 
 
-\mbox{\Hypertarget{classGrowController_1_1SensorManager_a74f3547cfef3d350ab44fe8dc82c26bb}\label{classGrowController_1_1SensorManager_a74f3547cfef3d350ab44fe8dc82c26bb}} 
+\Hypertarget{classGrowController_1_1SensorManager_a74f3547cfef3d350ab44fe8dc82c26bb}\label{classGrowController_1_1SensorManager_a74f3547cfef3d350ab44fe8dc82c26bb} 
 \index{GrowController::SensorManager@{GrowController::SensorManager}!SensorManager@{SensorManager}}
 \index{SensorManager@{SensorManager}!GrowController::SensorManager@{GrowController::SensorManager}}
 \doxysubsubsection{\texorpdfstring{SensorManager()}{SensorManager()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
@@ -81,8 +81,8 @@ Destrutor. Para a tarefa e libera recursos (automático via R\+A\+II).
 
 
 
-\doxysubsection{Funções membros}
-\mbox{\Hypertarget{classGrowController_1_1SensorManager_a2f37335a4aa0539d571918b2e672d9bb}\label{classGrowController_1_1SensorManager_a2f37335a4aa0539d571918b2e672d9bb}} 
+\doxysubsection{Documentação das funções}
+\Hypertarget{classGrowController_1_1SensorManager_a2f37335a4aa0539d571918b2e672d9bb}\label{classGrowController_1_1SensorManager_a2f37335a4aa0539d571918b2e672d9bb} 
 \index{GrowController::SensorManager@{GrowController::SensorManager}!getHumidity@{getHumidity}}
 \index{getHumidity@{getHumidity}!GrowController::SensorManager@{GrowController::SensorManager}}
 \doxysubsubsection{\texorpdfstring{getHumidity()}{getHumidity()}}
@@ -93,9 +93,9 @@ Destrutor. Para a tarefa e libera recursos (automático via R\+A\+II).
 Obtém a última leitura de umidade do ar válida do cache. Thread-\/safe. 
 
 \begin{DoxyReturn}{Retorna}
-float Umidade em \% ou N\+AN. 
+float Umidade em \% ou NAN. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classGrowController_1_1SensorManager_a3d10e6bd37ba70578c3ac3dccc8f9df9}\label{classGrowController_1_1SensorManager_a3d10e6bd37ba70578c3ac3dccc8f9df9}} 
+\Hypertarget{classGrowController_1_1SensorManager_a3d10e6bd37ba70578c3ac3dccc8f9df9}\label{classGrowController_1_1SensorManager_a3d10e6bd37ba70578c3ac3dccc8f9df9} 
 \index{GrowController::SensorManager@{GrowController::SensorManager}!getSoilHumidity@{getSoilHumidity}}
 \index{getSoilHumidity@{getSoilHumidity}!GrowController::SensorManager@{GrowController::SensorManager}}
 \doxysubsubsection{\texorpdfstring{getSoilHumidity()}{getSoilHumidity()}}
@@ -106,9 +106,9 @@ float Umidade em \% ou N\+AN.
 Obtém a última leitura de umidade do solo válida do cache. Thread-\/safe. 
 
 \begin{DoxyReturn}{Retorna}
-float Umidade do solo em \% ou N\+AN. 
+float Umidade do solo em \% ou NAN. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classGrowController_1_1SensorManager_a3d1a06f2a8650b4c272bdb370dd718ba}\label{classGrowController_1_1SensorManager_a3d1a06f2a8650b4c272bdb370dd718ba}} 
+\Hypertarget{classGrowController_1_1SensorManager_a3d1a06f2a8650b4c272bdb370dd718ba}\label{classGrowController_1_1SensorManager_a3d1a06f2a8650b4c272bdb370dd718ba} 
 \index{GrowController::SensorManager@{GrowController::SensorManager}!getTemperature@{getTemperature}}
 \index{getTemperature@{getTemperature}!GrowController::SensorManager@{GrowController::SensorManager}}
 \doxysubsubsection{\texorpdfstring{getTemperature()}{getTemperature()}}
@@ -119,9 +119,9 @@ float Umidade do solo em \% ou N\+AN.
 Obtém a última leitura de temperatura válida do cache. Thread-\/safe. 
 
 \begin{DoxyReturn}{Retorna}
-float Temperatura em Celsius ou N\+AN. 
+float Temperatura em Celsius ou NAN. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classGrowController_1_1SensorManager_af71128a23758e48e4dbedcc834c984f0}\label{classGrowController_1_1SensorManager_af71128a23758e48e4dbedcc834c984f0}} 
+\Hypertarget{classGrowController_1_1SensorManager_af71128a23758e48e4dbedcc834c984f0}\label{classGrowController_1_1SensorManager_af71128a23758e48e4dbedcc834c984f0} 
 \index{GrowController::SensorManager@{GrowController::SensorManager}!getVpd@{getVpd}}
 \index{getVpd@{getVpd}!GrowController::SensorManager@{GrowController::SensorManager}}
 \doxysubsubsection{\texorpdfstring{getVpd()}{getVpd()}}
@@ -129,12 +129,12 @@ float Temperatura em Celsius ou N\+AN.
 
 
 
-Obtém o último valor calculado de V\+PD do cache. Thread-\/safe. 
+Obtém o último valor calculado de VPD do cache. Thread-\/safe. 
 
 \begin{DoxyReturn}{Retorna}
-float V\+PD em k\+Pa ou N\+AN. 
+float VPD em k\+Pa ou NAN. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classGrowController_1_1SensorManager_aab57b0ac132192e6a3fa448322219d8d}\label{classGrowController_1_1SensorManager_aab57b0ac132192e6a3fa448322219d8d}} 
+\Hypertarget{classGrowController_1_1SensorManager_aab57b0ac132192e6a3fa448322219d8d}\label{classGrowController_1_1SensorManager_aab57b0ac132192e6a3fa448322219d8d} 
 \index{GrowController::SensorManager@{GrowController::SensorManager}!initialize@{initialize}}
 \index{initialize@{initialize}!GrowController::SensorManager@{GrowController::SensorManager}}
 \doxysubsubsection{\texorpdfstring{initialize()}{initialize()}}
@@ -142,14 +142,14 @@ float V\+PD em k\+Pa ou N\+AN.
 
 
 
-Inicializa o hardware do sensor D\+HT e o mutex. 
+Inicializa o hardware do sensor DHT e o mutex. 
 
 \begin{DoxyReturn}{Retorna}
 true Se a inicialização foi bem-\/sucedida. 
 
 false Se houve falha. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classGrowController_1_1SensorManager_aa4c75bdafbddfbf20ff3e47d29a90bd6}\label{classGrowController_1_1SensorManager_aa4c75bdafbddfbf20ff3e47d29a90bd6}} 
+\Hypertarget{classGrowController_1_1SensorManager_aa4c75bdafbddfbf20ff3e47d29a90bd6}\label{classGrowController_1_1SensorManager_aa4c75bdafbddfbf20ff3e47d29a90bd6} 
 \index{GrowController::SensorManager@{GrowController::SensorManager}!isInitialized@{isInitialized}}
 \index{isInitialized@{isInitialized}!GrowController::SensorManager@{GrowController::SensorManager}}
 \doxysubsubsection{\texorpdfstring{isInitialized()}{isInitialized()}}
@@ -162,21 +162,21 @@ Verifica se o manager foi inicializado.
 \begin{DoxyReturn}{Retorna}
 true se inicializado, false caso contrário. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classGrowController_1_1SensorManager_a5164ff86c72f7d2eb832f4a6cf501bdd}\label{classGrowController_1_1SensorManager_a5164ff86c72f7d2eb832f4a6cf501bdd}} 
+\Hypertarget{classGrowController_1_1SensorManager_a78118571f6100688a302d8dcc2812a37}\label{classGrowController_1_1SensorManager_a78118571f6100688a302d8dcc2812a37} 
 \index{GrowController::SensorManager@{GrowController::SensorManager}!operator=@{operator=}}
 \index{operator=@{operator=}!GrowController::SensorManager@{GrowController::SensorManager}}
 \doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
-{\footnotesize\ttfamily \mbox{\hyperlink{classGrowController_1_1SensorManager}{Sensor\+Manager}}\& Grow\+Controller\+::\+Sensor\+Manager\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classGrowController_1_1SensorManager}{Sensor\+Manager}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classGrowController_1_1SensorManager}{Sensor\+Manager}} \& Grow\+Controller\+::\+Sensor\+Manager\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classGrowController_1_1SensorManager}{Sensor\+Manager}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
 
-\mbox{\Hypertarget{classGrowController_1_1SensorManager_a107e760a0669a0e6e66f00b018d752ed}\label{classGrowController_1_1SensorManager_a107e760a0669a0e6e66f00b018d752ed}} 
+\Hypertarget{classGrowController_1_1SensorManager_a107e760a0669a0e6e66f00b018d752ed}\label{classGrowController_1_1SensorManager_a107e760a0669a0e6e66f00b018d752ed} 
 \index{GrowController::SensorManager@{GrowController::SensorManager}!startSensorTask@{startSensorTask}}
 \index{startSensorTask@{startSensorTask}!GrowController::SensorManager@{GrowController::SensorManager}}
 \doxysubsubsection{\texorpdfstring{startSensorTask()}{startSensorTask()}}
-{\footnotesize\ttfamily bool Grow\+Controller\+::\+Sensor\+Manager\+::start\+Sensor\+Task (\begin{DoxyParamCaption}\item[{U\+Base\+Type\+\_\+t}]{priority = {\ttfamily 1},  }\item[{uint32\+\_\+t}]{stack\+Size = {\ttfamily 4096} }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily bool Grow\+Controller\+::\+Sensor\+Manager\+::start\+Sensor\+Task (\begin{DoxyParamCaption}\item[{UBase\+Type\+\_\+t}]{priority = {\ttfamily 1},  }\item[{uint32\+\_\+t}]{stack\+Size = {\ttfamily 4096} }\end{DoxyParamCaption})}
 
 
 
-Inicia a tarefa Free\+R\+T\+OS para leitura periódica dos sensores. 
+Inicia a tarefa Free\+RTOS para leitura periódica dos sensores. 
 
 
 \begin{DoxyParams}{Parâmetros}

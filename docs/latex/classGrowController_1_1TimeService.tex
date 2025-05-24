@@ -1,38 +1,38 @@
-\hypertarget{classGrowController_1_1TimeService}{}\doxysection{Referência da Classe Grow\+Controller\+::Time\+Service}
-\label{classGrowController_1_1TimeService}\index{GrowController::TimeService@{GrowController::TimeService}}
+\doxysection{Referência da Classe Grow\+Controller\+::Time\+Service}
+\hypertarget{classGrowController_1_1TimeService}{}\label{classGrowController_1_1TimeService}\index{GrowController::TimeService@{GrowController::TimeService}}
 
 
-Classe para gerenciar o serviço de tempo e sincronização N\+TP. Encapsula a inicialização e obtenção da hora local.  
+Classe para gerenciar o serviço de tempo e sincronização NTP. Encapsula a inicialização e obtenção da hora local.  
 
 
 
 
 {\ttfamily \#include $<$time\+Service.\+hpp$>$}
 
-\doxysubsection*{Membros Públicos}
+\doxysubsubsection*{Membros Públicos}
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\hyperlink{classGrowController_1_1TimeService_a080e59ea4ced77c0d36fcf1d6258a13a}{Time\+Service}} ()
 \begin{DoxyCompactList}\small\item\em Construtor padrão. \end{DoxyCompactList}\item 
-\mbox{\hyperlink{classGrowController_1_1TimeService_a1dfc0ca1ba23b50c47c30c6f41572988}{$\sim$\+Time\+Service}} ()
+\mbox{\hyperlink{classGrowController_1_1TimeService_a1dfc0ca1ba23b50c47c30c6f41572988}{\texorpdfstring{$\sim$}{\string~}\+Time\+Service}} ()
 \begin{DoxyCompactList}\small\item\em Destrutor padrão. \end{DoxyCompactList}\item 
 \mbox{\hyperlink{classGrowController_1_1TimeService_a08f97fce030c912a5fea00e26a7684db}{Time\+Service}} (const \mbox{\hyperlink{classGrowController_1_1TimeService}{Time\+Service}} \&)=delete
 \item 
-\mbox{\hyperlink{classGrowController_1_1TimeService}{Time\+Service}} \& \mbox{\hyperlink{classGrowController_1_1TimeService_a9e34a7906084e59d10c1cf6c49fd35c0}{operator=}} (const \mbox{\hyperlink{classGrowController_1_1TimeService}{Time\+Service}} \&)=delete
+\mbox{\hyperlink{classGrowController_1_1TimeService}{Time\+Service}} \& \mbox{\hyperlink{classGrowController_1_1TimeService_abc8f670839d1908b9c176eca5a6eca4a}{operator=}} (const \mbox{\hyperlink{classGrowController_1_1TimeService}{Time\+Service}} \&)=delete
 \item 
 bool \mbox{\hyperlink{classGrowController_1_1TimeService_ab49b080e5df9c6b46fd4d8bb5174e51a}{initialize}} (const \mbox{\hyperlink{structTimeConfig}{Time\+Config}} \&config)
-\begin{DoxyCompactList}\small\item\em Inicializa o serviço de tempo, configurando o N\+TP. Deve ser chamado após a conexão Wi\+Fi ser estabelecida. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Inicializa o serviço de tempo, configurando o NTP. Deve ser chamado após a conexão Wi\+Fi ser estabelecida. \end{DoxyCompactList}\item 
 bool \mbox{\hyperlink{classGrowController_1_1TimeService_a3a23e126e64383a36b9ce837e256d407}{get\+Current\+Time}} (struct tm \&timeinfo) const
-\begin{DoxyCompactList}\small\item\em Obtém a hora local atual sincronizada via N\+TP. Tenta obter a hora atual do sistema, que deve estar sendo sincronizada pelo cliente S\+N\+TP do E\+S\+P32 (configurado em \mbox{\hyperlink{classGrowController_1_1TimeService_ab49b080e5df9c6b46fd4d8bb5174e51a}{initialize()}}). \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Obtém a hora local atual sincronizada via NTP. Tenta obter a hora atual do sistema, que deve estar sendo sincronizada pelo cliente SNTP do ESP32 (configurado em \doxylink{classGrowController_1_1TimeService_ab49b080e5df9c6b46fd4d8bb5174e51a}{initialize()}). \end{DoxyCompactList}\item 
 bool \mbox{\hyperlink{classGrowController_1_1TimeService_ac809d1d71c509b006a8c9cd354e9c6f4}{is\+Initialized}} () const
-\begin{DoxyCompactList}\small\item\em Verifica se o serviço de tempo foi inicializado (tentativa de configuração N\+TP ocorreu). Não garante que o N\+TP esteja {\itshape atualmente} sincronizado. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Verifica se o serviço de tempo foi inicializado (tentativa de configuração NTP ocorreu). Não garante que o NTP esteja {\itshape atualmente} sincronizado. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \doxysubsection{Descrição detalhada}
-Classe para gerenciar o serviço de tempo e sincronização N\+TP. Encapsula a inicialização e obtenção da hora local. 
+Classe para gerenciar o serviço de tempo e sincronização NTP. Encapsula a inicialização e obtenção da hora local. 
 
 \doxysubsection{Construtores e Destrutores}
-\mbox{\Hypertarget{classGrowController_1_1TimeService_a080e59ea4ced77c0d36fcf1d6258a13a}\label{classGrowController_1_1TimeService_a080e59ea4ced77c0d36fcf1d6258a13a}} 
+\Hypertarget{classGrowController_1_1TimeService_a080e59ea4ced77c0d36fcf1d6258a13a}\label{classGrowController_1_1TimeService_a080e59ea4ced77c0d36fcf1d6258a13a} 
 \index{GrowController::TimeService@{GrowController::TimeService}!TimeService@{TimeService}}
 \index{TimeService@{TimeService}!GrowController::TimeService@{GrowController::TimeService}}
 \doxysubsubsection{\texorpdfstring{TimeService()}{TimeService()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
@@ -42,17 +42,17 @@ Classe para gerenciar o serviço de tempo e sincronização N\+TP. Encapsula a i
 
 Construtor padrão. 
 
-\mbox{\Hypertarget{classGrowController_1_1TimeService_a1dfc0ca1ba23b50c47c30c6f41572988}\label{classGrowController_1_1TimeService_a1dfc0ca1ba23b50c47c30c6f41572988}} 
-\index{GrowController::TimeService@{GrowController::TimeService}!````~TimeService@{$\sim$TimeService}}
-\index{````~TimeService@{$\sim$TimeService}!GrowController::TimeService@{GrowController::TimeService}}
-\doxysubsubsection{\texorpdfstring{$\sim$TimeService()}{~TimeService()}}
-{\footnotesize\ttfamily Grow\+Controller\+::\+Time\+Service\+::$\sim$\+Time\+Service (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+\Hypertarget{classGrowController_1_1TimeService_a1dfc0ca1ba23b50c47c30c6f41572988}\label{classGrowController_1_1TimeService_a1dfc0ca1ba23b50c47c30c6f41572988} 
+\index{GrowController::TimeService@{GrowController::TimeService}!````~TimeService@{\texorpdfstring{$\sim$}{\string~}TimeService}}
+\index{````~TimeService@{\texorpdfstring{$\sim$}{\string~}TimeService}!GrowController::TimeService@{GrowController::TimeService}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}TimeService()}{\string~TimeService()}}
+{\footnotesize\ttfamily Grow\+Controller\+::\+Time\+Service\+::\texorpdfstring{$\sim$}{\string~}\+Time\+Service (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
 
 
 Destrutor padrão. 
 
-\mbox{\Hypertarget{classGrowController_1_1TimeService_a08f97fce030c912a5fea00e26a7684db}\label{classGrowController_1_1TimeService_a08f97fce030c912a5fea00e26a7684db}} 
+\Hypertarget{classGrowController_1_1TimeService_a08f97fce030c912a5fea00e26a7684db}\label{classGrowController_1_1TimeService_a08f97fce030c912a5fea00e26a7684db} 
 \index{GrowController::TimeService@{GrowController::TimeService}!TimeService@{TimeService}}
 \index{TimeService@{TimeService}!GrowController::TimeService@{GrowController::TimeService}}
 \doxysubsubsection{\texorpdfstring{TimeService()}{TimeService()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
@@ -60,8 +60,8 @@ Destrutor padrão.
 
 
 
-\doxysubsection{Funções membros}
-\mbox{\Hypertarget{classGrowController_1_1TimeService_a3a23e126e64383a36b9ce837e256d407}\label{classGrowController_1_1TimeService_a3a23e126e64383a36b9ce837e256d407}} 
+\doxysubsection{Documentação das funções}
+\Hypertarget{classGrowController_1_1TimeService_a3a23e126e64383a36b9ce837e256d407}\label{classGrowController_1_1TimeService_a3a23e126e64383a36b9ce837e256d407} 
 \index{GrowController::TimeService@{GrowController::TimeService}!getCurrentTime@{getCurrentTime}}
 \index{getCurrentTime@{getCurrentTime}!GrowController::TimeService@{GrowController::TimeService}}
 \doxysubsubsection{\texorpdfstring{getCurrentTime()}{getCurrentTime()}}
@@ -69,9 +69,9 @@ Destrutor padrão.
 
 
 
-Obtém a hora local atual sincronizada via N\+TP. Tenta obter a hora atual do sistema, que deve estar sendo sincronizada pelo cliente S\+N\+TP do E\+S\+P32 (configurado em \mbox{\hyperlink{classGrowController_1_1TimeService_ab49b080e5df9c6b46fd4d8bb5174e51a}{initialize()}}). 
+Obtém a hora local atual sincronizada via NTP. Tenta obter a hora atual do sistema, que deve estar sendo sincronizada pelo cliente SNTP do ESP32 (configurado em \doxylink{classGrowController_1_1TimeService_ab49b080e5df9c6b46fd4d8bb5174e51a}{initialize()}). 
 
-Obtém a hora local atual sincronizada via N\+TP.
+Obtém a hora local atual sincronizada via NTP.
 
 
 \begin{DoxyParams}{Parâmetros}
@@ -79,11 +79,11 @@ Obtém a hora local atual sincronizada via N\+TP.
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Retorna}
-true Se a hora local foi obtida com sucesso (implica que o N\+TP está sincronizado). 
+true Se a hora local foi obtida com sucesso (implica que o NTP está sincronizado). 
 
-false Se não foi possível obter a hora local (serviço não inicializado ou N\+TP não sincronizado ainda). 
+false Se não foi possível obter a hora local (serviço não inicializado ou NTP não sincronizado ainda). 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classGrowController_1_1TimeService_ab49b080e5df9c6b46fd4d8bb5174e51a}\label{classGrowController_1_1TimeService_ab49b080e5df9c6b46fd4d8bb5174e51a}} 
+\Hypertarget{classGrowController_1_1TimeService_ab49b080e5df9c6b46fd4d8bb5174e51a}\label{classGrowController_1_1TimeService_ab49b080e5df9c6b46fd4d8bb5174e51a} 
 \index{GrowController::TimeService@{GrowController::TimeService}!initialize@{initialize}}
 \index{initialize@{initialize}!GrowController::TimeService@{GrowController::TimeService}}
 \doxysubsubsection{\texorpdfstring{initialize()}{initialize()}}
@@ -91,21 +91,21 @@ false Se não foi possível obter a hora local (serviço não inicializado ou N\
 
 
 
-Inicializa o serviço de tempo, configurando o N\+TP. Deve ser chamado após a conexão Wi\+Fi ser estabelecida. 
+Inicializa o serviço de tempo, configurando o NTP. Deve ser chamado após a conexão Wi\+Fi ser estabelecida. 
 
-Inicializa o serviço de tempo, configurando o N\+TP.
+Inicializa o serviço de tempo, configurando o NTP.
 
 
 \begin{DoxyParams}{Parâmetros}
-{\em config} & Referência à estrutura \mbox{\hyperlink{structTimeConfig}{Time\+Config}} contendo o offset U\+TC e o servidor N\+TP. \\
+{\em config} & Referência à estrutura \doxylink{structTimeConfig}{Time\+Config} contendo o offset UTC e o servidor NTP. \\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Retorna}
-true Se a configuração inicial do N\+TP foi chamada e (opcionalmente) a sincronização inicial foi bem-\/sucedida. 
+true Se a configuração inicial do NTP foi chamada e (opcionalmente) a sincronização inicial foi bem-\/sucedida. 
 
 false Se houve um problema na configuração (ex\+: config inválida). 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classGrowController_1_1TimeService_ac809d1d71c509b006a8c9cd354e9c6f4}\label{classGrowController_1_1TimeService_ac809d1d71c509b006a8c9cd354e9c6f4}} 
+\Hypertarget{classGrowController_1_1TimeService_ac809d1d71c509b006a8c9cd354e9c6f4}\label{classGrowController_1_1TimeService_ac809d1d71c509b006a8c9cd354e9c6f4} 
 \index{GrowController::TimeService@{GrowController::TimeService}!isInitialized@{isInitialized}}
 \index{isInitialized@{isInitialized}!GrowController::TimeService@{GrowController::TimeService}}
 \doxysubsubsection{\texorpdfstring{isInitialized()}{isInitialized()}}
@@ -113,20 +113,20 @@ false Se houve um problema na configuração (ex\+: config inválida).
 
 
 
-Verifica se o serviço de tempo foi inicializado (tentativa de configuração N\+TP ocorreu). Não garante que o N\+TP esteja {\itshape atualmente} sincronizado. 
+Verifica se o serviço de tempo foi inicializado (tentativa de configuração NTP ocorreu). Não garante que o NTP esteja {\itshape atualmente} sincronizado. 
 
 Verifica se o serviço de tempo foi inicializado com sucesso.
 
 \begin{DoxyReturn}{Retorna}
-true Se o método \mbox{\hyperlink{classGrowController_1_1TimeService_ab49b080e5df9c6b46fd4d8bb5174e51a}{initialize()}} foi chamado com sucesso. 
+true Se o método \doxylink{classGrowController_1_1TimeService_ab49b080e5df9c6b46fd4d8bb5174e51a}{initialize()} foi chamado com sucesso. 
 
-false Se \mbox{\hyperlink{classGrowController_1_1TimeService_ab49b080e5df9c6b46fd4d8bb5174e51a}{initialize()}} ainda não foi chamado ou falhou na configuração. 
+false Se \doxylink{classGrowController_1_1TimeService_ab49b080e5df9c6b46fd4d8bb5174e51a}{initialize()} ainda não foi chamado ou falhou na configuração. 
 \end{DoxyReturn}
-\mbox{\Hypertarget{classGrowController_1_1TimeService_a9e34a7906084e59d10c1cf6c49fd35c0}\label{classGrowController_1_1TimeService_a9e34a7906084e59d10c1cf6c49fd35c0}} 
+\Hypertarget{classGrowController_1_1TimeService_abc8f670839d1908b9c176eca5a6eca4a}\label{classGrowController_1_1TimeService_abc8f670839d1908b9c176eca5a6eca4a} 
 \index{GrowController::TimeService@{GrowController::TimeService}!operator=@{operator=}}
 \index{operator=@{operator=}!GrowController::TimeService@{GrowController::TimeService}}
 \doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
-{\footnotesize\ttfamily \mbox{\hyperlink{classGrowController_1_1TimeService}{Time\+Service}}\& Grow\+Controller\+::\+Time\+Service\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classGrowController_1_1TimeService}{Time\+Service}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classGrowController_1_1TimeService}{Time\+Service}} \& Grow\+Controller\+::\+Time\+Service\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classGrowController_1_1TimeService}{Time\+Service}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
 
 
 
