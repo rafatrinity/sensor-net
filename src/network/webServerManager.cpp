@@ -115,28 +115,28 @@ void WebServerManager::begin() {
         request->send(200, "application/json", jsonResponse);
     });
 
-    // Handler para POST /api/targets (atualizado para usar buffer estático)
-    // Para evitar alocação dinâmica excessiva em onRequestBody, pode-se usar um buffer estático
-    // ou uma abordagem de streaming se o payload for muito grande.
-    // Aqui, vamos manter a lógica de acumular no `requestBodyBuffer` (que é static).
+    // Handler para POST /api/targets com suporte a buffer estático para dados maiores
     server_.onRequestBody([this](AsyncWebServerRequest *request, uint8_t *data, size_t len, size_t index, size_t total) {
         if (request->url() == "/api/targets" && request->method() == HTTP_POST) {
-            static std::vector<uint8_t> requestBodyBuffer; // static para persistir entre chamadas parciais
+            static std::vector<uint8_t> requestBodyBuffer;
             
-            if (index == 0) { // Primeira parte do corpo
-                requestBodyBuffer.assign(data, data + len); // Começa novo buffer
-            } else { // Partes subsequentes
+            // Proteger contra payloads muito grandes
+            if (total > 1024) { // Limite de 1KB para o payload
+                request->send(413, "application/json", "{\"success\":false, \"message\":\"Payload too large\"}");
+                return;
+            }
+
+            if (index == 0) {
+                requestBodyBuffer.reserve(total); // Reserva memória uma vez
+                requestBodyBuffer.assign(data, data + len);
+            } else {
                 requestBodyBuffer.insert(requestBodyBuffer.end(), data, data + len);
             }
 
-            if (index + len == total) { // Corpo completo recebido
-                // Logger::debug("POST /api/targets body (%d bytes): %.*s", total, total, (const char*)requestBodyBuffer.data());
+            if (index + len == total) {
                 JsonDocument doc;
                 DeserializationError error = deserializeJson(doc, requestBodyBuffer.data(), requestBodyBuffer.size());
                 
-                // Limpar o buffer estático para a próxima requisição
-                // requestBodyBuffer.clear(); // Não precisa mais se assign é usado no início
-
                 if (error) {
                     Logger::error("deserializeJson() failed for /api/targets: %s", error.c_str());
                     request->send(400, "application/json", "{\"success\":false, \"message\":\"Invalid JSON format\"}");
@@ -148,6 +148,12 @@ void WebServerManager::begin() {
                     return;
                 }
 
+                // Log para debug
+                Logger::debug("Received targets update request: airHumidity=%.1f, lightOn=%s, lightOff=%s",
+                    doc["targetAirHumidity"].as<float>(),
+                    doc["lightOnTime"].as<const char*>(),
+                    doc["lightOffTime"].as<const char*>());
+
                 bool success = targetDataManager_->updateTargetsFromJson(doc);
                 if (success) {
                     request->send(200, "application/json", "{\"success\":true, \"message\":\"Targets updated successfully.\"}");
@@ -155,8 +161,18 @@ void WebServerManager::begin() {
                 } else {
                     request->send(400, "application/json", "{\"success\":false, \"message\":\"Error updating targets or no valid data.\"}");
                 }
+
+                // Limpar buffer após processar
+                requestBodyBuffer.clear();
+                requestBodyBuffer.shrink_to_fit();
             }
         }
+    });
+
+    // Handler para POST /api/targets
+    server_.on("/api/targets", HTTP_POST, [](AsyncWebServerRequest *request) {
+        // O handler real está em onRequestBody
+        // Este handler é necessário para registrar o endpoint
     });
 
     // Configuração do Server-Sent Events
