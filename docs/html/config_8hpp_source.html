@@ -1,0 +1,220 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.17"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Smart Garden - Sistema de Controle de Ambiente: Código-Fonte de src/config.hpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Smart Garden - Sistema de Controle de Ambiente
+   &#160;<span id="projectnumber">v1.0</span>
+   </div>
+   <div id="projectbrief">Sistema embarcado para monitoramento e controle de ambiente para cultivo</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Gerado por Doxygen 1.8.17 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Busca');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Busca');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">config.hpp</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="config_8hpp.html">Vá para a documentação desse arquivo.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef CONFIG_HPP</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define CONFIG_HPP</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="comment">// Includes de bibliotecas ainda podem ser necessários por outros módulos</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="comment">// que usam tipos definidos aqui, mas não necessariamente o LCD diretamente.</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;DHT.h&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;freertos/FreeRTOS.h&gt;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;freertos/semphr.h&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;IPAddress.h&gt;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="comment">// --- Inclusão Condicional das Configurações da Placa ---</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#if defined(ARDUINO_ESP32_DEV)</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">    #include &quot;<a class="code" href="board__esp32__dev_8hpp.html">boards/board_esp32_dev.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">    #define BOARD_NAME &quot;ESP32 DevKit V1&quot;</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#elif defined(ARDUINO_SEEED_XIAO_ESP32C3)</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">    #include &quot;<a class="code" href="board__xiao__c3_8hpp.html">boards/board_xiao_c3.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">     #define BOARD_NAME &quot;Seeed XIAO ESP32-C3&quot;</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">    #error &quot;Placa não suportada. Crie um arquivo &#39;src/boards/board_your_board_name.hpp&#39; e inclua-o condicionalmente em config.hpp.&quot;</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment">// Credenciais do WiFi (Mantém a lógica de UNIT_TEST)</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#ifdef UNIT_TEST</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">    #define WIFI_SSID &quot;Wokwi-GUEST&quot;</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">    #define WIFI_PASSWORD &quot;&quot;</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="config_8hpp.html#a586542b79d00e4db7e1d5a667ae83a2b">   27</a></span>&#160;<span class="preprocessor">    #define WIFI_SSID &quot;Casa&quot; // TODO: Mudar para método seguro</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="config_8hpp.html#a8685d8aff7e570048090a3a51afceb07">   28</a></span>&#160;<span class="preprocessor">    #define WIFI_PASSWORD &quot;12345678&quot; // TODO: Mudar para método seguro</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
+<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="config_8hpp.html#a4c7e3b245b7ec8354c3e6b4b461cab62">   31</a></span>&#160;<span class="preprocessor">#define STATIC_IP_ENABLED 1 // 1 para habilitar IP estático, 0 para DHCP (se loadWiFiCredentials falhar)</span></div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#if STATIC_IP_ENABLED</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <span class="keyword">const</span> IPAddress <a class="code" href="config_8hpp.html#a97ea6ef2465d334109ae540c600e2ee3">LOCAL_IP</a>(192, 168, 1, 180);</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="keyword">const</span> IPAddress <a class="code" href="config_8hpp.html#a61b244664a635d7ccf4e5921d60bf285">GATEWAY_IP</a>(192, 168, 1, 1);</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keyword">const</span> IPAddress <a class="code" href="config_8hpp.html#a4ba44d6873a24be2319b40db2b0e9d25">SUBNET_MASK</a>(255, 255, 255, 0);</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keyword">const</span> IPAddress <a class="code" href="config_8hpp.html#ab5a8a53eef523dd34899f616c71f3ca6">PRIMARY_DNS_IP</a>(8, 8, 8, 8);</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="keyword">const</span> IPAddress <a class="code" href="config_8hpp.html#aa52bf3e99f5a6d0ff448bf604cbdbaf6">SECONDARY_DNS_IP</a>(8, 8, 4, 4);</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="comment">// --- Configurações do Servidor Web e mDNS ---</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="config_8hpp.html#a0906dae4a42c1fef9ec0cd0a5212ed4a">   42</a></span>&#160;<span class="preprocessor">#define HTTP_PORT 80</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="config_8hpp.html#a2a1e1448a1e301f5540820b34df496d2">   43</a></span>&#160;<span class="preprocessor">#define MDNS_HOSTNAME &quot;greenhouse&quot;</span></div>
+<div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="config_8hpp.html#a2597be4e15dcb4d93d323730f9ac2838">   44</a></span>&#160;<span class="preprocessor">#define MDNS_SERVICE_NAME &quot;webserver&quot;</span></div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="comment">// --- Configurações Gerais da Aplicação ---</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
+<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="config_8hpp.html#a62634036639f88eece6fbf226b45f84b">   48</a></span>&#160;<span class="preprocessor">#define BAUD 115200</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="comment">// --- Initialization Retry Configuration ---</span></div>
+<div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="config_8hpp.html#a24b2e4103f2dd7ee3566cc2aba51eb0e">   51</a></span>&#160;<span class="preprocessor">#define INIT_RETRY_COUNT 3       // Number of initialization attempts</span></div>
+<div class="line"><a name="l00052"></a><span class="lineno"><a class="line" href="config_8hpp.html#a8eb2327d7562d5f65b7e9e83fd767366">   52</a></span>&#160;<span class="preprocessor">#define INIT_RETRY_DELAY_MS 1000 // Delay between attempts in milliseconds</span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="comment">// Semáforos (Ainda como extern - próximos alvos de refatoração)</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keyword">extern</span> SemaphoreHandle_t <a class="code" href="config_8hpp.html#a25620e5c0ad6fb873f83bcc35fe39f8a">mqttMutex</a>; <span class="comment">// OK por enquanto, será encapsulado no MqttManager</span></div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="comment">// Estruturas de Configuração</span></div>
+<div class="line"><a name="l00058"></a><span class="lineno"><a class="line" href="structWiFiConfig.html">   58</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="structWiFiConfig.html">WiFiConfig</a></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    {</div>
+<div class="line"><a name="l00060"></a><span class="lineno"><a class="line" href="structWiFiConfig.html#aced103e227168d7a731e976b45fd2bb0">   60</a></span>&#160;        <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="structWiFiConfig.html#aced103e227168d7a731e976b45fd2bb0">ssid</a> = <a class="code" href="config_8hpp.html#a586542b79d00e4db7e1d5a667ae83a2b">WIFI_SSID</a>;</div>
+<div class="line"><a name="l00061"></a><span class="lineno"><a class="line" href="structWiFiConfig.html#a637b36367cdc7a4967a7e04415673ca5">   61</a></span>&#160;        <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="structWiFiConfig.html#a637b36367cdc7a4967a7e04415673ca5">password</a> = <a class="code" href="config_8hpp.html#a8685d8aff7e570048090a3a51afceb07">WIFI_PASSWORD</a>;</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    };</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
+<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="structMQTTConfig.html">   64</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structMQTTConfig.html">MQTTConfig</a> {</div>
+<div class="line"><a name="l00065"></a><span class="lineno"><a class="line" href="structMQTTConfig.html#a002d89a031211bea5a758b03d630a8af">   65</a></span>&#160;    <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="structMQTTConfig.html#a002d89a031211bea5a758b03d630a8af">server</a> = <a class="code" href="board__esp32__dev_8hpp.html#a977bd2592e99309a86e7034189e9e62d">MQTT_SERVER</a>; </div>
+<div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="structMQTTConfig.html#a997a7a0caba0560732c5636fbe31ecff">   66</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="structMQTTConfig.html#a997a7a0caba0560732c5636fbe31ecff">port</a> = <a class="code" href="board__esp32__dev_8hpp.html#aa8632baff6bbb5004385998918f1e6bd">MQTT_PORT</a>;             </div>
+<div class="line"><a name="l00067"></a><span class="lineno"><a class="line" href="structMQTTConfig.html#a53018b1f4af400dcf52216264b86b6cf">   67</a></span>&#160;    <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="structMQTTConfig.html#a53018b1f4af400dcf52216264b86b6cf">clientId</a> = <a class="code" href="board__esp32__dev_8hpp.html#a87467ea560dbba1fe10d066adb9f4a11">MQTT_CLIENT_ID</a>;</div>
+<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="structMQTTConfig.html#af59f64058a01af2de9342cf94f98b135">   68</a></span>&#160;    <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="structMQTTConfig.html#af59f64058a01af2de9342cf94f98b135">roomTopic</a> = <a class="code" href="board__esp32__dev_8hpp.html#aa396d6f8c03e8fbcf39cebe8e28e1ab5">MQTT_ROOM_TOPIC</a>;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;};</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160; </div>
+<div class="line"><a name="l00071"></a><span class="lineno"><a class="line" href="structGPIOControlConfig.html">   71</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structGPIOControlConfig.html">GPIOControlConfig</a> {</div>
+<div class="line"><a name="l00072"></a><span class="lineno"><a class="line" href="structGPIOControlConfig.html#a3538fac19349d1bde9e267c52fcdb093">   72</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="structGPIOControlConfig.html#a3538fac19349d1bde9e267c52fcdb093">humidityControlPin</a> = <a class="code" href="board__esp32__dev_8hpp.html#abdaa4d254cf2a9c7fffb54751f67bd57">GPIO_HUMIDITY_PIN</a>;</div>
+<div class="line"><a name="l00073"></a><span class="lineno"><a class="line" href="structGPIOControlConfig.html#afb9bd2334c1bf72a3cb0019569336099">   73</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="structGPIOControlConfig.html#afb9bd2334c1bf72a3cb0019569336099">lightControlPin</a> = <a class="code" href="board__esp32__dev_8hpp.html#abe32a4211e068694252721ab593f64ae">GPIO_LIGHT_PIN</a>;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;};</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
+<div class="line"><a name="l00076"></a><span class="lineno"><a class="line" href="structTimeConfig.html">   76</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structTimeConfig.html">TimeConfig</a> {</div>
+<div class="line"><a name="l00077"></a><span class="lineno"><a class="line" href="structTimeConfig.html#a68f61ddab4bd52deca356661a6e5c3ea">   77</a></span>&#160;    <span class="keywordtype">long</span> <a class="code" href="structTimeConfig.html#a68f61ddab4bd52deca356661a6e5c3ea">utcOffsetInSeconds</a> = -10800;</div>
+<div class="line"><a name="l00078"></a><span class="lineno"><a class="line" href="structTimeConfig.html#a7f45357c6ed9c5c6f5fcfd448122ac96">   78</a></span>&#160;    <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="structTimeConfig.html#a7f45357c6ed9c5c6f5fcfd448122ac96">ntpServer</a> = <span class="stringliteral">&quot;pool.ntp.org&quot;</span>;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;};</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160; </div>
+<div class="line"><a name="l00081"></a><span class="lineno"><a class="line" href="structSensorConfig.html">   81</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structSensorConfig.html">SensorConfig</a> {</div>
+<div class="line"><a name="l00082"></a><span class="lineno"><a class="line" href="structSensorConfig.html#a48b8e8eba506b49b1fce977e211329b9">   82</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="structSensorConfig.html#a48b8e8eba506b49b1fce977e211329b9">dhtPin</a> = <a class="code" href="board__esp32__dev_8hpp.html#a661d236dd49f3aef3a2cf46cf6a1405e">DHT_PIN</a>;</div>
+<div class="line"><a name="l00083"></a><span class="lineno"><a class="line" href="structSensorConfig.html#a2e3d2562239a17e270fc50afbb504988">   83</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="structSensorConfig.html#a2e3d2562239a17e270fc50afbb504988">dhtType</a> = DHT22;</div>
+<div class="line"><a name="l00084"></a><span class="lineno"><a class="line" href="structSensorConfig.html#ad08026cbcdc5d24a5922b5c2f20d1f6d">   84</a></span>&#160;    <span class="keywordtype">int</span> <a class="code" href="structSensorConfig.html#ad08026cbcdc5d24a5922b5c2f20d1f6d">soilHumiditySensorPin</a> = <a class="code" href="board__esp32__dev_8hpp.html#ae880121cee3d6c2666f3edefc9fef6a5">SOIL_HUMIDITY_PIN</a>;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;};</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="comment">// Estrutura de Configuração Principal da Aplicação</span></div>
+<div class="line"><a name="l00088"></a><span class="lineno"><a class="line" href="structAppConfig.html">   88</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structAppConfig.html">AppConfig</a> {</div>
+<div class="line"><a name="l00089"></a><span class="lineno"><a class="line" href="structAppConfig.html#a9f59622bf88afd461331b61c9d758474">   89</a></span>&#160;    <a class="code" href="structWiFiConfig.html">WiFiConfig</a> <a class="code" href="structAppConfig.html#a9f59622bf88afd461331b61c9d758474">wifi</a>;</div>
+<div class="line"><a name="l00090"></a><span class="lineno"><a class="line" href="structAppConfig.html#acfc7677b5625933261548adba033939b">   90</a></span>&#160;    <a class="code" href="structMQTTConfig.html">MQTTConfig</a> <a class="code" href="structAppConfig.html#acfc7677b5625933261548adba033939b">mqtt</a>;</div>
+<div class="line"><a name="l00091"></a><span class="lineno"><a class="line" href="structAppConfig.html#a29c794ac638c4dfd9be0478b5af5a644">   91</a></span>&#160;    <a class="code" href="structGPIOControlConfig.html">GPIOControlConfig</a> <a class="code" href="structAppConfig.html#a29c794ac638c4dfd9be0478b5af5a644">gpioControl</a>;</div>
+<div class="line"><a name="l00092"></a><span class="lineno"><a class="line" href="structAppConfig.html#a7cd3337dc002dbf678dc99b4a4a0fce6">   92</a></span>&#160;    <a class="code" href="structTimeConfig.html">TimeConfig</a> <a class="code" href="structAppConfig.html#a7cd3337dc002dbf678dc99b4a4a0fce6">time</a>;</div>
+<div class="line"><a name="l00093"></a><span class="lineno"><a class="line" href="structAppConfig.html#a6644a24c68ded4c36336bc034ff2fa24">   93</a></span>&#160;    <a class="code" href="structSensorConfig.html">SensorConfig</a> <a class="code" href="structAppConfig.html#a6644a24c68ded4c36336bc034ff2fa24">sensor</a>;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="comment">// const char* board = BOARD_NAME; // Pode adicionar se precisar</span></div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;};</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="preprocessor">#endif // CONFIG_HPP</span></div>
+</div><!-- fragment --></div><!-- contents -->
+<div class="ttc" id="astructSensorConfig_html"><div class="ttname"><a href="structSensorConfig.html">SensorConfig</a></div><div class="ttdef"><b>Definition:</b> config.hpp:81</div></div>
+<div class="ttc" id="aconfig_8hpp_html_a8685d8aff7e570048090a3a51afceb07"><div class="ttname"><a href="config_8hpp.html#a8685d8aff7e570048090a3a51afceb07">WIFI_PASSWORD</a></div><div class="ttdeci">#define WIFI_PASSWORD</div><div class="ttdef"><b>Definition:</b> config.hpp:28</div></div>
+<div class="ttc" id="astructAppConfig_html_a7cd3337dc002dbf678dc99b4a4a0fce6"><div class="ttname"><a href="structAppConfig.html#a7cd3337dc002dbf678dc99b4a4a0fce6">AppConfig::time</a></div><div class="ttdeci">TimeConfig time</div><div class="ttdef"><b>Definition:</b> config.hpp:92</div></div>
+<div class="ttc" id="astructWiFiConfig_html"><div class="ttname"><a href="structWiFiConfig.html">WiFiConfig</a></div><div class="ttdef"><b>Definition:</b> config.hpp:58</div></div>
+<div class="ttc" id="astructGPIOControlConfig_html_a3538fac19349d1bde9e267c52fcdb093"><div class="ttname"><a href="structGPIOControlConfig.html#a3538fac19349d1bde9e267c52fcdb093">GPIOControlConfig::humidityControlPin</a></div><div class="ttdeci">int humidityControlPin</div><div class="ttdef"><b>Definition:</b> config.hpp:72</div></div>
+<div class="ttc" id="aboard__xiao__c3_8hpp_html"><div class="ttname"><a href="board__xiao__c3_8hpp.html">board_xiao_c3.hpp</a></div></div>
+<div class="ttc" id="astructSensorConfig_html_a48b8e8eba506b49b1fce977e211329b9"><div class="ttname"><a href="structSensorConfig.html#a48b8e8eba506b49b1fce977e211329b9">SensorConfig::dhtPin</a></div><div class="ttdeci">int dhtPin</div><div class="ttdef"><b>Definition:</b> config.hpp:82</div></div>
+<div class="ttc" id="astructWiFiConfig_html_aced103e227168d7a731e976b45fd2bb0"><div class="ttname"><a href="structWiFiConfig.html#aced103e227168d7a731e976b45fd2bb0">WiFiConfig::ssid</a></div><div class="ttdeci">const char * ssid</div><div class="ttdef"><b>Definition:</b> config.hpp:60</div></div>
+<div class="ttc" id="astructSensorConfig_html_ad08026cbcdc5d24a5922b5c2f20d1f6d"><div class="ttname"><a href="structSensorConfig.html#ad08026cbcdc5d24a5922b5c2f20d1f6d">SensorConfig::soilHumiditySensorPin</a></div><div class="ttdeci">int soilHumiditySensorPin</div><div class="ttdef"><b>Definition:</b> config.hpp:84</div></div>
+<div class="ttc" id="aconfig_8hpp_html_a61b244664a635d7ccf4e5921d60bf285"><div class="ttname"><a href="config_8hpp.html#a61b244664a635d7ccf4e5921d60bf285">GATEWAY_IP</a></div><div class="ttdeci">const IPAddress GATEWAY_IP(192, 168, 1, 1)</div></div>
+<div class="ttc" id="astructAppConfig_html_acfc7677b5625933261548adba033939b"><div class="ttname"><a href="structAppConfig.html#acfc7677b5625933261548adba033939b">AppConfig::mqtt</a></div><div class="ttdeci">MQTTConfig mqtt</div><div class="ttdef"><b>Definition:</b> config.hpp:90</div></div>
+<div class="ttc" id="astructGPIOControlConfig_html"><div class="ttname"><a href="structGPIOControlConfig.html">GPIOControlConfig</a></div><div class="ttdef"><b>Definition:</b> config.hpp:71</div></div>
+<div class="ttc" id="astructGPIOControlConfig_html_afb9bd2334c1bf72a3cb0019569336099"><div class="ttname"><a href="structGPIOControlConfig.html#afb9bd2334c1bf72a3cb0019569336099">GPIOControlConfig::lightControlPin</a></div><div class="ttdeci">int lightControlPin</div><div class="ttdef"><b>Definition:</b> config.hpp:73</div></div>
+<div class="ttc" id="aconfig_8hpp_html_a586542b79d00e4db7e1d5a667ae83a2b"><div class="ttname"><a href="config_8hpp.html#a586542b79d00e4db7e1d5a667ae83a2b">WIFI_SSID</a></div><div class="ttdeci">#define WIFI_SSID</div><div class="ttdef"><b>Definition:</b> config.hpp:27</div></div>
+<div class="ttc" id="aconfig_8hpp_html_a4ba44d6873a24be2319b40db2b0e9d25"><div class="ttname"><a href="config_8hpp.html#a4ba44d6873a24be2319b40db2b0e9d25">SUBNET_MASK</a></div><div class="ttdeci">const IPAddress SUBNET_MASK(255, 255, 255, 0)</div></div>
+<div class="ttc" id="astructTimeConfig_html_a68f61ddab4bd52deca356661a6e5c3ea"><div class="ttname"><a href="structTimeConfig.html#a68f61ddab4bd52deca356661a6e5c3ea">TimeConfig::utcOffsetInSeconds</a></div><div class="ttdeci">long utcOffsetInSeconds</div><div class="ttdef"><b>Definition:</b> config.hpp:77</div></div>
+<div class="ttc" id="astructMQTTConfig_html_af59f64058a01af2de9342cf94f98b135"><div class="ttname"><a href="structMQTTConfig.html#af59f64058a01af2de9342cf94f98b135">MQTTConfig::roomTopic</a></div><div class="ttdeci">const char * roomTopic</div><div class="ttdef"><b>Definition:</b> config.hpp:68</div></div>
+<div class="ttc" id="aboard__esp32__dev_8hpp_html_ae880121cee3d6c2666f3edefc9fef6a5"><div class="ttname"><a href="board__esp32__dev_8hpp.html#ae880121cee3d6c2666f3edefc9fef6a5">SOIL_HUMIDITY_PIN</a></div><div class="ttdeci">#define SOIL_HUMIDITY_PIN</div><div class="ttdef"><b>Definition:</b> board_esp32_dev.hpp:12</div></div>
+<div class="ttc" id="aboard__esp32__dev_8hpp_html"><div class="ttname"><a href="board__esp32__dev_8hpp.html">board_esp32_dev.hpp</a></div></div>
+<div class="ttc" id="astructAppConfig_html_a9f59622bf88afd461331b61c9d758474"><div class="ttname"><a href="structAppConfig.html#a9f59622bf88afd461331b61c9d758474">AppConfig::wifi</a></div><div class="ttdeci">WiFiConfig wifi</div><div class="ttdef"><b>Definition:</b> config.hpp:89</div></div>
+<div class="ttc" id="astructMQTTConfig_html_a53018b1f4af400dcf52216264b86b6cf"><div class="ttname"><a href="structMQTTConfig.html#a53018b1f4af400dcf52216264b86b6cf">MQTTConfig::clientId</a></div><div class="ttdeci">const char * clientId</div><div class="ttdef"><b>Definition:</b> config.hpp:67</div></div>
+<div class="ttc" id="aboard__esp32__dev_8hpp_html_abdaa4d254cf2a9c7fffb54751f67bd57"><div class="ttname"><a href="board__esp32__dev_8hpp.html#abdaa4d254cf2a9c7fffb54751f67bd57">GPIO_HUMIDITY_PIN</a></div><div class="ttdeci">#define GPIO_HUMIDITY_PIN</div><div class="ttdef"><b>Definition:</b> board_esp32_dev.hpp:7</div></div>
+<div class="ttc" id="aboard__esp32__dev_8hpp_html_a661d236dd49f3aef3a2cf46cf6a1405e"><div class="ttname"><a href="board__esp32__dev_8hpp.html#a661d236dd49f3aef3a2cf46cf6a1405e">DHT_PIN</a></div><div class="ttdeci">#define DHT_PIN</div><div class="ttdef"><b>Definition:</b> board_esp32_dev.hpp:11</div></div>
+<div class="ttc" id="astructAppConfig_html_a6644a24c68ded4c36336bc034ff2fa24"><div class="ttname"><a href="structAppConfig.html#a6644a24c68ded4c36336bc034ff2fa24">AppConfig::sensor</a></div><div class="ttdeci">SensorConfig sensor</div><div class="ttdef"><b>Definition:</b> config.hpp:93</div></div>
+<div class="ttc" id="astructMQTTConfig_html_a997a7a0caba0560732c5636fbe31ecff"><div class="ttname"><a href="structMQTTConfig.html#a997a7a0caba0560732c5636fbe31ecff">MQTTConfig::port</a></div><div class="ttdeci">int port</div><div class="ttdef"><b>Definition:</b> config.hpp:66</div></div>
+<div class="ttc" id="astructTimeConfig_html"><div class="ttname"><a href="structTimeConfig.html">TimeConfig</a></div><div class="ttdef"><b>Definition:</b> config.hpp:76</div></div>
+<div class="ttc" id="aconfig_8hpp_html_aa52bf3e99f5a6d0ff448bf604cbdbaf6"><div class="ttname"><a href="config_8hpp.html#aa52bf3e99f5a6d0ff448bf604cbdbaf6">SECONDARY_DNS_IP</a></div><div class="ttdeci">const IPAddress SECONDARY_DNS_IP(8, 8, 4, 4)</div></div>
+<div class="ttc" id="aboard__esp32__dev_8hpp_html_a977bd2592e99309a86e7034189e9e62d"><div class="ttname"><a href="board__esp32__dev_8hpp.html#a977bd2592e99309a86e7034189e9e62d">MQTT_SERVER</a></div><div class="ttdeci">#define MQTT_SERVER</div><div class="ttdef"><b>Definition:</b> board_esp32_dev.hpp:35</div></div>
+<div class="ttc" id="astructWiFiConfig_html_a637b36367cdc7a4967a7e04415673ca5"><div class="ttname"><a href="structWiFiConfig.html#a637b36367cdc7a4967a7e04415673ca5">WiFiConfig::password</a></div><div class="ttdeci">const char * password</div><div class="ttdef"><b>Definition:</b> config.hpp:61</div></div>
+<div class="ttc" id="aconfig_8hpp_html_a97ea6ef2465d334109ae540c600e2ee3"><div class="ttname"><a href="config_8hpp.html#a97ea6ef2465d334109ae540c600e2ee3">LOCAL_IP</a></div><div class="ttdeci">const IPAddress LOCAL_IP(192, 168, 1, 180)</div></div>
+<div class="ttc" id="aboard__esp32__dev_8hpp_html_a87467ea560dbba1fe10d066adb9f4a11"><div class="ttname"><a href="board__esp32__dev_8hpp.html#a87467ea560dbba1fe10d066adb9f4a11">MQTT_CLIENT_ID</a></div><div class="ttdeci">#define MQTT_CLIENT_ID</div><div class="ttdef"><b>Definition:</b> board_esp32_dev.hpp:38</div></div>
+<div class="ttc" id="aboard__esp32__dev_8hpp_html_aa8632baff6bbb5004385998918f1e6bd"><div class="ttname"><a href="board__esp32__dev_8hpp.html#aa8632baff6bbb5004385998918f1e6bd">MQTT_PORT</a></div><div class="ttdeci">#define MQTT_PORT</div><div class="ttdef"><b>Definition:</b> board_esp32_dev.hpp:36</div></div>
+<div class="ttc" id="aboard__esp32__dev_8hpp_html_aa396d6f8c03e8fbcf39cebe8e28e1ab5"><div class="ttname"><a href="board__esp32__dev_8hpp.html#aa396d6f8c03e8fbcf39cebe8e28e1ab5">MQTT_ROOM_TOPIC</a></div><div class="ttdeci">#define MQTT_ROOM_TOPIC</div><div class="ttdef"><b>Definition:</b> board_esp32_dev.hpp:37</div></div>
+<div class="ttc" id="aboard__esp32__dev_8hpp_html_abe32a4211e068694252721ab593f64ae"><div class="ttname"><a href="board__esp32__dev_8hpp.html#abe32a4211e068694252721ab593f64ae">GPIO_LIGHT_PIN</a></div><div class="ttdeci">#define GPIO_LIGHT_PIN</div><div class="ttdef"><b>Definition:</b> board_esp32_dev.hpp:8</div></div>
+<div class="ttc" id="astructTimeConfig_html_a7f45357c6ed9c5c6f5fcfd448122ac96"><div class="ttname"><a href="structTimeConfig.html#a7f45357c6ed9c5c6f5fcfd448122ac96">TimeConfig::ntpServer</a></div><div class="ttdeci">const char * ntpServer</div><div class="ttdef"><b>Definition:</b> config.hpp:78</div></div>
+<div class="ttc" id="aconfig_8hpp_html_ab5a8a53eef523dd34899f616c71f3ca6"><div class="ttname"><a href="config_8hpp.html#ab5a8a53eef523dd34899f616c71f3ca6">PRIMARY_DNS_IP</a></div><div class="ttdeci">const IPAddress PRIMARY_DNS_IP(8, 8, 8, 8)</div></div>
+<div class="ttc" id="astructMQTTConfig_html"><div class="ttname"><a href="structMQTTConfig.html">MQTTConfig</a></div><div class="ttdef"><b>Definition:</b> config.hpp:64</div></div>
+<div class="ttc" id="astructSensorConfig_html_a2e3d2562239a17e270fc50afbb504988"><div class="ttname"><a href="structSensorConfig.html#a2e3d2562239a17e270fc50afbb504988">SensorConfig::dhtType</a></div><div class="ttdeci">int dhtType</div><div class="ttdef"><b>Definition:</b> config.hpp:83</div></div>
+<div class="ttc" id="astructAppConfig_html_a29c794ac638c4dfd9be0478b5af5a644"><div class="ttname"><a href="structAppConfig.html#a29c794ac638c4dfd9be0478b5af5a644">AppConfig::gpioControl</a></div><div class="ttdeci">GPIOControlConfig gpioControl</div><div class="ttdef"><b>Definition:</b> config.hpp:91</div></div>
+<div class="ttc" id="astructAppConfig_html"><div class="ttname"><a href="structAppConfig.html">AppConfig</a></div><div class="ttdef"><b>Definition:</b> config.hpp:88</div></div>
+<div class="ttc" id="astructMQTTConfig_html_a002d89a031211bea5a758b03d630a8af"><div class="ttname"><a href="structMQTTConfig.html#a002d89a031211bea5a758b03d630a8af">MQTTConfig::server</a></div><div class="ttdeci">const char * server</div><div class="ttdef"><b>Definition:</b> config.hpp:65</div></div>
+<div class="ttc" id="aconfig_8hpp_html_a25620e5c0ad6fb873f83bcc35fe39f8a"><div class="ttname"><a href="config_8hpp.html#a25620e5c0ad6fb873f83bcc35fe39f8a">mqttMutex</a></div><div class="ttdeci">SemaphoreHandle_t mqttMutex</div></div>
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Gerado por &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.17
+</small></address>
+</body>
+</html>

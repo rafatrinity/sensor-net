@@ -1,0 +1,201 @@
+\hypertarget{classGrowController_1_1DisplayManager}{}\doxysection{Referência da Classe Grow\+Controller\+::Display\+Manager}
+\label{classGrowController_1_1DisplayManager}\index{GrowController::DisplayManager@{GrowController::DisplayManager}}
+
+
+{\ttfamily \#include $<$display\+Manager.\+hpp$>$}
+
+\doxysubsection*{Membros Públicos}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classGrowController_1_1DisplayManager_a92716cd4eee6b7204b8d4a9c3affec5b}{Display\+Manager}} (uint8\+\_\+t i2c\+\_\+addr, uint8\+\_\+t cols, uint8\+\_\+t rows, \mbox{\hyperlink{classGrowController_1_1TimeService}{Time\+Service}} \&time\+Svc)
+\begin{DoxyCompactList}\small\item\em Construtor. Recebe parâmetros de configuração e dependências. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classGrowController_1_1DisplayManager_af691ece4acc0ce67390083a793843642}{$\sim$\+Display\+Manager}} ()
+\item 
+\mbox{\hyperlink{classGrowController_1_1DisplayManager_a01c622e178972a57d448bf0024a00160}{Display\+Manager}} (const \mbox{\hyperlink{classGrowController_1_1DisplayManager}{Display\+Manager}} \&)=delete
+\item 
+\mbox{\hyperlink{classGrowController_1_1DisplayManager}{Display\+Manager}} \& \mbox{\hyperlink{classGrowController_1_1DisplayManager_abe22644234f0c6faa2f01a8ac88c920b}{operator=}} (const \mbox{\hyperlink{classGrowController_1_1DisplayManager}{Display\+Manager}} \&)=delete
+\item 
+bool \mbox{\hyperlink{classGrowController_1_1DisplayManager_a0b9a9983fd204e965c1b005158220513}{initialize}} ()
+\item 
+void \mbox{\hyperlink{classGrowController_1_1DisplayManager_a26a0dd37ae00fb5d3e7bcff7b145cffa}{clear}} ()
+\item 
+void \mbox{\hyperlink{classGrowController_1_1DisplayManager_a358e99dcb42390daaad16ea61e57a25b}{set\+Backlight}} (bool enable)
+\item 
+void \mbox{\hyperlink{classGrowController_1_1DisplayManager_ac232fb6ac1eacfdb121d6ff6f7244780}{print\+Line}} (uint8\+\_\+t line, const char $\ast$format,...)
+\item 
+void \mbox{\hyperlink{classGrowController_1_1DisplayManager_a1f3eccfdabd2bf6deb21364b4448a47c}{show\+Error}} (const char $\ast$message)
+\item 
+void \mbox{\hyperlink{classGrowController_1_1DisplayManager_ada5805ecd9c1def0a3e91725130f15d8}{show\+Booting}} ()
+\item 
+void \mbox{\hyperlink{classGrowController_1_1DisplayManager_ab4d8662025b59c07e7a3119ffe84690b}{show\+Connecting\+Wi\+Fi}} ()
+\item 
+void \mbox{\hyperlink{classGrowController_1_1DisplayManager_a19f1621ebaa0a8c3f7ca900dadb22c44}{show\+Wi\+Fi\+Connected}} (const char $\ast$ip)
+\item 
+void \mbox{\hyperlink{classGrowController_1_1DisplayManager_a09c7b5216f3599f8e933a40d9e7f73d3}{show\+Ntp\+Syncing}} ()
+\item 
+void \mbox{\hyperlink{classGrowController_1_1DisplayManager_a71d688c36a8f2b566641cd1f57bd9eda}{show\+Ntp\+Synced}} ()
+\item 
+void \mbox{\hyperlink{classGrowController_1_1DisplayManager_a5892179e9cc7c7b7ab73119764ffcb1e}{show\+Mqtt\+Connecting}} ()
+\item 
+void \mbox{\hyperlink{classGrowController_1_1DisplayManager_a27c3b9c4ff05602045c88fb3d089cd8a}{show\+Mqtt\+Connected}} ()
+\item 
+void \mbox{\hyperlink{classGrowController_1_1DisplayManager_a838315916bd338bf4d30a228519fdb12}{show\+Sensor\+Data}} (float temp, float air\+Hum, float soil\+Hum)
+\begin{DoxyCompactList}\small\item\em Atualiza a exibição principal com dados de sensores e hora. Thread-\/safe. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classGrowController_1_1DisplayManager_a9a2ee0b4593b822dfcc878cb73576857}{update\+Spinner}} ()
+\item 
+bool \mbox{\hyperlink{classGrowController_1_1DisplayManager_a67abe4570eba5d743504ddd0679d1d6f}{is\+Initialized}} () const
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Construtores e Destrutores}
+\mbox{\Hypertarget{classGrowController_1_1DisplayManager_a92716cd4eee6b7204b8d4a9c3affec5b}\label{classGrowController_1_1DisplayManager_a92716cd4eee6b7204b8d4a9c3affec5b}} 
+\index{GrowController::DisplayManager@{GrowController::DisplayManager}!DisplayManager@{DisplayManager}}
+\index{DisplayManager@{DisplayManager}!GrowController::DisplayManager@{GrowController::DisplayManager}}
+\doxysubsubsection{\texorpdfstring{DisplayManager()}{DisplayManager()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Grow\+Controller\+::\+Display\+Manager\+::\+Display\+Manager (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{i2c\+\_\+addr,  }\item[{uint8\+\_\+t}]{cols,  }\item[{uint8\+\_\+t}]{rows,  }\item[{\mbox{\hyperlink{classGrowController_1_1TimeService}{Time\+Service}} \&}]{time\+Svc }\end{DoxyParamCaption})}
+
+
+
+Construtor. Recebe parâmetros de configuração e dependências. 
+
+
+\begin{DoxyParams}{Parâmetros}
+{\em i2c\+\_\+addr} & Endereço I2C do display. \\
+\hline
+{\em cols} & Número de colunas. \\
+\hline
+{\em rows} & Número de linhas. \\
+\hline
+{\em time\+Svc} & Referência ao \mbox{\hyperlink{classGrowController_1_1TimeService}{Time\+Service}} para obter a hora atual. // $<$$<$$<$ N\+O\+VA D\+EP D\+OC \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classGrowController_1_1DisplayManager_af691ece4acc0ce67390083a793843642}\label{classGrowController_1_1DisplayManager_af691ece4acc0ce67390083a793843642}} 
+\index{GrowController::DisplayManager@{GrowController::DisplayManager}!````~DisplayManager@{$\sim$DisplayManager}}
+\index{````~DisplayManager@{$\sim$DisplayManager}!GrowController::DisplayManager@{GrowController::DisplayManager}}
+\doxysubsubsection{\texorpdfstring{$\sim$DisplayManager()}{~DisplayManager()}}
+{\footnotesize\ttfamily Grow\+Controller\+::\+Display\+Manager\+::$\sim$\+Display\+Manager (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classGrowController_1_1DisplayManager_a01c622e178972a57d448bf0024a00160}\label{classGrowController_1_1DisplayManager_a01c622e178972a57d448bf0024a00160}} 
+\index{GrowController::DisplayManager@{GrowController::DisplayManager}!DisplayManager@{DisplayManager}}
+\index{DisplayManager@{DisplayManager}!GrowController::DisplayManager@{GrowController::DisplayManager}}
+\doxysubsubsection{\texorpdfstring{DisplayManager()}{DisplayManager()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Grow\+Controller\+::\+Display\+Manager\+::\+Display\+Manager (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classGrowController_1_1DisplayManager}{Display\+Manager}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+
+
+\doxysubsection{Funções membros}
+\mbox{\Hypertarget{classGrowController_1_1DisplayManager_a26a0dd37ae00fb5d3e7bcff7b145cffa}\label{classGrowController_1_1DisplayManager_a26a0dd37ae00fb5d3e7bcff7b145cffa}} 
+\index{GrowController::DisplayManager@{GrowController::DisplayManager}!clear@{clear}}
+\index{clear@{clear}!GrowController::DisplayManager@{GrowController::DisplayManager}}
+\doxysubsubsection{\texorpdfstring{clear()}{clear()}}
+{\footnotesize\ttfamily void Grow\+Controller\+::\+Display\+Manager\+::clear (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classGrowController_1_1DisplayManager_a0b9a9983fd204e965c1b005158220513}\label{classGrowController_1_1DisplayManager_a0b9a9983fd204e965c1b005158220513}} 
+\index{GrowController::DisplayManager@{GrowController::DisplayManager}!initialize@{initialize}}
+\index{initialize@{initialize}!GrowController::DisplayManager@{GrowController::DisplayManager}}
+\doxysubsubsection{\texorpdfstring{initialize()}{initialize()}}
+{\footnotesize\ttfamily bool Grow\+Controller\+::\+Display\+Manager\+::initialize (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classGrowController_1_1DisplayManager_a67abe4570eba5d743504ddd0679d1d6f}\label{classGrowController_1_1DisplayManager_a67abe4570eba5d743504ddd0679d1d6f}} 
+\index{GrowController::DisplayManager@{GrowController::DisplayManager}!isInitialized@{isInitialized}}
+\index{isInitialized@{isInitialized}!GrowController::DisplayManager@{GrowController::DisplayManager}}
+\doxysubsubsection{\texorpdfstring{isInitialized()}{isInitialized()}}
+{\footnotesize\ttfamily bool Grow\+Controller\+::\+Display\+Manager\+::is\+Initialized (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+\mbox{\Hypertarget{classGrowController_1_1DisplayManager_abe22644234f0c6faa2f01a8ac88c920b}\label{classGrowController_1_1DisplayManager_abe22644234f0c6faa2f01a8ac88c920b}} 
+\index{GrowController::DisplayManager@{GrowController::DisplayManager}!operator=@{operator=}}
+\index{operator=@{operator=}!GrowController::DisplayManager@{GrowController::DisplayManager}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classGrowController_1_1DisplayManager}{Display\+Manager}}\& Grow\+Controller\+::\+Display\+Manager\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classGrowController_1_1DisplayManager}{Display\+Manager}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classGrowController_1_1DisplayManager_ac232fb6ac1eacfdb121d6ff6f7244780}\label{classGrowController_1_1DisplayManager_ac232fb6ac1eacfdb121d6ff6f7244780}} 
+\index{GrowController::DisplayManager@{GrowController::DisplayManager}!printLine@{printLine}}
+\index{printLine@{printLine}!GrowController::DisplayManager@{GrowController::DisplayManager}}
+\doxysubsubsection{\texorpdfstring{printLine()}{printLine()}}
+{\footnotesize\ttfamily void Grow\+Controller\+::\+Display\+Manager\+::print\+Line (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{line,  }\item[{const char $\ast$}]{format,  }\item[{}]{... }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classGrowController_1_1DisplayManager_a358e99dcb42390daaad16ea61e57a25b}\label{classGrowController_1_1DisplayManager_a358e99dcb42390daaad16ea61e57a25b}} 
+\index{GrowController::DisplayManager@{GrowController::DisplayManager}!setBacklight@{setBacklight}}
+\index{setBacklight@{setBacklight}!GrowController::DisplayManager@{GrowController::DisplayManager}}
+\doxysubsubsection{\texorpdfstring{setBacklight()}{setBacklight()}}
+{\footnotesize\ttfamily void Grow\+Controller\+::\+Display\+Manager\+::set\+Backlight (\begin{DoxyParamCaption}\item[{bool}]{enable }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classGrowController_1_1DisplayManager_ada5805ecd9c1def0a3e91725130f15d8}\label{classGrowController_1_1DisplayManager_ada5805ecd9c1def0a3e91725130f15d8}} 
+\index{GrowController::DisplayManager@{GrowController::DisplayManager}!showBooting@{showBooting}}
+\index{showBooting@{showBooting}!GrowController::DisplayManager@{GrowController::DisplayManager}}
+\doxysubsubsection{\texorpdfstring{showBooting()}{showBooting()}}
+{\footnotesize\ttfamily void Grow\+Controller\+::\+Display\+Manager\+::show\+Booting (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classGrowController_1_1DisplayManager_ab4d8662025b59c07e7a3119ffe84690b}\label{classGrowController_1_1DisplayManager_ab4d8662025b59c07e7a3119ffe84690b}} 
+\index{GrowController::DisplayManager@{GrowController::DisplayManager}!showConnectingWiFi@{showConnectingWiFi}}
+\index{showConnectingWiFi@{showConnectingWiFi}!GrowController::DisplayManager@{GrowController::DisplayManager}}
+\doxysubsubsection{\texorpdfstring{showConnectingWiFi()}{showConnectingWiFi()}}
+{\footnotesize\ttfamily void Grow\+Controller\+::\+Display\+Manager\+::show\+Connecting\+Wi\+Fi (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classGrowController_1_1DisplayManager_a1f3eccfdabd2bf6deb21364b4448a47c}\label{classGrowController_1_1DisplayManager_a1f3eccfdabd2bf6deb21364b4448a47c}} 
+\index{GrowController::DisplayManager@{GrowController::DisplayManager}!showError@{showError}}
+\index{showError@{showError}!GrowController::DisplayManager@{GrowController::DisplayManager}}
+\doxysubsubsection{\texorpdfstring{showError()}{showError()}}
+{\footnotesize\ttfamily void Grow\+Controller\+::\+Display\+Manager\+::show\+Error (\begin{DoxyParamCaption}\item[{const char $\ast$}]{message }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classGrowController_1_1DisplayManager_a27c3b9c4ff05602045c88fb3d089cd8a}\label{classGrowController_1_1DisplayManager_a27c3b9c4ff05602045c88fb3d089cd8a}} 
+\index{GrowController::DisplayManager@{GrowController::DisplayManager}!showMqttConnected@{showMqttConnected}}
+\index{showMqttConnected@{showMqttConnected}!GrowController::DisplayManager@{GrowController::DisplayManager}}
+\doxysubsubsection{\texorpdfstring{showMqttConnected()}{showMqttConnected()}}
+{\footnotesize\ttfamily void Grow\+Controller\+::\+Display\+Manager\+::show\+Mqtt\+Connected (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classGrowController_1_1DisplayManager_a5892179e9cc7c7b7ab73119764ffcb1e}\label{classGrowController_1_1DisplayManager_a5892179e9cc7c7b7ab73119764ffcb1e}} 
+\index{GrowController::DisplayManager@{GrowController::DisplayManager}!showMqttConnecting@{showMqttConnecting}}
+\index{showMqttConnecting@{showMqttConnecting}!GrowController::DisplayManager@{GrowController::DisplayManager}}
+\doxysubsubsection{\texorpdfstring{showMqttConnecting()}{showMqttConnecting()}}
+{\footnotesize\ttfamily void Grow\+Controller\+::\+Display\+Manager\+::show\+Mqtt\+Connecting (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classGrowController_1_1DisplayManager_a71d688c36a8f2b566641cd1f57bd9eda}\label{classGrowController_1_1DisplayManager_a71d688c36a8f2b566641cd1f57bd9eda}} 
+\index{GrowController::DisplayManager@{GrowController::DisplayManager}!showNtpSynced@{showNtpSynced}}
+\index{showNtpSynced@{showNtpSynced}!GrowController::DisplayManager@{GrowController::DisplayManager}}
+\doxysubsubsection{\texorpdfstring{showNtpSynced()}{showNtpSynced()}}
+{\footnotesize\ttfamily void Grow\+Controller\+::\+Display\+Manager\+::show\+Ntp\+Synced (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classGrowController_1_1DisplayManager_a09c7b5216f3599f8e933a40d9e7f73d3}\label{classGrowController_1_1DisplayManager_a09c7b5216f3599f8e933a40d9e7f73d3}} 
+\index{GrowController::DisplayManager@{GrowController::DisplayManager}!showNtpSyncing@{showNtpSyncing}}
+\index{showNtpSyncing@{showNtpSyncing}!GrowController::DisplayManager@{GrowController::DisplayManager}}
+\doxysubsubsection{\texorpdfstring{showNtpSyncing()}{showNtpSyncing()}}
+{\footnotesize\ttfamily void Grow\+Controller\+::\+Display\+Manager\+::show\+Ntp\+Syncing (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classGrowController_1_1DisplayManager_a838315916bd338bf4d30a228519fdb12}\label{classGrowController_1_1DisplayManager_a838315916bd338bf4d30a228519fdb12}} 
+\index{GrowController::DisplayManager@{GrowController::DisplayManager}!showSensorData@{showSensorData}}
+\index{showSensorData@{showSensorData}!GrowController::DisplayManager@{GrowController::DisplayManager}}
+\doxysubsubsection{\texorpdfstring{showSensorData()}{showSensorData()}}
+{\footnotesize\ttfamily void Grow\+Controller\+::\+Display\+Manager\+::show\+Sensor\+Data (\begin{DoxyParamCaption}\item[{float}]{temp,  }\item[{float}]{air\+Hum,  }\item[{float}]{soil\+Hum }\end{DoxyParamCaption})}
+
+
+
+Atualiza a exibição principal com dados de sensores e hora. Thread-\/safe. 
+
+
+\begin{DoxyParams}{Parâmetros}
+{\em temp} & Temperatura em Celsius. \\
+\hline
+{\em air\+Hum} & Umidade do ar em \%. \\
+\hline
+{\em soil\+Hum} & Umidade do solo em \%. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classGrowController_1_1DisplayManager_a19f1621ebaa0a8c3f7ca900dadb22c44}\label{classGrowController_1_1DisplayManager_a19f1621ebaa0a8c3f7ca900dadb22c44}} 
+\index{GrowController::DisplayManager@{GrowController::DisplayManager}!showWiFiConnected@{showWiFiConnected}}
+\index{showWiFiConnected@{showWiFiConnected}!GrowController::DisplayManager@{GrowController::DisplayManager}}
+\doxysubsubsection{\texorpdfstring{showWiFiConnected()}{showWiFiConnected()}}
+{\footnotesize\ttfamily void Grow\+Controller\+::\+Display\+Manager\+::show\+Wi\+Fi\+Connected (\begin{DoxyParamCaption}\item[{const char $\ast$}]{ip }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{classGrowController_1_1DisplayManager_a9a2ee0b4593b822dfcc878cb73576857}\label{classGrowController_1_1DisplayManager_a9a2ee0b4593b822dfcc878cb73576857}} 
+\index{GrowController::DisplayManager@{GrowController::DisplayManager}!updateSpinner@{updateSpinner}}
+\index{updateSpinner@{updateSpinner}!GrowController::DisplayManager@{GrowController::DisplayManager}}
+\doxysubsubsection{\texorpdfstring{updateSpinner()}{updateSpinner()}}
+{\footnotesize\ttfamily void Grow\+Controller\+::\+Display\+Manager\+::update\+Spinner (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+A documentação para essa classe foi gerada a partir dos seguintes arquivos\+:\begin{DoxyCompactItemize}
+\item 
+src/ui/\mbox{\hyperlink{displayManager_8hpp}{display\+Manager.\+hpp}}\item 
+src/ui/\mbox{\hyperlink{displayManager_8cpp}{display\+Manager.\+cpp}}\end{DoxyCompactItemize}

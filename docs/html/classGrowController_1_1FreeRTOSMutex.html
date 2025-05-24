@@ -1,0 +1,335 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.17"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Smart Garden - Sistema de Controle de Ambiente: Referência da Classe GrowController::FreeRTOSMutex</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Smart Garden - Sistema de Controle de Ambiente
+   &#160;<span id="projectnumber">v1.0</span>
+   </div>
+   <div id="projectbrief">Sistema embarcado para monitoramento e controle de ambiente para cultivo</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Gerado por Doxygen 1.8.17 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Busca');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Busca');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="namespaceGrowController.html">GrowController</a></li><li class="navelem"><a class="el" href="classGrowController_1_1FreeRTOSMutex.html">FreeRTOSMutex</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Membros Públicos</a> &#124;
+<a href="classGrowController_1_1FreeRTOSMutex-members.html">Lista de todos os Membros</a>  </div>
+  <div class="headertitle">
+<div class="title">Referência da Classe GrowController::FreeRTOSMutex</div>  </div>
+</div><!--header-->
+<div class="contents">
+
+<p>Classe wrapper RAII para um Mutex FreeRTOS (SemaphoreHandle_t). Garante que vSemaphoreDelete seja chamado quando o objeto sair de escopo.  
+ <a href="classGrowController_1_1FreeRTOSMutex.html#details">Mais...</a></p>
+
+<p><code>#include &lt;<a class="el" href="freeRTOSMutex_8hpp_source.html">freeRTOSMutex.hpp</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Membros Públicos</h2></td></tr>
+<tr class="memitem:a5275ea6a53b16b3d48e823959b81d040"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1FreeRTOSMutex.html#a5275ea6a53b16b3d48e823959b81d040">FreeRTOSMutex</a> ()</td></tr>
+<tr class="memdesc:a5275ea6a53b16b3d48e823959b81d040"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constrói e cria o mutex subjacente.  <a href="classGrowController_1_1FreeRTOSMutex.html#a5275ea6a53b16b3d48e823959b81d040">Mais...</a><br /></td></tr>
+<tr class="separator:a5275ea6a53b16b3d48e823959b81d040"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a639ff7330d611d8fae0d9012c3e3b270"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1FreeRTOSMutex.html#a639ff7330d611d8fae0d9012c3e3b270">~FreeRTOSMutex</a> ()</td></tr>
+<tr class="memdesc:a639ff7330d611d8fae0d9012c3e3b270"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destrói o objeto e deleta o mutex subjacente, se válido.  <a href="classGrowController_1_1FreeRTOSMutex.html#a639ff7330d611d8fae0d9012c3e3b270">Mais...</a><br /></td></tr>
+<tr class="separator:a639ff7330d611d8fae0d9012c3e3b270"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26262ea6802705d2a16cb76f0c063c52"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1FreeRTOSMutex.html#a26262ea6802705d2a16cb76f0c063c52">FreeRTOSMutex</a> (const <a class="el" href="classGrowController_1_1FreeRTOSMutex.html">FreeRTOSMutex</a> &amp;)=delete</td></tr>
+<tr class="separator:a26262ea6802705d2a16cb76f0c063c52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a443414b4d9c1e5e2ed5ef98302bb8809"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGrowController_1_1FreeRTOSMutex.html">FreeRTOSMutex</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1FreeRTOSMutex.html#a443414b4d9c1e5e2ed5ef98302bb8809">operator=</a> (const <a class="el" href="classGrowController_1_1FreeRTOSMutex.html">FreeRTOSMutex</a> &amp;)=delete</td></tr>
+<tr class="separator:a443414b4d9c1e5e2ed5ef98302bb8809"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af90de3cbd61e6ca705594744c0431064"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1FreeRTOSMutex.html#af90de3cbd61e6ca705594744c0431064">FreeRTOSMutex</a> (<a class="el" href="classGrowController_1_1FreeRTOSMutex.html">FreeRTOSMutex</a> &amp;&amp;other) noexcept</td></tr>
+<tr class="separator:af90de3cbd61e6ca705594744c0431064"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade4226f72bcd2f8dec52f043979dca09"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classGrowController_1_1FreeRTOSMutex.html">FreeRTOSMutex</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1FreeRTOSMutex.html#ade4226f72bcd2f8dec52f043979dca09">operator=</a> (<a class="el" href="classGrowController_1_1FreeRTOSMutex.html">FreeRTOSMutex</a> &amp;&amp;other) noexcept</td></tr>
+<tr class="separator:ade4226f72bcd2f8dec52f043979dca09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af5e1625cb9725dd44c737abe19901273"><td class="memItemLeft" align="right" valign="top">SemaphoreHandle_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1FreeRTOSMutex.html#af5e1625cb9725dd44c737abe19901273">get</a> () const</td></tr>
+<tr class="memdesc:af5e1625cb9725dd44c737abe19901273"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtém o handle bruto do semáforo para uso com APIs FreeRTOS.  <a href="classGrowController_1_1FreeRTOSMutex.html#af5e1625cb9725dd44c737abe19901273">Mais...</a><br /></td></tr>
+<tr class="separator:af5e1625cb9725dd44c737abe19901273"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42bc3b653d705217e86d001574aeae48"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classGrowController_1_1FreeRTOSMutex.html#a42bc3b653d705217e86d001574aeae48">operator bool</a> () const</td></tr>
+<tr class="memdesc:a42bc3b653d705217e86d001574aeae48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verifica se o mutex foi criado com sucesso.  <a href="classGrowController_1_1FreeRTOSMutex.html#a42bc3b653d705217e86d001574aeae48">Mais...</a><br /></td></tr>
+<tr class="separator:a42bc3b653d705217e86d001574aeae48"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Descrição detalhada</h2>
+<div class="textblock"><p>Classe wrapper RAII para um Mutex FreeRTOS (SemaphoreHandle_t). Garante que vSemaphoreDelete seja chamado quando o objeto sair de escopo. </p>
+</div><h2 class="groupheader">Construtores e Destrutores</h2>
+<a id="a5275ea6a53b16b3d48e823959b81d040"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5275ea6a53b16b3d48e823959b81d040">&#9670;&nbsp;</a></span>FreeRTOSMutex() <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">GrowController::FreeRTOSMutex::FreeRTOSMutex </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constrói e cria o mutex subjacente. </p>
+
+</div>
+</div>
+<a id="a639ff7330d611d8fae0d9012c3e3b270"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a639ff7330d611d8fae0d9012c3e3b270">&#9670;&nbsp;</a></span>~FreeRTOSMutex()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">GrowController::FreeRTOSMutex::~FreeRTOSMutex </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Destrói o objeto e deleta o mutex subjacente, se válido. </p>
+
+</div>
+</div>
+<a id="a26262ea6802705d2a16cb76f0c063c52"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a26262ea6802705d2a16cb76f0c063c52">&#9670;&nbsp;</a></span>FreeRTOSMutex() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">GrowController::FreeRTOSMutex::FreeRTOSMutex </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classGrowController_1_1FreeRTOSMutex.html">FreeRTOSMutex</a> &amp;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="af90de3cbd61e6ca705594744c0431064"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af90de3cbd61e6ca705594744c0431064">&#9670;&nbsp;</a></span>FreeRTOSMutex() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">GrowController::FreeRTOSMutex::FreeRTOSMutex </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classGrowController_1_1FreeRTOSMutex.html">FreeRTOSMutex</a> &amp;&amp;&#160;</td>
+          <td class="paramname"><em>other</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Funções membros</h2>
+<a id="af5e1625cb9725dd44c737abe19901273"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af5e1625cb9725dd44c737abe19901273">&#9670;&nbsp;</a></span>get()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SemaphoreHandle_t GrowController::FreeRTOSMutex::get </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Obtém o handle bruto do semáforo para uso com APIs FreeRTOS. </p>
+<dl class="section return"><dt>Retorna</dt><dd>SemaphoreHandle_t O handle do mutex ou nullptr se a criação falhou. </dd></dl>
+
+</div>
+</div>
+<a id="a42bc3b653d705217e86d001574aeae48"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a42bc3b653d705217e86d001574aeae48">&#9670;&nbsp;</a></span>operator bool()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">GrowController::FreeRTOSMutex::operator bool </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Verifica se o mutex foi criado com sucesso. </p>
+<dl class="section return"><dt>Retorna</dt><dd>true Se o handle não for nullptr, false caso contrário. </dd></dl>
+
+</div>
+</div>
+<a id="a443414b4d9c1e5e2ed5ef98302bb8809"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a443414b4d9c1e5e2ed5ef98302bb8809">&#9670;&nbsp;</a></span>operator=() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classGrowController_1_1FreeRTOSMutex.html">FreeRTOSMutex</a>&amp; GrowController::FreeRTOSMutex::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classGrowController_1_1FreeRTOSMutex.html">FreeRTOSMutex</a> &amp;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ade4226f72bcd2f8dec52f043979dca09"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ade4226f72bcd2f8dec52f043979dca09">&#9670;&nbsp;</a></span>operator=() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classGrowController_1_1FreeRTOSMutex.html">FreeRTOSMutex</a>&amp; GrowController::FreeRTOSMutex::operator= </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classGrowController_1_1FreeRTOSMutex.html">FreeRTOSMutex</a> &amp;&amp;&#160;</td>
+          <td class="paramname"><em>other</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<hr/>A documentação para essa classe foi gerada a partir do seguinte arquivo:<ul>
+<li>src/utils/<a class="el" href="freeRTOSMutex_8hpp_source.html">freeRTOSMutex.hpp</a></li>
+</ul>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Gerado por &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.17
+</small></address>
+</body>
+</html>

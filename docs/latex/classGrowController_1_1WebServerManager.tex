@@ -1,0 +1,120 @@
+\hypertarget{classGrowController_1_1WebServerManager}{}\doxysection{Referência da Classe Grow\+Controller\+::Web\+Server\+Manager}
+\label{classGrowController_1_1WebServerManager}\index{GrowController::WebServerManager@{GrowController::WebServerManager}}
+
+
+Manages the E\+S\+P\+Async\+Web\+Server, handling H\+T\+TP requests and Server-\/\+Sent Events (S\+SE).  
+
+
+
+
+{\ttfamily \#include $<$web\+Server\+Manager.\+hpp$>$}
+
+\doxysubsection*{Membros Públicos}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classGrowController_1_1WebServerManager_a6afcd4c39d5168c08a81929fff8fc211}{Web\+Server\+Manager}} (uint16\+\_\+t port, \mbox{\hyperlink{classGrowController_1_1SensorManager}{Sensor\+Manager}} $\ast$\mbox{\hyperlink{main_8cpp_aa0842d72fac8fae67e8c146789ca6a52}{sensor\+Mgr}}, \mbox{\hyperlink{classGrowController_1_1TargetDataManager}{Target\+Data\+Manager}} $\ast$target\+Mgr, \mbox{\hyperlink{classGrowController_1_1ActuatorManager}{Actuator\+Manager}} $\ast$\mbox{\hyperlink{main_8cpp_a0727fe3b048e428a2fbcb2a88a8a635a}{actuator\+Mgr}}, \mbox{\hyperlink{classGrowController_1_1DataHistoryManager}{Data\+History\+Manager}} $\ast$history\+Mgr)
+\begin{DoxyCompactList}\small\item\em Constructs a new \mbox{\hyperlink{classGrowController_1_1WebServerManager}{Web\+Server\+Manager}} instance. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classGrowController_1_1WebServerManager_a3396dd74cdc0e0d7a87a18dbd4dddd28}{$\sim$\+Web\+Server\+Manager}} ()
+\begin{DoxyCompactList}\small\item\em Destroys the \mbox{\hyperlink{classGrowController_1_1WebServerManager}{Web\+Server\+Manager}} instance. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classGrowController_1_1WebServerManager_ab1e2fc9569c2623dfba8d58d231aa304}{Web\+Server\+Manager}} (const \mbox{\hyperlink{classGrowController_1_1WebServerManager}{Web\+Server\+Manager}} \&)=delete
+\item 
+\mbox{\hyperlink{classGrowController_1_1WebServerManager}{Web\+Server\+Manager}} \& \mbox{\hyperlink{classGrowController_1_1WebServerManager_a01f1d535259341b1f0b6dc1dd263f5f1}{operator=}} (const \mbox{\hyperlink{classGrowController_1_1WebServerManager}{Web\+Server\+Manager}} \&)=delete
+\item 
+void \mbox{\hyperlink{classGrowController_1_1WebServerManager_a1c7c8ff3c095c357d41883feecb65a1f}{begin}} ()
+\begin{DoxyCompactList}\small\item\em Initializes the web server and starts listening for incoming connections. This method should set up all H\+T\+TP routes and S\+SE endpoints. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classGrowController_1_1WebServerManager_af684e2ab62b4f522ccdbb9ebbbdf6721}{send\+Sensor\+Update\+Event}} ()
+\begin{DoxyCompactList}\small\item\em Sends an S\+SE event with the current sensor readings. This method is typically called periodically or when sensor data changes significantly. It respects the {\ttfamily event\+Interval\+Ms\+\_\+} to avoid flooding clients. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classGrowController_1_1WebServerManager_a37e7d31113de29165dba878d38d9ec69}{send\+Status\+Update\+Event}} ()
+\begin{DoxyCompactList}\small\item\em Sends an S\+SE event with the current status of actuators and target values. This method is typically called periodically or when status/target data changes. It respects the {\ttfamily event\+Interval\+Ms\+\_\+} to avoid flooding clients. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Descrição detalhada}
+Manages the E\+S\+P\+Async\+Web\+Server, handling H\+T\+TP requests and Server-\/\+Sent Events (S\+SE). 
+
+This class is responsible for initializing the web server, setting up routes (though route setup is typically done in the .cpp file), and sending real-\/time updates to connected clients via S\+SE. 
+
+\doxysubsection{Construtores e Destrutores}
+\mbox{\Hypertarget{classGrowController_1_1WebServerManager_a6afcd4c39d5168c08a81929fff8fc211}\label{classGrowController_1_1WebServerManager_a6afcd4c39d5168c08a81929fff8fc211}} 
+\index{GrowController::WebServerManager@{GrowController::WebServerManager}!WebServerManager@{WebServerManager}}
+\index{WebServerManager@{WebServerManager}!GrowController::WebServerManager@{GrowController::WebServerManager}}
+\doxysubsubsection{\texorpdfstring{WebServerManager()}{WebServerManager()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Grow\+Controller\+::\+Web\+Server\+Manager\+::\+Web\+Server\+Manager (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{port,  }\item[{\mbox{\hyperlink{classGrowController_1_1SensorManager}{Sensor\+Manager}} $\ast$}]{sensor\+Mgr,  }\item[{\mbox{\hyperlink{classGrowController_1_1TargetDataManager}{Target\+Data\+Manager}} $\ast$}]{target\+Mgr,  }\item[{\mbox{\hyperlink{classGrowController_1_1ActuatorManager}{Actuator\+Manager}} $\ast$}]{actuator\+Mgr,  }\item[{\mbox{\hyperlink{classGrowController_1_1DataHistoryManager}{Data\+History\+Manager}} $\ast$}]{history\+Mgr }\end{DoxyParamCaption})}
+
+
+
+Constructs a new \mbox{\hyperlink{classGrowController_1_1WebServerManager}{Web\+Server\+Manager}} instance. 
+
+
+\begin{DoxyParams}{Parâmetros}
+{\em port} & The network port on which the server will listen. \\
+\hline
+{\em sensor\+Mgr} & Pointer to the \mbox{\hyperlink{classGrowController_1_1SensorManager}{Sensor\+Manager}} for accessing sensor data. \\
+\hline
+{\em target\+Mgr} & Pointer to the \mbox{\hyperlink{classGrowController_1_1TargetDataManager}{Target\+Data\+Manager}} for accessing target data. \\
+\hline
+{\em actuator\+Mgr} & Pointer to the \mbox{\hyperlink{classGrowController_1_1ActuatorManager}{Actuator\+Manager}} for accessing actuator status. \\
+\hline
+{\em history\+Mgr} & Pointer to the \mbox{\hyperlink{classGrowController_1_1DataHistoryManager}{Data\+History\+Manager}} for accessing historical data. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classGrowController_1_1WebServerManager_a3396dd74cdc0e0d7a87a18dbd4dddd28}\label{classGrowController_1_1WebServerManager_a3396dd74cdc0e0d7a87a18dbd4dddd28}} 
+\index{GrowController::WebServerManager@{GrowController::WebServerManager}!````~WebServerManager@{$\sim$WebServerManager}}
+\index{````~WebServerManager@{$\sim$WebServerManager}!GrowController::WebServerManager@{GrowController::WebServerManager}}
+\doxysubsubsection{\texorpdfstring{$\sim$WebServerManager()}{~WebServerManager()}}
+{\footnotesize\ttfamily Grow\+Controller\+::\+Web\+Server\+Manager\+::$\sim$\+Web\+Server\+Manager (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Destroys the \mbox{\hyperlink{classGrowController_1_1WebServerManager}{Web\+Server\+Manager}} instance. 
+
+\mbox{\Hypertarget{classGrowController_1_1WebServerManager_ab1e2fc9569c2623dfba8d58d231aa304}\label{classGrowController_1_1WebServerManager_ab1e2fc9569c2623dfba8d58d231aa304}} 
+\index{GrowController::WebServerManager@{GrowController::WebServerManager}!WebServerManager@{WebServerManager}}
+\index{WebServerManager@{WebServerManager}!GrowController::WebServerManager@{GrowController::WebServerManager}}
+\doxysubsubsection{\texorpdfstring{WebServerManager()}{WebServerManager()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Grow\+Controller\+::\+Web\+Server\+Manager\+::\+Web\+Server\+Manager (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classGrowController_1_1WebServerManager}{Web\+Server\+Manager}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+
+
+\doxysubsection{Funções membros}
+\mbox{\Hypertarget{classGrowController_1_1WebServerManager_a1c7c8ff3c095c357d41883feecb65a1f}\label{classGrowController_1_1WebServerManager_a1c7c8ff3c095c357d41883feecb65a1f}} 
+\index{GrowController::WebServerManager@{GrowController::WebServerManager}!begin@{begin}}
+\index{begin@{begin}!GrowController::WebServerManager@{GrowController::WebServerManager}}
+\doxysubsubsection{\texorpdfstring{begin()}{begin()}}
+{\footnotesize\ttfamily void Grow\+Controller\+::\+Web\+Server\+Manager\+::begin (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Initializes the web server and starts listening for incoming connections. This method should set up all H\+T\+TP routes and S\+SE endpoints. 
+
+\mbox{\Hypertarget{classGrowController_1_1WebServerManager_a01f1d535259341b1f0b6dc1dd263f5f1}\label{classGrowController_1_1WebServerManager_a01f1d535259341b1f0b6dc1dd263f5f1}} 
+\index{GrowController::WebServerManager@{GrowController::WebServerManager}!operator=@{operator=}}
+\index{operator=@{operator=}!GrowController::WebServerManager@{GrowController::WebServerManager}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classGrowController_1_1WebServerManager}{Web\+Server\+Manager}}\& Grow\+Controller\+::\+Web\+Server\+Manager\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classGrowController_1_1WebServerManager}{Web\+Server\+Manager}} \&}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\mbox{\Hypertarget{classGrowController_1_1WebServerManager_af684e2ab62b4f522ccdbb9ebbbdf6721}\label{classGrowController_1_1WebServerManager_af684e2ab62b4f522ccdbb9ebbbdf6721}} 
+\index{GrowController::WebServerManager@{GrowController::WebServerManager}!sendSensorUpdateEvent@{sendSensorUpdateEvent}}
+\index{sendSensorUpdateEvent@{sendSensorUpdateEvent}!GrowController::WebServerManager@{GrowController::WebServerManager}}
+\doxysubsubsection{\texorpdfstring{sendSensorUpdateEvent()}{sendSensorUpdateEvent()}}
+{\footnotesize\ttfamily void Grow\+Controller\+::\+Web\+Server\+Manager\+::send\+Sensor\+Update\+Event (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Sends an S\+SE event with the current sensor readings. This method is typically called periodically or when sensor data changes significantly. It respects the {\ttfamily event\+Interval\+Ms\+\_\+} to avoid flooding clients. 
+
+\mbox{\Hypertarget{classGrowController_1_1WebServerManager_a37e7d31113de29165dba878d38d9ec69}\label{classGrowController_1_1WebServerManager_a37e7d31113de29165dba878d38d9ec69}} 
+\index{GrowController::WebServerManager@{GrowController::WebServerManager}!sendStatusUpdateEvent@{sendStatusUpdateEvent}}
+\index{sendStatusUpdateEvent@{sendStatusUpdateEvent}!GrowController::WebServerManager@{GrowController::WebServerManager}}
+\doxysubsubsection{\texorpdfstring{sendStatusUpdateEvent()}{sendStatusUpdateEvent()}}
+{\footnotesize\ttfamily void Grow\+Controller\+::\+Web\+Server\+Manager\+::send\+Status\+Update\+Event (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Sends an S\+SE event with the current status of actuators and target values. This method is typically called periodically or when status/target data changes. It respects the {\ttfamily event\+Interval\+Ms\+\_\+} to avoid flooding clients. 
+
+
+
+A documentação para essa classe foi gerada a partir dos seguintes arquivos\+:\begin{DoxyCompactItemize}
+\item 
+src/network/\mbox{\hyperlink{webServerManager_8hpp}{web\+Server\+Manager.\+hpp}}\item 
+src/network/\mbox{\hyperlink{webServerManager_8cpp}{web\+Server\+Manager.\+cpp}}\end{DoxyCompactItemize}

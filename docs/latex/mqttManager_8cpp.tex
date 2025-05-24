@@ -1,0 +1,52 @@
+\hypertarget{mqttManager_8cpp}{}\doxysection{Referência do Arquivo src/network/mqtt\+Manager.cpp}
+\label{mqttManager_8cpp}\index{src/network/mqttManager.cpp@{src/network/mqttManager.cpp}}
+{\ttfamily \#include \char`\"{}mqtt\+Manager.\+hpp\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}utils/free\+R\+T\+O\+S\+Mutex.\+hpp\char`\"{}}\newline
+{\ttfamily \#include $<$Arduino.\+h$>$}\newline
+{\ttfamily \#include $<$Wi\+Fi.\+h$>$}\newline
+{\ttfamily \#include $<$Arduino\+Json.\+h$>$}\newline
+Gráfico de dependência de inclusões para mqtt\+Manager.\+cpp\+:
+% FIG 0
+\doxysubsection*{$<$em$>$Namespaces$<$/em$>$}
+\begin{DoxyCompactItemize}
+\item 
+ \mbox{\hyperlink{namespaceGrowController}{Grow\+Controller}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Variáveis}
+\begin{DoxyCompactItemize}
+\item 
+const Tick\+Type\+\_\+t \mbox{\hyperlink{mqttManager_8cpp_a3421d6497e8adbba570b9d256aa12f1c}{M\+Q\+T\+T\+\_\+\+M\+U\+T\+E\+X\+\_\+\+T\+I\+M\+E\+O\+UT}} = pd\+M\+S\+\_\+\+T\+O\+\_\+\+T\+I\+C\+KS(200)
+\item 
+const Tick\+Type\+\_\+t \mbox{\hyperlink{mqttManager_8cpp_a7f82b130c7b29d53c91930c6e60d534a}{M\+Q\+T\+T\+\_\+\+L\+O\+O\+P\+\_\+\+D\+E\+L\+A\+Y\+\_\+\+MS}} = pd\+M\+S\+\_\+\+T\+O\+\_\+\+T\+I\+C\+KS(500)
+\item 
+const Tick\+Type\+\_\+t \mbox{\hyperlink{mqttManager_8cpp_a4756f105cf91bb743d80207386ab4a33}{M\+Q\+T\+T\+\_\+\+R\+E\+C\+O\+N\+N\+E\+C\+T\+\_\+\+D\+E\+L\+A\+Y\+\_\+\+MS}} = pd\+M\+S\+\_\+\+T\+O\+\_\+\+T\+I\+C\+KS(5000)
+\item 
+const uint8\+\_\+t \mbox{\hyperlink{mqttManager_8cpp_afbb722449abde71b13551ae96cb1f02d}{M\+Q\+T\+T\+\_\+\+C\+O\+N\+N\+E\+C\+T\+\_\+\+R\+E\+T\+R\+I\+ES}} = 3
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Variáveis}
+\mbox{\Hypertarget{mqttManager_8cpp_afbb722449abde71b13551ae96cb1f02d}\label{mqttManager_8cpp_afbb722449abde71b13551ae96cb1f02d}} 
+\index{mqttManager.cpp@{mqttManager.cpp}!MQTT\_CONNECT\_RETRIES@{MQTT\_CONNECT\_RETRIES}}
+\index{MQTT\_CONNECT\_RETRIES@{MQTT\_CONNECT\_RETRIES}!mqttManager.cpp@{mqttManager.cpp}}
+\doxysubsubsection{\texorpdfstring{MQTT\_CONNECT\_RETRIES}{MQTT\_CONNECT\_RETRIES}}
+{\footnotesize\ttfamily const uint8\+\_\+t M\+Q\+T\+T\+\_\+\+C\+O\+N\+N\+E\+C\+T\+\_\+\+R\+E\+T\+R\+I\+ES = 3}
+
+\mbox{\Hypertarget{mqttManager_8cpp_a7f82b130c7b29d53c91930c6e60d534a}\label{mqttManager_8cpp_a7f82b130c7b29d53c91930c6e60d534a}} 
+\index{mqttManager.cpp@{mqttManager.cpp}!MQTT\_LOOP\_DELAY\_MS@{MQTT\_LOOP\_DELAY\_MS}}
+\index{MQTT\_LOOP\_DELAY\_MS@{MQTT\_LOOP\_DELAY\_MS}!mqttManager.cpp@{mqttManager.cpp}}
+\doxysubsubsection{\texorpdfstring{MQTT\_LOOP\_DELAY\_MS}{MQTT\_LOOP\_DELAY\_MS}}
+{\footnotesize\ttfamily const Tick\+Type\+\_\+t M\+Q\+T\+T\+\_\+\+L\+O\+O\+P\+\_\+\+D\+E\+L\+A\+Y\+\_\+\+MS = pd\+M\+S\+\_\+\+T\+O\+\_\+\+T\+I\+C\+KS(500)}
+
+\mbox{\Hypertarget{mqttManager_8cpp_a3421d6497e8adbba570b9d256aa12f1c}\label{mqttManager_8cpp_a3421d6497e8adbba570b9d256aa12f1c}} 
+\index{mqttManager.cpp@{mqttManager.cpp}!MQTT\_MUTEX\_TIMEOUT@{MQTT\_MUTEX\_TIMEOUT}}
+\index{MQTT\_MUTEX\_TIMEOUT@{MQTT\_MUTEX\_TIMEOUT}!mqttManager.cpp@{mqttManager.cpp}}
+\doxysubsubsection{\texorpdfstring{MQTT\_MUTEX\_TIMEOUT}{MQTT\_MUTEX\_TIMEOUT}}
+{\footnotesize\ttfamily const Tick\+Type\+\_\+t M\+Q\+T\+T\+\_\+\+M\+U\+T\+E\+X\+\_\+\+T\+I\+M\+E\+O\+UT = pd\+M\+S\+\_\+\+T\+O\+\_\+\+T\+I\+C\+KS(200)}
+
+\mbox{\Hypertarget{mqttManager_8cpp_a4756f105cf91bb743d80207386ab4a33}\label{mqttManager_8cpp_a4756f105cf91bb743d80207386ab4a33}} 
+\index{mqttManager.cpp@{mqttManager.cpp}!MQTT\_RECONNECT\_DELAY\_MS@{MQTT\_RECONNECT\_DELAY\_MS}}
+\index{MQTT\_RECONNECT\_DELAY\_MS@{MQTT\_RECONNECT\_DELAY\_MS}!mqttManager.cpp@{mqttManager.cpp}}
+\doxysubsubsection{\texorpdfstring{MQTT\_RECONNECT\_DELAY\_MS}{MQTT\_RECONNECT\_DELAY\_MS}}
+{\footnotesize\ttfamily const Tick\+Type\+\_\+t M\+Q\+T\+T\+\_\+\+R\+E\+C\+O\+N\+N\+E\+C\+T\+\_\+\+D\+E\+L\+A\+Y\+\_\+\+MS = pd\+M\+S\+\_\+\+T\+O\+\_\+\+T\+I\+C\+KS(5000)}
+

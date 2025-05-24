@@ -1,0 +1,144 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.17"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Smart Garden - Sistema de Controle de Ambiente: Código-Fonte de src/data/dataHistoryManager.hpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Smart Garden - Sistema de Controle de Ambiente
+   &#160;<span id="projectnumber">v1.0</span>
+   </div>
+   <div id="projectbrief">Sistema embarcado para monitoramento e controle de ambiente para cultivo</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Gerado por Doxygen 1.8.17 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Busca');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Busca');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_c1be8d27e7f84178e95f152701110b19.html">data</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">dataHistoryManager.hpp</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="dataHistoryManager_8hpp.html">Vá para a documentação desse arquivo.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="comment">// src/data/dataHistoryManager.hpp</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#ifndef DATA_HISTORY_MANAGER_HPP</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#define DATA_HISTORY_MANAGER_HPP</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160; </div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="historicDataPoint_8hpp.html">historicDataPoint.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;LittleFS.h&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;Preferences.h&gt;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;Arduino.h&gt;</span>            <span class="comment">// Para String, Serial (se usado para logs)</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="logger_8hpp.html">utils/logger.hpp</a>&quot;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="freeRTOSMutex_8hpp.html">utils/freeRTOSMutex.hpp</a>&quot;</span> <span class="comment">// Para FreeRTOSMutex</span></div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keyword">namespace </span><a class="code" href="namespaceGrowController.html">GrowController</a> {</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
+<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="classGrowController_1_1DataHistoryManager.html">   15</a></span>&#160;<span class="keyword">class </span><a class="code" href="classGrowController_1_1DataHistoryManager.html">DataHistoryManager</a> {</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <a class="code" href="classGrowController_1_1DataHistoryManager.html#aa39b263bcb6d911f0cecd2e3843c497f">DataHistoryManager</a>();</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <a class="code" href="classGrowController_1_1DataHistoryManager.html#a4997e8e302ed9195efe1898acec80700">~DataHistoryManager</a>();</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <a class="code" href="classGrowController_1_1DataHistoryManager.html#aa39b263bcb6d911f0cecd2e3843c497f">DataHistoryManager</a>(<span class="keyword">const</span> <a class="code" href="classGrowController_1_1DataHistoryManager.html">DataHistoryManager</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    <a class="code" href="classGrowController_1_1DataHistoryManager.html">DataHistoryManager</a>&amp; <a class="code" href="classGrowController_1_1DataHistoryManager.html#ab52faa0f71b16a176cc6a837cd8641f0">operator=</a>(<span class="keyword">const</span> <a class="code" href="classGrowController_1_1DataHistoryManager.html">DataHistoryManager</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classGrowController_1_1DataHistoryManager.html#a60e5a18c9c3d2a7017b179558ca5f4ac">initialize</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* nvs_namespace = <span class="stringliteral">&quot;history_mgr&quot;</span>);</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classGrowController_1_1DataHistoryManager.html#ab01758e2750c2c9a8ec66e4a6dc825c8">addDataPoint</a>(<span class="keyword">const</span> <a class="code" href="structGrowController_1_1HistoricDataPoint.html">HistoricDataPoint</a>&amp; dataPoint);</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    std::vector&lt;HistoricDataPoint&gt; <a class="code" href="classGrowController_1_1DataHistoryManager.html#a4a096fe5c68609fa79f67ee18a9c6100">getAllDataPointsSorted</a>();</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="keywordtype">size_t</span> <a class="code" href="classGrowController_1_1DataHistoryManager.html#a9ca01beaca494097132a723b645e83e9">getRecordCount</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    uint8_t <a class="code" href="classGrowController_1_1DataHistoryManager.html#ad947782ffb2aec98773cf82c71d36503">getNextWriteIndex</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span>* LOG_FILE_NAME;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> MAX_RECORDS = 48;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span>* NVS_KEY_NEXT_INDEX;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span>* NVS_KEY_RECORD_COUNT;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    Preferences preferences;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    uint8_t nextWriteIndex;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    uint8_t recordCount;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="keywordtype">bool</span> initializedState;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keyword">const</span> <span class="keywordtype">char</span>* nvsNamespace;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160; </div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keyword">mutable</span> <a class="code" href="classGrowController_1_1FreeRTOSMutex.html">FreeRTOSMutex</a> dataMutex; <span class="comment">// Mutex para proteger acesso concorrente</span></div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> TickType_t MUTEX_TIMEOUT_MS = pdMS_TO_TICKS(200);</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;};</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;} <span class="comment">// namespace GrowController</span></div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="preprocessor">#endif // DATA_HISTORY_MANAGER_HPP</span></div>
+</div><!-- fragment --></div><!-- contents -->
+<div class="ttc" id="aclassGrowController_1_1FreeRTOSMutex_html"><div class="ttname"><a href="classGrowController_1_1FreeRTOSMutex.html">GrowController::FreeRTOSMutex</a></div><div class="ttdoc">Classe wrapper RAII para um Mutex FreeRTOS (SemaphoreHandle_t). Garante que vSemaphoreDelete seja cha...</div><div class="ttdef"><b>Definition:</b> freeRTOSMutex.hpp:14</div></div>
+<div class="ttc" id="aclassGrowController_1_1DataHistoryManager_html_aa39b263bcb6d911f0cecd2e3843c497f"><div class="ttname"><a href="classGrowController_1_1DataHistoryManager.html#aa39b263bcb6d911f0cecd2e3843c497f">GrowController::DataHistoryManager::DataHistoryManager</a></div><div class="ttdeci">DataHistoryManager()</div><div class="ttdef"><b>Definition:</b> dataHistoryManager.cpp:13</div></div>
+<div class="ttc" id="aclassGrowController_1_1DataHistoryManager_html_ad947782ffb2aec98773cf82c71d36503"><div class="ttname"><a href="classGrowController_1_1DataHistoryManager.html#ad947782ffb2aec98773cf82c71d36503">GrowController::DataHistoryManager::getNextWriteIndex</a></div><div class="ttdeci">uint8_t getNextWriteIndex() const</div><div class="ttdef"><b>Definition:</b> dataHistoryManager.cpp:285</div></div>
+<div class="ttc" id="aclassGrowController_1_1DataHistoryManager_html_a4997e8e302ed9195efe1898acec80700"><div class="ttname"><a href="classGrowController_1_1DataHistoryManager.html#a4997e8e302ed9195efe1898acec80700">GrowController::DataHistoryManager::~DataHistoryManager</a></div><div class="ttdeci">~DataHistoryManager()</div><div class="ttdef"><b>Definition:</b> dataHistoryManager.cpp:23</div></div>
+<div class="ttc" id="ahistoricDataPoint_8hpp_html"><div class="ttname"><a href="historicDataPoint_8hpp.html">historicDataPoint.hpp</a></div></div>
+<div class="ttc" id="aclassGrowController_1_1DataHistoryManager_html_ab52faa0f71b16a176cc6a837cd8641f0"><div class="ttname"><a href="classGrowController_1_1DataHistoryManager.html#ab52faa0f71b16a176cc6a837cd8641f0">GrowController::DataHistoryManager::operator=</a></div><div class="ttdeci">DataHistoryManager &amp; operator=(const DataHistoryManager &amp;)=delete</div></div>
+<div class="ttc" id="aclassGrowController_1_1DataHistoryManager_html_a60e5a18c9c3d2a7017b179558ca5f4ac"><div class="ttname"><a href="classGrowController_1_1DataHistoryManager.html#a60e5a18c9c3d2a7017b179558ca5f4ac">GrowController::DataHistoryManager::initialize</a></div><div class="ttdeci">bool initialize(const char *nvs_namespace=&quot;history_mgr&quot;)</div><div class="ttdef"><b>Definition:</b> dataHistoryManager.cpp:30</div></div>
+<div class="ttc" id="anamespaceGrowController_html"><div class="ttname"><a href="namespaceGrowController.html">GrowController</a></div><div class="ttdef"><b>Definition:</b> actuatorManager.cpp:7</div></div>
+<div class="ttc" id="alogger_8hpp_html"><div class="ttname"><a href="logger_8hpp.html">logger.hpp</a></div></div>
+<div class="ttc" id="aclassGrowController_1_1DataHistoryManager_html_a4a096fe5c68609fa79f67ee18a9c6100"><div class="ttname"><a href="classGrowController_1_1DataHistoryManager.html#a4a096fe5c68609fa79f67ee18a9c6100">GrowController::DataHistoryManager::getAllDataPointsSorted</a></div><div class="ttdeci">std::vector&lt; HistoricDataPoint &gt; getAllDataPointsSorted()</div><div class="ttdef"><b>Definition:</b> dataHistoryManager.cpp:188</div></div>
+<div class="ttc" id="afreeRTOSMutex_8hpp_html"><div class="ttname"><a href="freeRTOSMutex_8hpp.html">freeRTOSMutex.hpp</a></div></div>
+<div class="ttc" id="astructGrowController_1_1HistoricDataPoint_html"><div class="ttname"><a href="structGrowController_1_1HistoricDataPoint.html">GrowController::HistoricDataPoint</a></div><div class="ttdef"><b>Definition:</b> historicDataPoint.hpp:10</div></div>
+<div class="ttc" id="aclassGrowController_1_1DataHistoryManager_html"><div class="ttname"><a href="classGrowController_1_1DataHistoryManager.html">GrowController::DataHistoryManager</a></div><div class="ttdef"><b>Definition:</b> dataHistoryManager.hpp:15</div></div>
+<div class="ttc" id="aclassGrowController_1_1DataHistoryManager_html_ab01758e2750c2c9a8ec66e4a6dc825c8"><div class="ttname"><a href="classGrowController_1_1DataHistoryManager.html#ab01758e2750c2c9a8ec66e4a6dc825c8">GrowController::DataHistoryManager::addDataPoint</a></div><div class="ttdeci">bool addDataPoint(const HistoricDataPoint &amp;dataPoint)</div><div class="ttdef"><b>Definition:</b> dataHistoryManager.cpp:102</div></div>
+<div class="ttc" id="aclassGrowController_1_1DataHistoryManager_html_a9ca01beaca494097132a723b645e83e9"><div class="ttname"><a href="classGrowController_1_1DataHistoryManager.html#a9ca01beaca494097132a723b645e83e9">GrowController::DataHistoryManager::getRecordCount</a></div><div class="ttdeci">size_t getRecordCount() const</div><div class="ttdef"><b>Definition:</b> dataHistoryManager.cpp:273</div></div>
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Gerado por &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.17
+</small></address>
+</body>
+</html>
