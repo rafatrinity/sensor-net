@@ -115,19 +115,42 @@ void WebServerManager::begin() {
         request->send(200, "application/json", jsonResponse);
     });
 
-    // Handler para POST /api/targets com suporte a buffer estático para dados maiores
+    // Handler para POST /api/targets com suporte a CORS
+    server_.on("/api/targets", HTTP_OPTIONS, [](AsyncWebServerRequest *request) {
+        AsyncWebServerResponse *response = request->beginResponse(204);
+        response->addHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+        response->addHeader("Access-Control-Allow-Headers", "Content-Type");
+        response->addHeader("Access-Control-Allow-Origin", "*");
+        response->addHeader("Access-Control-Max-Age", "86400");
+        request->send(response);
+    });
+
+    server_.on("/api/targets", HTTP_POST, [](AsyncWebServerRequest *request) {
+        // O handler real está em onRequestBody, mas precisamos configurar os headers CORS aqui
+        if (!request->hasParam("body", true)) {
+            AsyncWebServerResponse *response = request->beginResponse(200, "application/json", 
+                "{\"success\":false, \"message\":\"No body received\"}");
+            response->addHeader("Access-Control-Allow-Origin", "*");
+            request->send(response);
+        }
+    });
+
+    // Handler para processamento do corpo da requisição
     server_.onRequestBody([this](AsyncWebServerRequest *request, uint8_t *data, size_t len, size_t index, size_t total) {
         if (request->url() == "/api/targets" && request->method() == HTTP_POST) {
             static std::vector<uint8_t> requestBodyBuffer;
             
             // Proteger contra payloads muito grandes
-            if (total > 1024) { // Limite de 1KB para o payload
-                request->send(413, "application/json", "{\"success\":false, \"message\":\"Payload too large\"}");
+            if (total > 1024) {
+                AsyncWebServerResponse *response = request->beginResponse(413, "application/json", 
+                    "{\"success\":false, \"message\":\"Payload too large\"}");
+                response->addHeader("Access-Control-Allow-Origin", "*");
+                request->send(response);
                 return;
             }
 
             if (index == 0) {
-                requestBodyBuffer.reserve(total); // Reserva memória uma vez
+                requestBodyBuffer.reserve(total);
                 requestBodyBuffer.assign(data, data + len);
             } else {
                 requestBodyBuffer.insert(requestBodyBuffer.end(), data, data + len);
@@ -137,18 +160,25 @@ void WebServerManager::begin() {
                 JsonDocument doc;
                 DeserializationError error = deserializeJson(doc, requestBodyBuffer.data(), requestBodyBuffer.size());
                 
+                AsyncWebServerResponse *response;
                 if (error) {
                     Logger::error("deserializeJson() failed for /api/targets: %s", error.c_str());
-                    request->send(400, "application/json", "{\"success\":false, \"message\":\"Invalid JSON format\"}");
+                    response = request->beginResponse(400, "application/json", 
+                        "{\"success\":false, \"message\":\"Invalid JSON format\"}");
+                    response->addHeader("Access-Control-Allow-Origin", "*");
+                    request->send(response);
                     return;
                 }
 
                 if (!targetDataManager_) {
-                    request->send(500, "application/json", "{\"success\":false, \"message\":\"TargetDataManager not available\"}");
+                    response = request->beginResponse(500, "application/json", 
+                        "{\"success\":false, \"message\":\"TargetDataManager not available\"}");
+                    response->addHeader("Access-Control-Allow-Origin", "*");
+                    request->send(response);
                     return;
                 }
 
-                // Log para debug
+                // Log para debug dos dados recebidos
                 Logger::debug("Received targets update request: airHumidity=%.1f, lightOn=%s, lightOff=%s",
                     doc["targetAirHumidity"].as<float>(),
                     doc["lightOnTime"].as<const char*>(),
@@ -156,10 +186,16 @@ void WebServerManager::begin() {
 
                 bool success = targetDataManager_->updateTargetsFromJson(doc);
                 if (success) {
-                    request->send(200, "application/json", "{\"success\":true, \"message\":\"Targets updated successfully.\"}");
-                    this->sendStatusUpdateEvent(); // Notificar clientes SSE
+                    response = request->beginResponse(200, "application/json", 
+                        "{\"success\":true, \"message\":\"Targets updated successfully.\"}");
+                    response->addHeader("Access-Control-Allow-Origin", "*");
+                    request->send(response);
+                    this->sendStatusUpdateEvent();
                 } else {
-                    request->send(400, "application/json", "{\"success\":false, \"message\":\"Error updating targets or no valid data.\"}");
+                    response = request->beginResponse(400, "application/json", 
+                        "{\"success\":false, \"message\":\"Error updating targets or no valid data.\"}");
+                    response->addHeader("Access-Control-Allow-Origin", "*");
+                    request->send(response);
                 }
 
                 // Limpar buffer após processar
@@ -167,12 +203,6 @@ void WebServerManager::begin() {
                 requestBodyBuffer.shrink_to_fit();
             }
         }
-    });
-
-    // Handler para POST /api/targets
-    server_.on("/api/targets", HTTP_POST, [](AsyncWebServerRequest *request) {
-        // O handler real está em onRequestBody
-        // Este handler é necessário para registrar o endpoint
     });
 
     // Configuração do Server-Sent Events
